@@ -10,12 +10,13 @@ public class Player : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer sprite;
     Animator anim;
+    public Scanner scan;
     public float speed;
     void Awake() {
         rigid = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-    
+        scan = GetComponent<Scanner>();
     }
 
     // Update is called once per frame
