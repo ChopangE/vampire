@@ -9,22 +9,42 @@ public class Boss : MonoBehaviour
     public Rigidbody2D target;
     bool isLive;
     public Animator anim;
+    public GameObject[] bossLevel;
     Collider2D coll;
     SpriteRenderer sprite;
     BossWeapon[] weapons;
+    bool isPhase2;
+    float Timer;
+    int levelIndex;
     void Awake() {
         coll = GetComponent<Collider2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         weapons = GetComponentsInChildren<BossWeapon>();
     }
+    
     public void Bottle() {
         weapons[0].Shut();
     }
     public void Crows() {
         weapons[1].Range();
     }
-    
+
+    void Update() {
+        if (!GameManager.Instance.isLive) return;
+        if (Input.GetKeyDown(KeyCode.H)) {
+            isPhase2 = true;
+        }
+        if (isPhase2) {
+            Timer += Time.deltaTime;
+            if(Timer > 5f) {
+                Timer = 0f;
+                bossLevel[levelIndex++].SetActive(true);
+                levelIndex = Mathf.Min(bossLevel.Length - 1, levelIndex);
+            }
+        }
+    }
+
     void OnEnable() {
         target = GameManager.Instance.player.GetComponent<Rigidbody2D>();
         isLive = true;

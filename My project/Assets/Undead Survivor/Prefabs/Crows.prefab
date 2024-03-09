@@ -78,6 +78,7 @@ GameObject:
   - component: {fileID: 9195100151605005388}
   - component: {fileID: 9195100151605005389}
   - component: {fileID: 9195100151605005390}
+  - component: {fileID: 1752854343436072506}
   m_Layer: 0
   m_Name: Crow (2)
   m_TagString: Untagged
@@ -182,6 +183,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   duration: 0
+--- !u!95 &1752854343436072506
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9195100151605005384}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 606b6eefb0419584e9dcf39cb4f09b0d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &9195100151917083093
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,6 +216,7 @@ GameObject:
   - component: {fileID: 9195100151917083098}
   - component: {fileID: 9195100151917083099}
   - component: {fileID: 9195100151917083097}
+  - component: {fileID: 3788759431929772922}
   m_Layer: 0
   m_Name: Crow (1)
   m_TagString: Untagged
@@ -298,6 +321,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   duration: 0
+--- !u!95 &3788759431929772922
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9195100151917083093}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 606b6eefb0419584e9dcf39cb4f09b0d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &9195100152177465804
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,6 +354,7 @@ GameObject:
   - component: {fileID: 9195100152177465811}
   - component: {fileID: 9195100152177465809}
   - component: {fileID: 9195100152177465808}
+  - component: {fileID: 8286893828694916395}
   m_Layer: 0
   m_Name: Crow
   m_TagString: Untagged
@@ -414,3 +459,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   duration: 0
+--- !u!95 &8286893828694916395
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9195100152177465804}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 606b6eefb0419584e9dcf39cb4f09b0d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
