@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         DontDestroyOnLoad(gameObject);
+       
     }
     void Start() {
         health = maxHealth;

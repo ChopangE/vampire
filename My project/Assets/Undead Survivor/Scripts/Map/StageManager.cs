@@ -42,7 +42,6 @@ public class StageManager : MonoBehaviour
     }
     public void CallScene() {
         SceneManager.LoadScene(2);
-        Debug.Log("Call");
     }
     
     public void TextingCoin() {

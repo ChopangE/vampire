@@ -7,6 +7,7 @@ public class Smash : MonoBehaviour
     Collider2D coll;
     public GameObject child;
     public Transform target;
+    
     float timer = 0;
     void Awake() {
         coll = GetComponent<Collider2D>();
@@ -24,7 +25,7 @@ public class Smash : MonoBehaviour
         coll.enabled = false;
         child.SetActive(false);
     }
-
+    
     void Update() {
         timer += Time.deltaTime;
         /*
@@ -51,7 +52,10 @@ public class Smash : MonoBehaviour
         transform.eulerAngles += new Vector3(0, 0, 30f);
     }
     public void OnSmash() {
-        child.SetActive(true);
+        SpriteRenderer sprite = child.GetComponent<SpriteRenderer>();
+        sprite.color = new Color(1, 1, 1, 0);
+        child.GetComponent<Collider2D>().enabled = true;
+
     }
 
     public void OnFinish() {
@@ -63,17 +67,20 @@ public class Smash : MonoBehaviour
         coll.enabled = false;
     }
 
+    public void ViewSmashLine() {
+        child.SetActive(true);
+        child.GetComponent<Collider2D>().enabled = false;
+        SpriteRenderer sprite = child.GetComponent<SpriteRenderer>();
+        sprite.color = new Color(1, 0, 0, 0.3f);
+    }
     void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag != "Player") return;
         Vector3 power = collision.transform.position - transform.position;
         power = power.normalized;
-        //new Vector3(-10, -10, 0);
         Rigidbody2D rigid = collision.gameObject.GetComponent<Rigidbody2D>();
         rigid.AddForce(power * 10, ForceMode2D.Impulse);
 
-        GameManager.Instance.health -= 10;
-        Debug.Log(collision.gameObject.tag);
-       // rigid.velocity = Vector2.zero;
+        GameManager.Instance.health -= 1;
 
     }
 
