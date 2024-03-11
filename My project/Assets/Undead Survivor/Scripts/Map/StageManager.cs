@@ -29,7 +29,7 @@ public class StageManager : MonoBehaviour
 
 
     public int curPoint = 0;
-    public bool[] isCheck = { false, false, false, false, false, true };
+    public bool[] isCheck = { true, false, false, false, false, false };
     public int coin;
     Text coinText;
     void Awake() {

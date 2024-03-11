@@ -40,6 +40,7 @@ public class StageButton : MonoBehaviour
         targetUI.SetActive(true);
         switch (type) {
             case StageType.Stage:
+            case StageType.Boss:
                 StageManager.Instance.isCheck[(int)type] = true;
                 StageManager.Instance.curPoint = (int)type;
                 //여기서 UI호출
@@ -48,9 +49,7 @@ public class StageButton : MonoBehaviour
             case StageType.Random:
                 //
                 break;
-            case StageType.Boss:
-                //Boss Stage
-                break;
+           
             case StageType.Rest:
                 //
                 break;

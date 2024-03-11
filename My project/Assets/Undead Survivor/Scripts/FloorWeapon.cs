@@ -9,10 +9,11 @@ public class FloorWeapon : MonoBehaviour
     public float speed;
     public float timer;
     public Player player;
+
     void Awake() {
         player = GameManager.Instance.player;
     }
-    // Update is called once per frame
+
     void Update()
     {
         if (!GameManager.Instance.isLive) return;

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -38,6 +39,9 @@ public class GameManager : MonoBehaviour
     public PoolManager pool;
     public LevelUp uiLevelUp;
     public Pause uiPause;
+    public GameObject spawner;
+    [Header("# Boss Object")]
+    public GameObject bossLevel;
     void Awake() {
         var objs = FindObjectsOfType<GameManager>();
         if(objs.Length != 1) {
@@ -49,7 +53,17 @@ public class GameManager : MonoBehaviour
     void Start() {
         health = maxHealth;
         AudioManager.instance.PlayBgm(true);
+        if(StageManager.Instance.curPoint == 1) {           //On stage 임시코드
+            player.transform.position = Vector3.zero;
+            bossLevel.SetActive(false);
+            spawner.SetActive(true);
+        }
+        else {
+            player.transform.position = new Vector3(100,98,0);
+            bossLevel.SetActive(true);
+            spawner.SetActive(false);
 
+        }
     }
 
     public void GameOver() {
