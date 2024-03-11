@@ -25,15 +25,19 @@ public class Player : MonoBehaviour
     void FixedUpdate() {
         if (!GameManager.Instance.isLive) return;
 
+        transform.Translate(inputVec * speed * Time.fixedDeltaTime);
+        //rigid.velocity = Vector2.zero;
+        /*
         Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + nextVec);
-        
+        */
     }
 
     void OnMove(InputValue value) {
     
         inputVec = value.Get<Vector2>();            //이미 normalized 적용
-    
+        rigid.velocity = Vector2.zero;
+
     }
 
     void LateUpdate() {
@@ -49,7 +53,7 @@ public class Player : MonoBehaviour
     
     void OnCollisionStay2D(Collision2D collision) {
         if (!GameManager.Instance.isLive) return;
-
+        if (collision.gameObject.tag == "Ground") return;
         GameManager.Instance.health -= Time.deltaTime * 10;
         if (GameManager.Instance.health < 0) {
             for (int i = 2; i < transform.childCount; i++) {
