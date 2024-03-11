@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     public float maxGameTime = 2 * 10f;
     [Header("# Player Info")]
     public float health;
-    public float maxHealth = 100;
+    public float maxHealth = 5;
     public int[] nextExp = { 10, 10, 10, 10 };
     public int level = 0;
     public int kill = 0;
@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     public LevelUp uiLevelUp;
     public Pause uiPause;
     public GameObject spawner;
+    public GameObject timer;
     [Header("# Boss Object")]
     public GameObject bossLevel;
     void Awake() {
@@ -57,11 +58,13 @@ public class GameManager : MonoBehaviour
             player.transform.position = Vector3.zero;
             bossLevel.SetActive(false);
             spawner.SetActive(true);
+            timer.SetActive(true);
         }
         else {
             player.transform.position = new Vector3(100,98,0);
             bossLevel.SetActive(true);
             spawner.SetActive(false);
+            timer.SetActive(false);
 
         }
     }

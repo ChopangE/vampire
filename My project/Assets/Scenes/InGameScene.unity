@@ -1392,6 +1392,7 @@ MonoBehaviour:
   uiLevelUp: {fileID: 464531282}
   uiPause: {fileID: 1501712634}
   spawner: {fileID: 372153626}
+  timer: {fileID: 403343191}
   bossLevel: {fileID: 1104175701}
 --- !u!4 &344616291
 Transform:
@@ -8399,7 +8400,7 @@ GameObject:
   - component: {fileID: 513447021}
   m_Layer: 0
   m_Name: Square
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8587,7 +8588,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 10
+  orthographic size: 7.105263
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -14236,6 +14237,7 @@ Transform:
   m_Children:
   - {fileID: 1038239884}
   - {fileID: 1817179459}
+  - {fileID: 2121772182}
   m_Father: {fileID: 1104175702}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14327,7 +14329,7 @@ GameObject:
   - component: {fileID: 796104456}
   m_Layer: 0
   m_Name: Square (3)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33759,7 +33761,7 @@ Transform:
   m_Children:
   - {fileID: 871060729}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1541482617
 GameObject:
@@ -34007,7 +34009,7 @@ GameObject:
   - component: {fileID: 1552007761}
   m_Layer: 0
   m_Name: Square (4)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39110,7 +39112,7 @@ GameObject:
   - component: {fileID: 2120537560}
   m_Layer: 0
   m_Name: Square (2)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -39222,7 +39224,7 @@ GameObject:
   - component: {fileID: 2121772185}
   - component: {fileID: 2121772184}
   m_Layer: 0
-  m_Name: WitchFarSmash_0
+  m_Name: Smash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39287,14 +39289,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2121772180}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 104.49, y: 101.64, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 4.439995, y: -4.0599976, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2064977095}
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_Father: {fileID: 774710372}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &2121772183
 Animator:
