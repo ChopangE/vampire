@@ -32,6 +32,7 @@ public class Boss : MonoBehaviour
 
     void Update() {
         if (!GameManager.Instance.isLive) return;
+        if (!isLive) return;
         if (Input.GetKeyDown(KeyCode.H)) {
             isPhase2 = true;
         }
@@ -43,6 +44,7 @@ public class Boss : MonoBehaviour
                 levelIndex = Mathf.Min(bossLevel.Length - 1, levelIndex);
             }
         }
+        
     }
 
     void OnEnable() {
@@ -54,6 +56,7 @@ public class Boss : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D collision) {
         if (!collision.CompareTag("Bullet")) return;
+        if (!isLive) return;
 
         health -= collision.GetComponent<Bullet>().damage;
 
@@ -62,18 +65,23 @@ public class Boss : MonoBehaviour
             isLive = false;
             coll.enabled = false;
             sprite.sortingOrder = 1;
-            anim.SetTrigger("Dead");
+            anim.SetBool("Dead", true);
+            
         }
 
     }
     void OnTriggerStay2D(Collider2D collision) {
         if (!collision.CompareTag("Floor")) return;
+        if (!isLive) return;
+
         health -= collision.GetComponent<FloorWeapon>().damage;
 
         if (health <= 0) {
             isLive = false;
             coll.enabled = false;
             sprite.sortingOrder = 1;
+            anim.SetBool("Dead", true);
+
         }
     }
 }
