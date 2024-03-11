@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     public float maxGameTime = 2 * 10f;
     [Header("# Player Info")]
     public float health;
-    public float maxHealth = 5;
+    public float maxHealth = 100;
     public int[] nextExp = { 10, 10, 10, 10 };
     public int level = 0;
     public int kill = 0;
