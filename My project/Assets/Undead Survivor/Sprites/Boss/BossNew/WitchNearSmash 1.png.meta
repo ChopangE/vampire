@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b8de69a19ca1a61409fc7ac236934e29
+guid: b0dadc9bbf68bba479b08588f3b720b6
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 30
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -70,7 +70,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -129,64 +129,64 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MapBurned-Sheet_0
+      name: WitchNearSmash 1_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64.666664
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 400.66666
+        height: 400
+      alignment: 9
+      pivot: {x: 0.5847458, y: 0.6616897}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa6cedd60172b0648ba7157ffbb71f58
-      internalID: -1299852363
+      spriteID: 867d437f4980c7643a197cda3dff7d8e
+      internalID: 1108339216
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MapBurned-Sheet_1
+      name: WitchNearSmash 1_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 400
         y: 0
-        width: 64.666664
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 400.66666
+        height: 400
+      alignment: 9
+      pivot: {x: 0.5807102, y: 0.6657318}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7542ef7661bfad49a7c43a32ecb6218
-      internalID: 186972407
+      spriteID: 8c2799c38a7ce7f46a20b67acc079cd2
+      internalID: 1647292706
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MapBurned-Sheet_2
+      name: WitchNearSmash 1_2
       rect:
         serializedVersion: 2
-        x: 128
+        x: 800
         y: 0
-        width: 64.666664
-        height: 64
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 400.66666
+        height: 400
+      alignment: 9
+      pivot: {x: 0.58474565, y: 0.6616897}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a3374cb324291ad47a77f8217a19f8ec
-      internalID: -331936180
+      spriteID: 3300c9e877c009448b150a2c29ddddc0
+      internalID: 1821931498
       vertices: []
       indices: 
       edges: []
@@ -202,9 +202,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MapBurned-Sheet_0: -1299852363
-      MapBurned-Sheet_1: 186972407
-      MapBurned-Sheet_2: -331936180
+      WitchNearSmash 1_0: 1108339216
+      WitchNearSmash 1_1: 1647292706
+      WitchNearSmash 1_2: 1821931498
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
