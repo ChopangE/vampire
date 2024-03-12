@@ -5,10 +5,8 @@ using UnityEngine;
 public class Burned : MonoBehaviour
 {
 
-    void OnCollisionStay2D(Collision2D collision) {
-        if (collision.gameObject.tag != "Player") return;
+    void OnTriggerStay2D(Collider2D collision) {
+        if (!collision.CompareTag("Player")) return;
         GameManager.Instance.health -= Time.deltaTime * 10f;
-        
-
     }
 }
