@@ -13,7 +13,6 @@ public class SmashRange : MonoBehaviour
         rigid.AddForce(power * 50, ForceMode2D.Impulse);
 
         GameManager.Instance.health -= 1;
-        Debug.Log(collision.gameObject.tag);
     }
 
     

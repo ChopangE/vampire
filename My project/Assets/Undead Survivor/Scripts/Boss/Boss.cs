@@ -9,18 +9,22 @@ public class Boss : MonoBehaviour
     public Rigidbody2D target;
     bool isLive;
     public Animator anim;
+    public Smash smash;
     public GameObject[] bossLevel;
+    public float smashTime;
     Collider2D coll;
     SpriteRenderer sprite;
     BossWeapon[] weapons;
     bool isPhase2;
     float Timer;
+    float Timer2;
     int levelIndex;
     void Awake() {
         coll = GetComponent<Collider2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         weapons = GetComponentsInChildren<BossWeapon>();
+        smash = GetComponentInChildren<Smash>(true);
     }
     
     public void Bottle() {
@@ -44,9 +48,29 @@ public class Boss : MonoBehaviour
                 levelIndex = Mathf.Min(bossLevel.Length - 1, levelIndex);
             }
         }
-        
-    }
 
+        Collider2D hit = Physics2D.OverlapBox(transform.position - new Vector3(0, 7.5f, 0), new Vector2(13, 4), 0, LayerMask.GetMask("Player"));
+
+
+        if (Timer2 > smashTime) {
+            Timer2 = 0f;
+            if(hit != null) {
+                GameManager.Instance.player.rigid.AddForce(new Vector2(0, -60), ForceMode2D.Impulse);
+            }
+            else {
+                anim.SetBool("Smash", true);
+                smash.gameObject.SetActive(true);
+            }
+        }
+        Timer2 += Time.deltaTime;
+
+
+
+    }
+    void OnDrawGizmos() {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position - new Vector3(0,7.5f,0), new Vector2(13,4));
+    }
     void OnEnable() {
         target = GameManager.Instance.player.GetComponent<Rigidbody2D>();
         isLive = true;

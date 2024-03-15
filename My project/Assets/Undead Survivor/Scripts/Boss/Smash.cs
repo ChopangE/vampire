@@ -7,14 +7,16 @@ public class Smash : MonoBehaviour
     Collider2D coll;
     public GameObject child;
     public Transform target;
+    public GameObject[] dusts;
+    public Animator anim;
     bool isAuto = true;
     float timer = 0;
     void Awake() {
         coll = GetComponent<Collider2D>();
         target = GameManager.Instance.player.GetComponent<Transform>();
-        //child = GetComponentInChildren<GameObject>();
     }
     void Start() {
+        /*
         if (transform.position.x > target.position.x) {
             transform.eulerAngles = new Vector3(0, 0 ,-45);
         }
@@ -22,6 +24,7 @@ public class Smash : MonoBehaviour
             transform.eulerAngles = new Vector3(0, 0 , 45);
 
         }
+        */
         coll.enabled = false;
         child.SetActive(false);
     }
@@ -50,7 +53,7 @@ public class Smash : MonoBehaviour
         if (isAuto) {
             Vector3 dir = target.position - transform.position;
             transform.rotation = Quaternion.FromToRotation(Vector3.up, -dir);
-            transform.eulerAngles += new Vector3(0, 0, 30f);
+            transform.eulerAngles += new Vector3(0, 0, 50f);
         }
     }
     public void OnSmash() {
@@ -63,11 +66,14 @@ public class Smash : MonoBehaviour
     public void OnFinish() {
         child.SetActive(false);
         coll.enabled = true;
+        OnDusts();
     }
 
     public void StartGoGO() {
         coll.enabled = false;
         OnAutoTarget();
+        OffDusts();
+
     }
 
     public void ViewSmashLine() {
@@ -76,11 +82,24 @@ public class Smash : MonoBehaviour
         SpriteRenderer sprite = child.GetComponent<SpriteRenderer>();
         sprite.color = new Color(1, 0, 0, 0.3f);
     }
-
+    public void LastFinish() {
+        
+        anim.SetBool("Smash", false);
+        gameObject.SetActive(false);
+    }
     void OnAutoTarget() {
         isAuto = true;
     }
-
+    void OnDusts() {
+        for(int i = 0; i < dusts.Length; i++) {
+            dusts[i].SetActive(true);
+        }
+    }
+    void OffDusts() {
+        for (int i = 0; i < dusts.Length; i++) {
+            dusts[i].SetActive(false);
+        }
+    }
     void OnEnable() {
         Vector3 dir = target.position - transform.position;
         transform.rotation = Quaternion.FromToRotation(Vector3.up, -dir);
