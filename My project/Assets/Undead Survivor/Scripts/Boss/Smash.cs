@@ -7,7 +7,7 @@ public class Smash : MonoBehaviour
     Collider2D coll;
     public GameObject child;
     public Transform target;
-    
+    bool isAuto = true;
     float timer = 0;
     void Awake() {
         coll = GetComponent<Collider2D>();
@@ -47,9 +47,11 @@ public class Smash : MonoBehaviour
         if(timer > 3f) {
             timer = 0f;
         }
-        Vector3 dir = target.position - transform.position;
-        transform.rotation = Quaternion.FromToRotation(Vector3.up, -dir);
-        transform.eulerAngles += new Vector3(0, 0, 30f);
+        if (isAuto) {
+            Vector3 dir = target.position - transform.position;
+            transform.rotation = Quaternion.FromToRotation(Vector3.up, -dir);
+            transform.eulerAngles += new Vector3(0, 0, 30f);
+        }
     }
     public void OnSmash() {
         SpriteRenderer sprite = child.GetComponent<SpriteRenderer>();
@@ -65,6 +67,7 @@ public class Smash : MonoBehaviour
 
     public void StartGoGO() {
         coll.enabled = false;
+        OnAutoTarget();
     }
 
     public void ViewSmashLine() {
@@ -72,6 +75,20 @@ public class Smash : MonoBehaviour
         child.GetComponent<Collider2D>().enabled = false;
         SpriteRenderer sprite = child.GetComponent<SpriteRenderer>();
         sprite.color = new Color(1, 0, 0, 0.3f);
+    }
+
+    void OnAutoTarget() {
+        isAuto = true;
+    }
+
+    void OnEnable() {
+        Vector3 dir = target.position - transform.position;
+        transform.rotation = Quaternion.FromToRotation(Vector3.up, -dir);
+        transform.eulerAngles += new Vector3(0, 0, 50f);
+    }
+
+    public void OffAutoTarget() {
+        isAuto = false;
     }
     void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag != "Player") return;
@@ -84,6 +101,7 @@ public class Smash : MonoBehaviour
 
     }
 
+    
     
     /*
     void OnCollisionStay2D(Collision2D collision) {
