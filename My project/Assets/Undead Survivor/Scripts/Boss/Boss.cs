@@ -55,7 +55,8 @@ public class Boss : MonoBehaviour
         if (Timer2 > smashTime) {
             Timer2 = 0f;
             if(hit != null) {
-                GameManager.Instance.player.rigid.AddForce(new Vector2(0, -60), ForceMode2D.Impulse);
+                anim.SetBool("Hammer", true);
+                //GameManager.Instance.player.rigid.AddForce(new Vector2(0, -60), ForceMode2D.Impulse);
             }
             else {
                 anim.SetBool("Smash", true);
@@ -63,9 +64,6 @@ public class Boss : MonoBehaviour
             }
         }
         Timer2 += Time.deltaTime;
-
-
-
     }
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
@@ -77,6 +75,11 @@ public class Boss : MonoBehaviour
         coll.enabled = true;
         sprite.sortingOrder = 1;
         health = maxHealth;
+    }
+
+    public void Hammer() {
+        Transform hammer = transform.GetChild(3);
+        hammer.gameObject.SetActive(true);
     }
     void OnTriggerEnter2D(Collider2D collision) {
         if (!collision.CompareTag("Bullet")) return;
