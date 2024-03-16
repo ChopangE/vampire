@@ -9,13 +9,13 @@ public class Hammer : MonoBehaviour
     void Awake() {
         boss = GetComponentInParent<Boss>();
     }
-    void AnimOff() {
+    public void AnimOff() {
         transform.GetChild(0).gameObject.SetActive(false);
         boss.anim.SetBool("Hammer", false);
         gameObject.SetActive(false);
     }
 
-    void EarthQuakeOn() {
+    public void EarthQuakeOn() {
         transform.GetChild(0).gameObject.SetActive(true);
         GameManager.Instance.player.rigid.AddForce(new Vector2(0, -60), ForceMode2D.Impulse);
     }
