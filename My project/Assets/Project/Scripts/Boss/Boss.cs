@@ -78,10 +78,21 @@ public class Boss : MonoBehaviour
     }
 
     public void Hammer() {
-        Transform hammer = transform.GetChild(3);
-        hammer.gameObject.SetActive(true);
         anim.SetBool("Hammer", false);
         anim.SetBool("Hamming", true);
+    }
+
+    public void AnimOff() {
+        transform.GetChild(3).gameObject.SetActive(false);
+        anim.SetBool("Hamming", false);
+    }
+
+    public void EarthQuakeOn() {
+        transform.GetChild(3).gameObject.SetActive(true);
+        Collider2D hit = Physics2D.OverlapBox(transform.position - new Vector3(0, 7.5f, 0), new Vector2(13, 4), 0, LayerMask.GetMask("Player"));
+        if (hit != null) {
+            hit.GetComponent<Player>().rigid.AddForce(new Vector2(0, -60), ForceMode2D.Impulse);
+        }
     }
     void OnTriggerEnter2D(Collider2D collision) {
         if (!collision.CompareTag("Bullet")) return;
