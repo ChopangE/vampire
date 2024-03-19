@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0d5e657ee5a074e4baa53d5b248a01d2
+guid: 57a1443e67528144aa07582927559650
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -20,12 +20,11 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMipmapLimit: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -64,7 +63,6 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
-  swizzle: 50462976
   cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
@@ -127,143 +125,197 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Weapon 0
+      name: Run 0
       rect:
         serializedVersion: 2
         x: 0
-        y: 42
+        y: 63
         width: 18
-        height: 9
-      alignment: 9
-      pivot: {x: 0.3, y: 0.6}
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe848cb6984cf0548a022c05227812e9
-      internalID: 143021600
+      spriteID: 7e2b4788caacd844282a62b4e2ad1566
+      internalID: -2088749509
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapon 1
+      name: Run 1
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 63
+        width: 18
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bf0fef3e79fe034694fcc437dde75d9
+      internalID: -1836318166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Run 2
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 63
+        width: 18
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 944816b4b17b43346ae045dc696ababd
+      internalID: -198311514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Run 3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 42
+        width: 18
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f74ac41b67e8eb44a8aa3e0dac809f47
+      internalID: -1997520891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Run 4
       rect:
         serializedVersion: 2
         x: 19
         y: 42
         width: 18
-        height: 9
-      alignment: 9
-      pivot: {x: 0.3, y: 0.6}
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 03aa7ec46ababa94ea4b79b5dbe919bf
-      internalID: -1972582131
+      spriteID: 33c6f95c6aa48ed4185b3e95ca72205f
+      internalID: -1017442464
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapon 2
+      name: Run 5
       rect:
         serializedVersion: 2
         x: 38
         y: 42
         width: 18
-        height: 9
-      alignment: 9
-      pivot: {x: 0.3, y: 0.6}
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c1356655813fe24d9a8738c61aafcbf
-      internalID: 1349035616
+      spriteID: 8987a8a777ef17b44bb0a24113065353
+      internalID: -2066638598
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapon 3
+      name: Stand 0
       rect:
         serializedVersion: 2
         x: 0
-        y: 32
+        y: 21
         width: 18
-        height: 9
-      alignment: 9
-      pivot: {x: 0.2, y: 0.5}
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5c66514b4fe03344901566a85dac876
-      internalID: -353751291
+      spriteID: 153147a80e7052d40a3281cea89791f3
+      internalID: 938132271
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapon 4
+      name: Stand 1
       rect:
         serializedVersion: 2
         x: 19
-        y: 32
+        y: 21
         width: 18
-        height: 9
-      alignment: 9
-      pivot: {x: 0.2, y: 0.5}
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f6a369fad18131b46b18f789f5ed532a
-      internalID: -144335857
+      spriteID: 11e7dae28fc0ec145a9535c13aabd657
+      internalID: -791905833
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Weapon 5
+      name: Stand 2
       rect:
         serializedVersion: 2
         x: 38
-        y: 32
+        y: 21
         width: 18
-        height: 9
-      alignment: 9
-      pivot: {x: 0.2, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7d13921cb5b88da4a93c26ca793efdf2
-      internalID: 1772703093
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bullet 0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 13
-        width: 7
-        height: 18
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -271,167 +323,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5aa825181fcee7a419436726060b971a
-      internalID: 1737672109
+      spriteID: f07a3ecb7a76bbe439e343722bef9210
+      internalID: 1684076649
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Bullet 1
-      rect:
-        serializedVersion: 2
-        x: 8
-        y: 13
-        width: 7
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bca8a8641c6e3354ab75d0274abbc1e1
-      internalID: -703694536
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bullet 2
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 18
-        width: 9
-        height: 13
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b6aabc5203cefc24db52ecf0ea98f5c4
-      internalID: 762804792
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bullet 3
-      rect:
-        serializedVersion: 2
-        x: 26
-        y: 23
-        width: 4
-        height: 8
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6befcdde3e485df47821ae82f1c4a2b2
-      internalID: -537537479
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bullet 4
-      rect:
-        serializedVersion: 2
-        x: 31
-        y: 22
-        width: 5
-        height: 9
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6c2486907b334634e81ca354c6e9bb14
-      internalID: -1327499133
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Shadow
-      rect:
-        serializedVersion: 2
-        x: 37
-        y: 25
-        width: 10
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 97c7a789f60c2734eaa0870903d4a8b4
-      internalID: 1304559308
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Bullet 5
-      rect:
-        serializedVersion: 2
-        x: 26
-        y: 15
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f0b3786c7d6806b4e95c8bfa9106f125
-      internalID: 154122315
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Box
-      rect:
-        serializedVersion: 2
-        x: 37
-        y: 12
-        width: 15
-        height: 12
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a4e1b228964841144bcdc169a70818dd
-      internalID: -38345435
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Exp 0
+      name: Stand 3
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 10
-        height: 11
+        width: 18
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -439,20 +344,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 74fc20a4abc4ea54b8692b4c6987d1c0
-      internalID: 362616440
+      spriteID: fb23b9d4f463a944289e397aa43f4c0d
+      internalID: 1883720508
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Exp 1
+      name: Dead 0
       rect:
         serializedVersion: 2
-        x: 11
+        x: 19
         y: 0
-        width: 10
-        height: 11
+        width: 18
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -460,20 +365,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dca584bf28cc4394ab1b4968285fbd18
-      internalID: 1807624531
+      spriteID: 9449f4559947b3942a7ade3dc0346119
+      internalID: 369909130
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Exp 2
+      name: Dead 1
       rect:
         serializedVersion: 2
-        x: 22
+        x: 38
         y: 0
-        width: 10
-        height: 11
+        width: 18
+        height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -481,50 +386,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c499da979228cb7479ca05e08eef5ee4
-      internalID: -1997803578
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mag
-      rect:
-        serializedVersion: 2
-        x: 33
-        y: 0
-        width: 12
-        height: 11
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d814282c489a3c140b0a29e1308a03cb
-      internalID: 1997828774
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Health
-      rect:
-        serializedVersion: 2
-        x: 46
-        y: 0
-        width: 10
-        height: 11
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e058c59a9d96270428e48c18f4b31870
-      internalID: 934571490
+      spriteID: 2ed8cb88237c453409ff0d3733ab146a
+      internalID: 1773231339
       vertices: []
       indices: 
       edges: []
@@ -540,27 +403,21 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Weapon 0: 143021600
-      Weapon 2: 1349035616
-      Exp 0: 362616440
-      Shadow: 1304559308
-      Health: 934571490
-      Bullet 0: 1737672109
-      Weapon 5: 1772703093
-      Bullet 5: 154122315
-      Weapon 1: -1972582131
-      Weapon 3: -353751291
-      Weapon 4: -144335857
-      Bullet 3: -537537479
-      Bullet 1: -703694536
-      Box: -38345435
-      Exp 1: 1807624531
-      Exp 2: -1997803578
-      Mag: 1997828774
-      Bullet 2: 762804792
-      Bullet 4: -1327499133
-  mipmapLimitGroupName: 
+      Dead 0: 369909130
+      Dead 1: 1773231339
+      Run 0: -2088749509
+      Run 1: -1836318166
+      Run 2: -198311514
+      Run 3: -1997520891
+      Run 4: -1017442464
+      Run 5: -2066638598
+      Stand 0: 938132271
+      Stand 1: -791905833
+      Stand 2: 1684076649
+      Stand 3: 1883720508
+  spritePackingTag: 
   pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

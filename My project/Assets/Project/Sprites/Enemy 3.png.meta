@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9ee30eb7d2f1f404790266ee96a67099
+guid: d33598d781682e049a53a0a13104ef29
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -20,12 +20,11 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMipmapLimit: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -64,7 +63,6 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
-  swizzle: 50462976
   cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
@@ -127,11 +125,86 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Tile 0
+      name: Run 0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 38
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49e0d998d75f8ce4ebd09abf6bd66ffc
+      internalID: 1782705385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Run 1
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 38
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf4c546e2c684434e9e0390bd559b021
+      internalID: 1544975445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Run 2
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 38
+        width: 18
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e0341f44abdd8c43bc9d05a941f084c
+      internalID: 33490002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Run 3
       rect:
         serializedVersion: 2
         x: 0
@@ -145,14 +218,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d9f812108496e0d4da2fe09a2360c314
-      internalID: 2093186594
+      spriteID: 25aa096b86708b446a57d3b7ae56aeba
+      internalID: 877188646
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tile 1
+      name: Run 4
       rect:
         serializedVersion: 2
         x: 19
@@ -166,14 +239,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa519104451eb2b4fa72798f5712fe93
-      internalID: -2031541144
+      spriteID: f1b10f110db351148b317f5dfa6d00d5
+      internalID: 393441404
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tile 2
+      name: Run 5
       rect:
         serializedVersion: 2
         x: 38
@@ -187,14 +260,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c275ace70e8c1e642944a4e5f47b1f52
-      internalID: 693853673
+      spriteID: 8c1ff8907ace5c04481f034ee6e7fde8
+      internalID: -595425931
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tile 3
+      name: Hit
       rect:
         serializedVersion: 2
         x: 0
@@ -208,14 +281,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 801a3a7999d0d7347b4ee52cbce915d1
-      internalID: 179664457
+      spriteID: 0f684ba64ddbbbb43baaa64b83e0ebdf
+      internalID: -1523209149
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Tile 4
+      name: Dead
       rect:
         serializedVersion: 2
         x: 19
@@ -229,29 +302,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 499b9b258a33b704fa976966c6b6b3bd
-      internalID: 1830541467
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Tile 5
-      rect:
-        serializedVersion: 2
-        x: 38
-        y: 0
-        width: 18
-        height: 18
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 021a06fb2ea20024587725277c4e262c
-      internalID: -133327340
+      spriteID: 1a9272f930e58ce4680cb9db7cca1a19
+      internalID: 1253841367
       vertices: []
       indices: 
       edges: []
@@ -267,14 +319,17 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Tile 2: 693853673
-      Tile 3: 179664457
-      Tile 4: 1830541467
-      Tile 0: 2093186594
-      Tile 1: -2031541144
-      Tile 5: -133327340
-  mipmapLimitGroupName: 
+      Dead: 1253841367
+      Hit: -1523209149
+      Run 0: 1782705385
+      Run 1: 1544975445
+      Run 2: 33490002
+      Run 3: 877188646
+      Run 4: 393441404
+      Run 5: -595425931
+  spritePackingTag: 
   pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
