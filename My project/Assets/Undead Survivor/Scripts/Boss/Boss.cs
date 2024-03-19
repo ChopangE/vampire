@@ -80,6 +80,8 @@ public class Boss : MonoBehaviour
     public void Hammer() {
         Transform hammer = transform.GetChild(3);
         hammer.gameObject.SetActive(true);
+        anim.SetBool("Hammer", false);
+        anim.SetBool("Hamming", true);
     }
     void OnTriggerEnter2D(Collider2D collision) {
         if (!collision.CompareTag("Bullet")) return;
