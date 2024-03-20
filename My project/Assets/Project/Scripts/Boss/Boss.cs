@@ -60,7 +60,7 @@ public class Boss : MonoBehaviour
             }
             else {
                 anim.SetBool("Smash", true);
-                smash.gameObject.SetActive(true);
+                //smash.gameObject.SetActive(true); Deleted
             }
         }
         Timer2 += Time.deltaTime;
@@ -93,6 +93,20 @@ public class Boss : MonoBehaviour
         if (hit != null) {
             hit.GetComponent<Player>().rigid.AddForce(new Vector2(0, -60), ForceMode2D.Impulse);
         }
+    }
+
+    public void TracePlayerOn() {
+        transform.GetChild(2).GetChild(0).gameObject.SetActive(true);
+
+    }
+
+    public void SmashUptoDown() {
+        anim.SetBool("Smash", false);
+        anim.SetBool("Smashing", true);
+        Transform child = transform.GetChild(2);
+        child.GetChild(0).gameObject.SetActive(false);
+        child.gameObject.GetComponent<Animator>().SetTrigger("isSmash");
+
     }
     void OnTriggerEnter2D(Collider2D collision) {
         if (!collision.CompareTag("Bullet")) return;
