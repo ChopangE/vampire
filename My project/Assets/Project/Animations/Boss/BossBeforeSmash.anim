@@ -31,7 +31,7 @@ AnimationClip:
       value: {fileID: 391609576, guid: ce317a2933cf5fa40a3831e73698f8db, type: 3}
     - time: 0.41666666
       value: {fileID: -444842165, guid: ce317a2933cf5fa40a3831e73698f8db, type: 3}
-    - time: 1.1666666
+    - time: 1.5
       value: {fileID: -444842165, guid: ce317a2933cf5fa40a3831e73698f8db, type: 3}
     attribute: m_Sprite
     path: 
@@ -64,7 +64,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.25
+    m_StopTime: 1.5833334
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -91,7 +91,14 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.1666666
+  - time: 0.9166667
+    functionName: StopToTracing
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.5
     functionName: SmashUptoDown
     data: 
     objectReferenceParameter: {fileID: 0}

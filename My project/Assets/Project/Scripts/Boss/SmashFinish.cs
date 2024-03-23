@@ -32,7 +32,7 @@ public class SmashFinish : MonoBehaviour
 
         boss.anim.SetBool("Smashing",false);
         Invoke("StartPositionToTarget", 0.3f);
-    }
+    }   
     void StartPositionToTarget() {
         isTargeting = true;
     }

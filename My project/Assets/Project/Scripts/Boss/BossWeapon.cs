@@ -65,7 +65,9 @@ public class BossWeapon : MonoBehaviour
         bullet.parent = transform;
         //bullet.position = new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, 0);
         //transform.position + new Vector3(Random.Range(-15f, 5f),-3f, 0);
-        bullet.localPosition = new Vector3(-9f + Random.Range(-3f,3f), 0, 0);
+        bullet.position = new Vector3(player.transform.position.x, boss.transform.position.y - 2 , 0);
+        //bullet.localPosition = new Vector3(Random.Range(-3f,3f), 0, 0);
+        
         bullet.GetComponent<BossBullet>().Init(damage, Vector3.zero, WT);
 
 

@@ -108,6 +108,10 @@ public class Boss : MonoBehaviour
 
     }
 
+    public void StopToTracing() {
+        transform.GetChild(2).GetComponent<SmashFinish>().StopPositionToTarget();
+    }
+
     public void SmashUptoDown() {
         anim.SetBool("Smash", false);
         anim.SetBool("Smashing", true);
