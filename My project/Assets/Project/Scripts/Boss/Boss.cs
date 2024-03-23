@@ -1,5 +1,7 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Boss : MonoBehaviour
@@ -12,6 +14,7 @@ public class Boss : MonoBehaviour
     public Smash smash;
     public GameObject[] bossLevel;
     public float smashTime;
+    CameraControl CC;
     Collider2D coll;
     SpriteRenderer sprite;
     BossWeapon[] weapons;
@@ -25,6 +28,7 @@ public class Boss : MonoBehaviour
         anim = GetComponent<Animator>();
         weapons = GetComponentsInChildren<BossWeapon>();
         smash = GetComponentInChildren<Smash>(true);
+        CC = FindObjectOfType<CameraControl>();
     }
     
     public void Bottle() {
@@ -80,8 +84,12 @@ public class Boss : MonoBehaviour
     public void Hammer() {
         anim.SetBool("Hammer", false);
         anim.SetBool("Hamming", true);
+        Invoke("StartShake", 0.2f);
     }
-
+    
+   public void StartShake() {
+        CC.ShakeCamera();
+   }
     public void AnimOff() {
         transform.GetChild(3).gameObject.SetActive(false);
         anim.SetBool("Hamming", false);
@@ -96,7 +104,7 @@ public class Boss : MonoBehaviour
     }
 
     public void TracePlayerOn() {
-        transform.GetChild(2).GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(2).GetChild(0).GetComponent<SmashUptoDown>().OnColor();
 
     }
 
@@ -104,7 +112,7 @@ public class Boss : MonoBehaviour
         anim.SetBool("Smash", false);
         anim.SetBool("Smashing", true);
         Transform child = transform.GetChild(2);
-        child.GetChild(0).gameObject.SetActive(false);
+        child.GetChild(0).GetComponent<SmashUptoDown>().OffColor();
         child.gameObject.GetComponent<Animator>().SetTrigger("isSmash");
 
     }

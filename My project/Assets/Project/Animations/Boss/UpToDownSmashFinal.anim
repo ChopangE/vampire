@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EarthQuake
+  m_Name: UpToDownSmashFinal
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,13 +20,13 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 1811101297, guid: 9d639745eef9d854c9917fe4960d7758, type: 3}
+      value: {fileID: -3849347, guid: e4d7711d6ac635a4694a1ccb085eac36, type: 3}
+    - time: 0.083333336
+      value: {fileID: 950108799, guid: e4d7711d6ac635a4694a1ccb085eac36, type: 3}
     - time: 0.16666667
-      value: {fileID: 304229721, guid: 9d639745eef9d854c9917fe4960d7758, type: 3}
-    - time: 0.33333334
-      value: {fileID: -385934125, guid: 9d639745eef9d854c9917fe4960d7758, type: 3}
-    - time: 0.5
-      value: {fileID: 1994428173, guid: 9d639745eef9d854c9917fe4960d7758, type: 3}
+      value: {fileID: -2125781745, guid: e4d7711d6ac635a4694a1ccb085eac36, type: 3}
+    - time: 0.6666667
+      value: {fileID: -2125781745, guid: e4d7711d6ac635a4694a1ccb085eac36, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -46,16 +46,16 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 1811101297, guid: 9d639745eef9d854c9917fe4960d7758, type: 3}
-    - {fileID: 304229721, guid: 9d639745eef9d854c9917fe4960d7758, type: 3}
-    - {fileID: -385934125, guid: 9d639745eef9d854c9917fe4960d7758, type: 3}
-    - {fileID: 1994428173, guid: 9d639745eef9d854c9917fe4960d7758, type: 3}
+    - {fileID: -3849347, guid: e4d7711d6ac635a4694a1ccb085eac36, type: 3}
+    - {fileID: 950108799, guid: e4d7711d6ac635a4694a1ccb085eac36, type: 3}
+    - {fileID: -2125781745, guid: e4d7711d6ac635a4694a1ccb085eac36, type: 3}
+    - {fileID: -2125781745, guid: e4d7711d6ac635a4694a1ccb085eac36, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.5833333
+    m_StopTime: 0.75
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -75,8 +75,29 @@ AnimationClip:
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
   m_Events:
+  - time: 0
+    functionName: StopPositionToTarget
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.16666667
+    functionName: MakeDustAndDamaging
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.5
-    functionName: StopCameraShaking
+    functionName: DoneDust
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.6666667
+    functionName: SmashFinishing
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
