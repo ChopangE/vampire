@@ -46,9 +46,9 @@ public class Melee : MonoBehaviour
                         dir = dir * -1;
                     }
                     Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position + dir, boxSize, 0);
-                    GameObject sw = Instantiate(sword, pos.position + dir, Quaternion.identity);                //임시코드
+                    GameObject sw = Instantiate(sword, pos.position + dir, Quaternion.identity);                
                     sw.GetComponent<SpriteRenderer>().flipX = !sprite.flipX;
-                    Destroy(sw, 0.2f);                                                                          //임시코드
+                    Destroy(sw, 0.2f);                                                                          
                     foreach (Collider2D coll in collider2Ds) {
                         if (coll.CompareTag("Enemy") && coll.GetComponent<Enemy>() != null) {
                             coll.GetComponent<Enemy>().GetDamage(damage);
