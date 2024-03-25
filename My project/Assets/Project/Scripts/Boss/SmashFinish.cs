@@ -31,8 +31,12 @@ public class SmashFinish : MonoBehaviour
         transform.GetChild(0).GetComponent<Collider2D>().enabled = false;
 
         boss.anim.SetBool("Smashing",false);
+        //boss.isPatterning = false;
         Invoke("StartPositionToTarget", 0.3f);
-    }   
+        //StartCoroutine(FinshPattern());
+    }
+
+    
     void StartPositionToTarget() {
         isTargeting = true;
     }

@@ -27,25 +27,43 @@ public class BossWeapon : MonoBehaviour
 
     void Update() {
         if (!GameManager.Instance.isLive) return;
-        timer += Time.deltaTime;
-        switch (WT) {
-            case BossWeaponType.Bomb:
-                if (timer > 5f) {
-                    boss.anim.SetTrigger("Pattern0");             
-                    timer = 0f;
-                }
-                break;
-            case BossWeaponType.Range:
-                if (Input.GetKeyDown(KeyCode.K)) {
-                    boss.anim.SetTrigger("Pattern1");
-
-                }
-                break;
-            default:
-                break;
+        if (!BossManager.isPatterning) {
+            timer += Time.deltaTime;
+            switch (WT) {
+                case BossWeaponType.Bomb:
+                    if (timer > 5f) {
+                        BossManager.isPatterning = true;
+                        boss.anim.SetTrigger("Pattern0");
+                        timer = 0f;
+                    }
+                    break;
+                case BossWeaponType.Range:
+                    if (timer > 3f) {
+                        BossManager.isPatterning = true;
+                        boss.anim.SetTrigger("Pattern1");
+                        timer = 0f;
+                    }
+                    break;
+                default:
+                    break;
+            }
+           
         }
-    }
+        /*
+        if (BossManager.curTimer < 3f) {
+            BossManager.curTimer += Time.deltaTime;
+        }
+        else {
+            BossManager.curTimer = 0f;
+            BossManager.isPatterning = false;
+        }
+        */
+        //Invoke("isPatteringFalse", 3f);
 
+    }
+    void isPatteringFalse() {
+        BossManager.isPatterning = false;
+    }
 
     public void Shut() {
         Transform bullet = poolManager.Get(prefabId).transform;

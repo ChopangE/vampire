@@ -18,7 +18,6 @@ public class Boss : MonoBehaviour
     Collider2D coll;
     SpriteRenderer sprite;
     BossWeapon[] weapons;
-    bool isPhase2;
     float Timer;
     float Timer2;
     int levelIndex;
@@ -41,33 +40,55 @@ public class Boss : MonoBehaviour
     void Update() {
         if (!GameManager.Instance.isLive) return;
         if (!isLive) return;
-        if (Input.GetKeyDown(KeyCode.H)) {
-            isPhase2 = true;
+
+        
+        if (BossManager.Instance.phase >= 2) {
+                Timer += Time.deltaTime;
+                if (Timer > 5f) {
+                    Timer = 0f;
+                    bossLevel[levelIndex++].SetActive(true);
+                    levelIndex = Mathf.Min(bossLevel.Length - 1, levelIndex);
+                }
+            }
+        
+
+        Collider2D hit = Physics2D.OverlapBox(transform.position - new Vector3(0, 7.5f, 0), new Vector2(13, 4), 0, LayerMask.GetMask("Player"));
+
+        if (!BossManager.isPatterning && BossManager.Instance.phase >= 1) {
+
+            if (Timer2 > smashTime) {
+                BossManager.isPatterning = true;
+
+                Timer2 = 0f;
+                if (hit != null) {
+                    anim.SetBool("Hammer", true);
+                    //GameManager.Instance.player.rigid.AddForce(new Vector2(0, -60), ForceMode2D.Impulse);
+                }
+                else {
+                    anim.SetBool("Smash", true);
+                    //smash.gameObject.SetActive(true); Deleted
+                }
+                
+            }
+            Timer2 += Time.deltaTime;
         }
-        if (isPhase2) {
+    }
+    void BossFire() {
+        if (BossManager.Instance.phase >= 2) {
             Timer += Time.deltaTime;
-            if(Timer > 5f) {
+            if (Timer > 5f) {
                 Timer = 0f;
                 bossLevel[levelIndex++].SetActive(true);
                 levelIndex = Mathf.Min(bossLevel.Length - 1, levelIndex);
             }
         }
+    }
+    public void FinishPattern() {
+        Invoke("SwitchPatterning", 3f);
+    }
+    void SwitchPatterning() {
+        BossManager.isPatterning = false;
 
-        Collider2D hit = Physics2D.OverlapBox(transform.position - new Vector3(0, 7.5f, 0), new Vector2(13, 4), 0, LayerMask.GetMask("Player"));
-
-
-        if (Timer2 > smashTime) {
-            Timer2 = 0f;
-            if(hit != null) {
-                anim.SetBool("Hammer", true);
-                //GameManager.Instance.player.rigid.AddForce(new Vector2(0, -60), ForceMode2D.Impulse);
-            }
-            else {
-                anim.SetBool("Smash", true);
-                //smash.gameObject.SetActive(true); Deleted
-            }
-        }
-        Timer2 += Time.deltaTime;
     }
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
@@ -80,7 +101,7 @@ public class Boss : MonoBehaviour
         sprite.sortingOrder = 1;
         health = maxHealth;
     }
-
+   
     public void Hammer() {
         anim.SetBool("Hammer", false);
         anim.SetBool("Hamming", true);
