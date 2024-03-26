@@ -10,8 +10,6 @@ public class BossManager : MonoBehaviour
     bool isDead;
     int bossLevel = 0;
     float[] phaseLevel = { 0.7f, 0.3f };
-    public static bool isPatterning;
-    public static float curTimer;
 
     public int phase = 0;
     void Awake() {

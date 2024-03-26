@@ -31,10 +31,10 @@ public class Boss : MonoBehaviour
     }
     
     public void Bottle() {
-        weapons[0].Shut();
+        weapons[0].Shut(0, 5);
     }
     public void Crows() {
-        weapons[1].Range();
+        weapons[0].Range(2, 10);
     }
 
     void Update() {
@@ -54,10 +54,9 @@ public class Boss : MonoBehaviour
 
         Collider2D hit = Physics2D.OverlapBox(transform.position - new Vector3(0, 7.5f, 0), new Vector2(13, 4), 0, LayerMask.GetMask("Player"));
 
-        if (!BossManager.isPatterning && BossManager.Instance.phase >= 1) {
+        if (BossManager.Instance.phase >= 1) {
 
             if (Timer2 > smashTime) {
-                BossManager.isPatterning = true;
 
                 Timer2 = 0f;
                 if (hit != null) {
@@ -73,23 +72,8 @@ public class Boss : MonoBehaviour
             Timer2 += Time.deltaTime;
         }
     }
-    void BossFire() {
-        if (BossManager.Instance.phase >= 2) {
-            Timer += Time.deltaTime;
-            if (Timer > 5f) {
-                Timer = 0f;
-                bossLevel[levelIndex++].SetActive(true);
-                levelIndex = Mathf.Min(bossLevel.Length - 1, levelIndex);
-            }
-        }
-    }
-    public void FinishPattern() {
-        Invoke("SwitchPatterning", 3f);
-    }
-    void SwitchPatterning() {
-        BossManager.isPatterning = false;
-
-    }
+    
+    
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position - new Vector3(0,7.5f,0), new Vector2(13,4));
@@ -141,6 +125,7 @@ public class Boss : MonoBehaviour
         child.gameObject.GetComponent<Animator>().SetTrigger("isSmash");
 
     }
+
     void OnTriggerEnter2D(Collider2D collision) {
         if (!collision.CompareTag("Bullet")) return;
         if (!isLive) return;

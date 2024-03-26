@@ -17,6 +17,7 @@ public class BossWeapon : MonoBehaviour
     public int count;
     public float speed;
     public BossWeaponType WT;
+    int bossWeaponPat;
     float timer;
     Player player;
     Boss boss;
@@ -27,19 +28,28 @@ public class BossWeapon : MonoBehaviour
 
     void Update() {
         if (!GameManager.Instance.isLive) return;
-        if (!BossManager.isPatterning) {
-            timer += Time.deltaTime;
+        timer += Time.deltaTime;
+        if (timer > 5f) {
+            timer = 0f;
+            bossWeaponPat = Random.Range(0, 2);
+            string aniName = "Pattern" + bossWeaponPat;
+            if (bossWeaponPat == 1) bossWeaponPat = 2;
+            boss.anim.SetTrigger(aniName);
+
+        }
+    }
+            /*
             switch (WT) {
                 case BossWeaponType.Bomb:
                     if (timer > 5f) {
-                        BossManager.isPatterning = true;
+                        isPatterning = true;
                         boss.anim.SetTrigger("Pattern0");
                         timer = 0f;
                     }
                     break;
                 case BossWeaponType.Range:
                     if (timer > 3f) {
-                        BossManager.isPatterning = true;
+                        isPatterning = true;
                         boss.anim.SetTrigger("Pattern1");
                         timer = 0f;
                     }
@@ -47,8 +57,8 @@ public class BossWeapon : MonoBehaviour
                 default:
                     break;
             }
-           
-        }
+            */
+        
         /*
         if (BossManager.curTimer < 3f) {
             BossManager.curTimer += Time.deltaTime;
@@ -60,12 +70,8 @@ public class BossWeapon : MonoBehaviour
         */
         //Invoke("isPatteringFalse", 3f);
 
-    }
-    void isPatteringFalse() {
-        BossManager.isPatterning = false;
-    }
 
-    public void Shut() {
+    public void Shut(int prefabId, int damage) {
         Transform bullet = poolManager.Get(prefabId).transform;
         bullet.parent = transform;
         bullet.position = player.transform.position + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0);
@@ -74,19 +80,14 @@ public class BossWeapon : MonoBehaviour
         bottle.parent = transform;
         bottle.position = bullet.position + new Vector3(0.4f,3.5f,0);
         bottle.GetComponent<Bottle>().target = bullet.position + new Vector3(0.4f,0.4f,0);
-        bullet.GetComponent<BossBullet>().Init(damage, Vector3.zero,WT);
-
+        bullet.GetComponent<BossBullet>().Init(damage, Vector3.zero, BossWeaponType.Bomb);
     }
 
-    public void Range() {
+    public void Range(int prefabId, int damage) {
         Transform bullet = poolManager.Get(prefabId).transform;
         bullet.parent = transform;
-        //bullet.position = new Vector3(GameManager.Instance.player.transform.position.x, transform.position.y, 0);
-        //transform.position + new Vector3(Random.Range(-15f, 5f),-3f, 0);
         bullet.position = new Vector3(player.transform.position.x, boss.transform.position.y - 2 , 0);
-        //bullet.localPosition = new Vector3(Random.Range(-3f,3f), 0, 0);
-        
-        bullet.GetComponent<BossBullet>().Init(damage, Vector3.zero, WT);
+        bullet.GetComponent<BossBullet>().Init(damage, Vector3.zero, BossWeaponType.Range);
 
 
     }
