@@ -53,6 +53,10 @@ public class Melee : MonoBehaviour
                         if (coll.CompareTag("Enemy") && coll.GetComponent<Enemy>() != null) {
                             coll.GetComponent<Enemy>().GetDamage(damage);
                         }
+                        else if(coll.CompareTag("BossEnemy") && coll.GetComponent<BossEnemy>() != null) {
+                            coll.GetComponent<BossEnemy>().GetDamage(damage);
+
+                        }
                     }
                     curTime = coolTime;
                 }

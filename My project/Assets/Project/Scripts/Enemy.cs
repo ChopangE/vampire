@@ -89,7 +89,6 @@ public class Enemy : MonoBehaviour
             //anim.SetBool("Dead", true);
             Dead();
         }
-
     }
     public void GetDamage(float damage) {
         health -= damage;
