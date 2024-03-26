@@ -39,10 +39,12 @@ public class Boss : MonoBehaviour
 
     void Update() {
         if (!GameManager.Instance.isLive) return;
-        if (!isLive) return;
+        if (!isLive) {
+            transform.Translate(0, -10 * Time.deltaTime, 0);
+        }
 
-        
-        if (BossManager.Instance.phase >= 2) {
+        else {
+            if (BossManager.Instance.phase >= 2) {
                 Timer += Time.deltaTime;
                 if (Timer > 5f) {
                     Timer = 0f;
@@ -50,26 +52,27 @@ public class Boss : MonoBehaviour
                     levelIndex = Mathf.Min(bossLevel.Length - 1, levelIndex);
                 }
             }
-        
 
-        Collider2D hit = Physics2D.OverlapBox(transform.position - new Vector3(0, 7.5f, 0), new Vector2(13, 4), 0, LayerMask.GetMask("Player"));
 
-        if (BossManager.Instance.phase >= 1) {
+            Collider2D hit = Physics2D.OverlapBox(transform.position - new Vector3(0, 7.5f, 0), new Vector2(13, 4), 0, LayerMask.GetMask("Player"));
 
-            if (Timer2 > smashTime) {
+            if (BossManager.Instance.phase >= 1) {
 
-                Timer2 = 0f;
-                if (hit != null) {
-                    anim.SetBool("Hammer", true);
-                    //GameManager.Instance.player.rigid.AddForce(new Vector2(0, -60), ForceMode2D.Impulse);
+                if (Timer2 > smashTime) {
+
+                    Timer2 = 0f;
+                    if (hit != null) {
+                        anim.SetBool("Hammer", true);
+                        //GameManager.Instance.player.rigid.AddForce(new Vector2(0, -60), ForceMode2D.Impulse);
+                    }
+                    else {
+                        anim.SetBool("Smash", true);
+                        //smash.gameObject.SetActive(true); Deleted
+                    }
+
                 }
-                else {
-                    anim.SetBool("Smash", true);
-                    //smash.gameObject.SetActive(true); Deleted
-                }
-                
+                Timer2 += Time.deltaTime;
             }
-            Timer2 += Time.deltaTime;
         }
     }
     
@@ -136,9 +139,9 @@ public class Boss : MonoBehaviour
         if(health < 0) {
             isLive = false;
             coll.enabled = false;
-            sprite.sortingOrder = 1;
+            sprite.sortingOrder = -2;
             anim.SetBool("Dead", true);
-            
+            CC.ShakeCamera();
         }
 
     }
@@ -151,9 +154,9 @@ public class Boss : MonoBehaviour
         if (health <= 0) {
             isLive = false;
             coll.enabled = false;
-            sprite.sortingOrder = 1;
+            sprite.sortingOrder = -2;
             anim.SetBool("Dead", true);
-
+            CC.ShakeCamera();
         }
     }
 }
