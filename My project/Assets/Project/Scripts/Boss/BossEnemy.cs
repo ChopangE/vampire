@@ -51,7 +51,9 @@ public class BossEnemy : MonoBehaviour
     }
     public void GetDamage(float damage) {
         health -= damage;
-        if(health < 0) {
+        StartCoroutine(KnockBack());
+
+        if (health < 0) {
             Dead();
         }
     }
@@ -62,12 +64,15 @@ public class BossEnemy : MonoBehaviour
         if (!collision.CompareTag("Bullet")) return;
 
         health -= collision.GetComponent<Bullet>().damage;
-        //StartCoroutine(KnockBack());
+        if (collision.CompareTag("Melee")) {
+            Debug.Log("hihi");
+            StartCoroutine(KnockBack());
+        }
 
        if(health < 0) {
             Dead();
 
-        }
+       }
     }
     void OnTriggerStay2D(Collider2D collision) {
         if (!collision.CompareTag("Floor")) return;
@@ -83,5 +88,13 @@ public class BossEnemy : MonoBehaviour
         rigid.simulated = false;
         spriter.sortingOrder = 1;
         gameObject.SetActive(false);
+    }
+    IEnumerator KnockBack() {
+
+        yield return null;  // 1물리 프레임 wait
+        Vector3 playerPos = GameManager.Instance.player.transform.position;
+        Vector3 dir = transform.position - playerPos;
+        rigid.AddForce(dir.normalized * 5, ForceMode2D.Impulse);
+
     }
 }

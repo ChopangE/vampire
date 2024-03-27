@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static Weapon;
@@ -21,6 +22,8 @@ public class BossWeapon : MonoBehaviour
     float timer;
     Player player;
     Boss boss;
+    float cur1 = 0;
+    float cur2;
     void Awake() {
         player = GameManager.Instance.player;
         boss = GetComponentInParent<Boss>();
@@ -29,8 +32,8 @@ public class BossWeapon : MonoBehaviour
     void Update() {
         if (!GameManager.Instance.isLive) return;
         timer += Time.deltaTime;
-        if (timer > 5f) {
-            timer = 0f;
+        if (timer > cur1) {
+            cur1 += 3f;
             bossWeaponPat = Random.Range(0, 2);
             string aniName = "Pattern" + bossWeaponPat;
             if (bossWeaponPat == 1) bossWeaponPat = 2;
