@@ -22,8 +22,7 @@ public class BossWeapon : MonoBehaviour
     float timer;
     Player player;
     Boss boss;
-    float cur1 = 0;
-    float cur2;
+
     void Awake() {
         player = GameManager.Instance.player;
         boss = GetComponentInParent<Boss>();
@@ -32,8 +31,8 @@ public class BossWeapon : MonoBehaviour
     void Update() {
         if (!GameManager.Instance.isLive) return;
         timer += Time.deltaTime;
-        if (timer > cur1) {
-            cur1 += 3f;
+        if (timer > 3f) {
+            timer = 0f;
             bossWeaponPat = Random.Range(0, 2);
             string aniName = "Pattern" + bossWeaponPat;
             if (bossWeaponPat == 1) bossWeaponPat = 2;

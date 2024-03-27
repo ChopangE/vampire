@@ -40,7 +40,7 @@ public class Boss : MonoBehaviour
     void Update() {
         if (!GameManager.Instance.isLive) return;
         if (!isLive) {
-            transform.Translate(0, -10 * Time.deltaTime, 0);
+            transform.Translate(0, -5 * Time.deltaTime, 0);
         }
 
         else {
