@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     [Header("# Player Info")]
     public float health;
     public float maxHealth = 100;
-    public int[] nextExp = { 10, 10, 10, 10 };
+    public int[] nextExp = { 10, 30, 50, 100 };
     public int level = 0;
     public int kill = 0;
     public int coin = 0;
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
        
     }
     void Start() {
