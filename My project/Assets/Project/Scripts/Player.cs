@@ -19,7 +19,6 @@ public class Player : MonoBehaviour
         scan = GetComponent<Scanner>();
     }
 
-    // Update is called once per frame
     
 
     void FixedUpdate() {
@@ -35,7 +34,7 @@ public class Player : MonoBehaviour
 
     void OnMove(InputValue value) {
     
-        inputVec = value.Get<Vector2>();            //ÀÌ¹Ì normalized Àû¿ë
+        inputVec = value.Get<Vector2>();            //ï¿½Ì¹ï¿½ normalized ï¿½ï¿½ï¿½ï¿½
         rigid.velocity = Vector2.zero;
 
     }
@@ -63,6 +62,17 @@ public class Player : MonoBehaviour
             anim.SetTrigger("Dead");
             GameManager.Instance.GameOver();
         }
+    }
+    
+    public void Stopping()
+    {
+        StartCoroutine(StoppingCor());
+    }
+
+    IEnumerator StoppingCor()
+    {
+        yield return new WaitForSeconds(0.8f);
+        rigid.velocity = Vector2.zero;
     }
     /*
     void OnTriggerStay2D(Collider2D collision) {

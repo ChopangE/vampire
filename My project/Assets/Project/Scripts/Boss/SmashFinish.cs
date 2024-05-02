@@ -22,6 +22,7 @@ public class SmashFinish : MonoBehaviour
             Vector3 dir = target.position - transform.position;
             transform.rotation = Quaternion.FromToRotation(Vector3.up, -dir);
             transform.eulerAngles += new Vector3(0, 0, 30f);
+            
         }
 
     }
