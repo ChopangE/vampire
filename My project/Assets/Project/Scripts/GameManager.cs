@@ -43,7 +43,9 @@ public class GameManager : MonoBehaviour
     public GameObject timer;
     [Header("# Boss Object")]
     public GameObject bossLevel;
-    void Awake() {
+    void Awake()
+    {
+        player = FindObjectOfType<Player>();
         var objs = FindObjectsOfType<GameManager>();
         if(objs.Length != 1) {
             Destroy(gameObject);

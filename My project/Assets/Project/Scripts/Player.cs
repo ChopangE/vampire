@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         scan = GetComponent<Scanner>();
+        
     }
 
     

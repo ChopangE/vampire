@@ -13,14 +13,21 @@ public class Pet : MonoBehaviour
     void Awake()
     {
         playerPos = GameManager.Instance.player.transform;
-        transform.position = playerPos.position;
         sprite = GetComponent<SpriteRenderer>();
     }
-    
+
+    void Start()
+    {
+        transform.position = playerPos.position;
+
+    }
     void Update()
     {
         if (!GameManager.Instance.isLive) return;
-
+        if((transform.position - playerPos.position).magnitude > 10)
+        {
+            transform.position = playerPos.position;
+        }
         Vector3 dir = new Vector3(0, 1.5f, 0);
         dir.x = player.flipX ? 1.5f : -1.5f;
         sprite.flipX = !player.flipX;
