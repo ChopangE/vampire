@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Weapon : MonoBehaviour
 {
@@ -16,7 +18,7 @@ public class Weapon : MonoBehaviour
     public float speed;
     float timer;
     Player player;
-
+    public ItemData data; 
     void Awake() {
         player = GameManager.Instance.player;
     }
@@ -61,6 +63,11 @@ public class Weapon : MonoBehaviour
         
     }
 
+    private void OnEnable()
+    {
+        Init(data);
+    }
+
     public void LevelUp(float damage, int count) {
         this.damage = damage;
         this.count += count;
@@ -75,16 +82,16 @@ public class Weapon : MonoBehaviour
     public void Init(ItemData data) {
 
         // Basic Set
-        name = "Weapon " + data.itemId;
-        transform.parent = player.transform;
-        transform.localPosition = Vector3.zero;
+        //name = "Weapon " + data.itemId;
+        //transform.parent = player.transform;
+        //transform.localPosition = Vector3.zero;
 
 
         // Property Set
         id = data.itemId;
         damage = data.baseDamage;   
         count = data.baseCount;
-
+        
         for(int i =0; i < GameManager.Instance.pool.prefabs.Length; i++) {
             if(data.projectile == GameManager.Instance.pool.prefabs[i]) {
                 prefabId = i;
@@ -156,11 +163,11 @@ public class Weapon : MonoBehaviour
     void Shut()
     {
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
-        bullet.parent = transform;
+        //bullet.parent = transform;
         bullet.position = transform.position + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0);
-        bullet.localRotation = Quaternion.identity;
+        bullet.rotation = Quaternion.identity;
         bullet.GetComponent<Bullet>().Init(damage, -100, Vector3.zero);
-
+        
     }
 
     void Raser() {

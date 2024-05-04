@@ -53,17 +53,24 @@ public class Item : MonoBehaviour
     }
     
 
-    public void OnClick() {
+    public void OnClick()
+    {
+        Weapon[] weapons = GameManager.Instance.player.GetComponentsInChildren<Weapon>(true);
         switch (data.itemType) {
             case ItemData.ItemType.Melee:
             case ItemData.ItemType.Range:
             case ItemData.ItemType.Bomb:
             case ItemData.ItemType.Raser:
             case ItemData.ItemType.Breath:
-                if(level == 0) {
+                if(level == 0)
+                {
+                    weapon = weapons[(int)data.itemType];
+                    weapon.gameObject.SetActive(true);
+                    /*
                     GameObject newWeapon = new GameObject();
                     weapon = newWeapon.AddComponent<Weapon>();
                     weapon.Init(data);
+                    */
                 }
 
                 else {

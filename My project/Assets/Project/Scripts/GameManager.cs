@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     [Header("# Player Info")]
     public float health;
     public float maxHealth = 100;
-    public int[] nextExp = { 10, 30, 50, 100 };
+    public int[] nextExp = { 5, 10, 20, 30 };
     public int level = 0;
     public int kill = 0;
     public int coin = 0;
@@ -49,13 +49,13 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        //DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject);
        
     }
     void Start() {
         health = maxHealth;
         AudioManager.instance.PlayBgm(true);
-        if(StageManager.Instance.curPoint == 1) {           //On stage ÀÓ½ÃÄÚµå
+        if(StageManager.Instance.curPoint == 1) {           //On stage ï¿½Ó½ï¿½ï¿½Úµï¿½
             player.transform.position = Vector3.zero;
             bossLevel.SetActive(false);
             spawner.SetActive(true);

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,12 @@ public class PetWeapon : MonoBehaviour
     public float damage;
     public float speed;
     float timer;
-    public Player player;
+    Player player;
+
+    void Awake()
+    {
+        player = GameManager.Instance.player;
+    }
 
     void Start() {
         speed = 1f;

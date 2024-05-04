@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class Pet : MonoBehaviour
 {
-    public Transform playerPos;
+    //public Transform playerPos;
+    private Transform playerPos;
     public SpriteRenderer player;
     public float speed;
     float timer;
     SpriteRenderer sprite;
-    void Awake() {
+    void Awake()
+    {
+        playerPos = GameManager.Instance.player.transform;
+        transform.position = playerPos.position;
         sprite = GetComponent<SpriteRenderer>();
     }
-    void Start() {
-        transform.position = playerPos.position;
-    }
+    
     void Update()
     {
         if (!GameManager.Instance.isLive) return;
