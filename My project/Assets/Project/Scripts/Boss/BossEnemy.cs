@@ -88,10 +88,11 @@ public class BossEnemy : MonoBehaviour
         rigid.simulated = false;
         spriter.sortingOrder = 1;
         gameObject.SetActive(false);
+        GameManager.Instance.GetExp(3);
     }
     IEnumerator KnockBack() {
 
-        yield return null;  // 1╧╟╦╝ га╥╧юс wait
+        yield return null;  // 1О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ wait
         Vector3 playerPos = GameManager.Instance.player.transform.position;
         Vector3 dir = transform.position - playerPos;
         rigid.AddForce(dir.normalized * 5, ForceMode2D.Impulse);
