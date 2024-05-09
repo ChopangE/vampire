@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using TreeEditor;
+//using TreeEditor;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,7 +13,7 @@ public class Melee : MonoBehaviour
     public Vector2 boxSize;
     public Transform pos;
     Vector3 dir;
-    public GameObject sword; //¸ð¼Çµû¸é ¾ø¾îÁú ¿¹Á¤. 
+    public GameObject sword; //ï¿½ï¿½Çµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½. 
     public GameObject tail;
     GameObject sw;
     bool isGoing = false;

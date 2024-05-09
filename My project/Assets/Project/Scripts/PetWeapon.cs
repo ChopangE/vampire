@@ -42,6 +42,8 @@ public class PetWeapon : MonoBehaviour
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
         bullet.position = transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
-        bullet.GetComponent<Bullet>().Init(damage, 100, dir);
+        bullet.GetComponent<Bullet>().Init(damage, 0, dir);
     }
+
+    
 }

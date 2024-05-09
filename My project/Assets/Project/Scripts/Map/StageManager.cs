@@ -41,7 +41,7 @@ public class StageManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
     public void CallScene() {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene("LoadingScene");
     }
     
     public void TextingCoin() {

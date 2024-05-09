@@ -120,7 +120,7 @@ public class Enemy : MonoBehaviour
     }
     IEnumerator KnockBack() {
 
-        yield return wait;  // 1¹°¸® ÇÁ·¹ÀÓ wait
+        yield return wait;  // 1ë¬¼ë¦¬ í”„ë ˆìž„ wait
         Vector3 playerPos = GameManager.Instance.player.transform.position;
         Vector3 dir = transform.position - playerPos;
         rigid.AddForce(dir.normalized * 5, ForceMode2D.Impulse);
@@ -133,7 +133,7 @@ public class Enemy : MonoBehaviour
         coin.transform.rotation = Quaternion.identity;
         Coin cc = coin.GetComponent<Coin>();
         cc.sprite.sprite = cc.sprites[level];
-        cc.exp = level + 1;                               //°æÇèÄ¡ Á¶Àý ¿©±â¼­ °¡´É
+        cc.exp = level + 1;                               //ê²½í—˜ì¹˜ ì¡°ì ˆ ì—¬ê¸°ì„œ ê°€ëŠ¥
         GameManager.Instance.kill++;
         gameObject.SetActive(false);
     }

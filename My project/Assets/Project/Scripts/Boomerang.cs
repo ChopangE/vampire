@@ -56,7 +56,7 @@ public class Boomerang : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision) {
         if (!collision.CompareTag("Player")) return;
-        if (isComing) {
+        if (isComing) { 
             isShoot = false;
             isComing = false;
             timer = 0f;

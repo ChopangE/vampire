@@ -16,7 +16,7 @@ public class LoadingScene : MonoBehaviour {
     }
 
     IEnumerator LoadSceneProcess() {
-        AsyncOperation op = SceneManager.LoadSceneAsync(0);
+        AsyncOperation op = SceneManager.LoadSceneAsync("InGameScene");
         op.allowSceneActivation = false;
 
         float timer = 0f;

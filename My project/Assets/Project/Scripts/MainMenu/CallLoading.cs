@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class CallLoading : MonoBehaviour
 {
     public void OnClickLoadScene() {
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene("Map");
     }
 
 }
