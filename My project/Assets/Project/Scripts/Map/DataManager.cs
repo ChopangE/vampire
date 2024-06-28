@@ -50,9 +50,7 @@ public class DataManager : MonoBehaviour {
         saveDataToJson();
     }
     
-
     void saveDataToJson() {
-
         string result = JsonUtility.ToJson(list);
         string path = Path.Combine(Application.dataPath, "playerData.json");
         File.WriteAllText(path, result);
@@ -63,13 +61,14 @@ public class DataManager : MonoBehaviour {
         list = JsonUtility.FromJson<playerDataList>(jsonData);
     }
     
-    public void SetData() {
+    public void SetData(playerData[] datas) {
+        list.datalist = datas;
         saveDataToJson();
     }
     
     public playerData[] GetData() {
         loadDataFromJson();
-        return datas;
+        return list.datalist;
     }
    
 }

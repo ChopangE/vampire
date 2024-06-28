@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public enum StageType {
-    Starting, Stage, Shop, Random, Boss, Rest
+    Starting, Stage, Shop, Boss, Random, Rest
 }
 public class StageManager : MonoBehaviour
 {

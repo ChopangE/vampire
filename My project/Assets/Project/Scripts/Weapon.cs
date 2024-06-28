@@ -63,10 +63,10 @@ public class Weapon : MonoBehaviour
         
     }
 
-    private void OnEnable()
-    {
-        Init(data);
-    }
+    //private void OnEnable()
+    //{
+    //    Init(data);
+    //}
 
     public void LevelUp(float damage, int count) {
         this.damage = damage;
@@ -98,7 +98,10 @@ public class Weapon : MonoBehaviour
                 break;
             }
         }
+        InitSetting();
+    }
 
+    public void InitSetting() {
         switch (id) {
             case 0:                     //Shop
                 speed = 150;
@@ -114,13 +117,13 @@ public class Weapon : MonoBehaviour
                 speed = 5f;
                 break;
             case 4:                     //Breath
-                speed = 5f; 
+                speed = 5f;
                 break;
             default:
                 break;
         }
 
-        player.BroadcastMessage("ApplayGear",SendMessageOptions.DontRequireReceiver);
+        player.BroadcastMessage("ApplayGear", SendMessageOptions.DontRequireReceiver);
     }
 
     void Batch() {

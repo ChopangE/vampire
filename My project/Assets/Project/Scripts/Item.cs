@@ -66,14 +66,14 @@ public class Item : MonoBehaviour
                 {
                     weapon = weapons[(int)data.itemType];
                     weapon.gameObject.SetActive(true);
-                    /*
-                    GameObject newWeapon = new GameObject();
-                    weapon = newWeapon.AddComponent<Weapon>();
                     weapon.Init(data);
-                    */
+                    
                 }
 
                 else {
+                    if(weapon == null) {
+                        weapon = weapons[(int)data.itemType];
+                    }
                     float nextDamage = data.baseDamage;
                     int nextCount = 0;
 
@@ -90,8 +90,10 @@ public class Item : MonoBehaviour
                 if(level == 0) {
                     floorWeapon = GameManager.Instance.player.GetComponentInChildren<FloorWeapon>(true);
                     floorWeapon.gameObject.SetActive(true);
+                    floorWeapon.Init(data);
                 }
                 else {
+                    if (floorWeapon == null) floorWeapon = GameManager.Instance.player.GetComponentInChildren<FloorWeapon>(true);
                     float nextDamage = data.baseDamage;
                     nextDamage += data.baseDamage * data.damages[level];
                     floorWeapon.LevelUp(nextDamage);

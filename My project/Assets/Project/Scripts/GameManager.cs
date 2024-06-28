@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -44,11 +43,13 @@ public class GameManager : MonoBehaviour
     public GameObject timer;
     [Header("# Boss Object")]
     public GameObject bossLevel;
-    public Weapon[] weapons;
-    public Item[] items;
+    
 
     [Header("# Datas")]
     public playerData[] datas;
+    public Weapon[] weapons;
+    public FloorWeapon floorWeapon;
+    public Item[] items;
     void Awake()
     {
         player = FindObjectOfType<Player>();
@@ -64,6 +65,7 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.PlayBgm(true);
         datas = DataManager.Instance.GetData();
         weapons = player.GetComponentsInChildren<Weapon>(true);
+        floorWeapon = player.GetComponentInChildren<FloorWeapon>(true);
         //item은 우선 inspector에서 집어넣음.
         GetData();
         if(StageManager.Instance.curPoint == 1) {           //On stage �ӽ��ڵ�
@@ -81,22 +83,39 @@ public class GameManager : MonoBehaviour
         }
     }
     void GetData() {
-        for(int i= 0; i < datas.Length; i++) {
+        for(int i= 0; i < 5; i++) {
             if (datas[i].isHave) {
+                weapons[i].gameObject.SetActive(true);
                 weapons[i].damage = datas[i].damage;
                 weapons[i].count = datas[i].count;
                 items[i].level = datas[i].level;
+                weapons[i].InitSetting();
             }
+        }
+        if (datas[5].isHave) {
+            floorWeapon.gameObject.SetActive(true);
+            floorWeapon.damage = datas[5].damage;
+            items[5].level = datas[5].level;
         }
     }
 
     void SetData() {
-        for(int i = 0; i < datas.Length; i++) {
-            datas[i].isHave = weapons[i].enabled;
-            datas[i].damage = weapons[i].damage;
-            datas[i].count = weapons[i].count;
-            datas[i].level = datas[i].level;
+        for(int i = 0; i < weapons.Length; i++) {
+            Debug.Log(i);
+            if (weapons[i].gameObject.activeSelf) {
+                datas[i].isHave = weapons[i].gameObject.activeSelf;
+                datas[i].damage = weapons[i].damage;
+                datas[i].count = weapons[i].count;
+                datas[i].level = items[i].level;
+            }
         }
+        if (floorWeapon.gameObject.activeSelf) {
+            datas[5].isHave = floorWeapon.gameObject.activeSelf;
+            datas[5].damage = floorWeapon.damage;
+            datas[5].count = 0;
+            datas[5].level = items[5].level;
+        }
+        DataManager.Instance.SetData(datas);
     }
     public void StageClear() {
         SetData();
