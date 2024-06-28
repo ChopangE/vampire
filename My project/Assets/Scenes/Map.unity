@@ -1097,7 +1097,7 @@ PrefabInstance:
       objectReference: {fileID: 1650761965}
     - target: {fileID: 2497842041757318448, guid: 4f31a9082a955174689366d698b66113, type: 3}
       propertyPath: type
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2497842041757318448, guid: 4f31a9082a955174689366d698b66113, type: 3}
       propertyPath: player
@@ -2481,6 +2481,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0569809fef7bbb47b487fa68665a6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  datas:
+  - id: 0
+    level: 0
+    damage: 0
+    count: 0
+    isHave: 0
+  - id: 0
+    level: 0
+    damage: 0
+    count: 0
+    isHave: 0
+  - id: 0
+    level: 0
+    damage: 0
+    count: 0
+    isHave: 0
+  - id: 0
+    level: 0
+    damage: 0
+    count: 0
+    isHave: 0
+  - id: 0
+    level: 0
+    damage: 0
+    count: 0
+    isHave: 0
+  - id: 0
+    level: 0
+    damage: 0
+    count: 0
+    isHave: 0
+  list:
+    datalist: []
 --- !u!1 &1519551820
 GameObject:
   m_ObjectHideFlags: 0
