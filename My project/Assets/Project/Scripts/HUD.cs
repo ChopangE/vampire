@@ -43,7 +43,7 @@ public class HUD : MonoBehaviour
                 int sec = Mathf.FloorToInt(remainTime % 60);
                 myText.text = string.Format("{0:D2}:{1:D2}", min, sec);
                 if(remainTime <= 0 ) {
-                    SceneManager.LoadScene(3);
+                    GameManager.Instance.StageClear();
                 }
                 break;
             case InfoType.Health:

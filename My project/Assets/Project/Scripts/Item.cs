@@ -29,7 +29,7 @@ public class Item : MonoBehaviour
 
     void OnEnable() {
         textLevel.text = "Lv." + (level + 1);
-
+    
         switch (data.itemType) {
             case ItemData.ItemType.Melee:
             case ItemData.ItemType.Range:

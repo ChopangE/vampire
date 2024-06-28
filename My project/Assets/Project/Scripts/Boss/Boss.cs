@@ -41,6 +41,7 @@ public class Boss : MonoBehaviour
         if (!GameManager.Instance.isLive) return;
         if (!isLive) {
             transform.Translate(0, -5 * Time.deltaTime, 0);
+            StartCoroutine(StageClear());
         }
 
         else {
@@ -76,7 +77,10 @@ public class Boss : MonoBehaviour
         }
     }
     
-    
+    IEnumerator StageClear() {
+        yield return new WaitForSeconds(3f);
+        GameManager.Instance.StageClear();
+    }
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(transform.position - new Vector3(0,7.5f,0), new Vector2(13,4));

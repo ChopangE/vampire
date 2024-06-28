@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
@@ -43,6 +44,11 @@ public class GameManager : MonoBehaviour
     public GameObject timer;
     [Header("# Boss Object")]
     public GameObject bossLevel;
+    public Weapon[] weapons;
+    public Item[] items;
+
+    [Header("# Datas")]
+    public playerData[] datas;
     void Awake()
     {
         player = FindObjectOfType<Player>();
@@ -51,12 +57,15 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        //DontDestroyOnLoad(gameObject);
        
     }
     void Start() {
         health = maxHealth;
         AudioManager.instance.PlayBgm(true);
+        datas = DataManager.Instance.GetData();
+        weapons = player.GetComponentsInChildren<Weapon>(true);
+        //item은 우선 inspector에서 집어넣음.
+        GetData();
         if(StageManager.Instance.curPoint == 1) {           //On stage �ӽ��ڵ�
             player.transform.position = Vector3.zero;
             bossLevel.SetActive(false);
@@ -71,11 +80,30 @@ public class GameManager : MonoBehaviour
 
         }
     }
+    void GetData() {
+        for(int i= 0; i < datas.Length; i++) {
+            if (datas[i].isHave) {
+                weapons[i].damage = datas[i].damage;
+                weapons[i].count = datas[i].count;
+                items[i].level = datas[i].level;
+            }
+        }
+    }
 
+    void SetData() {
+        for(int i = 0; i < datas.Length; i++) {
+            datas[i].isHave = weapons[i].enabled;
+            datas[i].damage = weapons[i].damage;
+            datas[i].count = weapons[i].count;
+            datas[i].level = datas[i].level;
+        }
+    }
+    public void StageClear() {
+        SetData();
+        SceneManager.LoadScene(3);
+    }
     public void GameOver() {
-
         StartCoroutine(GameOverRoutine());
-
     }
 
     IEnumerator GameOverRoutine() {
