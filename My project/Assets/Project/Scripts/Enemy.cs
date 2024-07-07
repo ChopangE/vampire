@@ -95,7 +95,6 @@ public class Enemy : MonoBehaviour
         //StartCoroutine(KnockBack());
         if (health > 0) {
             anim.SetTrigger("Hit");
-
         } else {
             isLive = false;
             coll.enabled = false;
