@@ -101,7 +101,6 @@ public class GameManager : MonoBehaviour
 
     void SetData() {
         for(int i = 0; i < weapons.Length; i++) {
-            Debug.Log(i);
             if (weapons[i].gameObject.activeSelf) {
                 datas[i].isHave = weapons[i].gameObject.activeSelf;
                 datas[i].damage = weapons[i].damage;

@@ -45,10 +45,10 @@ public class Weapon : MonoBehaviour
                     Shut();
                 }
                 break;
-            case 3:                 //Raser
+            case 3:                 
                 if (timer > speed) {
                     timer = 0f;
-                    Raser();
+                    Amulet();
                 }
                 break;
             case 4:
@@ -188,6 +188,11 @@ public class Weapon : MonoBehaviour
         bullet.GetComponent<Bullet>().Init(damage, -1, dir);
 
         StartCoroutine(raser(bullet, dir));
+    }
+    void Amulet() {
+        Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
+        bullet.position = transform.position;
+        bullet.GetChild(0).GetComponent<Bullet>().Init(damage, -1, Vector3.zero);
     }
     void Breath() {
         Vector3 dir = player.inputVec;

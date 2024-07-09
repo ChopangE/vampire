@@ -11,9 +11,11 @@ GameObject:
   - component: {fileID: 3696966789972427612}
   - component: {fileID: 3696966789972427603}
   - component: {fileID: 3696966789972427602}
+  - component: {fileID: 2479176017567219221}
+  - component: {fileID: 4515084126876697189}
   m_Layer: 0
   m_Name: ExplodingAmulet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -106,3 +108,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!70 &2479176017567219221
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3696966789972427601}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.05, y: 0}
+  m_Size: {x: 1.75, y: 2.75}
+  m_Direction: 0
+--- !u!114 &4515084126876697189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3696966789972427601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de42e593ec2402d4bb2fada5c6a40423, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 50
+  per: -1
