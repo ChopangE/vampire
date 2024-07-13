@@ -6,30 +6,20 @@ public class FloorWeapon : MonoBehaviour
 {
     public int id;
     public float damage;
-    public float speed;
-    public float timer;
-    public Player player;
+
+    protected float timer;
+    protected Player player;
 
     void Awake() {
         player = GameManager.Instance.player;
     }
 
-    void Update()
-    {
-        if (!GameManager.Instance.isLive) return;
-
-        timer += Time.time;
-        if(timer > speed) {
-            timer = 0f;
-        }
-
-    }
-    public void Init(ItemData data) {
+    
+    public virtual void Init(ItemData data) {
         // Basic Set
-        name = "Weapon " + data.itemId;
-        transform.parent = player.transform;
-        transform.localPosition = Vector3.zero;
-
+        //name = "Weapon " + data.itemId;
+        //transform.parent = player.transform;
+        //transform.localPosition = Vector3.zero;
 
         // Property Set
         id = data.itemId;

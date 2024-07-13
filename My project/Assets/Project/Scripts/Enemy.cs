@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
-public class Enemy : MonoBehaviour
-{
+public class Enemy : MonoBehaviour {
     public float speed;
     public float health;
     public float maxHealth;
@@ -15,14 +15,15 @@ public class Enemy : MonoBehaviour
     bool isLive;
     int level;
     float timer;
+    bool isBack;
 
     Rigidbody2D rigid;
     Collider2D coll;
     Animator anim;
     SpriteRenderer spriter;
     WaitForFixedUpdate wait;
-    void Awake()
-    {
+    Vector2 targetVec;
+    void Awake() {
         coinNum = 4;
         rigid = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
@@ -31,20 +32,20 @@ public class Enemy : MonoBehaviour
         wait = new WaitForFixedUpdate();
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         if (!GameManager.Instance.isLive) return;
+        if (!isLive) return;
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Hit")) return;
 
-        if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit")) return;
-        
         Vector2 dirVec = target.position - rigid.position;
         Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
         rigid.MovePosition(nextVec + rigid.position);
-        rigid.velocity = Vector2.zero;
-
-        timer += Time.fixedDeltaTime;
+        //transform.Translate(nextVec);
+        //rigid.velocity = Vector2.zero;
+        
+        
     }
-
+  
     void LateUpdate() {
         if (!GameManager.Instance.isLive) return;
 
@@ -61,6 +62,7 @@ public class Enemy : MonoBehaviour
         spriter.sortingOrder = 2;
         anim.SetBool("Dead", false);
         health = maxHealth;
+        isBack = false;
     }
 
     public void Init(SpawnData data) {
@@ -72,12 +74,17 @@ public class Enemy : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D collision) {
-        if (!collision.CompareTag("Bullet")) return;
+        if (!collision.CompareTag("Bullet") && !collision.CompareTag("Floor")) return;
+        if (collision.GetComponent<Bullet>()) {
+            health -= collision.GetComponent<Bullet>().damage;
+            if (collision.GetComponent<WhirlBullet>()) {
+                targetVec = collision.GetComponent<Rigidbody2D>().position;
+                if(gameObject.activeSelf) StartCoroutine(KnockBack());
 
-        health -= collision.GetComponent<Bullet>().damage;
-        //StartCoroutine(KnockBack());
-
-        if(health> 0) {
+            }
+        }
+        
+        if (health> 0) {
             anim.SetTrigger("Hit");
 
         }
@@ -88,6 +95,14 @@ public class Enemy : MonoBehaviour
             spriter.sortingOrder = 1;
             //anim.SetBool("Dead", true);
             Dead();
+        }
+    }
+    void OnTriggerExit2D(Collider2D collision) {
+        if(collision.CompareTag("Circle")) {
+            Vector2 dir = targetVec - rigid.position;
+            anim.SetTrigger("Hit");
+            rigid.AddForce(dir.normalized * 7, ForceMode2D.Impulse);
+
         }
     }
     public void GetDamage(float damage) {
@@ -106,8 +121,10 @@ public class Enemy : MonoBehaviour
     }
     void OnTriggerStay2D(Collider2D collision) {
         if (!collision.CompareTag("Floor")) return;
-        health -= collision.GetComponent<FloorWeapon>().damage;
-
+        health -= collision.GetComponent<WhirlBullet>().damage / 10.0f;
+        //Vector3 dir = collision.transform.position - transform.position;
+        //rigid.AddForce(dir.normalized * 4, ForceMode2D.Impulse);
+        //StartCoroutine(KnockBack(collision.transform.position));
         if(health <=0) {
             isLive = false;
             coll.enabled = false;
@@ -118,12 +135,10 @@ public class Enemy : MonoBehaviour
         }
     }
     IEnumerator KnockBack() {
-
-        yield return wait;  // 1물리 프레임 wait
-        Vector3 playerPos = GameManager.Instance.player.transform.position;
-        Vector3 dir = transform.position - playerPos;
+        Vector2 dir = targetVec - rigid.position;
+        yield return wait;          // 1물리 프레임 wait
         rigid.AddForce(dir.normalized * 5, ForceMode2D.Impulse);
-
+        yield return wait;          // 1물리 프레임 wait
     }
 
     void Dead() {
@@ -135,5 +150,9 @@ public class Enemy : MonoBehaviour
         cc.exp = level + 1;                               //경험치 조절 여기서 가능
         GameManager.Instance.kill++;
         gameObject.SetActive(false);
+    }
+    public void GetAddForce(Vector3 pos) {
+        Vector2 enemyToCircle = (pos - transform.position).normalized;
+        rigid.AddForce(enemyToCircle * 10, ForceMode2D.Impulse);
     }
 }

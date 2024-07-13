@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b380ea208af7612438c6c0b17e20bafe
+guid: 3b2c6449dbe3f51468ca96627aa815f9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 25
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -129,13 +129,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ninja-Sheet_0
+      name: Whirlwind-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64.75
-        height: 64
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,41 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e8236d6289d67c4448692cdc2415aa49
-      internalID: -283651992
+      spriteID: 1d42804fd17f22246bb8f2e6c6a0dfc8
+      internalID: 2122328146
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ninja-Sheet_1
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 64.75
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 33cd10062c1be414d8daa4159d210822
-      internalID: 1749061877
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ninja-Sheet_2
+      name: Whirlwind-Sheet_1
       rect:
         serializedVersion: 2
         x: 128
         y: 0
-        width: 64.75
-        height: 64
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,20 +164,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd15d3c1bf2ec3f45aebac67423ebdcf
-      internalID: 2038359378
+      spriteID: eed0a3ec3ab0cca4897d12d947a6e9a6
+      internalID: 1536136161
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ninja-Sheet_3
+      name: Whirlwind-Sheet_2
       rect:
         serializedVersion: 2
-        x: 192
+        x: 256
         y: 0
-        width: 64.75
-        height: 64
+        width: 128
+        height: 128
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,8 +185,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 19f0c1407a1e52049ab380cc776e2c6a
-      internalID: 897010216
+      spriteID: 101965d4c7dcbb445a36d1844dd3b87b
+      internalID: -1346578964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whirlwind-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08d06db46302b91409b17907bf47a391
+      internalID: -995086547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Whirlwind-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 128
+        height: 128
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ef04a7a6cc45f9428d364981f424c27
+      internalID: 1528246029
       vertices: []
       indices: 
       edges: []
@@ -223,10 +244,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Ninja-Sheet_0: -283651992
-      Ninja-Sheet_1: 1749061877
-      Ninja-Sheet_2: 2038359378
-      Ninja-Sheet_3: 897010216
+      Whirlwind-Sheet_0: 2122328146
+      Whirlwind-Sheet_1: 1536136161
+      Whirlwind-Sheet_2: -1346578964
+      Whirlwind-Sheet_3: -995086547
+      Whirlwind-Sheet_4: 1528246029
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

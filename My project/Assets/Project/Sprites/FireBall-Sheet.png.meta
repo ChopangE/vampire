@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b380ea208af7612438c6c0b17e20bafe
+guid: 3862dabb24ae2bd46b8d12a314929106
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 25
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -129,13 +129,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ninja-Sheet_0
+      name: FireBall-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64.75
-        height: 64
+        width: 53
+        height: 42
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,20 +143,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e8236d6289d67c4448692cdc2415aa49
-      internalID: -283651992
+      spriteID: b567a0ac3c851b24bb323a7a23cfa64f
+      internalID: 2020454681
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ninja-Sheet_1
+      name: FireBall-Sheet_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 53
         y: 0
-        width: 64.75
-        height: 64
+        width: 53
+        height: 42
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,20 +164,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 33cd10062c1be414d8daa4159d210822
-      internalID: 1749061877
+      spriteID: e9e859785ee9ab1448ae42d2b17da739
+      internalID: 180542780
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ninja-Sheet_2
+      name: FireBall-Sheet_2
       rect:
         serializedVersion: 2
-        x: 128
+        x: 106
         y: 0
-        width: 64.75
-        height: 64
+        width: 53
+        height: 42
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,29 +185,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd15d3c1bf2ec3f45aebac67423ebdcf
-      internalID: 2038359378
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Ninja-Sheet_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 0
-        width: 64.75
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 19f0c1407a1e52049ab380cc776e2c6a
-      internalID: 897010216
+      spriteID: 6f83bf94caab98a478117d228cc46923
+      internalID: 323888641
       vertices: []
       indices: 
       edges: []
@@ -223,10 +202,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Ninja-Sheet_0: -283651992
-      Ninja-Sheet_1: 1749061877
-      Ninja-Sheet_2: 2038359378
-      Ninja-Sheet_3: 897010216
+      FireBall-Sheet_0: 2020454681
+      FireBall-Sheet_1: 180542780
+      FireBall-Sheet_2: 323888641
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

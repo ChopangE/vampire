@@ -200,12 +200,15 @@ public class Weapon : MonoBehaviour
             dir = player.GetComponent<SpriteRenderer>().flipX ? new Vector2(-1f, 0) : new Vector2(1f, 0);
         }
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
-        bullet.position = transform.position + dir * 4f;
-        bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
-        bullet.Rotate(new Vector3(0, 0, -135), Space.Self);
-        bullet.localScale = new Vector3(3,3,0);
-        bullet.GetComponent<Bullet>().Init(damage, -1, dir);
-        StartCoroutine(BreathDown(bullet, dir));
+        bullet.position = transform.position + dir * 3f;
+        //Vector3 dir2 = dir;
+        //if (player.scan.nearestTarget) {
+        //    Vector3 targetPos = player.scan.nearestTarget.position;
+        //    dir2 = (targetPos - transform.position).normalized;
+        //}
+        //bullet.transform.GetChild(0).rotation = Quaternion.FromToRotation(Vector3.up, dir2);
+        //bullet.transform.GetChild(0).GetComponent<Bullet>().Init(damage, 1, dir2);
+        //StartCoroutine(BreathDown(bullet, dir));
     }
     IEnumerator BreathDown(Transform bullet, Vector3 dir) {
         yield return new WaitForSeconds(0.4f);
