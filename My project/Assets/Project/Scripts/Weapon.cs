@@ -30,7 +30,11 @@ public class Weapon : MonoBehaviour
         timer += Time.deltaTime;
         switch (id) {
             case 0:
-                transform.Rotate(Vector3.back * speed * Time.deltaTime);
+                if(timer > speed)
+                {
+                    timer = 0f;
+                    Wind();
+                }
                 break;
             case 1:
                 if (timer > speed) {
@@ -72,9 +76,9 @@ public class Weapon : MonoBehaviour
         this.damage = damage;
         this.count += count;
         
-        if(id == 0) {
-            Batch();
-        }
+        //if(id == 0) {
+        //    Batch();
+        //}
 
         player.BroadcastMessage("ApplayGear", SendMessageOptions.DontRequireReceiver);
 
@@ -103,9 +107,8 @@ public class Weapon : MonoBehaviour
 
     public void InitSetting() {
         switch (id) {
-            case 0:                     //Shop
-                speed = 150;
-                Batch();
+            case 0:                     //wind
+                speed = 5f;
                 break;
             case 1:                     //Fire
                 speed = 0.3f;
@@ -148,7 +151,19 @@ public class Weapon : MonoBehaviour
             
         }
     }
-
+    void Wind()
+    {
+        if (!player.scan.nearestTarget)
+        {
+            return;
+        }
+        Vector3 targetPos = player.scan.nearestTarget.position;
+        Vector3 dir = (targetPos - transform.position).normalized;
+        Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
+        bullet.position = transform.position;
+        //bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
+        bullet.GetComponent<Bullet>().Init(damage, 50, dir);
+    }
     void Fire() {
         if (!player.scan.nearestTarget) {
             return;
