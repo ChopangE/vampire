@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
         }
     }
     void GetData() {
-        for(int i= 0; i < 5; i++) {
+        for(int i= 0; i < 6; i++) {
             if (datas[i].isHave) {
                 weapons[i].gameObject.SetActive(true);
                 weapons[i].damage = datas[i].damage;
@@ -92,10 +92,10 @@ public class GameManager : MonoBehaviour
                 weapons[i].InitSetting();
             }
         }
-        if (datas[5].isHave) {
+        if (datas[6].isHave) {
             floorWeapon.gameObject.SetActive(true);
-            floorWeapon.damage = datas[5].damage;
-            items[5].level = datas[5].level;
+            floorWeapon.damage = datas[6].damage;
+            items[6].level = datas[6].level;
         }
     }
 
@@ -109,10 +109,10 @@ public class GameManager : MonoBehaviour
             }
         }
         if (floorWeapon.gameObject.activeSelf) {
-            datas[5].isHave = floorWeapon.gameObject.activeSelf;
-            datas[5].damage = floorWeapon.damage;
-            datas[5].count = 0;
-            datas[5].level = items[5].level;
+            datas[6].isHave = floorWeapon.gameObject.activeSelf;
+            datas[6].damage = floorWeapon.damage;
+            datas[6].count = 0;
+            datas[6].level = items[6].level;
         }
         DataManager.Instance.SetData(datas);
     }
