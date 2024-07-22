@@ -6,6 +6,9 @@ public class Necro : MiddleBoss
 {
     float castingTimer;
     float timer;
+    PoolManager pool;
+
+    public GameObject savePrefabs;
     protected override void Update() {
         base.Update();
         timer += Time.deltaTime;
@@ -20,10 +23,15 @@ public class Necro : MiddleBoss
         speed = 2.0f;
         castingTimer = 3f;
         timer = 0f;
+        pool = GetComponentInChildren<PoolManager>();
     }
     void Casting() {
         anim.SetTrigger("Casting");
         SetDoing();
     }
-    
+    public void BulletInit() {
+        //pool.Get(Random.Range(0,pool.prefabs.Length));
+        pool.Get(Random.Range(0, pool.prefabs.Length)).transform.parent = savePrefabs.transform;
+
+    }
 }
