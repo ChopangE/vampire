@@ -24,7 +24,7 @@ public class WingWind : Bullet
         enemyRb = collision.GetComponent<Rigidbody2D>();
         enemyAnim.SetTrigger("hit");
         Vector2 dir = (collision.transform.position - transform.position).normalized;
-        enemyRb.AddForce(dir * addPower, ForceMode2D.Impulse);
+        if(enemyRb) enemyRb.AddForce(dir * addPower, ForceMode2D.Impulse);
 
     }
 }
