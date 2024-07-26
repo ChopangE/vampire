@@ -72,10 +72,10 @@ public class MiddleBoss : MonoBehaviour {
         
     }
 
-    protected void SetDoing() {
+    public void SetDoing() {
         isDoing = true;
     }
-    protected void EndDoing() {
+    public void EndDoing() {
         isDoing = false;
     }
 }
