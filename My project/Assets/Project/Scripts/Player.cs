@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
     
     void OnCollisionStay2D(Collision2D collision) {
         if (!GameManager.Instance.isLive) return;
-        if (collision.gameObject.tag == "Ground") return;
+        if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Bound") return;
         GameManager.Instance.health -= Time.deltaTime * 10;
         if (GameManager.Instance.health < 0) {
             for (int i = 2; i < transform.childCount; i++) {

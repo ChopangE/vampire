@@ -22,7 +22,7 @@ public class WingWind : Bullet
         if (!collision.gameObject.activeSelf) return;
         enemyAnim = collision.GetComponent<Animator>();
         enemyRb = collision.GetComponent<Rigidbody2D>();
-        enemyAnim.SetTrigger("hit");
+        enemyAnim.SetTrigger("Hit");
         Vector2 dir = (collision.transform.position - transform.position).normalized;
         if(enemyRb) enemyRb.AddForce(dir * addPower, ForceMode2D.Impulse);
 

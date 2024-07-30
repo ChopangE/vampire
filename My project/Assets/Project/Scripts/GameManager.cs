@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -45,11 +46,19 @@ public class GameManager : MonoBehaviour
     public GameObject bossLevel;
     
 
-    [Header("# Datas")]
+    [Header("# Data")]
     public playerData[] datas;
     public Weapon[] weapons;
     public FloorWeapon floorWeapon;
     public Item[] items;
+    
+    [Header("# Stage Data")]
+    //private static int maxStageNum = 3;
+    //private static int maxStageCountNum = 4;
+    //List<GameObject>[] stages = new List<GameObject>[maxStageNum];
+    public Transform[] stages = new Transform[StageManager.Instance.maxStageNum * StageManager.Instance.maxStageCountNum];
+    public int curStage;
+
     void Awake()
     {
         player = FindObjectOfType<Player>();
@@ -68,19 +77,35 @@ public class GameManager : MonoBehaviour
         floorWeapon = player.GetComponentInChildren<FloorWeapon>(true);
         //item은 우선 inspector에서 집어넣음.
         GetData();
-        if(StageManager.Instance.curPoint == 1) {           //On stage �ӽ��ڵ�
-            player.transform.position = Vector3.zero;
+        //여기에서 설정해주기
+        if (StageManager.Instance.stageCount == StageManager.Instance.maxStageCountNum) {
+            StageManager.Instance.stageLevel++;
+        }
+        curStage = StageManager.Instance.stageCount++;
+        player.transform.position = stages[curStage].position;
+        if (curStage == StageManager.Instance.maxStageCountNum * StageManager.Instance.maxStageNum) {
+            bossLevel.SetActive(true);
+            spawner.SetActive(false);
+            timer.SetActive(false);
+        }
+        else {
             bossLevel.SetActive(false);
             spawner.SetActive(true);
             timer.SetActive(true);
         }
-        else {
-            player.transform.position = new Vector3(100,98,0);
-            bossLevel.SetActive(true);
-            spawner.SetActive(false);
-            timer.SetActive(false);
 
-        }
+        //if(StageManager.Instance.curPoint == 1) {           //On stage �ӽ��ڵ�
+        //    player.transform.position = Vector3.zero;
+        //    bossLevel.SetActive(false);
+        //    spawner.SetActive(true);
+        //    timer.SetActive(true);
+        //}
+        //else {
+        //    player.transform.position = new Vector3(100,98,0);
+        //    bossLevel.SetActive(true);
+        //    spawner.SetActive(false);
+        //    timer.SetActive(false);
+        //}
     }
     void GetData() {
         for(int i= 0; i < 6; i++) {

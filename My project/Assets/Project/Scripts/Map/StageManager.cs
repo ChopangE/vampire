@@ -8,8 +8,13 @@ using UnityEngine.UI;
 public enum StageType {
     Starting, Stage, Shop, Boss, Random, Rest
 }
+
 public class StageManager : MonoBehaviour
 {
+    public int maxStageNum = 3;
+    public int maxStageCountNum = 4;
+    public int stageLevel = 0;
+    public int stageCount = 0;
     private static StageManager instance;
     public static StageManager Instance {
         get {
@@ -40,6 +45,7 @@ public class StageManager : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
     }
+    
     public void CallScene() {
         SceneManager.LoadScene("LoadingScene");
     }

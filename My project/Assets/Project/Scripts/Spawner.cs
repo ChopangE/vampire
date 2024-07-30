@@ -34,7 +34,12 @@ public class Spawner : MonoBehaviour
     void Spawn() {
         GameObject enemy = GameManager.Instance.pool.Get(0);
         enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position; // 1부터 검색하는 이유 : GetComponentsInChildern의 0번째 인덱스는 자기자신이다.
-        enemy.GetComponent<Enemy>().Init(spawnData[Random.Range(0,level + 1)]);
+        if (GameManager.Instance.curStage % 4 == 3) {
+            enemy.GetComponent<Enemy>().Init(spawnData[Random.Range(GameManager.Instance.curStage-3, GameManager.Instance.curStage)]);
+        }
+        else {
+            enemy.GetComponent<Enemy>().Init(spawnData[GameManager.Instance.curStage]);
+        }
     }
 }
 
