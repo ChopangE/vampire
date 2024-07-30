@@ -7,14 +7,13 @@ public class Bullet : MonoBehaviour
 {
     public float damage;
     public int per;
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
     float duration;
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    
-    public void Init(float damage, int per, Vector3 dir) {
+    public virtual void Init(float damage, int per, Vector3 dir) {
         this.damage = damage;
         this.per = per;
         if (per <= -100)
@@ -26,8 +25,6 @@ public class Bullet : MonoBehaviour
         if (per > -1) {
             rb.velocity = dir * 7f;
         }
-        
-
     }
 
     IEnumerator Stop()
@@ -36,12 +33,11 @@ public class Bullet : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void OnTriggerEnter2D(Collider2D collision) {
+    public virtual void OnTriggerEnter2D(Collider2D collision) {
         if ((!collision.CompareTag("Enemy")&& ! collision.CompareTag("BossEnemy")) || per == -1) {
             return;
         }
         
-
         per--;
 
         if(per == -1) {

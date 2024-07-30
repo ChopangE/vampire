@@ -657,7 +657,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &411223270
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1097,7 +1097,7 @@ PrefabInstance:
       objectReference: {fileID: 1650761965}
     - target: {fileID: 2497842041757318448, guid: 4f31a9082a955174689366d698b66113, type: 3}
       propertyPath: type
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2497842041757318448, guid: 4f31a9082a955174689366d698b66113, type: 3}
       propertyPath: player
@@ -2481,6 +2481,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0569809fef7bbb47b487fa68665a6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  datas:
+  - id: 0
+    level: 0
+    damage: 0
+    count: 0
+    isHave: 0
+  - id: 0
+    level: 0
+    damage: 0
+    count: 0
+    isHave: 0
+  - id: 0
+    level: 0
+    damage: 0
+    count: 0
+    isHave: 0
+  - id: 0
+    level: 0
+    damage: 0
+    count: 0
+    isHave: 0
+  - id: 0
+    level: 0
+    damage: 0
+    count: 0
+    isHave: 0
+  - id: 0
+    level: 0
+    damage: 0
+    count: 0
+    isHave: 0
+  - id: 0
+    level: 0
+    damage: 0
+    count: 0
+    isHave: 0
+  list:
+    datalist: []
 --- !u!1 &1519551820
 GameObject:
   m_ObjectHideFlags: 0
@@ -2929,7 +2967,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4d42255da3f48c94a98e1b55b6e88b22, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f6703949cc419f144986756e2fd80ba1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

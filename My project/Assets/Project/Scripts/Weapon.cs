@@ -30,7 +30,11 @@ public class Weapon : MonoBehaviour
         timer += Time.deltaTime;
         switch (id) {
             case 0:
-                transform.Rotate(Vector3.back * speed * Time.deltaTime);
+                if(timer > speed)
+                {
+                    timer = 0f;
+                    Wind();
+                }
                 break;
             case 1:
                 if (timer > speed) {
@@ -45,16 +49,22 @@ public class Weapon : MonoBehaviour
                     Shut();
                 }
                 break;
-            case 3:                 //Raser
+            case 3:                 
                 if (timer > speed) {
                     timer = 0f;
-                    Raser();
+                    Amulet();
                 }
                 break;
             case 4:
                 if(timer > speed) {
                     timer = 0f;
                     Breath();
+                }
+                break;
+            case 5:
+                if(timer > speed) {
+                    timer = 0f;
+                    Clone();
                 }
                 break;
             default:
@@ -72,9 +82,9 @@ public class Weapon : MonoBehaviour
         this.damage = damage;
         this.count += count;
         
-        if(id == 0) {
-            Batch();
-        }
+        //if(id == 0) {
+        //    Batch();
+        //}
 
         player.BroadcastMessage("ApplayGear", SendMessageOptions.DontRequireReceiver);
 
@@ -103,9 +113,8 @@ public class Weapon : MonoBehaviour
 
     public void InitSetting() {
         switch (id) {
-            case 0:                     //Shop
-                speed = 150;
-                Batch();
+            case 0:                     //wind
+                speed = 5f;
                 break;
             case 1:                     //Fire
                 speed = 0.3f;
@@ -118,6 +127,9 @@ public class Weapon : MonoBehaviour
                 break;
             case 4:                     //Breath
                 speed = 5f;
+                break;
+            case 5:                     //HGDClone
+                speed = 7f;             
                 break;
             default:
                 break;
@@ -147,6 +159,20 @@ public class Weapon : MonoBehaviour
             bullet.GetComponent<Bullet>().Init(damage, -1, Vector3.zero); // -1 is infinity per;
             
         }
+    }
+
+    void Wind()
+    {
+        if (!player.scan.nearestTarget)
+        {
+            return;
+        }
+        Vector3 targetPos = player.scan.nearestTarget.position;
+        Vector3 dir = (targetPos - transform.position).normalized;
+        Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
+        bullet.position = transform.position;
+        //bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
+        bullet.GetComponent<Bullet>().Init(damage, 50, dir);
     }
 
     void Fire() {
@@ -189,19 +215,42 @@ public class Weapon : MonoBehaviour
 
         StartCoroutine(raser(bullet, dir));
     }
+
+    void Amulet() {
+        Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
+        bullet.position = transform.position;
+        bullet.GetChild(0).GetComponent<Bullet>().Init(damage, -1, Vector3.zero);
+    }
+
     void Breath() {
         Vector3 dir = player.inputVec;
         if (dir.magnitude < 0.1f) {
             dir = player.GetComponent<SpriteRenderer>().flipX ? new Vector2(-1f, 0) : new Vector2(1f, 0);
         }
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
-        bullet.position = transform.position + dir * 4f;
-        bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
-        bullet.Rotate(new Vector3(0, 0, -135), Space.Self);
-        bullet.localScale = new Vector3(3,3,0);
-        bullet.GetComponent<Bullet>().Init(damage, -1, dir);
-        StartCoroutine(BreathDown(bullet, dir));
+        bullet.position = transform.position + dir * 3f;
+        //Vector3 dir2 = dir;
+        //if (player.scan.nearestTarget) {
+        //    Vector3 targetPos = player.scan.nearestTarget.position;
+        //    dir2 = (targetPos - transform.position).normalized;
+        //}
+        //bullet.transform.GetChild(0).rotation = Quaternion.FromToRotation(Vector3.up, dir2);
+        //bullet.transform.GetChild(0).GetComponent<Bullet>().Init(damage, 1, dir2);
+        //StartCoroutine(BreathDown(bullet, dir));
     }
+
+    void Clone() {
+        Vector3 dir = player.inputVec;
+        if (dir.magnitude < 0.1f) {
+            dir = player.GetComponent<SpriteRenderer>().flipX ? new Vector2(-1f, 0) : new Vector2(1f, 0);
+        }
+        Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
+        bullet.position = transform.position;
+
+        bullet.rotation = Quaternion.FromToRotation(Vector3.right, dir);
+        bullet.GetComponent<Bullet>().Init(damage, 100, dir);
+    }
+
     IEnumerator BreathDown(Transform bullet, Vector3 dir) {
         yield return new WaitForSeconds(0.4f);
         bullet.localScale = new Vector3(5, 5, 0);

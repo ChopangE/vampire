@@ -6,7 +6,7 @@ using UnityEngine;
 public class DataManager : MonoBehaviour {
 
     private static DataManager instance;
-    public playerData[] datas = new playerData[6];
+    public playerData[] datas = new playerData[7];
     public playerDataList list = new playerDataList();
     public static DataManager Instance { 
         get {
