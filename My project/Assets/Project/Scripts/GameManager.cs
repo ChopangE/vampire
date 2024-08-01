@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour
     [Header("# Player Info")]
     public float health;
     public float maxHealth = 100;
-    public int[] nextExp = { 5, 10, 20, 30 };
+    public int[] nextExp = { 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
     public int level = 0;
     public int kill = 0;
     public int coin = 0;
@@ -78,9 +78,9 @@ public class GameManager : MonoBehaviour
         //item은 우선 inspector에서 집어넣음.
         GetData();
         //여기에서 설정해주기
-        if (StageManager.Instance.stageCount == StageManager.Instance.maxStageCountNum) {
-            StageManager.Instance.stageLevel++;
-        }
+        //if (StageManager.Instance.stageCount % StageManager.Instance.maxStageCountNum == StageManager.Instance.maxStageCountNum - 1) {
+        //    StageManager.Instance.stageLevel++;
+        //}
         curStage = StageManager.Instance.stageCount++;
         player.transform.position = stages[curStage].position;
         if (curStage == StageManager.Instance.maxStageCountNum * StageManager.Instance.maxStageNum) {
@@ -89,6 +89,12 @@ public class GameManager : MonoBehaviour
             timer.SetActive(false);
         }
         else {
+            if(curStage % StageManager.Instance.maxStageCountNum == StageManager.Instance.maxStageCountNum - 1) {
+                Debug.Log("STargt");
+                Transform bossTran = pool.Get(11 + StageManager.Instance.stageLevel++).transform;
+                bossTran.position = stages[curStage].position + new Vector3(0,10f,0);
+                //보스 소환
+            }
             bossLevel.SetActive(false);
             spawner.SetActive(true);
             timer.SetActive(true);

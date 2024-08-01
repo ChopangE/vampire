@@ -14,6 +14,8 @@ public class EvilDragon : MiddleBoss
         castingTimer = 5f;
         timer = 0f;
         pool = GetComponentInChildren<PoolManager>();
+        savingPrefabs = GameObject.Find("MiddleBossPrefabs");
+
     }
     protected override void Update() {
         base.Update();

@@ -24,6 +24,7 @@ public class Necro : MiddleBoss
         castingTimer = 3f;
         timer = 0f;
         pool = GetComponentInChildren<PoolManager>();
+        savePrefabs = GameObject.Find("MiddleBossPrefabs");
     }
     void Casting() {
         anim.SetTrigger("Casting");

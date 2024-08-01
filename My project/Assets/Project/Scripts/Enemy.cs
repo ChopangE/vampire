@@ -146,7 +146,7 @@ public class Enemy : MonoBehaviour {
         coin.transform.position = transform.position;
         coin.transform.rotation = Quaternion.identity;
         Coin cc = coin.GetComponent<Coin>();
-        cc.sprite.sprite = cc.sprites[level];
+        cc.sprite.sprite = cc.sprites[Mathf.Min((level / 4),cc.sprites.Length-1)];
         cc.exp = level + 1;                               //경험치 조절 여기서 가능
         GameManager.Instance.kill++;
         gameObject.SetActive(false);
