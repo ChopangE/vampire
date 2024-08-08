@@ -8,7 +8,7 @@ public class MiddleBoss : MonoBehaviour {
 
     protected float speed;
     protected float health;
-    protected bool isDoing;
+    public bool isDoing;
 
     protected Animator anim;
     Transform playerPos;
