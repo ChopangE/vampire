@@ -66,6 +66,10 @@ public class Golem : MiddleBoss
         if (coll) {
             coll.gameObject.GetComponent<Rigidbody2D>().AddForce((coll.transform.position - transform.position).normalized * 100f, ForceMode2D.Impulse);
             GameManager.Instance.health -= meleeDamage;
+            Player player = coll.GetComponent<Player>();
+            if (player) {
+                player.Stopping();
+            }
         }
     }
 

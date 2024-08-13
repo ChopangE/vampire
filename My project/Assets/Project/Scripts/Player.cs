@@ -12,20 +12,21 @@ public class Player : MonoBehaviour
     Animator anim;
     public Scanner scan;
     public float speed;
+    bool isKnockBack { get; set; }
     void Awake() {
         
         rigid = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         scan = GetComponent<Scanner>();
-        
+        isKnockBack = false;
     }
 
     
 
     void FixedUpdate() {
         if (!GameManager.Instance.isLive) return;
-
+        if (isKnockBack) return;
         transform.Translate(inputVec * speed * Time.fixedDeltaTime);
         //rigid.velocity = Vector2.zero;
         /*
@@ -37,7 +38,9 @@ public class Player : MonoBehaviour
     void OnMove(InputValue value) {
     
         inputVec = value.Get<Vector2>();            //�̹� normalized ����
-        rigid.velocity = Vector2.zero;
+        if (!isKnockBack) {
+            rigid.velocity = Vector2.zero;
+        }
 
     }
 
@@ -68,6 +71,7 @@ public class Player : MonoBehaviour
     
     public void Stopping()
     {
+        isKnockBack = true;
         StartCoroutine(StoppingCor());
     }
 
@@ -75,7 +79,10 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(0.8f);
         rigid.velocity = Vector2.zero;
+        isKnockBack = false;
     }
+
+    
     /*
     void OnTriggerStay2D(Collider2D collision) {
         if (!GameManager.Instance.isLive) return;

@@ -14,7 +14,7 @@ public class StageManager : MonoBehaviour
     public int maxStageNum = 3;
     public int maxStageCountNum = 4;
     public int stageLevel = 0;
-    public int stageCount = 1;
+    public int stageCount = 0;
     private static StageManager instance;
     public static StageManager Instance {
         get {

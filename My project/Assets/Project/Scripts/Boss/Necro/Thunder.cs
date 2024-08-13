@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Thunder : MiddleBossBullet {
 
@@ -32,6 +33,7 @@ public class Thunder : MiddleBossBullet {
             sprite.color = new Color(1, 0, 0, Mathf.Lerp(startColor, endColor, timer / duration));
             yield return null;
         }
+        yield return new WaitForSeconds(0.3f);  //시간 조절 가능
         Attack();
     }
 

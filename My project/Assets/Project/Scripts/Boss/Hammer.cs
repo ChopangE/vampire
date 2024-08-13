@@ -18,7 +18,8 @@ public class Hammer : MonoBehaviour
         transform.GetChild(0).gameObject.SetActive(true);
         Collider2D hit = Physics2D.OverlapBox(boss.transform.position - new Vector3(0, 7.5f, 0), new Vector2(13, 4), 0, LayerMask.GetMask("Player"));
         if(hit != null) {
-            hit.GetComponent<Player>().rigid.AddForce(new Vector2(0, -60), ForceMode2D.Impulse);
+            Player player = hit.GetComponent<Player>();
+            player.rigid.AddForce(new Vector2(0, -60), ForceMode2D.Impulse);
             Debug.Log("hi");
         }
     }
