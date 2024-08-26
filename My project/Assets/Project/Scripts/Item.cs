@@ -39,6 +39,7 @@ public class Item : MonoBehaviour
             case ItemData.ItemType.Raser:
             case ItemData.ItemType.Breath:
             case ItemData.ItemType.Floor:
+            case ItemData.ItemType.HGDClone:
                 textDesc.text = string.Format(data.itemDesc, data.damages[level] * 100);
                 break;
             case ItemData.ItemType.Glove:
@@ -62,7 +63,8 @@ public class Item : MonoBehaviour
             case ItemData.ItemType.Bomb:
             case ItemData.ItemType.Raser:
             case ItemData.ItemType.Breath:
-                if(level == 0)
+            case ItemData.ItemType.HGDClone:
+                if (level == 0)
                 {
                     weapon = weapons[(int)data.itemType];
                     weapon.gameObject.SetActive(true);
