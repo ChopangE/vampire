@@ -732,22 +732,23 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: UNITY_VISUAL_SCRIPTING;TextMeshPro
-    EmbeddedLinux: UNITY_VISUAL_SCRIPTING;TextMeshPro
-    GameCoreXboxOne: TextMeshPro
-    LinuxHeadlessSimulation: UNITY_VISUAL_SCRIPTING
-    Lumin: TextMeshPro
-    Nintendo Switch: UNITY_VISUAL_SCRIPTING;TextMeshPro
-    PS4: UNITY_VISUAL_SCRIPTING;TextMeshPro
-    PS5: TextMeshPro
+    Android: UNITY_VISUAL_SCRIPTING;TextMeshPro;DOTWEEN
+    EmbeddedLinux: UNITY_VISUAL_SCRIPTING;TextMeshPro;DOTWEEN
+    GameCoreScarlett: DOTWEEN
+    GameCoreXboxOne: TextMeshPro;DOTWEEN
+    LinuxHeadlessSimulation: UNITY_VISUAL_SCRIPTING;DOTWEEN
+    Lumin: TextMeshPro;DOTWEEN
+    Nintendo Switch: UNITY_VISUAL_SCRIPTING;TextMeshPro;DOTWEEN
+    PS4: UNITY_VISUAL_SCRIPTING;TextMeshPro;DOTWEEN
+    PS5: TextMeshPro;DOTWEEN
     Server: UNITY_VISUAL_SCRIPTING
-    Stadia: TextMeshPro
-    Standalone: UNITY_VISUAL_SCRIPTING;TextMeshPro;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;ODIN_INSPECTOR_3_2;ODIN_INSPECTOR_3_3
-    WebGL: UNITY_VISUAL_SCRIPTING;TextMeshPro
-    Windows Store Apps: UNITY_VISUAL_SCRIPTING;TextMeshPro
-    XboxOne: UNITY_VISUAL_SCRIPTING;TextMeshPro
-    iPhone: UNITY_VISUAL_SCRIPTING;TextMeshPro
-    tvOS: UNITY_VISUAL_SCRIPTING;TextMeshPro
+    Stadia: TextMeshPro;DOTWEEN
+    Standalone: UNITY_VISUAL_SCRIPTING;TextMeshPro;ODIN_INSPECTOR;ODIN_INSPECTOR_3;ODIN_INSPECTOR_3_1;ODIN_INSPECTOR_3_2;ODIN_INSPECTOR_3_3;DOTWEEN
+    WebGL: UNITY_VISUAL_SCRIPTING;TextMeshPro;DOTWEEN
+    Windows Store Apps: UNITY_VISUAL_SCRIPTING;TextMeshPro;DOTWEEN
+    XboxOne: UNITY_VISUAL_SCRIPTING;TextMeshPro;DOTWEEN
+    iPhone: UNITY_VISUAL_SCRIPTING;TextMeshPro;DOTWEEN
+    tvOS: UNITY_VISUAL_SCRIPTING;TextMeshPro;DOTWEEN
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
