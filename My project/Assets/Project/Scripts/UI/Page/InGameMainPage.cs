@@ -8,15 +8,34 @@ namespace UI.Page
 {
     [Binding]
     public class InGameMainPage : PageViewModel
-    {
+    {        
+        private bool _activeTimer;
+
         [Binding]
-        public void OnClickStartButton()
+        public bool ActiveTimer
         {
+            get => _activeTimer;
+            set
+            {
+                _activeTimer = value;
+                OnPropertyChanged(nameof(ActiveTimer));
+            }
         }
-        
+
+        private LevelUpPage levelUpPage;
+        private PausePage pausePage;
+
         [Binding]
-        public void OnClickOptionButton()
+        public void Pause()
         {
+            pausePage = GetComponentInChildren<PausePage>();
+            pausePage.Show();
+        }
+        [Binding]
+        public void ShowLevelUP()
+        {
+            levelUpPage = GetComponentInChildren<LevelUpPage>();
+            levelUpPage.Show();
         }
         [Binding]
         public void OnClickExitButton()

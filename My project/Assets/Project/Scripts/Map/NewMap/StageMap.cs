@@ -12,7 +12,7 @@ public class StageMap : MonoBehaviour
     }
     void Init() {
         for(int i = 0; i < stages.Length; i++) {
-            if(i == StageManager.Instance.stageLevel) {
+            if(i == Manager.Global.StageManager.stageLevel) {
                 stages[i].SetActive(true);
             }
             else {

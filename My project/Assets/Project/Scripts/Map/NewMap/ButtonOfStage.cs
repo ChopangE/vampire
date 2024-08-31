@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,8 +21,8 @@ public class ButtonOfStage : MonoBehaviour
     void Init() {
         title = GetComponent<Image>();
         button = GetComponent<Button>();
-        button.onClick.AddListener(StageManager.Instance.CallScene);
-        isActive = (buttonNum == StageManager.Instance.stageCount);
+        button.onClick.AddListener(() => UnityEngine.SceneManagement.SceneManager.LoadScene("LoadingScene"));
+        isActive = buttonNum == Global.StageManager.stageCount;
         button.interactable = isActive;
         if (isActive) {
             title.sprite = image;

@@ -1,29 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Manager;
+using UI.Page;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MMSingleton<GameManager>
 {
-    private static GameManager instance;
-    public static GameManager Instance {
-        get {
-            if(instance == null) {
-                var obj = FindObjectOfType<GameManager>();
-                if(obj != null) {
-                    instance = obj;
-                }
-                else {
-                    var newObj = new GameObject().AddComponent<GameManager>();
-                    instance = newObj;
-                }
-            }
-            return instance;
-        }
-    }
+
     [Header("# Game Control")]
     public bool isLive;
     public float gameTime;
@@ -38,10 +25,7 @@ public class GameManager : MonoBehaviour
     [Header("# Game Object")]
     public Player player;
     public PoolManager pool;
-    public LevelUp uiLevelUp;
-    public Pause uiPause;
     public GameObject spawner;
-    public GameObject timer;
     [Header("# Boss Object")]
     public GameObject bossLevel;
     
@@ -56,20 +40,15 @@ public class GameManager : MonoBehaviour
     //private static int maxStageNum = 3;
     //private static int maxStageCountNum = 4;
     //List<GameObject>[] stages = new List<GameObject>[maxStageNum];
-    public Transform[] stages = new Transform[StageManager.Instance.maxStageNum * StageManager.Instance.maxStageCountNum];
+    public Transform[] stages = new Transform[Global.StageManager.maxStageNum * Global.StageManager.maxStageCountNum];
     public int curStage;
 
-    void Awake()
-    {
-        player = FindObjectOfType<Player>();
-        var objs = FindObjectsOfType<GameManager>();
-        if(objs.Length != 1) {
-            Destroy(gameObject);
-            return;
-        }
-       
-    }
+    private InGameMainPage inGameMainPage;
     void Start() {
+        //* 인게임 UI 호출
+        Global.Create(true);
+        inGameMainPage = Global.UIManager.OpenPage<InGameMainPage>();
+
         health = maxHealth;
         AudioManager.instance.PlayBgm(true);
         datas = DataManager.Instance.GetData();
@@ -81,26 +60,26 @@ public class GameManager : MonoBehaviour
         //if (StageManager.Instance.stageCount % StageManager.Instance.maxStageCountNum == StageManager.Instance.maxStageCountNum - 1) {
         //    StageManager.Instance.stageLevel++;
         //}
-        curStage = StageManager.Instance.stageCount++;
+        curStage = Global.StageManager.stageCount++;
         player.transform.position = stages[curStage].position;
-        if (curStage == StageManager.Instance.maxStageCountNum * StageManager.Instance.maxStageNum) {
+        if (curStage == Global.StageManager.maxStageCountNum * Global.StageManager.maxStageNum) {
             bossLevel.SetActive(true);
             spawner.SetActive(false);
-            timer.SetActive(false);
+            inGameMainPage.ActiveTimer = false;
         }
         else {
-            if(curStage % StageManager.Instance.maxStageCountNum == StageManager.Instance.maxStageCountNum - 1) {
+            if(curStage % Global.StageManager.maxStageCountNum == Global.StageManager.maxStageCountNum - 1) {
                 Debug.Log("STargt");
-                Transform bossTran = pool.Get(11 + StageManager.Instance.stageLevel++).transform;
+                Transform bossTran = pool.Get(11 + Global.StageManager.stageLevel++).transform;
                 bossTran.position = stages[curStage].position + new Vector3(0,10f,0);
                 //보스 소환
             }
             bossLevel.SetActive(false);
             spawner.SetActive(true);
-            timer.SetActive(true);
+            inGameMainPage.ActiveTimer = true;
         }
 
-        //if(StageManager.Instance.curPoint == 1) {           //On stage �ӽ��ڵ�
+        //if(Global.StageManager.curPoint == 1) {           //On stage �ӽ��ڵ�
         //    player.transform.position = Vector3.zero;
         //    bossLevel.SetActive(false);
         //    spawner.SetActive(true);
@@ -170,7 +149,7 @@ public class GameManager : MonoBehaviour
             gameTime = maxGameTime;
         }
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            uiPause.Show();
+            inGameMainPage.Pause();
         }
 
     }
@@ -181,7 +160,7 @@ public class GameManager : MonoBehaviour
         {
             level = Mathf.Min(level + 1, nextExp.Length-1);
             coin = 0;
-            uiLevelUp.Show();
+            inGameMainPage.ShowLevelUP();
         }
         
     }

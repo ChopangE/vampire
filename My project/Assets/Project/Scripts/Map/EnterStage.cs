@@ -26,7 +26,7 @@ public class EnterStage : MonoBehaviour
 
         }
         if (type == StageType.Stage) {
-            StageManager.Instance.curPoint = 0;
+            Manager.Global.StageManager.curPoint = 0;
             SceneManager.LoadScene(2);
         }
         gameObject.SetActive(false);

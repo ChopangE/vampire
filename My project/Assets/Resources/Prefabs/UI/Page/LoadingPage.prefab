@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1465241482618358242}
   - component: {fileID: 7840743194150834197}
+  - component: {fileID: -6491369233107404061}
   m_Layer: 5
   m_Name: LoadingPage
   m_TagString: Untagged
@@ -51,6 +52,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d90d3f05d18a2f141ac07355e005efff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &-6491369233107404061
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465241482618358246}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1465241482700451727
 GameObject:
   m_ObjectHideFlags: 0

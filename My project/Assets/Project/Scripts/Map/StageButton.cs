@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
  
 public class StageButton : MonoBehaviour
@@ -12,7 +13,7 @@ public class StageButton : MonoBehaviour
     //SpriteRenderer sprite;
 
     //void Start() {
-    //    if (StageManager.Instance.isCheck[(int)type]) {
+    //    if (Global.StageManager.isCheck[(int)type]) {
     //        sprite = GetComponent<SpriteRenderer>();
     //        cr.a = 0.5f;
     //        sprite.color = cr;
@@ -22,7 +23,7 @@ public class StageButton : MonoBehaviour
     //    prevUI = List.GetComponentInChildren<ListType>();
     }
     void OnMouseDown() {
-        if (!StageManager.Instance.isCheck[(int)type])
+        if (!Global.StageManager.isCheck[(int)type])
         StartCoroutine(GoToBtn(transform.position, player));
     }
 
@@ -41,8 +42,8 @@ public class StageButton : MonoBehaviour
         switch (type) {
             case StageType.Stage:
             case StageType.Boss:
-                StageManager.Instance.isCheck[(int)type] = true;
-                StageManager.Instance.curPoint = (int)type;
+                Global.StageManager.isCheck[(int)type] = true;
+                Global.StageManager.curPoint = (int)type;
                 //여기서 UI호출
                 
                 break;
@@ -54,8 +55,8 @@ public class StageButton : MonoBehaviour
                 //
                 break;
             case StageType.Shop:
-                StageManager.Instance.isCheck[(int)type] = true;
-                StageManager.Instance.curPoint = (int)type;
+                Global.StageManager.isCheck[(int)type] = true;
+                Global.StageManager.curPoint = (int)type;
 
                 break;
         }
