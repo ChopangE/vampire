@@ -14,6 +14,8 @@ namespace Manager
     /// </remarks>
     public class Global : MMSingleton<Global>
     {
+        public static OutGame.SceneBase CurrentScene { get; set; }
+
         public static UIManager UIManager { get; private set; }
         public static UserDataManager UserDataManager { get; set; }
         public static SoundManager SoundManager { get; set; }
