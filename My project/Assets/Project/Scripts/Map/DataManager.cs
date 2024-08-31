@@ -3,35 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-public class DataManager : MonoBehaviour {
+public class DataManager : MMSingleton<DataManager> {
 
     private static DataManager instance;
     public playerData[] datas = new playerData[7];
     public playerDataList list = new playerDataList();
-    public static DataManager Instance { 
-        get {
-            if (instance == null) {
-                var obj = FindObjectOfType<DataManager>();
-                if (obj != null) {
-                    instance = obj;
-                }
-            }
-            else {
-                var newObj = new GameObject().AddComponent<DataManager>();
-                instance = newObj;
-            }
-            return instance;
-        } 
-    
-    }
-    void Awake() {
-        var objs = FindObjectsOfType<DataManager>();
-        if (objs.Length != 1) {
-            Destroy(gameObject);
-            return;
-        }
-        DontDestroyOnLoad(gameObject);
-    }
 
     void Start() {
         Init();

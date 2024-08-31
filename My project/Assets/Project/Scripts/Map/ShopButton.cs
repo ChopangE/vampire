@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -17,8 +18,8 @@ public class ShopButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         defaultVec = rect.localScale;
     }
     public void OnClicked() {
-        StageManager.Instance.coin = StageManager.Instance.coin - price;
-        StageManager.Instance.TextingCoin();
+        Global.StageManager.coin = Global.StageManager.coin - price;
+        Global.StageManager.TextingCoin();
         btn.interactable = false;
     }
     public void OnPointerEnter(PointerEventData eventData) {

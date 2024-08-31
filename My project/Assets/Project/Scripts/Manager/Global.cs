@@ -14,9 +14,13 @@ namespace Manager
     /// </remarks>
     public class Global : MMSingleton<Global>
     {
+        public static OutGame.SceneBase CurrentScene { get; set; }
+
         public static UIManager UIManager { get; private set; }
         public static UserDataManager UserDataManager { get; set; }
         public static SoundManager SoundManager { get; set; }
+        public static StageManager StageManager { get; set; }
+
         // public static OptionManager OptionManager { get; private set; }
         // public static GameDataManager GameDataManager { get; set; }
         // public static SceneBase CurrentScene { get; private set; }
@@ -47,6 +51,11 @@ namespace Manager
             {
                 SoundManager = Instantiate(Resources.Load<SoundManager>(prefixManager + nameof(Manager.SoundManager)), transform);
                 SoundManager.name = nameof(SoundManager);
+            }
+            if (StageManager == null)
+            {
+                StageManager = Instantiate(Resources.Load<StageManager>(prefixManager + nameof(Manager.StageManager)), transform);
+                SoundManager.name = nameof(StageManager);
             }
         }
     }

@@ -5,54 +5,29 @@ using UnityEngine.Assertions.Must;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public enum StageType {
+public enum StageType
+{
     Starting, Stage, Shop, Boss, Random, Rest
 }
-
-public class StageManager : MonoBehaviour
+namespace Manager
 {
-    public int maxStageNum = 3;
-    public int maxStageCountNum = 4;
-    public int stageLevel = 0;
-    public int stageCount = 0;
-    private static StageManager instance;
-    public static StageManager Instance {
-        get {
-            if (instance == null) {
-                var obj = FindObjectOfType<StageManager>();
-                if (obj != null) {
-                    instance = obj;
-                }
-                else {
-                    var newObj = new GameObject().AddComponent<StageManager>();
-                    instance = newObj;
-                }
-            }
-            return instance;
+    public class StageManager : MonoBehaviour
+    {
+        public int maxStageNum = 3;
+        public int maxStageCountNum = 4;
+        public int stageLevel = 0;
+        public int stageCount = 0;
+
+        public int curPoint = 0;
+        public bool[] isCheck = { true, false, false, false, false, false };
+        public int coin;
+        Text coinText;
+
+        public void TextingCoin()
+        {
+            coinText = FindObjectOfType<CoinText>().coinText;
+            coinText.text = string.Format("Coin : {0}", coin);
         }
-    }
 
-
-    public int curPoint = 0;
-    public bool[] isCheck = { true, false, false, false, false, false };
-    public int coin;
-    Text coinText;
-    void Awake() {
-        var objs = FindObjectsOfType<StageManager>();
-        if (objs.Length != 1) {
-            Destroy(gameObject);
-            return;
-        }
-        DontDestroyOnLoad(gameObject);
     }
-    
-    public void CallScene() {
-        SceneManager.LoadScene("LoadingScene");
-    }
-    
-    public void TextingCoin() {
-        coinText = FindObjectOfType<CoinText>().coinText;
-        coinText.text = string.Format("Coin : {0}", coin);  
-    }
-
 }
