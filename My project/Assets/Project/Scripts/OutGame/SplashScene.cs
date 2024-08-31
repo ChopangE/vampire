@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Manager;
 using Cysharp.Threading.Tasks;
-// using DG.Tweening;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UI.Page;
 
 namespace OutGame
 {
@@ -24,14 +25,14 @@ namespace OutGame
         {
             AsyncOperation asyncOp = SceneManager.LoadSceneAsync("StartScene", LoadSceneMode.Single);
             asyncOp.allowSceneActivation = false;
-            // await _canvasGroup.DOFade(1, 0.5f).AsyncWaitForCompletion();
+            await _canvasGroup.DOFade(1, 0.5f).AsyncWaitForCompletion();
             await UniTask.Delay(250, true);
             
             await UniTask.WaitUntil(() => asyncOp.progress >= 0.9f);
             Global.Create(true);
             
             await UniTask.Delay(500, true);
-            // await _canvasGroup.DOFade(0, 0.5f).AsyncWaitForCompletion();
+            await _canvasGroup.DOFade(0, 0.5f).AsyncWaitForCompletion();
             asyncOp.allowSceneActivation = true;
         }
     }
