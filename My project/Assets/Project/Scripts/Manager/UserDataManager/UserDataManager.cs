@@ -8,9 +8,11 @@ namespace Manager
         public Storage()
         {
             GoldData = "0";
+            upgradeDataList = new List<Data.UpgradeData>();
         }
         // public HashSet<int> CollectedItem = new();
         public string GoldData;
+        public List<Data.UpgradeData> upgradeDataList;
     }
     public partial class UserDataManager
     {

@@ -41,36 +41,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5160617498010180298}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d8b36524a20dad4bb427bde88b92696, type: 3}
+  m_Script: {fileID: 11500000, guid: a2f5244ae827a31498ad3940ec471aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalStatsUpgradeList:
-  - {fileID: 11400000, guid: 4e863f27a47ab0f4792f18881a202c9f, type: 2}
-  - {fileID: 11400000, guid: c0214e63d74fce943bf776f116c2e34a, type: 2}
-  - {fileID: 11400000, guid: fb63dfc6016facb48af6d671baf6449b, type: 2}
-  - {fileID: 11400000, guid: 15b1190e982b6a4418ed6d26f7a25b0e, type: 2}
-  recipeStatsUpgradeList:
-  - {fileID: 11400000, guid: 05b79246da67f2044b1c473cf8e1cb1d, type: 2}
-  - {fileID: 11400000, guid: e8b416672adfb6d40bd3be844b51d7c2, type: 2}
-  - {fileID: 11400000, guid: 5bd11b5844bb31c46ac9666dde86ce03, type: 2}
-  - {fileID: 11400000, guid: 7b5561be4ff3be74f93390d401b21375, type: 2}
-  - {fileID: 11400000, guid: 8689f469556d6b547bd88aae0189fc58, type: 2}
-  - {fileID: 11400000, guid: 5cd20bd720605864e8a33bc76f9c2104, type: 2}
-  - {fileID: 11400000, guid: 9b5f11eeec5c0a84d9b72e33af9c73a7, type: 2}
-  - {fileID: 11400000, guid: e308ec4cbd503b34c91701a5a37efff3, type: 2}
-  - {fileID: 11400000, guid: 7d2714f68ab22a44eb2fa7940593aded, type: 2}
-  - {fileID: 11400000, guid: 947082b828e62324892f816f0b573ac0, type: 2}
-  - {fileID: 11400000, guid: d5c3b0ac82ddec34288bdda0629b89cd, type: 2}
-  - {fileID: 11400000, guid: bfd2764449a9821439a5b6b610577e90, type: 2}
-  - {fileID: 11400000, guid: afaaf05e2e2734a448f87aacffc5a43f, type: 2}
-  - {fileID: 11400000, guid: 545c12eac3ec2a340a076eafdaaa85d6, type: 2}
-  - {fileID: 11400000, guid: b2d683083623c924c9a9d18fbde4f585, type: 2}
-  - {fileID: 11400000, guid: 0a63ae4921ea5c945a4e3d6b672e569d, type: 2}
-  - {fileID: 11400000, guid: de25d022d2db93f419abe100ddfddf75, type: 2}
-  - {fileID: 11400000, guid: 59e42eb8960f7e74eba8e157a9984267, type: 2}
-  - {fileID: 11400000, guid: 96d0d39759a513e47ad43997fde55e62, type: 2}
-  - {fileID: 11400000, guid: 5fec3082fe2d77a4a8faa13864808e91, type: 2}
-  - {fileID: 11400000, guid: 4bd4f6afef102724bb8edd6494a678c8, type: 2}
-  - {fileID: 11400000, guid: 012beabb47dabc244b96493a6203b726, type: 2}
-  cafeStatsUpgradeList:
-  - {fileID: 11400000, guid: 174426cb98997f341ae2713723747337, type: 2}
+  playerStatsUpgradeList: []
+  playerPassiveStatsUpgradeList:
+  - {fileID: 11400000, guid: 806fc94d6bae062439671541799c2ecb, type: 2}
