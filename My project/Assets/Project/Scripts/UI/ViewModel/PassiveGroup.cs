@@ -1,0 +1,37 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Data;
+using SO;
+using UnityEngine;
+using UnityWeld;
+using UnityWeld.Binding;
+
+namespace UI
+{
+    [Binding]
+    public class PassiveGroup : GroupView
+    {
+        List<LevelUpgradeSO<PlayerPassiveStat>> _levelUpgradeSOList = new List<LevelUpgradeSO<PlayerPassiveStat>>();
+        public void AddToGroup(LevelUpgradeSO<PlayerPassiveStat> levelUpgradeSO)
+        {   
+            _levelUpgradeSOList.Add(levelUpgradeSO);
+        }
+
+        public void InitialGorup()
+        {
+            PrepareViewModels(_levelUpgradeSOList.Count);
+            var models = GetViewModels();
+
+            //* 패시브를 요소들에게 하나하나 지정
+            for (int i = 0; i < models.Count; i++)
+            {
+                if (models[i] as PassiveButtonViewModel)
+                {
+                    var model = models[i] as PassiveButtonViewModel;
+                    model.SetPassive(_levelUpgradeSOList[i]);
+                }
+            }
+        }
+    }
+}

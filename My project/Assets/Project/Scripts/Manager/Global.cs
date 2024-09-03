@@ -20,6 +20,8 @@ namespace Manager
         public static UserDataManager UserDataManager { get; set; }
         public static SoundManager SoundManager { get; set; }
         public static StageManager StageManager { get; set; }
+        public static StatsManager StatsManager { get; set; }
+        public static StatsUpgradeManager StatsUpgradeManager { get; set; }
 
         // public static OptionManager OptionManager { get; private set; }
         // public static GameDataManager GameDataManager { get; set; }
@@ -55,7 +57,17 @@ namespace Manager
             if (StageManager == null)
             {
                 StageManager = Instantiate(Resources.Load<StageManager>(prefixManager + nameof(Manager.StageManager)), transform);
-                SoundManager.name = nameof(StageManager);
+                StageManager.name = nameof(StageManager);
+            }
+            if (StatsManager == null)
+            {
+                StatsManager = Instantiate(Resources.Load<StatsManager>(prefixManager + nameof(Manager.StatsManager)), transform);
+                StatsManager.name = nameof(StageManager);
+            }
+            if (StatsUpgradeManager == null)
+            {
+                StatsUpgradeManager = Instantiate(Resources.Load<StatsUpgradeManager>(prefixManager + nameof(Manager.StatsUpgradeManager)), transform);
+                StatsUpgradeManager.name = nameof(StageManager);
             }
         }
     }

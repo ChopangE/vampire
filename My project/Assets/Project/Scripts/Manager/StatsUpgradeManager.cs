@@ -22,6 +22,11 @@ namespace Manager
             playerStatsUpgradeList = HelperFunctions.GetScriptableObjects<LevelUpgradeSO<PlayerStat>>(playerStatsPath);
             playerPassiveStatsUpgradeList = HelperFunctions.GetScriptableObjects<LevelUpgradeSO<PlayerPassiveStat>>(playerPassiveStatsPath);
         }
-        #endif
+
+        public List<LevelUpgradeSO<PlayerPassiveStat>> GetAllPassives()
+        {
+            return playerPassiveStatsUpgradeList;
+        }
+#endif
     }
 }
