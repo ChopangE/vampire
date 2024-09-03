@@ -8,6 +8,7 @@ namespace Manager
     {
         public UpgradeData GetUpgradeData(string upgradeName)
         {
+            if(storage.upgradeDataList.Count == 0) InitialUpgradeData(upgradeName);
             foreach(var u in storage.upgradeDataList) {
                 if(u.upgradeName == upgradeName)
                 {
