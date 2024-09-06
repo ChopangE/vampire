@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee358156595ae9f419bc20921452c27a, type: 3}
-  m_Name: AttackDamageLevelUpgrade
+  m_Name: RevivePossibility
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: -1582885889, guid: 6fdf0eac6efa3b4418e54039a20e2de0, type: 3}
+    - {fileID: 24060987, guid: fea1640a0611f7443837b141c9790ca7, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -27,8 +27,8 @@ MonoBehaviour:
       Data: 0
     - Name: description
       Entry: 1
-      Data: "\uACF5\uACA9\uB825 \uC99D\uAC00"
-  upgradeName: "\uACF5\uACA9\uB825"
+      Data: "\uBD80\uD65C\uD655\uB960 \uC99D\uAC00"
+  upgradeName: "\uBD80\uD65C\uD655\uB960"
   unitsToUpgrade:
-  - {fileID: 11400000, guid: d7b75f63a9b69c04ea3399e4172ef918, type: 2}
+  - {fileID: 11400000, guid: ceb0af7e6bc1abb4ba067be658c8c4c5, type: 2}
   isPercentUpgrade: 0

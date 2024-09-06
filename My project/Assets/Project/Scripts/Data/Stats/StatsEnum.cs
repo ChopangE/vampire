@@ -14,8 +14,15 @@ namespace Data
     }
     public enum PlayerPassiveStat //* 플레이어 영구 패시브 
     {
-        Passive_Health, //* 체력
+        Passive_MaxHealth, //* 체력
         Passive_AttackDamage, //* 공격력
+        Passive_Defense,
+        Passive_GoldBonus,
+        Passive_RevivePossibility,
         Passive_MovementSpeed, //* 이동속도
+        Passive_AttackSpeed,
+        Passive_EXPMagnetRange,
+        Passive_HealthRegeneration
+
     }
 }
