@@ -12,10 +12,11 @@ namespace UI
     [Binding]
     public class PassiveGroup : GroupView
     {
-        List<LevelUpgradeSO<PlayerPassiveStat>> _levelUpgradeSOList = new List<LevelUpgradeSO<PlayerPassiveStat>>();
-        public void AddToGroup(LevelUpgradeSO<PlayerPassiveStat> levelUpgradeSO)
+        List<PlayerPassiveLevelUpgradeSO> _levelUpgradeSOList = new List<PlayerPassiveLevelUpgradeSO>();
+        public void AddToGroup(PlayerPassiveLevelUpgradeSO levelUpgradeSO)
         {   
-            _levelUpgradeSOList.Add(levelUpgradeSO);
+            if(!_levelUpgradeSOList.Contains(levelUpgradeSO))
+                _levelUpgradeSOList.Add(levelUpgradeSO);
         }
 
         public void InitialGorup()

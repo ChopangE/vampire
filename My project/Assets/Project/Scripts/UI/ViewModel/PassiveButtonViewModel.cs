@@ -11,8 +11,16 @@ namespace UI
     [Binding]
     public class PassiveButtonViewModel : ViewModel
     {
-        private LevelUpgradeSO<PlayerPassiveStat> _levelUpgradeSO;
+        private PlayerPassiveLevelUpgradeSO _levelUpgradeSO;
 
+        public void SetPassive(PlayerPassiveLevelUpgradeSO levelUpgradeSO)
+        {
+            _levelUpgradeSO = levelUpgradeSO;
+            Icon = _levelUpgradeSO.icon;
+            PassiveName = _levelUpgradeSO.upgradeName;
+            PassiveValue = string.Format("value {0}", _levelUpgradeSO.GetUpgradeValue());
+            PassiveLevel = string.Format("LV.{0}", _levelUpgradeSO.GetUpgradeLevel());
+        }
         private Sprite _icon;
         [Binding]
         public Sprite Icon
@@ -47,20 +55,22 @@ namespace UI
                 OnPropertyChanged(nameof(PassiveValue));
             }
         }
+        private string _passiveLevel;
+        [Binding]
+        public string PassiveLevel
+        {
+            get => _passiveLevel;
+            set
+            {
+                _passiveLevel = value;
+                OnPropertyChanged(nameof(PassiveLevel));
+            }
+        }
         [Binding]
         public void DoUpgrade()
         {
             _levelUpgradeSO.DoUpgrade();
             PassiveValue = _levelUpgradeSO.GetUpgradeValue();
-        }
-
-        public void SetPassive(LevelUpgradeSO<PlayerPassiveStat> levelUpgradeSO)
-        {
-            _levelUpgradeSO = levelUpgradeSO;
-            Icon = _levelUpgradeSO.icon;
-            PassiveName = _levelUpgradeSO.upgradeName;
-            var passiveSO =_levelUpgradeSO as PlayerPassiveLevelUpgradeSO;
-            PassiveValue = passiveSO.GetUpgradeValue();
         }
     }
 }

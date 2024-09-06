@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
+using UGS;
 using UnityEngine;
 
 namespace Manager
@@ -36,9 +36,10 @@ namespace Manager
             Input.multiTouchEnabled = false;
 
             LoadManagerPrefabs();
+
             UserDataManager = new();
             UserDataManager.Load();
-
+            UnityGoogleSheet.LoadAllData();
         }
 
         private void LoadManagerPrefabs()

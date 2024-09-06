@@ -17,10 +17,10 @@ using UnityEngine;
 namespace Passive
 {
     [GoogleSheet.Attribute.TableStruct]
-    public partial class AttackDamage : ITable
+    public partial class PlayerStat : ITable
     { 
 
-        public delegate void OnLoadedFromGoogleSheets(List<AttackDamage> loadedList, Dictionary<int, AttackDamage> loadedDictionary);
+        public delegate void OnLoadedFromGoogleSheets(List<PlayerStat> loadedList, Dictionary<int, PlayerStat> loadedDictionary);
 
         static bool isLoaded = false;
         static string spreadSheetID = "1NYmPR1CVbhduomXXU2qSx898JJbkGvywHNFydQRXpzc"; // it is file id
@@ -29,33 +29,36 @@ namespace Passive
 
 /* Your Loaded Data Storage. */
     
-        public static Dictionary<int, AttackDamage> AttackDamageMap = new Dictionary<int, AttackDamage>();  
-        public static List<AttackDamage> AttackDamageList = new List<AttackDamage>();   
+        public static Dictionary<int, PlayerStat> PlayerStatMap = new Dictionary<int, PlayerStat>();  
+        public static List<PlayerStat> PlayerStatList = new List<PlayerStat>();   
 
         /// <summary>
-        /// Get AttackDamage List 
+        /// Get PlayerStat List 
         /// Auto Load
         /// </summary>
-        public static List<AttackDamage> GetList()
+        public static List<PlayerStat> GetList()
         {{
            if (isLoaded == false) Load();
-           return AttackDamageList;
+           return PlayerStatList;
         }}
 
         /// <summary>
-        /// Get AttackDamage Dictionary, keyType is your sheet A1 field type.
+        /// Get PlayerStat Dictionary, keyType is your sheet A1 field type.
         /// - Auto Load
         /// </summary>
-        public static Dictionary<int, AttackDamage>  GetDictionary()
+        public static Dictionary<int, PlayerStat>  GetDictionary()
         {{
            if (isLoaded == false) Load();
-           return AttackDamageMap;
+           return PlayerStatMap;
         }}
 
     
 
 /* Fields. */
 
+		public System.Int32 id;
+		public System.Int32 GroupID;
+		public System.String name;
 		public System.Int32 level;
 		public System.String goldCost;
 		public System.String value;
@@ -69,7 +72,7 @@ namespace Passive
             if(isLoaded && forceReload == false)
             {
 #if UGS_DEBUG
-                 Debug.Log("AttackDamage is already loaded! if you want reload then, forceReload parameter set true");
+                 Debug.Log("PlayerStat is already loaded! if you want reload then, forceReload parameter set true");
 #endif
                  return;
             }
@@ -85,7 +88,7 @@ namespace Passive
         }
  
 
-        public static void LoadFromGoogle(System.Action<List<AttackDamage>, Dictionary<int, AttackDamage>> onLoaded, bool updateCurrentData = false)
+        public static void LoadFromGoogle(System.Action<List<PlayerStat>, Dictionary<int, PlayerStat>> onLoaded, bool updateCurrentData = false)
         {      
                 IHttpProtcol webInstance = null;
     #if UNITY_EDITOR
@@ -113,14 +116,14 @@ namespace Passive
                
 
 
-    public static (List<AttackDamage> list, Dictionary<int, AttackDamage> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
-            Dictionary<int, AttackDamage> Map = new Dictionary<int, AttackDamage>();
-            List<AttackDamage> List = new List<AttackDamage>();     
+    public static (List<PlayerStat> list, Dictionary<int, PlayerStat> map) CommonLoad(Dictionary<string, Dictionary<string, List<string>>> jsonObject, bool forceReload){
+            Dictionary<int, PlayerStat> Map = new Dictionary<int, PlayerStat>();
+            List<PlayerStat> List = new List<PlayerStat>();     
             TypeMap.Init();
-            FieldInfo[] fields = typeof(AttackDamage).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(PlayerStat).GetFields(BindingFlags.Public | BindingFlags.Instance);
             List<(string original, string propertyName, string type)> typeInfos = new List<(string, string, string)>(); 
             List<List<string>> rows = new List<List<string>>();
-            var sheet = jsonObject["AttackDamage"];
+            var sheet = jsonObject["PlayerStat"];
 
             foreach (var column in sheet.Keys)
             {
@@ -139,7 +142,7 @@ namespace Passive
                         int rowCount = rows[0].Count;
                         for (int i = 0; i < rowCount; i++)
                         {
-                            AttackDamage instance = new AttackDamage();
+                            PlayerStat instance = new PlayerStat();
                             for (int j = 0; j < typeInfos.Count; j++)
                             {
                                 try
@@ -176,12 +179,12 @@ namespace Passive
                               
                             }
                             List.Add(instance); 
-                            Map.Add(instance.level, instance);
+                            Map.Add(instance.id, instance);
                         }
                         if(isLoaded == false || forceReload)
                         { 
-                            AttackDamageList = List;
-                            AttackDamageMap = Map;
+                            PlayerStatList = List;
+                            PlayerStatMap = Map;
                             isLoaded = true;
                         }
                     } 
@@ -191,10 +194,10 @@ namespace Passive
 
  
 
-        public static void Write(AttackDamage data, System.Action<WriteObjectResult> onWriteCallback = null)
+        public static void Write(PlayerStat data, System.Action<WriteObjectResult> onWriteCallback = null)
         { 
             TypeMap.Init();
-            FieldInfo[] fields = typeof(AttackDamage).GetFields(BindingFlags.Public | BindingFlags.Instance);
+            FieldInfo[] fields = typeof(PlayerStat).GetFields(BindingFlags.Public | BindingFlags.Instance);
             var datas = new string[fields.Length];
             for (int i = 0; i < fields.Length; i++)
             {

@@ -9,32 +9,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16b806eade14ba649a5e3923f6fe4281, type: 3}
-  m_Name: HealthStatsUpgrade
+  m_Script: {fileID: 11500000, guid: 5b4ad1f46d6ee334dad3f5067d4fb029, type: 3}
+  m_Name: AttackDamageLevelStats
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 934571490, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: icon
-      Entry: 10
-      Data: 0
-    - Name: description
-      Entry: 6
-      Data: 
-    - Name: upgradeToApply
+    - Name: instanceStats
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[Data.PlayerStat, Assembly-CSharp],[System.Single,
+      Data: 0|System.Collections.Generic.Dictionary`2[[Data.PlayerPassiveStat, Assembly-CSharp],[System.Single,
         mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Data.PlayerStat,
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[Data.PlayerPassiveStat,
         Assembly-CSharp]], mscorlib
     - Name: 
       Entry: 12
@@ -47,16 +40,32 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: stats
+      Entry: 7
+      Data: 2|System.Collections.Generic.Dictionary`2[[Data.PlayerPassiveStat, Assembly-CSharp],[System.Single,
+        mscorlib]], mscorlib
+    - Name: comparer
+      Entry: 9
+      Data: 1
+    - Name: 
+      Entry: 12
       Data: 1
     - Name: 
       Entry: 7
       Data: 
     - Name: $k
       Entry: 3
-      Data: 0
+      Data: 1
     - Name: $v
       Entry: 4
-      Data: 50
+      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -66,7 +75,3 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  upgradeName: "\uCCB4\uB825"
-  unitsToUpgrade:
-  - {fileID: 11400000, guid: 16a0578dc370a164689cb7a98e6f116e, type: 2}
-  isPercentUpgrade: 0

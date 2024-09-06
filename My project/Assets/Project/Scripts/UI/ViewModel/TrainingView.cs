@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -16,6 +17,11 @@ namespace UI
         [LabelText("한 그룹에 몇개의 요소가 들어갈 것인가")]
         [SerializeField] private int groupElementCount = 4;
         private void OnEnable()
+        {
+            InitialTrainingGroup();
+        }
+
+        private void InitialTrainingGroup()
         {
             var allPassives = Global.StatsUpgradeManager.GetAllPassives();
             //* 책 한페이지당 패시브 4 X 2(그룹 수) 개씩 있으니 4개 묶음 수 구하기
@@ -43,6 +49,7 @@ namespace UI
                 }
             }
         }
+
         private int _coin;
 
         [Binding]

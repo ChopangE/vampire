@@ -8,7 +8,7 @@ namespace SO
     [CreateAssetMenu(menuName = "스탯/Upgrades/Level/Player Passive Level Upgrade")]
     public class PlayerPassiveLevelUpgradeSO : LevelUpgradeSO<PlayerPassiveStat>
     {
-        public virtual void Initialize(){
+        public override void Initialize(){
             GetMaxLevel();
             GetUpgradeCost();
             GetUpgradeValue();
@@ -16,32 +16,48 @@ namespace SO
         }
         public override int GetMaxLevel()
         {
+            //* 그룹이 있으면 Count 가져오고 아니면 1 리턴
+            _maxLevel = Passive.PlayerStat.PlayerStatList?.Count ?? 1;
             return _maxLevel;
         }
         public override string GetUpgradeCost()
         {
+            var b = GetLevelElement();
+            if(b != null)
+            {
+                _levelCost = b?.goldCost ?? "1";
+            }
             return _levelCost;
         }
         public override string GetUpgradeValue()
         {
+            var b = GetLevelElement();
+            if(b != null)
+            {
+                _levelValue = b.value;
+            }
             return _levelValue;
         }
 
-        public override int GetUpgradeLevel()
+        private Passive.PlayerStat GetLevelElement()
         {
-            UpgradeData data = GetUpgradeDataByName(upgradeName);
-            if(data != null)
-                _curLevel = data.level;
-            return _curLevel;
-        }
-        public override void SetUpgradeLevel()
-        {
-            UpgradeData data = GetUpgradeDataByName(upgradeName);
-            if(data != null)
-            {
-                data.level = _curLevel;
-                Global.UserDataManager.SetUpgradeData(data);
+            Passive.PlayerStat value = null;
+            foreach(var element in Passive.PlayerStat.PlayerStatList) {
+                foreach(var unit in unitsToUpgrade) {
+                    foreach (var enumValue in unit.stats.Keys) 
+                    {
+                        if ((int)enumValue == element.GroupID)
+                        {
+                            if (GetUpgradeLevel() == element.level)
+                            {
+                                value = element;
+                                return value;
+                            }
+                        }
+                    }
+                }
             }
+            return value;
         }
     }
 }

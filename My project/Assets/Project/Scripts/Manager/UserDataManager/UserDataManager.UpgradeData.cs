@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Data;
 
 namespace Manager
@@ -8,14 +9,16 @@ namespace Manager
     {
         public UpgradeData GetUpgradeData(string upgradeName)
         {
-            if(storage.upgradeDataList.Count == 0) InitialUpgradeData(upgradeName);
+            UpgradeData upgradeData = null;
             foreach(var u in storage.upgradeDataList) {
                 if(u.upgradeName == upgradeName)
                 {
-                    return u;
+                    upgradeData = u;
+                    return upgradeData;
                 }
             }
-            return storage.upgradeDataList[0];
+            //* 못찾았으니 초기화
+            return InitialUpgradeData(upgradeName);
         }
         public void SetUpgradeData(UpgradeData _upgradeData)
         {
@@ -31,7 +34,6 @@ namespace Manager
             upgradeData.level = 1;
 
             SetUpgradeData(upgradeData);
-            
             return upgradeData;
         }
     }

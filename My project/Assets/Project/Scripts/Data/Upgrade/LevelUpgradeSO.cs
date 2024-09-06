@@ -19,11 +19,8 @@ namespace SO
         protected int _maxLevel = 0;
         protected string _levelValue = "1";
         protected string _levelCost = "1";
-        public void Initialize(int maxLevel, string cost, string levelValue)
+        public virtual void Initialize()
         {
-            _maxLevel = maxLevel;
-            _levelCost = cost;
-            _levelValue = levelValue;
             SetUpgrade();
         }
         public virtual bool IsMaxLevel()
@@ -46,14 +43,10 @@ namespace SO
         public virtual float GetUpgradeValueConvert()
         {
             float output;
-            if (float.TryParse(_levelValue, out output))
-            {
+            if (float.TryParse(GetUpgradeValue(), out output))
                 return output;
-            }
             else
-            {
                 Debug.Log("숫자가 아닙니다.");
-            }
             return output;
         }
         public void SetUpgrade()
@@ -81,7 +74,8 @@ namespace SO
         public virtual int GetUpgradeLevel()
         {
             UpgradeData data = GetUpgradeDataByName(upgradeName);
-            if(data != null)
+
+            if (data != null)
                 _curLevel = data.level;
             return _curLevel;
         }
