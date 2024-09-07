@@ -40,7 +40,7 @@ public class GameManager : MMSingleton<GameManager>
     //private static int maxStageNum = 3;
     //private static int maxStageCountNum = 4;
     //List<GameObject>[] stages = new List<GameObject>[maxStageNum];
-    public Transform[] stages = new Transform[Global.StageManager.maxStageNum * Global.StageManager.maxStageCountNum];
+    public Transform[] stages = new Transform[Global.StageManager.stageCount * Global.StageManager.stageLevel];
     public int curStage;
 
     private InGameMainPage inGameMainPage;
@@ -60,17 +60,18 @@ public class GameManager : MMSingleton<GameManager>
         //if (StageManager.Instance.stageCount % StageManager.Instance.maxStageCountNum == StageManager.Instance.maxStageCountNum - 1) {
         //    StageManager.Instance.stageLevel++;
         //}
-        curStage = Global.StageManager.stageCount++;
+        curStage = Global.UserDataManager.curStage++;
         player.transform.position = stages[curStage].position;
-        if (curStage == Global.StageManager.maxStageCountNum * Global.StageManager.maxStageNum) {
+        if (curStage == Global.StageManager.MAX_STAGE_COUNT * Global.StageManager.MAX_STAGE_LEVEL) {
             bossLevel.SetActive(true);
             spawner.SetActive(false);
             inGameMainPage.ActiveTimer = false;
+            //최종 보스 소환
         }
         else {
-            if(curStage % Global.StageManager.maxStageCountNum == Global.StageManager.maxStageCountNum - 1) {
-                Debug.Log("STargt");
-                Transform bossTran = pool.Get(11 + Global.StageManager.stageLevel++).transform;
+            if(curStage % Global.StageManager.stageCount == Global.StageManager.MAX_STAGE_COUNT - 1) {
+                Transform bossTran = pool.Get(11 + Global.StageManager.stageCount).transform;
+                Global.UserDataManager.curStage++;
                 bossTran.position = stages[curStage].position + new Vector3(0,10f,0);
                 //보스 소환
             }
@@ -79,18 +80,7 @@ public class GameManager : MMSingleton<GameManager>
             inGameMainPage.ActiveTimer = true;
         }
 
-        //if(Global.StageManager.curPoint == 1) {           //On stage �ӽ��ڵ�
-        //    player.transform.position = Vector3.zero;
-        //    bossLevel.SetActive(false);
-        //    spawner.SetActive(true);
-        //    timer.SetActive(true);
-        //}
-        //else {
-        //    player.transform.position = new Vector3(100,98,0);
-        //    bossLevel.SetActive(true);
-        //    spawner.SetActive(false);
-        //    timer.SetActive(false);
-        //}
+        
     }
     void GetData() {
         for(int i= 0; i < 6; i++) {

@@ -13,21 +13,20 @@ namespace Manager
 {
     public class StageManager : MonoBehaviour
     {
-        public int maxStageNum = 3;
-        public int maxStageCountNum = 4;
-        public int stageLevel = 0;
-        public int stageCount = 0;
+        public int stageCount { get { return Global.UserDataManager.curStage % 4; } }
+        public int stageLevel { get { return Global.UserDataManager.curStage / 4; } } 
 
-        public int curPoint = 0;
-        public bool[] isCheck = { true, false, false, false, false, false };
-        public int coin;
-        Text coinText;
-
-        public void TextingCoin()
+        public int MAX_STAGE_COUNT
         {
-            coinText = FindObjectOfType<CoinText>().coinText;
-            coinText.text = string.Format("Coin : {0}", coin);
+            get { return 4;}
+            private set { }
         }
+        public int MAX_STAGE_LEVEL
+        {
+            get { return 3;}
+            private set { }
+        }
+       
 
     }
 }
