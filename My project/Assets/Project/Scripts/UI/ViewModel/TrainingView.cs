@@ -15,7 +15,7 @@ namespace UI
     public class TrainingView : GroupView
     {
         [LabelText("한 그룹에 몇개의 요소가 들어갈 것인가")]
-        [SerializeField] private int groupElementCount = 4;
+        [SerializeField] private int GCount = 4;
         private void OnEnable()
         {
             InitialTrainingGroup();
@@ -26,7 +26,7 @@ namespace UI
             var allPassives = Global.StatsUpgradeManager.GetAllPassives();
             //* 책 한페이지당 패시브 4 X 2(그룹 수) 개씩 있으니 4개 묶음 수 구하기
             int passiveUnitCount = 
-            (allPassives.Count > groupElementCount) ? allPassives.Count / groupElementCount : allPassives.Count;
+            (allPassives.Count > GCount) ? (allPassives.Count / GCount) + 1 : allPassives.Count;
 
             PrepareViewModels(passiveUnitCount);
             var models = GetViewModels();
@@ -39,7 +39,7 @@ namespace UI
                 {
                     var modelGroup = models[i] as PassiveGroup;
                     //* 그룹에 담을 갯수만큼만 담고 다음 그룹으로 넘겨주기
-                    while (passiveCounter <= groupElementCount * (i+1) && passiveCounter < allPassives.Count)
+                    while (passiveCounter < GCount * (i+1) && passiveCounter < allPassives.Count)
                     {
                         var passive = allPassives[passiveCounter];
                         modelGroup.AddToGroup(passive);
