@@ -7,6 +7,5 @@ public class PlayerPosition : MonoBehaviour
 {
     public Transform[] Position;
     void Start() {
-        transform.position = Position[Manager.Global.StageManager.curPoint].position;
     }
 }

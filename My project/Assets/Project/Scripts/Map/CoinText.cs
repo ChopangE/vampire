@@ -12,7 +12,6 @@ public class CoinText : MonoBehaviour
     }
     void Start()
     {
-        coinText.text = string.Format("Coin : {0}", Global.StageManager.coin);
     }
 
     

@@ -23,7 +23,6 @@ public class StageButton : MonoBehaviour
     //    prevUI = List.GetComponentInChildren<ListType>();
     }
     void OnMouseDown() {
-        if (!Global.StageManager.isCheck[(int)type])
         StartCoroutine(GoToBtn(transform.position, player));
     }
 
@@ -42,9 +41,7 @@ public class StageButton : MonoBehaviour
         switch (type) {
             case StageType.Stage:
             case StageType.Boss:
-                Global.StageManager.isCheck[(int)type] = true;
-                Global.StageManager.curPoint = (int)type;
-                //¿©±â¼­ UIÈ£Ãâ
+                //ï¿½ï¿½ï¿½â¼­ UIÈ£ï¿½ï¿½
                 
                 break;
             case StageType.Random:
@@ -55,8 +52,6 @@ public class StageButton : MonoBehaviour
                 //
                 break;
             case StageType.Shop:
-                Global.StageManager.isCheck[(int)type] = true;
-                Global.StageManager.curPoint = (int)type;
 
                 break;
         }

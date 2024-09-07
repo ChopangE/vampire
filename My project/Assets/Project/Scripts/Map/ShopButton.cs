@@ -18,8 +18,6 @@ public class ShopButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         defaultVec = rect.localScale;
     }
     public void OnClicked() {
-        Global.StageManager.coin = Global.StageManager.coin - price;
-        Global.StageManager.TextingCoin();
         btn.interactable = false;
     }
     public void OnPointerEnter(PointerEventData eventData) {
