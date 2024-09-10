@@ -22,6 +22,7 @@ namespace Manager
         public static StageManager StageManager { get; set; }
         public static StatsManager StatsManager { get; set; }
         public static StatsUpgradeManager StatsUpgradeManager { get; set; }
+        public static InputManager InputManager { get; set; }
 
         // public static OptionManager OptionManager { get; private set; }
         // public static GameDataManager GameDataManager { get; set; }
@@ -40,6 +41,7 @@ namespace Manager
             UserDataManager = new();
             UserDataManager.Load();
             UnityGoogleSheet.LoadAllData();
+
         }
 
         private void LoadManagerPrefabs()
@@ -69,6 +71,11 @@ namespace Manager
             {
                 StatsUpgradeManager = Instantiate(Resources.Load<StatsUpgradeManager>(prefixManager + nameof(Manager.StatsUpgradeManager)), transform);
                 StatsUpgradeManager.name = nameof(StageManager);
+            }
+            if (InputManager == null)
+            {
+                InputManager = Instantiate(Resources.Load<InputManager>(prefixManager + nameof(Manager.InputManager)), transform);
+                InputManager.name = nameof(InputManager);
             }
         }
     }

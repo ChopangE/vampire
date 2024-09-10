@@ -35,6 +35,8 @@ namespace UI
             PassiveName = _levelUpgradeSO.upgradeName;
             PassiveValue = string.Format("value {0}", _levelUpgradeSO.GetUpgradeValue());
             PassiveLevel = string.Format("LV.{0}", _levelUpgradeSO.GetUpgradeLevel());
+            PassiveCost = _levelUpgradeSO.GetUpgradeCost();
+            PassiveInfo = _levelUpgradeSO.description;
             UpdateLevelGroup();
         }
         private Sprite _icon;
@@ -80,6 +82,28 @@ namespace UI
             {
                 _passiveLevel = value;
                 OnPropertyChanged(nameof(PassiveLevel));
+            }
+        }
+        private string _passiveCost;
+        [Binding]
+        public string PassiveCost
+        {
+            get => _passiveCost;
+            set
+            {
+                _passiveCost = value;
+                OnPropertyChanged(nameof(PassiveCost));
+            }
+        }
+        private string _passiveInfo;
+        [Binding]
+        public string PassiveInfo
+        {
+            get => _passiveInfo;
+            set
+            {
+                _passiveInfo = value;
+                OnPropertyChanged(nameof(PassiveInfo));
             }
         }
     }
