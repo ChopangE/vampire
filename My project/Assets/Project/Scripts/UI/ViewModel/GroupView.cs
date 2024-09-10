@@ -31,21 +31,25 @@ namespace UnityWeld
         [SerializeField] private Transform modelParent;
         private List<ViewModel> _pool = new();
 
+        private bool IsInitial = false;
         protected override void Awake()
         {
             base.Awake();
             if (baseViewModel == null) return;
-            if (modelParent == null) modelParent = baseViewModel.transform.parent;
+            if (modelParent == null) modelParent = transform;
             baseViewModel.gameObject.SetActive(false);
+            IsInitial = true;
         }
 
         public void PrepareViewModels(int count)
         {
+            if(!IsInitial) Awake();
             if (_pool.Count < count)
             {
                 for (int i = _pool.Count; i < count; i++)
                 {
                     var viewModel = Instantiate(baseViewModel, modelParent);
+
                     _pool.Add(viewModel);
                 }
             }
