@@ -33,7 +33,7 @@ namespace UI
         {
             Icon = _levelUpgradeSO.icon;
             PassiveName = _levelUpgradeSO.upgradeName;
-            PassiveValue = string.Format("value {0}", _levelUpgradeSO.GetUpgradeValue());
+            PassiveValue = _levelUpgradeSO.GetUpgradeValue();
             PassiveLevel = string.Format("LV.{0}", _levelUpgradeSO.GetUpgradeLevel());
             PassiveCost = _levelUpgradeSO.GetUpgradeCost();
             PassiveInfo = _levelUpgradeSO.description;

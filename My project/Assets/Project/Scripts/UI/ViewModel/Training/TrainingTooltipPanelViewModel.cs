@@ -16,7 +16,8 @@ namespace UI
             Name = infos.PassiveName;
             Cost = infos.PassiveCost;
             Icon = infos.Icon;
-            Info = infos.PassiveInfo;
+
+            Info = string.Format("{0}\n{1}%", infos.PassiveInfo, infos.PassiveValue);
         }
         private string _name;
         [Binding]
