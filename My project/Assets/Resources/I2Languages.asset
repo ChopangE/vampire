@@ -16,7 +16,95 @@ MonoBehaviour:
     UserAgreesToHaveItOnTheScene: 0
     UserAgreesToHaveItInsideThePluginsFolder: 0
     GoogleLiveSyncIsUptoDate: 1
-    mTerms: []
+    mTerms:
+    - Term: Passive/Info/AttackDamageInfo
+      TermType: 0
+      Description: 
+      Languages:
+      - Increase Attack Damage
+      - "\uACF5\uACA9\uB825 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Info/DefenseInfo
+      TermType: 0
+      Description: 
+      Languages:
+      - Increased Defense
+      - "\uBC29\uC5B4\uB825 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Info/GoldBonusInfo
+      TermType: 0
+      Description: 
+      Languages:
+      - Increased Gold Acquisition Rate
+      - "\uACE8\uB4DC \uD68D\uB4DD\uB960 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Info/HealthInfo
+      TermType: 0
+      Description: 
+      Languages:
+      - Increased Stamina
+      - "\uCCB4\uB825 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Info/RevivePossibilityInfo
+      TermType: 0
+      Description: 
+      Languages:
+      - Increased Resurrection Probability
+      - "\uBD80\uD65C\uD655\uB960 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Name/AttackDamageName
+      TermType: 0
+      Description: 
+      Languages:
+      - Attack Damage
+      - "\uACF5\uACA9\uB825"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Name/DefenseName
+      TermType: 0
+      Description: 
+      Languages:
+      - Defense
+      - "\uBC29\uC5B4\uB825"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Name/GoldBonusName
+      TermType: 0
+      Description: 
+      Languages:
+      - Gold Bonus
+      - "\uACE8\uB4DC \uBCF4\uB108\uC2A4"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Name/HealthName
+      TermType: 0
+      Description: 
+      Languages:
+      - Stamina
+      - "\uCCB4\uB825"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Name/RevivePossibilityName
+      TermType: 0
+      Description: 
+      Languages:
+      - Revive Possibility
+      - "\uBD80\uD65C\uD655\uB960"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: font/textFontLocal
+      TermType: 9
+      Description: 
+      Languages:
+      - PixelSerif_16px_normal_v02 SDF
+      - Galmuri11 SDF
+      Flags: 0000
+      Languages_Touch: []
     CaseInsensitiveTerms: 0
     OnMissingTranslation: 1
     mTerm_AppName: 
@@ -29,16 +117,20 @@ MonoBehaviour:
       Flags: 0
     IgnoreDeviceLanguage: 0
     _AllowUnloadingLanguages: 0
-    Google_WebServiceURL: 
-    Google_SpreadsheetKey: 
-    Google_SpreadsheetName: 
-    Google_LastUpdatedVersion: 
-    Google_Password: change_this
+    Google_WebServiceURL: https://script.google.com/macros/s/AKfycbwdPVAlDVP3iMK97Ytq04SaMrbkrgSDEMbtL6XuSGENq2oboE8ijiMLza3gYe9P9sAr/exec
+    Google_SpreadsheetKey: 1p863SKW8MDiIdoIoCEeEKVeLVze0RoaihCjeu4er2_k
+    Google_SpreadsheetName: I2Loc My project Localization
+    Google_LastUpdatedVersion: 1726665146928
+    Google_Password: a12345
     GoogleUpdateFrequency: 3
     GoogleInEditorCheckFrequency: 2
     GoogleUpdateSynchronization: 1
     GoogleUpdateDelay: 0
-    Assets: []
+    Assets:
+    - {fileID: 12800000, guid: 8cfe50e7fc30eaa4c92d75773eefe5cf, type: 3}
+    - {fileID: 12800000, guid: 5a2a5e2cfd11dc1478a67030f9390157, type: 3}
+    - {fileID: 11400000, guid: e092b8fd273741348aac71e0cea5877e, type: 2}
+    - {fileID: 11400000, guid: de68c7c3718d17e40bf1745ac7d6f2a9, type: 2}
     Spreadsheet_LocalFileName: 
     Spreadsheet_LocalCSVSeparator: ','
     Spreadsheet_LocalCSVEncoding: utf-8

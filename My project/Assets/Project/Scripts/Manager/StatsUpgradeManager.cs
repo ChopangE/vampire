@@ -11,8 +11,8 @@ namespace Manager
     public class StatsUpgradeManager : MonoBehaviour
     {
         [SerializeField] private List<PlayerPassiveLevelUpgradeSO> playerPassiveStatsUpgradeList;
-        private const string playerStatsPath = "Assets/Project/Scripts/Data/Upgrade/PlayerStat";
-        private const string playerPassiveStatsPath = "Assets/Project/Scripts/Data/Upgrade/LevelStatUpgrade";
+        private const string playerStatsPath = "Assets/Project/Data/Upgrade/PlayerStat";
+        private const string playerPassiveStatsPath = "Assets/Project/Data/Upgrade/LevelStatUpgrade";
 
 #if UNITY_EDITOR
         [Button("SO 불러오기")]

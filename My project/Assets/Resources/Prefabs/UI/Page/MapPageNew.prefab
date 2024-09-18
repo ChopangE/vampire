@@ -3504,13 +3504,41 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3448582354506926911, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
+      propertyPath: m_text
+      value: "\uACF5\uACA9\uB825"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3448582354506926911, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
       propertyPath: m_fontSize
       value: 17.25
       objectReference: {fileID: 0}
     - target: {fileID: 3448582354506926911, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: de68c7c3718d17e40bf1745ac7d6f2a9, type: 2}
+    - target: {fileID: 3448582354506926911, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
       propertyPath: m_fontSizeMin
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 3448582354506926911, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7928067749875610369, guid: de68c7c3718d17e40bf1745ac7d6f2a9, type: 2}
+    - target: {fileID: 3714206011472330854, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
+      propertyPath: m_text
+      value: "\uBC29\uC5B4\uB825"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3714206011472330854, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
+      propertyPath: m_fontSize
+      value: 42
+      objectReference: {fileID: 0}
+    - target: {fileID: 3714206011472330854, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: de68c7c3718d17e40bf1745ac7d6f2a9, type: 2}
+    - target: {fileID: 3714206011472330854, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7928067749875610369, guid: de68c7c3718d17e40bf1745ac7d6f2a9, type: 2}
     - target: {fileID: 5798144325386529645, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -3521,8 +3549,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6029953946240499485, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
       propertyPath: m_text
-      value: Info
+      value: "\uBC29\uC5B4\uB825"
       objectReference: {fileID: 0}
+    - target: {fileID: 6029953946240499485, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: de68c7c3718d17e40bf1745ac7d6f2a9, type: 2}
+    - target: {fileID: 6029953946240499485, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -7928067749875610369, guid: de68c7c3718d17e40bf1745ac7d6f2a9, type: 2}
     - target: {fileID: 6965273787606684986, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
       propertyPath: viewModelMethodName
       value: UI.Page.MapPageNew.OnClickStageMapPageButton
@@ -3545,8 +3581,140 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
+--- !u!1 &1060679141309314869 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6241362968214746007, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
+  m_PrefabInstance: {fileID: 6351637339531363490}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7563928670508106457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060679141309314869}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Passive/Name/DefenseName
+  mTermSecondary: font/textFontLocal
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
 --- !u!224 &5518774639993394073 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1491585145954785083, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
   m_PrefabInstance: {fileID: 6351637339531363490}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8433436573228549099 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3255004546019919689, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
+  m_PrefabInstance: {fileID: 6351637339531363490}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5205376928139460223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8433436573228549099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Passive/Name/AttackDamageName
+  mTermSecondary: font/textFontLocal
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
+--- !u!1 &9128672802409399183 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2777035480212834093, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
+  m_PrefabInstance: {fileID: 6351637339531363490}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8531692898942760437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9128672802409399183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344445a89b4f74a0e9a0a766903df87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mTerm: Passive/Name/DefenseName
+  mTermSecondary: font/textFontLocal
+  PrimaryTermModifier: 0
+  SecondaryTermModifier: 0
+  TermPrefix: 
+  TermSuffix: 
+  LocalizeOnAwake: 1
+  IgnoreRTL: 0
+  MaxCharactersInRTL: 0
+  IgnoreNumbersInRTL: 1
+  CorrectAlignmentForRTL: 1
+  AddSpacesToJoinedLanguages: 0
+  AllowLocalizedParameters: 1
+  AllowParameters: 1
+  TranslatedObjects: []
+  LocalizeEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  AlwaysForceLocalize: 0
+  LocalizeCallBack:
+    Target: {fileID: 0}
+    MethodName: 
+  mGUI_ShowReferences: 0
+  mGUI_ShowTems: 1
+  mGUI_ShowCallback: 0
+  mLocalizeTarget: {fileID: 0}
+  mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI

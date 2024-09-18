@@ -10,7 +10,8 @@ namespace UI.Page
         [Binding]
         public void OnClickKorean()
         {
-            I2.Loc.LocalizationManager.CurrentLanguage = "English (United States)";  //Language and Variant
+            I2.Loc.LocalizationManager.CurrentLanguage = "Korean";  //Language and Variant
+            Debug.Log(I2.Loc.LocalizationManager.CurrentLanguage);
         }
         [Binding]
         public void OnClickEnglish()

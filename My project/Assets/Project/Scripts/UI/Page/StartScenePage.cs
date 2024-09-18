@@ -31,6 +31,7 @@ namespace UI.Page
         [Binding]
         public void OnClickOptionButton()
         {
+            Global.UIManager.OpenPage<OptionPage>();
         }
         [Binding]
         public void OnClickExitButton()

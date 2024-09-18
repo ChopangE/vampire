@@ -10,8 +10,8 @@ namespace Manager
     {
         [SerializeField] private List<Stats<PlayerStat>> playerStatsList;
         [SerializeField] private List<Stats<PlayerPassiveStat>> playerPassiveStatsList;
-        private const string playerStatsPath = "Assets/Project/Scripts/Data/Stats/NormalStats";
-        private const string playerPassiveStatsPath = "Assets/Project/Scripts/Data/Stats/LevelStats";
+        private const string playerStatsPath = "Assets/Project/Data/Stats/NormalStats";
+        private const string playerPassiveStatsPath = "Assets/Project/Data/Stats/LevelStats";
 
         #if UNITY_EDITOR
         [Button("SO 불러오기")]

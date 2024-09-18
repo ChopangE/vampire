@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Data;
+using I2.Loc;
 using SO;
 using UnityEngine;
 using UnityWeld;
@@ -32,11 +33,11 @@ namespace UI
         private void RefreshData()
         {
             Icon = _levelUpgradeSO.icon;
-            PassiveName = _levelUpgradeSO.upgradeName;
+            PassiveName = LocalizationManager.GetTranslation(_levelUpgradeSO.upgradeNameKey);
             PassiveValue = _levelUpgradeSO.GetUpgradeValue();
             PassiveLevel = string.Format("LV.{0}", _levelUpgradeSO.GetUpgradeLevel());
             PassiveCost = _levelUpgradeSO.GetUpgradeCost();
-            PassiveInfo = _levelUpgradeSO.description;
+            PassiveInfo =  LocalizationManager.GetTranslation(_levelUpgradeSO.descriptionKey);
             UpdateLevelGroup();
         }
         private Sprite _icon;
