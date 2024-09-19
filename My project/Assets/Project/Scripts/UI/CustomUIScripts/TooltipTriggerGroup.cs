@@ -21,7 +21,7 @@ namespace UI
         private bool isHovering = false;
         private bool isControlInGroup = false;
         private void OnEnable(){
-
+            InitialTriggers();
         }
 
         private void OnDisable()
@@ -36,8 +36,6 @@ namespace UI
         {
             if (Input.GetMouseButtonDown(0)) isMouseDown = true;
             if (Input.GetMouseButtonUp(0)) isMouseDown = false;
-
-            InitialTriggers();
 
             CheckLastTooltip();
 
@@ -82,13 +80,22 @@ namespace UI
 
         private void InitialTriggers()
         {
-            if(tooltipTriggerList.Count == 0) {
-                tooltipTriggerList = transform.GetComponentsInChildren<TooltipTrigger>().ToList();
-                foreach (var tooltipTrigger in tooltipTriggerList)
+            tooltipTriggerList = transform.GetComponentsInChildren<TooltipTrigger>().ToList();
+            foreach (var tooltipTrigger in tooltipTriggerList)
+            {
+                tooltipTrigger.isControlInGroup = true;
+            }
+        }
+
+        public void RegisterTooltipTriger(TooltipTrigger tooltipTrigger)
+        {
+            foreach(var t in tooltipTriggerList) {
+                if(t == tooltipTrigger)
                 {
-                    tooltipTrigger.isControlInGroup = true;
+                    return;
                 }
             }
+            tooltipTriggerList.Add(tooltipTrigger);
         }
 
         protected virtual void ShowTooltip(string _text, RectTransform _rectTransform)

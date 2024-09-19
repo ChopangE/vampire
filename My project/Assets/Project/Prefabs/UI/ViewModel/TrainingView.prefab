@@ -246,7 +246,7 @@ MonoBehaviour:
   text: Test
   delay: 0.1
   rectTransform: {fileID: 0}
-  isControlInGroup: 0
+  isControlInGroup: 1
 --- !u!114 &5601561462921947892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,7 +327,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseViewModel: {fileID: 8327680289650250489}
   modelParent: {fileID: 230127416373029098}
-  GCount: 4
+  GCount: 2
+  GCountElement: 4
 --- !u!1 &1491585147060967644
 GameObject:
   m_ObjectHideFlags: 0

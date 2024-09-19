@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee358156595ae9f419bc20921452c27a, type: 3}
+  m_Name: CritRate
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 21300000, guid: 3cdbecd58fbe7da4aba6ee4446d1e07c, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: icon
+      Entry: 10
+      Data: 0
+    - Name: description
+      Entry: 1
+      Data: "\uBD80\uD65C\uD655\uB960 \uC99D\uAC00"
+  upgradeName: "\uBD80\uD65C\uD655\uB960"
+  upgradeNameKey: Passive/Name/CritRateName
+  descriptionKey: Passive/Info/CritRateInfo
+  unitsToUpgrade:
+  - {fileID: 11400000, guid: 086af2d4958076d41974b0ee26644dbc, type: 2}
+  isPercentUpgrade: 0

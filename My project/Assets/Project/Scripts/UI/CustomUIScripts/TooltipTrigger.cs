@@ -1,5 +1,6 @@
 using System;
 using Manager;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,14 +9,15 @@ namespace UI
     [RequireComponent(typeof(RectTransform))]
     public class TooltipTrigger : MonoBehaviour
     {
-        [Tooltip("The tooltip canvas which will display the tooltip. If not specified, we'll try to find one.")]
+        [LabelText("툴팁 띄울 패널")]
         public TooltipPanel tooltipPanel;
-        [Tooltip("The text to display in the tooltip")]
+        [LabelText("툴팁이 띄울 텍스트")]
         public string text;
-        [Tooltip("How long the mouse must linger on us before showing the tooltip")]
+        [LabelText("툴팁 보여주기 전 딜레이")]
         public float delay = 1f;
         
         public RectTransform rectTransform;
+        [LabelText("그룹으로 관리할것인가")]
         public bool isControlInGroup = false;
 
         private bool mouseIsHovering;
@@ -36,6 +38,11 @@ namespace UI
                 var canvases = Resources.FindObjectsOfTypeAll<TooltipPanel>();
                 if (canvases.Length > 0)
                     tooltipPanel = canvases[0];
+            }
+            if(isControlInGroup)
+            {
+                TooltipTriggerGroup tooltipTriggerGroup = transform.GetComponentInParent<TooltipTriggerGroup>();
+                tooltipTriggerGroup?.RegisterTooltipTriger(this);
             }
         }
 

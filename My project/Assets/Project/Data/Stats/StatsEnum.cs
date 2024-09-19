@@ -19,10 +19,12 @@ namespace Data
         Passive_Defense,
         Passive_GoldBonus,
         Passive_RevivePossibility,
-        Passive_MovementSpeed, //* 이동속도
-        Passive_AttackSpeed,
+        Passive_MoveSpeed, //* 이동속도
+        Passive_ProjectileSpeed, //* 발사 속도
         Passive_EXPMagnetRange,
-        Passive_HealthRegeneration
-
+        Passive_HealthRegeneration,
+        Passive_EXPBonus,
+        Passive_CriticalDamage,
+        Passive_CriticalRate, //* 치확
     }
 }

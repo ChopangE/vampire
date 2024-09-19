@@ -1101,9 +1101,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7865087176744693628}
     m_Modifications:
+    - target: {fileID: 2861437428248075779, guid: c681bafa66c17eb42b76a4c33faba17a, type: 3}
+      propertyPath: mTerm
+      value: UI/Option
+      objectReference: {fileID: 0}
+    - target: {fileID: 2861437428248075779, guid: c681bafa66c17eb42b76a4c33faba17a, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7882095247133956125, guid: c681bafa66c17eb42b76a4c33faba17a, type: 3}
       propertyPath: m_text
-      value: Option
+      value: "\uC124\uC815"
       objectReference: {fileID: 0}
     - target: {fileID: 7882095248003829958, guid: c681bafa66c17eb42b76a4c33faba17a, type: 3}
       propertyPath: m_Name
@@ -1227,9 +1235,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7865087176744693628}
     m_Modifications:
+    - target: {fileID: 2861437428248075779, guid: c681bafa66c17eb42b76a4c33faba17a, type: 3}
+      propertyPath: mTerm
+      value: UI/Continue
+      objectReference: {fileID: 0}
+    - target: {fileID: 2861437428248075779, guid: c681bafa66c17eb42b76a4c33faba17a, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7882095247133956125, guid: c681bafa66c17eb42b76a4c33faba17a, type: 3}
       propertyPath: m_text
-      value: Continue
+      value: "\uACC4\uC18D\uD558\uAE30"
       objectReference: {fileID: 0}
     - target: {fileID: 7882095248003829952, guid: c681bafa66c17eb42b76a4c33faba17a, type: 3}
       propertyPath: panel

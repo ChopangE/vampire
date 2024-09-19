@@ -25,12 +25,44 @@ MonoBehaviour:
       - "\uACF5\uACA9\uB825 \uC99D\uAC00"
       Flags: 0000
       Languages_Touch: []
+    - Term: Passive/Info/CritDamageInfo
+      TermType: 0
+      Description: 
+      Languages:
+      - Critical Damage Increased
+      - "\uCE58\uBA85\uD0C0 \uB370\uBBF8\uC9C0 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Info/CritRateInfo
+      TermType: 0
+      Description: 
+      Languages:
+      - Increased Critical Hit Chance
+      - "\uCE58\uBA85\uD0C0 \uD655\uB960 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
     - Term: Passive/Info/DefenseInfo
       TermType: 0
       Description: 
       Languages:
       - Increased Defense
       - "\uBC29\uC5B4\uB825 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Info/EXPBonusInfo
+      TermType: 0
+      Description: 
+      Languages:
+      - Increased Experience Bonus
+      - "\uACBD\uD5D8\uCE58 \uBCF4\uB108\uC2A4 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Info/EXPMangentRangeInfo
+      TermType: 0
+      Description: 
+      Languages:
+      - Increased Experience Gain Range
+      - "\uACBD\uD5D8\uCE58 \uD68D\uB4DD \uBC94\uC704 \uC99D\uAC00"
       Flags: 0000
       Languages_Touch: []
     - Term: Passive/Info/GoldBonusInfo
@@ -46,7 +78,31 @@ MonoBehaviour:
       Description: 
       Languages:
       - Increased Stamina
-      - "\uCCB4\uB825 \uC99D\uAC00"
+      - "\uCD5C\uB300 \uCCB4\uB825 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Info/HealthRegenerationInfo
+      TermType: 0
+      Description: 
+      Languages:
+      - Increased Playback
+      - "\uC7AC\uC0DD \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Info/MovementSpeedInfo
+      TermType: 0
+      Description: 
+      Languages:
+      - Increased Movement Speed
+      - "\uC774\uB3D9\uC18D\uB3C4 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Info/ProjectileSpeedInfo
+      TermType: 0
+      Description: 
+      Languages:
+      - Increased Projectile Speed
+      - "\uBC1C\uC0AC\uCCB4 \uC18D\uB3C4 \uC99D\uAC00"
       Flags: 0000
       Languages_Touch: []
     - Term: Passive/Info/RevivePossibilityInfo
@@ -65,12 +121,44 @@ MonoBehaviour:
       - "\uACF5\uACA9\uB825"
       Flags: 0000
       Languages_Touch: []
+    - Term: Passive/Name/CritDamageName
+      TermType: 0
+      Description: 
+      Languages:
+      - Critical Damage
+      - "\uCE58\uBA85\uD0C0 \uB370\uBBF8\uC9C0"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Name/CritRateName
+      TermType: 0
+      Description: 
+      Languages:
+      - Critical Chance
+      - "\uCE58\uBA85\uD0C0 \uD655\uB960"
+      Flags: 0000
+      Languages_Touch: []
     - Term: Passive/Name/DefenseName
       TermType: 0
       Description: 
       Languages:
       - Defense
       - "\uBC29\uC5B4\uB825"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Name/EXPBonusName
+      TermType: 0
+      Description: 
+      Languages:
+      - Experience Bonus
+      - "\uACBD\uD5D8\uCE58 \uBCF4\uB108\uC2A4"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Name/EXPMangentRangeName
+      TermType: 0
+      Description: 
+      Languages:
+      - Range Of Experience Gain
+      - "\uACBD\uD5D8\uCE58 \uD68D\uB4DD \uBC94\uC704"
       Flags: 0000
       Languages_Touch: []
     - Term: Passive/Name/GoldBonusName
@@ -89,6 +177,30 @@ MonoBehaviour:
       - "\uCCB4\uB825"
       Flags: 0000
       Languages_Touch: []
+    - Term: Passive/Name/HealthRegenerationName
+      TermType: 0
+      Description: 
+      Languages:
+      - Reproduction
+      - "\uC7AC\uC0DD"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Name/MovementSpeedName
+      TermType: 0
+      Description: 
+      Languages:
+      - Movement Speed
+      - "\uC774\uB3D9\uC18D\uB3C4"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Passive/Name/ProjectileSpeedName
+      TermType: 0
+      Description: 
+      Languages:
+      - Projectile Speed
+      - "\uBC1C\uC0AC\uCCB4 \uC18D\uB3C4"
+      Flags: 0000
+      Languages_Touch: []
     - Term: Passive/Name/RevivePossibilityName
       TermType: 0
       Description: 
@@ -97,7 +209,39 @@ MonoBehaviour:
       - "\uBD80\uD65C\uD655\uB960"
       Flags: 0000
       Languages_Touch: []
+    - Term: UI/Continue
+      TermType: 0
+      Description: 
+      Languages:
+      - Continue
+      - "\uACC4\uC18D\uD558\uAE30"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: UI/Option
+      TermType: 0
+      Description: 
+      Languages:
+      - Option
+      - "\uC124\uC815"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: UI/StartGame
+      TermType: 0
+      Description: 
+      Languages:
+      - Start Game
+      - "\uC2DC\uC791"
+      Flags: 0000
+      Languages_Touch: []
     - Term: font/textFontLocal
+      TermType: 9
+      Description: 
+      Languages:
+      - PixelSerif_16px_normal_v02 SDF
+      - Galmuri11 SDF
+      Flags: 0000
+      Languages_Touch: []
+    - Term: tmpFont
       TermType: 9
       Description: 
       Languages:
@@ -120,7 +264,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbwdPVAlDVP3iMK97Ytq04SaMrbkrgSDEMbtL6XuSGENq2oboE8ijiMLza3gYe9P9sAr/exec
     Google_SpreadsheetKey: 1p863SKW8MDiIdoIoCEeEKVeLVze0RoaihCjeu4er2_k
     Google_SpreadsheetName: I2Loc My project Localization
-    Google_LastUpdatedVersion: 1726665146928
+    Google_LastUpdatedVersion: 1726755558951
     Google_Password: a12345
     GoogleUpdateFrequency: 3
     GoogleInEditorCheckFrequency: 2

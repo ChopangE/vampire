@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee358156595ae9f419bc20921452c27a, type: 3}
+  m_Name: MovementSpeed
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 21300000, guid: 1e61129125f18974aa4a29fe4dbef9da, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: icon
+      Entry: 10
+      Data: 0
+    - Name: description
+      Entry: 1
+      Data: "\uC774\uB3D9\uC18D\uB3C4 \uC99D\uAC00"
+  upgradeName: "\uC774\uB3D9\uC18D\uB3C4"
+  upgradeNameKey: Passive/Name/MovementSpeedName
+  descriptionKey: Passive/Info/MovementSpeedInfo
+  unitsToUpgrade:
+  - {fileID: 11400000, guid: ceb0af7e6bc1abb4ba067be658c8c4c5, type: 2}
+  isPercentUpgrade: 0
