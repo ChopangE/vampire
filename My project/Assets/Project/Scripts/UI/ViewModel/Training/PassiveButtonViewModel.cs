@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Data;
 using I2.Loc;
+using Manager;
 using SO;
 using UnityEngine;
 using UnityWeld;
@@ -22,6 +23,9 @@ namespace UI
         [Binding]
         public void DoUpgrade()
         {
+            string remainGold = (int.Parse(Global.UserDataManager.GetGoldDataString())
+                                 -int.Parse(_levelUpgradeSO.GetUpgradeCost())).ToString();
+            Global.UserDataManager.SetGoldData(remainGold);
             _levelUpgradeSO.DoUpgrade();
             RefreshData();
         }
