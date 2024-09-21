@@ -14,7 +14,6 @@ public class Player : MonoBehaviour
     public float speed;
     bool isKnockBack { get; set; }
     void Awake() {
-        
         rigid = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
@@ -28,11 +27,7 @@ public class Player : MonoBehaviour
         if (!GameManager.Instance.isLive) return;
         if (isKnockBack) return;
         transform.Translate(inputVec * speed * Time.fixedDeltaTime);
-        //rigid.velocity = Vector2.zero;
-        /*
-        Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
-        rigid.MovePosition(rigid.position + nextVec);
-        */
+       
     }
 
     void OnMove(InputValue value) {
@@ -55,19 +50,7 @@ public class Player : MonoBehaviour
         
     }
     
-    void OnCollisionStay2D(Collision2D collision) {
-        if (!GameManager.Instance.isLive) return;
-        if (collision.gameObject.tag == "Ground" || collision.gameObject.tag == "Bound") return;
-        GameManager.Instance.health -= Time.deltaTime * 10;
-        if (GameManager.Instance.health < 0) {
-            for (int i = 2; i < transform.childCount; i++) {
-                transform.GetChild(i).gameObject.SetActive(false);
-            }
-
-            anim.SetTrigger("Dead");
-            GameManager.Instance.GameOver();
-        }
-    }
+    
     
     public void Stopping()
     {
@@ -83,19 +66,5 @@ public class Player : MonoBehaviour
     }
 
     
-    /*
-    void OnTriggerStay2D(Collider2D collision) {
-        if (!GameManager.Instance.isLive) return;
-        if (!collision.CompareTag("Burn")) return;
-        GameManager.Instance.health -=  Time.deltaTime * 10;
-        if (GameManager.Instance.health < 0) {
-            for (int i = 2; i < transform.childCount; i++) {
-                transform.GetChild(i).gameObject.SetActive(false);
-            }
-
-            anim.SetTrigger("Dead");
-            GameManager.Instance.GameOver();
-        }
-    }
-    */
+    
 }
