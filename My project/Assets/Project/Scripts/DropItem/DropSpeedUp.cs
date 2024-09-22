@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 
-namespace DropItem
+namespace InGame
 {
     public class DropSpeedUp : DropItem
     {   

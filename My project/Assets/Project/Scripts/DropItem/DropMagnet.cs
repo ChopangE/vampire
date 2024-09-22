@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 
-namespace DropItem
+namespace InGame
 {
     public class DropMagnet : DropItem
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace DropItem
+namespace InGame
 {
    public class DropMagnetTrigger : DropItemTrigger
    {

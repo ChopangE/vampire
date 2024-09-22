@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 
-namespace DropItem
+namespace InGame
 {
     public interface ITriggerable
     {

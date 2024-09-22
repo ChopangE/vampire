@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Manager;
 using UnityEngine;
 
-namespace DropItem
+namespace InGame
 {
    public class DropCoin : DropItem
    {
