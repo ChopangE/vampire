@@ -150,7 +150,7 @@ namespace Manager
         {
             dropItemPool = new List<ObjectPool<PoolObject>>();
             ObjectPool<PoolObject> o;
-            for(int i = 0; i < dropItemList.Count; i++) {
+            for(int i = 0; i < dropItemList.Count; i++) { 
                 o = new ObjectPool<PoolObject>(dropItemList[i].gameObject, ResetOnPull, ResetOnPush);
                 dropItemPool.Add(o);
             }
