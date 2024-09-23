@@ -20,7 +20,6 @@ namespace InGame
             offset = new Vector3(0, 2f, 0);
             player = GameManager.Instance.player;
             dropItemTrigger.OnTriggered += PullCoin;
-
         }
 
         private void PullCoin()
@@ -30,7 +29,7 @@ namespace InGame
             transform.parent = player.transform;
             transform.DOShakePosition(duration, new Vector3(0, 0.5f, 0),1,0f, false, false);
             Coin[] coins = FindObjectsOfType<Coin>();
-            DOVirtual.DelayedCall(duration,() => { Destroy(gameObject); }).OnUpdate(() => { 
+            DOVirtual.DelayedCall(duration,() => { DestroyItem(); }).OnUpdate(() => { 
                 coins =  FindObjectsOfType<Coin>();
                 foreach (var coin in coins)
                 {

@@ -41,7 +41,7 @@ namespace InGame
         void SpeedDown()
         {
             player.speed /= (1f + SpeedUpRatio);
-            Destroy(gameObject);
+            DestroyItem();
         }
     }
 

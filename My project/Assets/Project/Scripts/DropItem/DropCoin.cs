@@ -20,7 +20,7 @@ namespace InGame
            int nowCoin = int.Parse(Global.UserDataManager.GetGoldDataString());
            nowCoin += coin;
            Global.UserDataManager.SetGoldData(nowCoin.ToString());
-           Destroy(gameObject);
+           DestroyItem();
        }
    } 
 }

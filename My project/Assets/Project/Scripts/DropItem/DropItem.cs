@@ -6,12 +6,17 @@ using UnityEngine;
 
 namespace InGame
 {
+    [RequireComponent(typeof(DropItemTrigger))]
     public abstract class DropItem : PoolObject
     {
         protected DropItemTrigger dropItemTrigger;
         protected virtual void Start()
         {
             dropItemTrigger = GetComponent<DropItemTrigger>();
+        }
+        protected virtual void DestroyItem()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

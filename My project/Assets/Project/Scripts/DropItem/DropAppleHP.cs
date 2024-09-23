@@ -18,7 +18,7 @@ namespace InGame
         {
             GameManager.Instance.health = Mathf.Min(GameManager.Instance.health += plusHP, GameManager.Instance.maxHealth);
             //임시코드 stat 방식 바뀌면 교체
-            Destroy(gameObject);
+            DestroyItem();
         }
     }
 }

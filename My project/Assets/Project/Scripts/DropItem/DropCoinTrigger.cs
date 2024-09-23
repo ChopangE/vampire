@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace InGame
 {
-    public class DropCoinTrigger : MonoBehaviour
+    public class DropCoinTrigger : DropItemTrigger
     {
         
     }

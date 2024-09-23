@@ -167,4 +167,7 @@ public class GameManager : MMSingleton<GameManager>
 
     }
 
+    public Transform CurStagePos() => stages[curStage];
+    public Bounds CurStageBounds() => stages[curStage].GetComponentInChildren<CompositeCollider2D>().bounds;
+
 }
