@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Manager.InGame;
 using UGS;
 using UnityEngine;
 
@@ -23,6 +24,7 @@ namespace Manager
         public static StatsManager StatsManager { get; set; }
         public static StatsUpgradeManager StatsUpgradeManager { get; set; }
         public static InputManager InputManager { get; set; }
+        public static ExpManager ExpManager { get; set; }
 
         // public static OptionManager OptionManager { get; private set; }
         // public static GameDataManager GameDataManager { get; set; }
@@ -54,28 +56,33 @@ namespace Manager
             }
             if (SoundManager == null)
             {
-                SoundManager = Instantiate(Resources.Load<SoundManager>(prefixManager + nameof(Manager.SoundManager)), transform);
+                SoundManager = Instantiate(Resources.Load<SoundManager>(prefixManager + nameof(SoundManager)), transform);
                 SoundManager.name = nameof(SoundManager);
             }
             if (StageManager == null)
             {
-                StageManager = Instantiate(Resources.Load<StageManager>(prefixManager + nameof(Manager.StageManager)), transform);
+                StageManager = Instantiate(Resources.Load<StageManager>(prefixManager + nameof(StageManager)), transform);
                 StageManager.name = nameof(StageManager);
             }
             if (StatsManager == null)
             {
-                StatsManager = Instantiate(Resources.Load<StatsManager>(prefixManager + nameof(Manager.StatsManager)), transform);
+                StatsManager = Instantiate(Resources.Load<StatsManager>(prefixManager + nameof(StatsManager)), transform);
                 StatsManager.name = nameof(StageManager);
             }
             if (StatsUpgradeManager == null)
             {
-                StatsUpgradeManager = Instantiate(Resources.Load<StatsUpgradeManager>(prefixManager + nameof(Manager.StatsUpgradeManager)), transform);
+                StatsUpgradeManager = Instantiate(Resources.Load<StatsUpgradeManager>(prefixManager + nameof(StatsUpgradeManager)), transform);
                 StatsUpgradeManager.name = nameof(StageManager);
             }
             if (InputManager == null)
             {
-                InputManager = Instantiate(Resources.Load<InputManager>(prefixManager + nameof(Manager.InputManager)), transform);
+                InputManager = Instantiate(Resources.Load<InputManager>(prefixManager + nameof(InputManager)), transform);
                 InputManager.name = nameof(InputManager);
+            }
+            if (ExpManager == null)
+            {
+                ExpManager = Instantiate(Resources.Load<ExpManager>(prefixManager + nameof(ExpManager)), transform);
+                ExpManager.name = nameof(ExpManager);
             }
         }
     }

@@ -136,13 +136,13 @@ namespace Manager
             DropItem dropItem = poolObject as DropItem;
             // dropItem.SetDropItemManager(this);
 
-            activeObjCount++; // 활성화된 손님 수 증가
+            activeObjCount++; // 활성화된 객체 수 증가
             OnDropItemSpawned?.Invoke(this, dropItem);
         }
         //* 다시 폴에 넣으실 때 호출될 함수는 push할 때 호출될 액션에 포함할 함수로 만드는게 맞습니다. 
         protected override void ResetOnPush(PoolObject pushObject)
         {
-            activeObjCount--; // 활성화된 손님 수 감소
+            activeObjCount--; // 활성화된 객체 수 감소
             spawnedItemList.Remove(pushObject.GetComponent<DropItem>());
         }
 
