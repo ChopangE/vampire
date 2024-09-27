@@ -69,7 +69,7 @@ public class GameManager : MMSingleton<GameManager>
             //최종 보스 소환
         }
         else {
-            if(curStage % Global.StageManager.stageCount == Global.StageManager.MAX_STAGE_COUNT - 1) {
+            if(curStage % Global.StageManager.MAX_STAGE_COUNT == Global.StageManager.MAX_STAGE_COUNT - 1) {
                 Transform bossTran = pool.Get(11 + Global.StageManager.stageCount).transform;
                 Global.UserDataManager.curStage++;
                 bossTran.position = stages[curStage].position + new Vector3(0,10f,0);

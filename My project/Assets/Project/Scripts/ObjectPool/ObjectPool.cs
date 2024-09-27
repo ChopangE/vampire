@@ -17,7 +17,7 @@ namespace ObjectPooling
             Spawn(numToSpawn, parent);
         }
 
-        public ObjectPool(GameObject pooledObject, Action<T> pullObject, Action<T> pushObject, int numToSpawn = 0)
+        public ObjectPool(GameObject pooledObject, Action<T> pullObject, Action<T> pushObject, int numToSpawn = 5)
         {
             this.prefab = pooledObject;
             this.pullObject = pullObject;
