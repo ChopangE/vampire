@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2294806815535269022}
   - component: {fileID: 2637496444157739224}
   m_Layer: 0
-  m_Name: DropAppleHp30Up
+  m_Name: DropAppleHp60Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 96ab565cce915f64eb35829fc18ab940, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f010b2ad4425a8e4bb4215eb716c4143, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d71085d52b69844abca156601327466, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plusHP: 30
+  plusHP: 60
 --- !u!114 &2294806815535269022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,19 +122,19 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.019545674, y: -0.009772882}
+  m_Offset: {x: -0.009772956, y: -0.0032576025}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 8, y: 8}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5178697, y: 0.52438486}
+  m_Size: {x: 0.7719654, y: 0.7589348}
   m_EdgeRadius: 0
