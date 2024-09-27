@@ -88,7 +88,6 @@ public class BossEnemy : MonoBehaviour
         rigid.simulated = false;
         spriter.sortingOrder = 1;
         gameObject.SetActive(false);
-        GameManager.Instance.GetExp(3);
     }
     IEnumerator KnockBack() {
 
