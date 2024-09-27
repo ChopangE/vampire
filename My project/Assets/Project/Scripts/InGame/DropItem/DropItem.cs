@@ -10,7 +10,7 @@ namespace InGame
     public abstract class DropItem : PoolObject
     {
         protected DropItemTrigger dropItemTrigger;
-        protected virtual void Start()
+        protected virtual void Awake()
         {
             dropItemTrigger = GetComponent<DropItemTrigger>();
         }

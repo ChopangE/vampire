@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Manager;
@@ -8,12 +9,21 @@ namespace InGame
     public class DropAppleHP : DropItem
     {
         public float plusHP;
-        protected override void Start()
+        protected override void Awake()
         {
-            base.Start();
+            base.Awake();
+        }
+
+        private void OnEnable()
+        {
             dropItemTrigger.OnTriggered += PlusHP;          //Event 구독
         }
 
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            dropItemTrigger.OnTriggered -= PlusHP;          //Event 구독
+        }
         void PlusHP()
         {
             GameManager.Instance.health = Mathf.Min(GameManager.Instance.health += plusHP, GameManager.Instance.maxHealth);

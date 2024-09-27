@@ -18,16 +18,25 @@ namespace InGame
         private Collider2D coll;
         private Vector3 offset;
         public float duration;
-        protected override void Start()
+        protected override void Awake()
         {
-            base.Start();
+            base.Awake();
             coll = GetComponent<Collider2D>();
             player = GameManager.Instance.player;
             offset = new Vector3(0, 2f, 0);
+        }
+
+        void OnEnable()
+        {
             dropItemTrigger.OnTriggered += SpeedUp;
         }
-        
 
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            dropItemTrigger.OnTriggered -= SpeedUp;
+
+        }
         void SpeedUp()
         {
             player.speed *= (1f + SpeedUpRatio);

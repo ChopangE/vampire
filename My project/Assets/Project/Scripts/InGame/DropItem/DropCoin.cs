@@ -9,12 +9,22 @@ namespace InGame
    {
        public int coin;
        // Start is called before the first frame update
-       protected override void Start()
+       protected override void Awake()
        {
-           base.Start();
-           dropItemTrigger.OnTriggered += PlusCoin;
+           base.Awake();
        }
 
+       void OnEnable()
+       {
+           dropItemTrigger.OnTriggered += PlusCoin;
+           
+       }
+
+       protected void OnDisable()
+       {
+           base.OnDisable();
+           dropItemTrigger.OnTriggered -= PlusCoin;
+       }
        void PlusCoin()
        {
            int nowCoin = int.Parse(Global.UserDataManager.GetGoldDataString());
