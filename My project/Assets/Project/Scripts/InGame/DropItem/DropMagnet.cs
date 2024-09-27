@@ -15,6 +15,7 @@ namespace InGame
         private Vector3 offset;
         private Player player;
         public float duration;
+        public float pullSpeed;
         protected override void Awake()
         {
             base.Awake();
@@ -40,17 +41,21 @@ namespace InGame
             transform.parent = player.transform;
             transform.DOShakePosition(duration, new Vector3(0, 0.3f, 0),1,0f, false, false);
             var expList = Global.ExpManager.spawnedItemList;
-            DOVirtual.DelayedCall(duration,() => { DestroyItem(); }).OnUpdate(() => { 
-                foreach (var coin in expList)
-                {
-                    coin.transform.DOMove(player.transform.position, 0.3f);
-                }
-            }).OnComplete(() =>
+            player = GameManager.Instance.player;
+            DOVirtual.DelayedCall(duration, () => { DestroyItem(); }).OnUpdate(() =>
             {
-                foreach (var coin in expList)
+                //List<Tween> tweens = new List<Tween>();
+                foreach (var expItem in expList)
                 {
-                    coin.transform.DOMove(player.transform.position, 0.3f);
+                    Vector3 pos = Vector3.MoveTowards(expItem.transform.position, player.transform.position,
+                        Time.deltaTime * pullSpeed);
+                    expItem.transform.position = pos;
+                    //expItem.transform.DOMove(player.transform.position, 0.5f);
                 }
+                // foreach (var tween in tweens)
+                // {
+                //     tween.Kill(false);
+                // }
             });
 
         }
