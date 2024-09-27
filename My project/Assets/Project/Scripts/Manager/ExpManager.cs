@@ -14,8 +14,8 @@ namespace Manager.InGame
         public event EventHandler<ExpItem> OnExpSpawned;
         [SerializeField] private Transform ExpGroup;
 
-        private List<ExpItem> expItemList;
-        private List<ExpItem> spawnedItemList;
+        private List<ExpItem> expItemList = new List<ExpItem>();
+        public List<ExpItem> spawnedItemList = new List<ExpItem>();
         private List<ObjectPool<PoolObject>> expPool = new List<ObjectPool<PoolObject>>();
 
         private void Awake() {

@@ -9,10 +9,11 @@ namespace InGame
     [RequireComponent(typeof(DropItemTrigger))]
     public abstract class ExpItem : PoolObject
     {
-        public int exp = 0;
+        [SerializeField]
+        protected int exp = 0;
 
         protected DropItemTrigger dropItemTrigger;
-        protected virtual void Start()
+        protected virtual void Awake()
         {
             dropItemTrigger = GetComponent<DropItemTrigger>();
         }
