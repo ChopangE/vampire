@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
@@ -142,12 +143,13 @@ public class Enemy : MonoBehaviour {
     }
 
     void Dead() {
-        GameObject coin = GameManager.Instance.pool.Get(coinNum);
-        coin.transform.position = transform.position;
-        coin.transform.rotation = Quaternion.identity;
-        Coin cc = coin.GetComponent<Coin>();
-        cc.sprite.sprite = cc.sprites[Mathf.Min((level / 4),cc.sprites.Length-1)];
-        cc.exp = level + 1;                               //경험치 조절 여기서 가능
+        // GameObject coin = GameManager.Instance.pool.Get(coinNum);
+        // coin.transform.position = transform.position;
+        // coin.transform.rotation = Quaternion.identity;
+        // Coin cc = coin.GetComponent<Coin>();
+        // cc.sprite.sprite = cc.sprites[Mathf.Min((level / 4),cc.sprites.Length-1)];
+        // cc.exp = level + 1;                               //경험치 조절 여기서 가능
+        Global.ExpManager.SpawnExpItem(level/4, transform);
         GameManager.Instance.kill++;
         gameObject.SetActive(false);
     }
