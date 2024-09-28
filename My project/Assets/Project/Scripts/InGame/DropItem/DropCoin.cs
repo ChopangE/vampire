@@ -20,7 +20,7 @@ namespace InGame
            
        }
 
-       protected void OnDisable()
+       protected override void OnDisable()
        {
            base.OnDisable();
            dropItemTrigger.OnTriggered -= PlusCoin;
