@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8146144851027560942}
   - component: {fileID: 8146144851027560939}
   - component: {fileID: 8146144851027560940}
-  - component: {fileID: 8146144851027560938}
+  - component: {fileID: 237812300414648108}
   m_Layer: 0
   m_Name: ExpStoneStage3
   m_TagString: Untagged
@@ -111,9 +111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 358af9a21f6e637409d21892542dd72b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exp: 3
---- !u!61 &8146144851027560938
-BoxCollider2D:
+  exp: 1
+--- !u!70 &237812300414648108
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -125,16 +125,6 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Offset: {x: -0.006234646, y: -0.03740692}
+  m_Size: {x: 0.55110073, y: 0.92518616}
+  m_Direction: 0
