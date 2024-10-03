@@ -9,7 +9,7 @@ public class Melee : MonoBehaviour
     private float curTime;
     public int id;
     public float damage = 3f;
-    public float coolTime = 3f;
+    public float coolTime = 1f;
     public Vector2 boxSize;
     public Transform pos;
     Vector3 dir;
@@ -43,29 +43,26 @@ public class Melee : MonoBehaviour
 
         if (id == 1) {
             if (curTime <= 0) {
-                if (Input.GetKeyDown(KeyCode.Z)) {
-                    dir = new Vector3(0.3f, 0, 0);
-                    if (pos.gameObject.GetComponent<SpriteRenderer>().flipX) {
-                        dir = dir * -1;
-                    }
-                    GameObject sw = Instantiate(stick, pos.position + dir, Quaternion.identity);
-                    sw.transform.parent = pos.transform;
-                    sw.transform.localScale = sprite.flipX? new Vector3(-1,1,1) : new Vector3(1,1,1);
-                    Destroy(sw, 0.5f);
-                    //Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(sw.transform.position, boxSize, 0);
-
-                    //foreach (Collider2D coll in collider2Ds) {
-                    //    if (coll.CompareTag("Enemy") && coll.GetComponent<Enemy>() != null) {
-                    //        coll.GetComponent<Enemy>().GetDamage(damage);
-                    //    }
-                    //    else if (coll.CompareTag("BossEnemy") && coll.GetComponent<BossEnemy>() != null) {
-                    //        coll.GetComponent<BossEnemy>().GetDamage(damage);
-
-                    //    }
-                    //}
-                    curTime = coolTime;
+                dir = new Vector3(1.0f, 0, 0);
+                if (pos.gameObject.GetComponent<SpriteRenderer>().flipX) {
+                    dir = dir * -1;
                 }
+                GameObject sw = Instantiate(sword, pos.position + dir, Quaternion.identity);
+                sw.transform.parent = pos.transform;
+                sw.transform.localScale = !sprite.flipX? new Vector3(-1,1,1) : new Vector3(1,1,1);
+                Destroy(sw, 0.5f);
+                //Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(sw.transform.position, boxSize, 0);
 
+                //foreach (Collider2D coll in collider2Ds) {
+                //    if (coll.CompareTag("Enemy") && coll.GetComponent<Enemy>() != null) {
+                //        coll.GetComponent<Enemy>().GetDamage(damage);
+                //    }
+                //    else if (coll.CompareTag("BossEnemy") && coll.GetComponent<BossEnemy>() != null) {
+                //        coll.GetComponent<BossEnemy>().GetDamage(damage);
+
+                //    }
+                //}
+                curTime = coolTime;
             }
             curTime -= Time.deltaTime;
         } 

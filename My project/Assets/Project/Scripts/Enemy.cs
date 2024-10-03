@@ -1,17 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
+using InGame;
 using Manager;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
 public class Enemy : MonoBehaviour {
+    enum EnemyType
+    {
+        Elite, Normal,
+    }
+
     public float speed;
     public float health;
     public float maxHealth;
     public RuntimeAnimatorController[] animCon;
+    public RuntimeAnimatorController[] eliteanimCon;
     public Rigidbody2D target;
 
+    private EnemyType _enemyType = EnemyType.Normal;
     int coinNum;
     bool isLive;
     int level;
@@ -72,8 +80,17 @@ public class Enemy : MonoBehaviour {
         maxHealth = data.health;
         health = data.health;
         level = data.spriteType;
+        _enemyType = EnemyType.Normal;
     }
+    public void InitElite(SpawnData data) {
+        anim.runtimeAnimatorController = eliteanimCon[data.spriteType];
+        speed = data.speed;
+        maxHealth = data.health;
+        health = data.health;
+        level = data.spriteType;
+        _enemyType = EnemyType.Elite;
 
+    }
     void OnTriggerEnter2D(Collider2D collision) {
         if (!collision.CompareTag("Bullet") && !collision.CompareTag("Floor")) return;
         if (collision.GetComponent<Bullet>()) {
@@ -149,7 +166,16 @@ public class Enemy : MonoBehaviour {
         // Coin cc = coin.GetComponent<Coin>();
         // cc.sprite.sprite = cc.sprites[Mathf.Min((level / 4),cc.sprites.Length-1)];
         // cc.exp = level + 1;                               //경험치 조절 여기서 가능
-        Global.ExpManager.SpawnExpItem(level/4, transform);
+        if(_enemyType == EnemyType.Normal)
+            Global.ExpManager.SpawnExpItem(level/4 + 1, transform);
+        else
+        {
+            Global.ExpManager.SpawnExpItem(0, transform);
+            GameManager.Instance.ShowLevelUp();
+            DropItemPoolManager poolManager = FindObjectOfType<DropItemPoolManager>();
+            DropItem dropItem = Resources.Load<DropItem>("Prefabs/DropItem/GoldBarCoinGold");
+            poolManager.SpawnDropItem(dropItem,transform.position);
+        }
         GameManager.Instance.kill++;
         gameObject.SetActive(false);
     }

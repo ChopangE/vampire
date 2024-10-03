@@ -2583,7 +2583,7 @@ MonoBehaviour:
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 00:00
 --- !u!114 &6670507438211223787
@@ -2606,7 +2606,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6670507438211223781}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43352902310e02e4895b9d70a80c740e, type: 3}
   m_Name: 
@@ -2615,7 +2615,7 @@ MonoBehaviour:
   viewAdapterId: 
   viewAdapterOptions: {fileID: 0}
   viewModelPropertyName: UI.Page.InGameMainPage.ActiveTimer
-  viewPropertyName: UnityEngine.CanvasRenderer.cull
+  viewPropertyName: UnityEngine.UI.Text.text
 --- !u!1 &6670507438225662883
 GameObject:
   m_ObjectHideFlags: 0
@@ -3234,10 +3234,10 @@ RectTransform:
   - {fileID: 2275259539103592931}
   - {fileID: 6799420560686016541}
   - {fileID: 4234329832700786468}
+  - {fileID: 4851929976002971437}
   - {fileID: 3572409092052307397}
   - {fileID: 2996619094463482816}
   - {fileID: 6673035935293461329}
-  - {fileID: 4851929976002971437}
   m_Father: {fileID: 6670507438032282519}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3714,7 +3714,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4813931283886031963, guid: 9d635e3e759cdb84e9cc4db13a7a9bc3, type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4813931283886031963, guid: 9d635e3e759cdb84e9cc4db13a7a9bc3, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3942,7 +3942,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4813931283886031963, guid: 9d635e3e759cdb84e9cc4db13a7a9bc3, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4813931283886031963, guid: 9d635e3e759cdb84e9cc4db13a7a9bc3, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4345,7 +4345,7 @@ PrefabInstance:
     - target: {fileID: 4813931283886031967, guid: 9d635e3e759cdb84e9cc4db13a7a9bc3, type: 3}
       propertyPath: data
       value: 
-      objectReference: {fileID: 11400000, guid: 9e8549da70d00eb45bbe3d9e01f3d50b, type: 2}
+      objectReference: {fileID: 11400000, guid: adce9bdc1c73716408f283c2deb76856, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d635e3e759cdb84e9cc4db13a7a9bc3, type: 3}
 --- !u!224 &2275259539103592931 stripped
@@ -4382,7 +4382,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4813931283886031963, guid: 9d635e3e759cdb84e9cc4db13a7a9bc3, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4813931283886031963, guid: 9d635e3e759cdb84e9cc4db13a7a9bc3, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4496,7 +4496,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4813931283886031963, guid: 9d635e3e759cdb84e9cc4db13a7a9bc3, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4813931283886031963, guid: 9d635e3e759cdb84e9cc4db13a7a9bc3, type: 3}
       propertyPath: m_AnchorMax.x

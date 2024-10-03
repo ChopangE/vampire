@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 3555869678632685314}
   - component: {fileID: -856979071829819787}
   - component: {fileID: -5152510230042065913}
+  - component: {fileID: -8306884072748631998}
   m_Layer: 0
   m_Name: Sword
-  m_TagString: Melee
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -133,3 +134,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-8306884072748631998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3555869678632685315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de42e593ec2402d4bb2fada5c6a40423, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  per: -1
+  rb: {fileID: 0}

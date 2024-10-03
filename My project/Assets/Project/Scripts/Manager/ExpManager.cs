@@ -54,7 +54,7 @@ namespace Manager.InGame
         {
             ExpItem expItem = poolObject as ExpItem;
             // dropItem.SetDropItemManager(this);
-
+            
             activeObjCount++; // 활성화된 객체 수 증가
             OnExpSpawned?.Invoke(this, expItem);
             spawnedItemList.Add(expItem);

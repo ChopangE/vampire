@@ -6,11 +6,11 @@ public class Spawner : MonoBehaviour
 {
     public Transform[] spawnPoint;
     public SpawnData[] spawnData;
-
+    public float eliteSpawnTime = 30;
 
     int level;
     float timer;
-
+    private float eliteTimer;
     void Awake() {
         spawnPoint = GetComponentsInChildren<Transform>();
     }
@@ -20,12 +20,20 @@ public class Spawner : MonoBehaviour
         if (!GameManager.Instance.isLive) return;
 
         timer += Time.deltaTime;
-
-        level = GameManager.Instance.level;      //FloorToInt¹ö¸®°í intÇü º¯È¯/ ceilToint ¿Ã¸®°í intÇü º¯È¯
+        eliteTimer += Time.deltaTime;
+        
+        level = GameManager.Instance.level;      //FloorToIntï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ intï¿½ï¿½ ï¿½ï¿½È¯/ ceilToint ï¿½Ã¸ï¿½ï¿½ï¿½ intï¿½ï¿½ ï¿½ï¿½È¯
 
         if(timer > spawnData[level].spawnTime) {
             Spawn();
             timer = 0f;
+        }
+
+        if (eliteTimer >= eliteSpawnTime)
+        {
+            Debug.Log("Spawn");
+            eliteTimer = 0f;
+            SpawnElite();
         }
 
 
@@ -33,12 +41,22 @@ public class Spawner : MonoBehaviour
     }
     void Spawn() {
         GameObject enemy = GameManager.Instance.pool.Get(0);
-        enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position; // 1ºÎÅÍ °Ë»öÇÏ´Â ÀÌÀ¯ : GetComponentsInChildernÀÇ 0¹øÂ° ÀÎµ¦½º´Â ÀÚ±âÀÚ½ÅÀÌ´Ù.
+        enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position; // 1ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ : GetComponentsInChildernï¿½ï¿½ 0ï¿½ï¿½Â° ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú±ï¿½ï¿½Ú½ï¿½ï¿½Ì´ï¿½.
         if (GameManager.Instance.curStage % 4 == 3) {
             enemy.GetComponent<Enemy>().Init(spawnData[Random.Range(GameManager.Instance.curStage-3, GameManager.Instance.curStage)]);
         }
         else {
             enemy.GetComponent<Enemy>().Init(spawnData[GameManager.Instance.curStage]);
+        }
+    }
+    void SpawnElite() {
+        GameObject enemy = GameManager.Instance.pool.Get(0);
+        enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position; // 1ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ : GetComponentsInChildernï¿½ï¿½ 0ï¿½ï¿½Â° ï¿½Îµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú±ï¿½ï¿½Ú½ï¿½ï¿½Ì´ï¿½.
+        if (GameManager.Instance.curStage % 4 == 3) {
+            enemy.GetComponent<Enemy>().InitElite(spawnData[Random.Range(GameManager.Instance.curStage-3, GameManager.Instance.curStage)]);
+        }
+        else {
+            enemy.GetComponent<Enemy>().InitElite(spawnData[GameManager.Instance.curStage]);
         }
     }
 }

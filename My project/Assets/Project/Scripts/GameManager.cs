@@ -55,11 +55,9 @@ public class GameManager : MMSingleton<GameManager>
         weapons = player.GetComponentsInChildren<Weapon>(true);
         floorWeapon = player.GetComponentInChildren<FloorWeapon>(true);
         //item은 우선 inspector에서 집어넣음.
+        GetItems();
         GetData();
-        //여기에서 설정해주기
-        //if (StageManager.Instance.stageCount % StageManager.Instance.maxStageCountNum == StageManager.Instance.maxStageCountNum - 1) {
-        //    StageManager.Instance.stageLevel++;
-        //}
+        
         curStage = Global.UserDataManager.curStage++;
         player.transform.position = stages[curStage].position;
         if (curStage == Global.StageManager.MAX_STAGE_COUNT * Global.StageManager.MAX_STAGE_LEVEL) {
@@ -79,11 +77,18 @@ public class GameManager : MMSingleton<GameManager>
             spawner.SetActive(true);
             inGameMainPage.ActiveTimer = true;
         }
+    }
 
-        
+    void GetItems()
+    {
+        Item[] items = FindObjectsOfType<Item>(true);
+        for (int i = 0; i < items.Length-2; i++)
+        {
+            this.items[i] = items[items.Length - 3 - i];
+        }
     }
     void GetData() {
-        for(int i= 0; i < 6; i++) {
+        for(int i= 0; i < datas.Length - 1; i++) {
             if (datas[i].isHave) {
                 weapons[i].gameObject.SetActive(true);
                 weapons[i].damage = datas[i].damage;
@@ -92,16 +97,17 @@ public class GameManager : MMSingleton<GameManager>
                 weapons[i].InitSetting();
             }
         }
-        if (datas[6].isHave) {
+        if (datas[datas.Length-1].isHave) {
             floorWeapon.gameObject.SetActive(true);
-            floorWeapon.damage = datas[6].damage;
-            items[6].level = datas[6].level;
+            floorWeapon.damage = datas[datas.Length-1].damage;
+            items[datas.Length-1].level = datas[datas.Length-1].level;
         }
     }
 
     void SetData() {
         for(int i = 0; i < weapons.Length; i++) {
             if (weapons[i].gameObject.activeSelf) {
+                Debug.Log("Setting");
                 datas[i].isHave = weapons[i].gameObject.activeSelf;
                 datas[i].damage = weapons[i].damage;
                 datas[i].count = weapons[i].count;
@@ -109,15 +115,16 @@ public class GameManager : MMSingleton<GameManager>
             }
         }
         if (floorWeapon.gameObject.activeSelf) {
-            datas[6].isHave = floorWeapon.gameObject.activeSelf;
-            datas[6].damage = floorWeapon.damage;
-            datas[6].count = 0;
-            datas[6].level = items[6].level;
+            datas[datas.Length-1].isHave = floorWeapon.gameObject.activeSelf;
+            datas[datas.Length-1].damage = floorWeapon.damage;
+            datas[datas.Length-1].count = 0;
+            datas[datas.Length-1].level = items[datas.Length-1].level;
         }
         DataManager.Instance.SetData(datas);
     }
     public void StageClear() {
         SetData();
+        Global.UIManager.ClosePage();
         SceneManager.LoadScene(3);
     }
     public void GameOver() {
@@ -150,11 +157,16 @@ public class GameManager : MMSingleton<GameManager>
         {
             level = Mathf.Min(level + 1, nextExp.Length-1);
             coin = 0;
-            inGameMainPage.ShowLevelUP();
+            ShowLevelUp();
         }
         
     }
-    
+
+    public void ShowLevelUp()
+    {
+        inGameMainPage.ShowLevelUP();
+
+    }
     public void Stop() {
         isLive = false;
         Time.timeScale = 0;
