@@ -50,7 +50,6 @@ public class LevelUpPage : ViewModel
             }
             else {
                 ranItem.gameObject.SetActive(true);
-
             }
 
 

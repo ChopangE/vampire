@@ -31,7 +31,6 @@ public class Spawner : MonoBehaviour
 
         if (eliteTimer >= eliteSpawnTime)
         {
-            Debug.Log("Spawn");
             eliteTimer = 0f;
             SpawnElite();
         }

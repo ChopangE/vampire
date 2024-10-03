@@ -26,6 +26,7 @@ namespace Manager
         public static InputManager InputManager { get; set; }
         public static ExpManager ExpManager { get; set; }
 
+        public static DataManager DataManager { get; set; }
         // public static OptionManager OptionManager { get; private set; }
         // public static GameDataManager GameDataManager { get; set; }
         // public static SceneBase CurrentScene { get; private set; }
@@ -83,6 +84,12 @@ namespace Manager
             {
                 ExpManager = Instantiate(Resources.Load<ExpManager>(prefixManager + nameof(ExpManager)), transform);
                 ExpManager.name = nameof(ExpManager);
+            }
+            
+            if (DataManager == null)
+            {
+                DataManager = Instantiate(Resources.Load<DataManager>(prefixManager + nameof(DataManager)), transform);
+                DataManager.name = nameof(DataManager);
             }
         }
     }

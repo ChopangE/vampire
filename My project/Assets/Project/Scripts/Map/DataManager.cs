@@ -6,7 +6,7 @@ using UnityEngine;
 public class DataManager : MMSingleton<DataManager> {
 
     private static DataManager instance;
-    public playerData[] datas = new playerData[7];
+    public playerData[] datas = new playerData[8];
     public playerDataList list = new playerDataList();
 
     void Start() {
@@ -27,6 +27,7 @@ public class DataManager : MMSingleton<DataManager> {
     }
     
     void saveDataToJson() {
+        Debug.Log("Save!");
         string result = JsonUtility.ToJson(list);
         string path = Path.Combine(Application.dataPath, "playerData.json");
         File.WriteAllText(path, result);

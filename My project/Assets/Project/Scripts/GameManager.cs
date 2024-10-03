@@ -84,7 +84,7 @@ public class GameManager : MMSingleton<GameManager>
         Item[] items = FindObjectsOfType<Item>(true);
         for (int i = 0; i < items.Length-2; i++)
         {
-            this.items[i] = items[items.Length - 3 - i];
+            this.items[i] = items[items.Length - 1 - i];
         }
     }
     void GetData() {

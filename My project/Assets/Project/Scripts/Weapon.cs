@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEditor.Rendering;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -67,6 +68,13 @@ public class Weapon : MonoBehaviour
                     Clone();
                 }
                 break;
+            case 6:
+                if(timer > speed) {
+                timer = 0f;
+                Stick();
+                
+                }
+                break;
             default:
                 break;
         }
@@ -130,6 +138,9 @@ public class Weapon : MonoBehaviour
                 break;
             case 5:                     //HGDClone
                 speed = 7f;             
+                break;
+            case 6:
+                speed = 4f;
                 break;
             default:
                 break;
@@ -239,6 +250,14 @@ public class Weapon : MonoBehaviour
         //StartCoroutine(BreathDown(bullet, dir));
     }
 
+    void Stick()
+    {
+        Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
+        bullet.position = transform.position;
+        float dir = player.GetComponent<SpriteRenderer>().flipX ? -1f : 1f;
+        bullet.localScale = new Vector3(dir, 1, 1);
+        DOVirtual.DelayedCall(0.5f, () => {bullet.gameObject.SetActive(false); });
+    }
     void Clone() {
         Vector3 dir = player.inputVec;
         if (dir.magnitude < 0.1f) {
