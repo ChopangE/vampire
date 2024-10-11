@@ -1370,6 +1370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
+  enabled_: 0
 --- !u!1 &6670507437591736857
 GameObject:
   m_ObjectHideFlags: 0
@@ -1937,6 +1938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 4
+  enabled_: 0
 --- !u!1 &6670507437807205883
 GameObject:
   m_ObjectHideFlags: 0
@@ -2031,6 +2033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
+  enabled_: 0
 --- !u!1 &6670507437965850737
 GameObject:
   m_ObjectHideFlags: 0
@@ -2599,6 +2602,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
+  enabled_: 0
 --- !u!114 &5040185570533144360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2615,7 +2619,7 @@ MonoBehaviour:
   viewAdapterId: 
   viewAdapterOptions: {fileID: 0}
   viewModelPropertyName: UI.Page.InGameMainPage.ActiveTimer
-  viewPropertyName: UnityEngine.UI.Text.text
+  viewPropertyName: HUD.enabled
 --- !u!1 &6670507438225662883
 GameObject:
   m_ObjectHideFlags: 0
@@ -3120,6 +3124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  enabled_: 0
 --- !u!1 &6670507438513988592
 GameObject:
   m_ObjectHideFlags: 0

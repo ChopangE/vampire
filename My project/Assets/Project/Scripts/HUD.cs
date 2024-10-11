@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using UI;
+using UI.Page;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -8,7 +10,6 @@ public class HUD : MonoBehaviour
 {
     public enum InfoType { Exp,Level,Kill,Time,Health}
     public InfoType type;
-
     Text myText;
     Slider mySlider;
 
@@ -17,7 +18,15 @@ public class HUD : MonoBehaviour
         myText = GetComponent<Text>();
         mySlider = GetComponent<Slider>();
     }
-   
+
+    void Start()
+    {
+        if (type == InfoType.Time)
+        {
+            InGameMainPage inGameMainPage = GetComponentInParent<InGameMainPage>(); 
+            gameObject.SetActive(inGameMainPage.ActiveTimer);
+        }
+    }
     void LateUpdate()
     {
         if (!GameManager.Instance.isLive) return;

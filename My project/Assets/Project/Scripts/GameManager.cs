@@ -42,7 +42,7 @@ public class GameManager : MMSingleton<GameManager>
     //List<GameObject>[] stages = new List<GameObject>[maxStageNum];
     public Transform[] stages = new Transform[Global.StageManager.stageCount * Global.StageManager.stageLevel];
     public int curStage;
-
+    
     private InGameMainPage inGameMainPage;
     void Start() {
         //* 인게임 UI 호출
