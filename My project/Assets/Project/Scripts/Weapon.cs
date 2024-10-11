@@ -94,7 +94,6 @@ public class Weapon : MonoBehaviour
         //    Batch();
         //}
 
-        player.BroadcastMessage("ApplayGear", SendMessageOptions.DontRequireReceiver);
 
     }
     public void Init(ItemData data) {
