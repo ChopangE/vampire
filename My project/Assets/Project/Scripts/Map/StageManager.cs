@@ -13,20 +13,10 @@ namespace Manager
 {
     public class StageManager : MonoBehaviour
     {
-        public int stageCount { get { return Global.UserDataManager.curStage % 4; } }
-        public int stageLevel { get { return Global.UserDataManager.curStage / 4; } } 
+        public int stageCount { get { return Global.UserDataManager.curStage % MAX_STAGE_COUNT; } }
+        public int stageLevel { get { return Global.UserDataManager.curStage / MAX_STAGE_COUNT; } } 
 
-        public int MAX_STAGE_COUNT
-        {
-            get { return 4;}
-            private set { }
-        }
-        public int MAX_STAGE_LEVEL
-        {
-            get { return 3;}
-            private set { }
-        }
-       
-
+        public readonly int MAX_STAGE_COUNT = 4;
+        public readonly int MAX_STAGE_LEVEL = 3;
     }
 }

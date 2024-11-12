@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +17,10 @@ public class Item : MonoBehaviour
     Text textName;
     Text textDesc;
 
-    void Awake() {
+    private WeaponController weaponController;
+
+    void Awake()
+    {
         icon = GetComponentsInChildren<Image>()[1];
         icon.sprite = data.itemIcon;
 
@@ -25,17 +29,21 @@ public class Item : MonoBehaviour
         textName = texts[1];
         textDesc = texts[2];
         textName.text = data.itemName;
+
+        weaponController = GameManager.Instance.player.GetComponent<WeaponController>();
     }
 
-    void OnEnable() {
+    void OnEnable()
+    {
         textLevel.text = "Lv." + (level + 1);
-    
-        switch (data.itemType) {
+
+        switch (data.itemType)
+        {
             case ItemData.ItemType.Melee:
             case ItemData.ItemType.Range:
                 textDesc.text = string.Format(data.itemDesc, data.damages[level] * 100, data.counts[level]);
                 break;
-            case ItemData.ItemType.Bomb:           
+            case ItemData.ItemType.Bomb:
             case ItemData.ItemType.Raser:
             case ItemData.ItemType.Breath:
             case ItemData.ItemType.Floor:
@@ -46,74 +54,45 @@ public class Item : MonoBehaviour
             case ItemData.ItemType.Glove:
             case ItemData.ItemType.Shoe:
                 textDesc.text = string.Format(data.itemDesc, data.damages[level] * 100);
+                break;
+            case ItemData.ItemType.Heal:
+                GameManager.Instance.health = GameManager.Instance.maxHealth;
                 break;
             default:
                 textDesc.text = string.Format(data.itemDesc);
                 break;
         }
-        
+
     }
-    
+
 
     public void OnClick()
     {
         Weapon[] weapons = GameManager.Instance.player.GetComponentsInChildren<Weapon>(true);
-        switch (data.itemType) {
+        switch (data.itemType)
+        {
             case ItemData.ItemType.Melee:
             case ItemData.ItemType.Range:
+                InitializeWeapon(weapons);
+                UpgradeWeapon();
+                level++;
+                break;
             case ItemData.ItemType.Bomb:
             case ItemData.ItemType.Raser:
             case ItemData.ItemType.Breath:
             case ItemData.ItemType.HGDClone:
             case ItemData.ItemType.Stick:
-                if (level == 0)
-                {
-                    weapon = weapons[(int)data.itemType];
-                    weapon.gameObject.SetActive(true);
-                    weapon.Init(data);
-                }
-
-                else {
-                    if(weapon == null) {
-                        weapon = weapons[(int)data.itemType];
-                    }
-                    float nextDamage = data.baseDamage;
-                    int nextCount = 0;
-
-                    nextDamage += data.baseDamage * data.damages[level];
-                    nextCount += data.counts[level];
-
-                    weapon.LevelUp(nextDamage, nextCount);
-
-                }
+                InitializeWeapon(weapons);
+                UpgradeWeapon();
                 level++;
-
                 break;
             case ItemData.ItemType.Floor:
-                if(level == 0) {
-                    floorWeapon = GameManager.Instance.player.GetComponentInChildren<FloorWeapon>(true);
-                    floorWeapon.gameObject.SetActive(true);
-                    floorWeapon.Init(data);
-                }
-                else {
-                    if (floorWeapon == null) floorWeapon = GameManager.Instance.player.GetComponentInChildren<FloorWeapon>(true);
-                    float nextDamage = data.baseDamage;
-                    nextDamage += data.baseDamage * data.damages[level];
-                    floorWeapon.LevelUp(nextDamage);
-                }
+                HandleFloorWeapon();
                 level++;
                 break;
             case ItemData.ItemType.Glove:
             case ItemData.ItemType.Shoe:
-                if(level == 0) {
-                    GameObject newGear = new GameObject();
-                    gear = newGear.AddComponent<Gear>();
-                    gear.Init(data);
-                }
-                else {
-                    float nextRate = data.damages[level];
-                    gear.LevelUP(nextRate);
-                }
+                HandleGear();
                 level++;
                 break;
             case ItemData.ItemType.Heal:
@@ -122,9 +101,76 @@ public class Item : MonoBehaviour
         }
 
 
-        if(level == data.damages.Length) {
+        if (level == data.damages.Length)
+        {
             GetComponent<Button>().interactable = false;
         }
     }
-    
+
+    private void InitializeWeapon(Weapon[] weapons)
+    {
+        weapon = weapons[(int)data.itemType];
+        weapon.gameObject.SetActive(true);
+        weapon.Init(data);
+        weaponController.ActivateWeapon(weapon);
+    }
+
+    private void UpgradeWeapon(bool includeSizeUpgrade = false)
+    {
+        if (weapon == null)
+        {
+            weapon = GameManager.Instance.player.GetComponentsInChildren<Weapon>(true)[(int)data.itemType];
+        }
+
+        float nextDamage = data.baseDamage * (1 + data.damages[level]);
+        int nextCount = data.counts[level];
+
+        weapon.LevelUp(nextDamage, nextCount);
+
+        if (includeSizeUpgrade)
+        {
+            float nextSize = 1f + (0.1f * level);
+            weapon.transform.localScale = Vector3.one * nextSize;
+        }
+    }
+
+    private void HandleFloorWeapon()
+    {
+        if (level == 0)
+        {
+            floorWeapon = GameManager.Instance.player.GetComponentInChildren<FloorWeapon>(true);
+            floorWeapon.gameObject.SetActive(true);
+            floorWeapon.Init(data);
+        }
+        else
+        {
+            if (floorWeapon == null) 
+                floorWeapon = GameManager.Instance.player.GetComponentInChildren<FloorWeapon>(true);
+            
+            float nextDamage = data.baseDamage * (1 + data.damages[level]);
+            floorWeapon.LevelUp(nextDamage);
+        }
+    }
+
+    private void HandleGear()
+    {
+        if (level == 0)
+        {
+            gear = new GameObject().AddComponent<Gear>();
+            gear.Init(data);
+        }
+        else
+        {
+            gear.LevelUP(data.damages[level]);
+        }
+    }
+
+    private void OnWeaponActivated(int weaponIndex)
+    {
+        if ((int)data.itemType == weaponIndex)
+        {
+            // 해당 무기가 활성화되었을 때의 처리
+            Debug.Log($"Weapon {data.itemName} has been activated!");
+        }
+    }
 }

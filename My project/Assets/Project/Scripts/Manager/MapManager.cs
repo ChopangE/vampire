@@ -41,7 +41,7 @@ namespace Manager
                 }
             }
 
-            Debug.LogWarning("스폰 위치 찾기 실패");
+            // Debug.LogWarning("스폰 위치 찾기 실패");
             return Vector3.zero;
         }
 

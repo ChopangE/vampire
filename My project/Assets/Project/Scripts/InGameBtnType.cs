@@ -9,7 +9,7 @@ public class InGameBtnType : MonoBehaviour {
     public IngameButtonType btnType;
     public CanvasGroup main;
     public CanvasGroup option;
-    public Pause pause;
+    public PausePage pausePage;
     Vector3 defaultVec;
     void Awake() {
         defaultVec = transform.localScale;
@@ -18,7 +18,7 @@ public class InGameBtnType : MonoBehaviour {
     public void OnBtnClick() {
         switch (btnType) {
             case IngameButtonType.Continue:
-                pause.Hide();
+                pausePage.Hide();
                 break;
             case IngameButtonType.Option:
                 CanvasOn(option);

@@ -68,12 +68,12 @@ namespace Manager
             if (StatsManager == null)
             {
                 StatsManager = Instantiate(Resources.Load<StatsManager>(prefixManager + nameof(StatsManager)), transform);
-                StatsManager.name = nameof(StageManager);
+                StatsManager.name = nameof(StatsManager);
             }
             if (StatsUpgradeManager == null)
             {
                 StatsUpgradeManager = Instantiate(Resources.Load<StatsUpgradeManager>(prefixManager + nameof(StatsUpgradeManager)), transform);
-                StatsUpgradeManager.name = nameof(StageManager);
+                StatsUpgradeManager.name = nameof(StatsUpgradeManager);
             }
             if (InputManager == null)
             {

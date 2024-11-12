@@ -16,12 +16,6 @@ public class FloorWeapon : MonoBehaviour
 
     
     public virtual void Init(ItemData data) {
-        // Basic Set
-        //name = "Weapon " + data.itemId;
-        //transform.parent = player.transform;
-        //transform.localPosition = Vector3.zero;
-
-        // Property Set
         id = data.itemId;
         damage = data.baseDamage;
     }

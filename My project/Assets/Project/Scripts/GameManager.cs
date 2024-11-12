@@ -21,7 +21,7 @@ public class GameManager : MMSingleton<GameManager>
     public int[] nextExp = { 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
     public int level = 0;
     public int kill = 0;
-    public int coin = 0;
+    public int curExp = 0;
     [Header("# Game Object")]
     public Player player;
     public PoolManager pool;
@@ -40,7 +40,7 @@ public class GameManager : MMSingleton<GameManager>
     //private static int maxStageNum = 3;
     //private static int maxStageCountNum = 4;
     //List<GameObject>[] stages = new List<GameObject>[maxStageNum];
-    public Transform[] stages = new Transform[Global.StageManager.stageCount * Global.StageManager.stageLevel];
+    public Transform[] stages;
     public int curStage;
     
     private InGameMainPage inGameMainPage;
@@ -152,11 +152,11 @@ public class GameManager : MMSingleton<GameManager>
     }
     public void GetExp(int exp)
     {
-        coin += exp;
-        if (coin >= nextExp[level])
+        curExp += exp; 
+        if (curExp >= nextExp[level])
         {
             level = Mathf.Min(level + 1, nextExp.Length-1);
-            coin = 0;
+            curExp = 0;
             ShowLevelUp();
         }
         
