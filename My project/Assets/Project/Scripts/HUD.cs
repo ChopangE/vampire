@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class HUD : MonoBehaviour
 {
-    public enum InfoType { Exp,Level,Kill,Time,Health}
+    public enum InfoType { Exp, Level, Kill, Time, Health, Shield }
     public InfoType type;
     Text myText;
     Slider mySlider;
@@ -23,7 +23,7 @@ public class HUD : MonoBehaviour
     {
         if (type == InfoType.Time)
         {
-            InGameMainPage inGameMainPage = GetComponentInParent<InGameMainPage>(); 
+            InGameMainPage inGameMainPage = GetComponentInParent<InGameMainPage>();
             gameObject.SetActive(inGameMainPage.ActiveTimer);
         }
     }
@@ -36,11 +36,11 @@ public class HUD : MonoBehaviour
             case InfoType.Exp:
                 float curExp = GameManager.Instance.curExp;
                 float maxExp = GameManager.Instance.nextExp[GameManager.Instance.level];
-                mySlider.value= curExp / maxExp;
+                mySlider.value = curExp / maxExp;
                 break;
 
             case InfoType.Level:
-                myText.text = string.Format("Lv.{0:F0}",GameManager.Instance.level);
+                myText.text = string.Format("Lv.{0:F0}", GameManager.Instance.level);
                 break;
 
             case InfoType.Kill:
@@ -51,7 +51,8 @@ public class HUD : MonoBehaviour
                 int min = Mathf.FloorToInt(remainTime / 60);
                 int sec = Mathf.FloorToInt(remainTime % 60);
                 myText.text = string.Format("{0:D2}:{1:D2}", min, sec);
-                if(remainTime <= 0 ) {
+                if (remainTime <= 0)
+                {
                     GameManager.Instance.StageClear();
                 }
                 break;
@@ -60,8 +61,13 @@ public class HUD : MonoBehaviour
                 float maxHealth = GameManager.Instance.maxHealth;
                 mySlider.value = curHealth / maxHealth;
                 break;
+            case InfoType.Shield:
+                float curShield = GameManager.Instance.shield;
+                float maxShield = GameManager.Instance.maxHealth;
+                mySlider.value = curShield / maxShield;
+                break;
 
-        }    
+        }
     }
 
 

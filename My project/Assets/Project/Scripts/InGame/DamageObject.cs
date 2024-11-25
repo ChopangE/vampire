@@ -17,10 +17,10 @@ namespace InGame
         public float health;
 
         [LabelText("넉백 옵션")] [SerializeField] 
-        private bool canKnockBack = false;
-        private Rigidbody2D _rigid;
-        private Collider2D _coll;
-        private bool _isLive;
+        protected bool canKnockBack = false;
+        protected Rigidbody2D _rigid;
+        protected Collider2D _coll;
+        protected bool _isLive;
         protected virtual void Awake()
         {
             _rigid = GetComponent<Rigidbody2D>();

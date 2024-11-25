@@ -21,15 +21,17 @@ namespace UI
             _contentSizeFitter = GetComponent<ContentSizeFitter>();
             _weaponController = FindObjectOfType<WeaponController>();
             _weaponController.OnWeaponActivated += OnWeaponActivated;
+        }
+        void Start() {
             InitializeSkillItems();
         }
         private void InitializeSkillItems()
         {
             if (_weaponController != null)
             {
-                PrepareViewModels(_weaponController.Weapons.Count);
+                PrepareViewModels(_weaponController.ActiveWeapons.Count);
             }
-            var weapons = _weaponController.Weapons;
+            var weapons = _weaponController.ActiveWeapons;
             var viewModels = GetViewModels().ToList();
             _skillItems = new List<SkillItemViewModel>();
             foreach(var obj in viewModels) {

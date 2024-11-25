@@ -9,11 +9,14 @@ public class WeaponController : MonoBehaviour
 
     private List<Weapon> weapons = new List<Weapon>();
     
+    public int maxActiveWeaponCount = 6;
     public IReadOnlyList<Weapon> ActiveWeapons => weapons.Where(w => w.gameObject.activeSelf).ToList();
-    public IReadOnlyList<Weapon> Weapons => ActiveWeapons;
+    public IReadOnlyList<Weapon> Weapons => weapons;
+    private float damageMultiplier = 1f;
+
     void Start()
     {
-        weapons = GetComponentsInChildren<Weapon>().ToList();
+        weapons = GetComponentsInChildren<Weapon>(true).ToList();
     }
 
     void Update()
@@ -33,5 +36,12 @@ public class WeaponController : MonoBehaviour
         
         weapon.gameObject.SetActive(true);
         OnWeaponActivated?.Invoke(weapon);
+    }
+
+    public void DamageBuffPercent(float percent) {
+        damageMultiplier += percent;
+        foreach(Weapon weapon in ActiveWeapons) {
+            weapon.UpdateDamage(damageMultiplier);
+        }
     }
 }

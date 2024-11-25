@@ -6,18 +6,17 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
-public class Enemy : MonoBehaviour {
+public class Enemy : DamageObject {
     enum EnemyType
     {
         Elite, Normal,
     }
 
     public float speed;
-    public float health;
-    public float maxHealth;
     public RuntimeAnimatorController[] animCon;
     public RuntimeAnimatorController[] eliteanimCon;
     public Rigidbody2D target;
+    public OutlineSprite outlineSprite;
 
     private EnemyType _enemyType = EnemyType.Normal;
     int coinNum;
@@ -32,7 +31,23 @@ public class Enemy : MonoBehaviour {
     SpriteRenderer spriter;
     WaitForFixedUpdate wait;
     Vector2 targetVec;
-    void Awake() {
+
+    private bool _isStunned;
+    public bool isStunned {
+        get => _isStunned;
+        set {
+            _isStunned = value;
+            outlineSprite.SetStunned(value);
+            
+            // 스턴 상태일 때는 이동 불가
+            if (value) {
+                rigid.velocity = Vector2.zero;
+            }
+        }
+    }
+
+    protected override void Awake() {
+        base.Awake();
         coinNum = 4;
         rigid = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
@@ -45,6 +60,7 @@ public class Enemy : MonoBehaviour {
         if (!GameManager.Instance.isLive) return;
         if (!isLive) return;
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Hit")) return;
+        if (_isStunned) return; // 스턴 상태일 때는 이동하지 않음
 
         Vector2 dirVec = target.position - rigid.position;
         Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
@@ -63,7 +79,8 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    void OnEnable() {
+    protected override void OnEnable() {
+        base.OnEnable();
         target = GameManager.Instance.player.GetComponent<Rigidbody2D>();
         isLive = true; 
         coll.enabled = true;
@@ -72,9 +89,11 @@ public class Enemy : MonoBehaviour {
         anim.SetBool("Dead", false);
         health = maxHealth;
         isBack = false;
+        isStunned = false; // 활성화될 때 스턴 해제
     }
 
     public void Init(SpawnData data) {
+        base.OnEnable();
         anim.runtimeAnimatorController = animCon[data.spriteType];
         speed = data.speed;
         maxHealth = data.health;
@@ -91,10 +110,13 @@ public class Enemy : MonoBehaviour {
         _enemyType = EnemyType.Elite;
 
     }
-    void OnTriggerEnter2D(Collider2D collision) {
+    public override void OnTriggerEnter2D(Collider2D collision) {
         if (!collision.CompareTag("Bullet") && !collision.CompareTag("Floor")) return;
         if (collision.GetComponent<Bullet>()) {
-            health -= collision.GetComponent<Bullet>().damage;
+            float damage = collision.GetComponent<Bullet>().damage;
+            health -= damage;
+            GameManager.DamageTextPoolManager.SpawnDamageText(0, transform.position, damage);
+
             if (collision.GetComponent<WhirlBullet>()) {
                 targetVec = collision.GetComponent<Rigidbody2D>().position;
                 if(gameObject.activeSelf) StartCoroutine(KnockBack());
@@ -125,7 +147,8 @@ public class Enemy : MonoBehaviour {
     }
     public void GetDamage(float damage) {
         health -= damage;
-        //StartCoroutine(KnockBack());
+        GameManager.DamageTextPoolManager.SpawnDamageText(0, transform.position, damage);
+        
         if (health > 0) {
             anim.SetTrigger("Hit");
         } else {
@@ -159,7 +182,7 @@ public class Enemy : MonoBehaviour {
         yield return wait;          // 1물리 프레임 wait
     }
 
-    void Dead() {
+    public override void Dead() {
         // GameObject coin = GameManager.Instance.pool.Get(coinNum);
         // coin.transform.position = transform.position;
         // coin.transform.rotation = Quaternion.identity;
@@ -172,9 +195,8 @@ public class Enemy : MonoBehaviour {
         {
             Global.ExpManager.SpawnExpItem(0, transform);
             GameManager.Instance.ShowLevelUp();
-            DropItemPoolManager poolManager = FindObjectOfType<DropItemPoolManager>();
             DropItem dropItem = Resources.Load<DropItem>("Prefabs/DropItem/GoldBarCoinGold");
-            poolManager.SpawnDropItem(dropItem,transform.position);
+            GameManager.DropItemPoolManager.SpawnDropItem(dropItem,transform.position);
         }
         GameManager.Instance.kill++;
         gameObject.SetActive(false);

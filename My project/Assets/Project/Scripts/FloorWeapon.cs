@@ -2,22 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FloorWeapon : MonoBehaviour
+public class FloorWeapon : Weapon
 {
-    public int id;
-    public float damage;
-
-    protected float timer;
-    protected Player player;
-
-    void Awake() {
+    protected override      void Awake() {
         player = GameManager.Instance.player;
     }
 
     
-    public virtual void Init(ItemData data) {
-        id = data.itemId;
-        damage = data.baseDamage;
+    public override void Init(ItemData data) {
+        base.Init(data);
     }
 
     public void LevelUp(float damage) {
@@ -25,5 +18,8 @@ public class FloorWeapon : MonoBehaviour
 
         player.BroadcastMessage("ApplayGear", SendMessageOptions.DontRequireReceiver);
 
+    }
+    public override void ExecuteAttack() {
+        
     }
 }

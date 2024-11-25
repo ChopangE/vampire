@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6800467226587657996}
   - component: {fileID: 6800467226587657999}
   - component: {fileID: 6800467226587657994}
+  - component: {fileID: 2325408326989757108}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -57,7 +58,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: e452b55db63bdce42ae6bd915e0d660f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -159,9 +160,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc99254c1fda9ed48a402e027da7947f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
-  health: 0
   maxHealth: 0
+  health: 0
+  canKnockBack: 0
+  speed: 0
   animCon:
   - {fileID: 22100000, guid: 050556270436d4f4288557291a1a99c0, type: 2}
   - {fileID: 22100000, guid: a4030c41375a9714e972698212d8c80b, type: 2}
@@ -189,6 +191,21 @@ MonoBehaviour:
   - {fileID: 22100000, guid: 2a70102fd8f6c754dae52182398cda72, type: 2}
   - {fileID: 22100000, guid: 25f7a818644b68042bb0c0c2a28d1550, type: 2}
   target: {fileID: 0}
+  outlineSprite: {fileID: 2325408326989757108}
+--- !u!114 &2325408326989757108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6800467226587658000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 256b32658f3f11b4aaee030bff8eb8c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0, g: 0, b: 0, a: 0}
+  outlineSize: 0
 --- !u!1 &6800467228253778903
 GameObject:
   m_ObjectHideFlags: 0

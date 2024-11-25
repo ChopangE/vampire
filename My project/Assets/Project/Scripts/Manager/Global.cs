@@ -75,6 +75,11 @@ namespace Manager
                 StatsUpgradeManager = Instantiate(Resources.Load<StatsUpgradeManager>(prefixManager + nameof(StatsUpgradeManager)), transform);
                 StatsUpgradeManager.name = nameof(StatsUpgradeManager);
             }
+            if (DataManager == null)
+            {
+                DataManager = Instantiate(Resources.Load<DataManager>(prefixManager + nameof(DataManager)), transform);
+                DataManager.name = nameof(DataManager);
+            }
             if (InputManager == null)
             {
                 InputManager = Instantiate(Resources.Load<InputManager>(prefixManager + nameof(InputManager)), transform);
@@ -85,12 +90,8 @@ namespace Manager
                 ExpManager = Instantiate(Resources.Load<ExpManager>(prefixManager + nameof(ExpManager)), transform);
                 ExpManager.name = nameof(ExpManager);
             }
-            
-            if (DataManager == null)
-            {
-                DataManager = Instantiate(Resources.Load<DataManager>(prefixManager + nameof(DataManager)), transform);
-                DataManager.name = nameof(DataManager);
-            }
+
+
         }
     }
 }

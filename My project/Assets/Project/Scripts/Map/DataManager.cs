@@ -1,17 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Data;
+using Data.WeaponData;
+using Manager;
 using UnityEngine;
 
 public class DataManager : MMSingleton<DataManager> {
+    private const string itemPath = "Assets/Project/Data/Items";
 
-    private static DataManager instance;
-    public playerData[] datas = new playerData[8];
+    public playerData[] datas = new playerData[GameManager.Instance.weaponController.Weapons.Count];
+    
     public playerDataList list = new playerDataList();
-
-    void Start() {
-        Init();
-    }
+    public Weapon[] weapons;
+    public List<ItemData> items = new List<ItemData>();
 
     void Init() {
         for (int i = 0; i < datas.Length; i++) {
@@ -24,6 +28,7 @@ public class DataManager : MMSingleton<DataManager> {
         }
         list.datalist = datas;
         saveDataToJson();
+        LoadInGameDatas();
     }
     
     void saveDataToJson() {
@@ -47,7 +52,83 @@ public class DataManager : MMSingleton<DataManager> {
         loadDataFromJson();
         return list.datalist;
     }
-   
+
+    public void LoadData(bool isNewGame = false)
+    {
+        if(isNewGame) {
+            Init();
+            Global.UserDataManager.storage.itemDataInfoList = items.Select(item => item.itemDataInfo).ToList();
+            Global.UserDataManager.Save();
+        }
+        if (datas == null || weapons == null || items == null) {
+            Debug.LogError("필수 데이터가 초기화되지 않았습니다.");
+            return;
+        }
+
+        for(int i = 0; i < datas.Length; i++) {
+            if (datas[i].isHave && i < weapons.Length) {
+                weapons[i].gameObject.SetActive(true);
+                weapons[i].damage = datas[i].damage;
+                weapons[i].count = datas[i].count;
+                items[i].itemDataInfo.curLevel = datas[i].level;
+                
+                weapons[i].Init();
+            }
+        }
+    }
+
+    private void LoadInGameDatas()
+    {
+        datas = GetData();
+        weapons = GameManager.Instance.weaponController.Weapons.ToArray();
+        items = Util.Data.HelperFunctions.GetScriptableObjects<ItemData>(itemPath);
+    }
+
+    public ItemDataInfo GetItemDataInfo(ItemData itemData) {
+        ItemDataInfo info = null;
+
+        foreach(var itemDataInfo in Global.UserDataManager.storage.itemDataInfoList) {
+            if (itemData.itemDataInfo.itemId == itemDataInfo.itemId) {
+                info = itemDataInfo;
+                return info;
+            }
+        }
+        return info;
+    }
+    public ItemDataInfo GetItemDataInfo(WeaponId itemId) {
+        ItemDataInfo info = null;
+
+        foreach(var itemDataInfo in Global.UserDataManager.storage.itemDataInfoList) {
+            if (itemId == itemDataInfo.itemId) {
+                info = itemDataInfo;
+                return info;
+            }
+        }
+        return info;
+    }
+    public ItemData[] GetNotMaxLevelItems() {
+        List<ItemData> notMaxLevelItems = new List<ItemData>();
+        foreach(var item in items) {
+            if(GetItemDataInfo(item).curLevel != GetItemDataInfo(item).maxLevel) {
+                notMaxLevelItems.Add(item);
+            }
+        }
+        return notMaxLevelItems.ToArray();
+    }
+
+    public void SaveData() {
+        LoadInGameDatas();
+        for(int i = 0; i < weapons.Length; i++) {
+            if (weapons[i].gameObject.activeSelf) {
+                Debug.Log("Setting");
+                datas[i].isHave = weapons[i].gameObject.activeSelf;
+                datas[i].damage = weapons[i].damage;
+                datas[i].count = weapons[i].count;
+                datas[i].level = GetItemDataInfo(items[i]).curLevel;
+            }
+        }
+        DataManager.Instance.SetData(datas);
+    }
 }
 
 

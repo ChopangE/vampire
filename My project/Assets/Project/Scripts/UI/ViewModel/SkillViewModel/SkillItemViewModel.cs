@@ -77,7 +77,7 @@ namespace UI
             if (weapon == null)
                 return;
                 
-            SkillIcon = weapon.data.itemIcon;
+            SkillIcon = weapon._data.itemIcon;
             SkillLevel = weapon.level;
             _weapon = weapon;
             _weapon.OnSkillCooldownUpdate += UpdateCooldownProgress;

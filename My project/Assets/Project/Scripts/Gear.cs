@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data.WeaponData;
 using UnityEngine;
 
 public class Gear : MonoBehaviour
@@ -8,12 +9,12 @@ public class Gear : MonoBehaviour
     public float rate;
 
     public void Init(ItemData data) {
-        name = "Gear" + data.itemId;
+        name = "Gear" + data.itemDataInfo.itemId;
         transform.parent = GameManager.Instance.player.transform;
         transform.localPosition = Vector3.zero;
 
         type = data.itemType;
-        rate = data.damages[0];
+        rate = data.itemDataInfo.damages[0];
         ApplayGear();
     }
     public void LevelUP(float rate) {
@@ -36,11 +37,11 @@ public class Gear : MonoBehaviour
         Weapon[] weapons = transform.parent.GetComponentsInChildren<Weapon>();
         foreach (Weapon weapon in weapons) {
             switch (weapon.id) {
-                case 0:
-                    weapon.speed = 150 + (150 * rate);
+                case WeaponId.Wind:
+                    weapon.maxCooldown = 150 + (150 * rate);
                     break;
-                case 1:
-                    weapon.speed = 0.5f * (1f - rate);
+                case WeaponId.Fire:
+                    weapon.maxCooldown = 0.5f * (1f - rate);
                     break;
             }
         }

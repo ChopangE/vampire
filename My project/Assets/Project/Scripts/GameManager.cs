@@ -10,13 +10,19 @@ using UnityEngine.UIElements;
 
 public class GameManager : MMSingleton<GameManager>
 {
+    public static DropItemPoolManager DropItemPoolManager { get; set; }
+    public static DamageTextPoolManager DamageTextPoolManager { get; set; }
+
+    public WeaponController weaponController;
 
     [Header("# Game Control")]
+    public bool isNewGame = false;
     public bool isLive;
     public float gameTime;
     public float maxGameTime = 2 * 10f;
     [Header("# Player Info")]
-    public float health;
+    private float _health;
+    private float _shield;
     public float maxHealth = 100;
     public int[] nextExp = { 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 };
     public int level = 0;
@@ -26,16 +32,10 @@ public class GameManager : MMSingleton<GameManager>
     public Player player;
     public PoolManager pool;
     public GameObject spawner;
+    public GameObject shieldObject;
     [Header("# Boss Object")]
     public GameObject bossLevel;
-    
 
-    [Header("# Data")]
-    public playerData[] datas;
-    public Weapon[] weapons;
-    public FloorWeapon floorWeapon;
-    public Item[] items;
-    
     [Header("# Stage Data")]
     //private static int maxStageNum = 3;
     //private static int maxStageCountNum = 4;
@@ -44,19 +44,21 @@ public class GameManager : MMSingleton<GameManager>
     public int curStage;
     
     private InGameMainPage inGameMainPage;
-    void Start() {
+    protected override void Awake() {
+        base.Awake();
         //* 인게임 UI 호출
         Global.Create(true);
+        DropItemPoolManager = FindObjectOfType<DropItemPoolManager>();
+        DamageTextPoolManager = FindObjectOfType<DamageTextPoolManager>();
+        isNewGame = true;
+        Global.DataManager.LoadData(isNewGame);
+
+        
         inGameMainPage = Global.UIManager.OpenPage<InGameMainPage>();
 
-        health = maxHealth;
+        _health = maxHealth;
+        _shield = 0;
         AudioManager.instance.PlayBgm(true);
-        datas = DataManager.Instance.GetData();
-        weapons = player.GetComponentsInChildren<Weapon>(true);
-        floorWeapon = player.GetComponentInChildren<FloorWeapon>(true);
-        //item은 우선 inspector에서 집어넣음.
-        GetItems();
-        GetData();
         
         curStage = Global.UserDataManager.curStage++;
         player.transform.position = stages[curStage].position;
@@ -79,51 +81,9 @@ public class GameManager : MMSingleton<GameManager>
         }
     }
 
-    void GetItems()
-    {
-        Item[] items = FindObjectsOfType<Item>(true);
-        for (int i = 0; i < items.Length-2; i++)
-        {
-            this.items[i] = items[items.Length - 1 - i];
-        }
-    }
-    void GetData() {
-        for(int i= 0; i < datas.Length - 1; i++) {
-            if (datas[i].isHave) {
-                weapons[i].gameObject.SetActive(true);
-                weapons[i].damage = datas[i].damage;
-                weapons[i].count = datas[i].count;
-                items[i].level = datas[i].level;
-                weapons[i].InitSetting();
-            }
-        }
-        if (datas[datas.Length-1].isHave) {
-            floorWeapon.gameObject.SetActive(true);
-            floorWeapon.damage = datas[datas.Length-1].damage;
-            items[datas.Length-1].level = datas[datas.Length-1].level;
-        }
-    }
 
-    void SetData() {
-        for(int i = 0; i < weapons.Length; i++) {
-            if (weapons[i].gameObject.activeSelf) {
-                Debug.Log("Setting");
-                datas[i].isHave = weapons[i].gameObject.activeSelf;
-                datas[i].damage = weapons[i].damage;
-                datas[i].count = weapons[i].count;
-                datas[i].level = items[i].level;
-            }
-        }
-        if (floorWeapon.gameObject.activeSelf) {
-            datas[datas.Length-1].isHave = floorWeapon.gameObject.activeSelf;
-            datas[datas.Length-1].damage = floorWeapon.damage;
-            datas[datas.Length-1].count = 0;
-            datas[datas.Length-1].level = items[datas.Length-1].level;
-        }
-        DataManager.Instance.SetData(datas);
-    }
     public void StageClear() {
-        SetData();
+        DataManager.Instance.SaveData();
         Global.UIManager.ClosePage();
         SceneManager.LoadScene(3);
     }
@@ -179,7 +139,64 @@ public class GameManager : MMSingleton<GameManager>
 
     }
 
-    public Transform CurStagePos() => stages[curStage];
-    public Bounds CurStageBounds() => stages[curStage].GetComponentInChildren<CompositeCollider2D>().bounds;
+    public Transform CurStagePos() {
+        if (stages == null || curStage < 0 || curStage >= stages.Length) {
+            Debug.LogError($"유효하지 않은 스테이지 인덱스: {curStage}");
+            return null;
+        }
+        return stages[curStage];
+    }
+
+    public Bounds CurStageBounds() {
+        Transform currentStage = CurStagePos();
+        if (currentStage == null) return new Bounds();
+        
+        CompositeCollider2D collider = currentStage.GetComponentInChildren<CompositeCollider2D>();
+        if (collider == null) {
+            Debug.LogError("CompositeCollider2D를 찾을 수 없습니다.");
+            return new Bounds();
+        }
+        return collider.bounds;
+    }
+
+    public float health 
+    {
+        get => _health;
+        set 
+        {
+            float damage = _health - value; // 받은 데미지 계산
+            if (damage > 0 && shield > 0)   // 데미지를 받았고 쉴드가 있다면
+            {
+                if (shield >= damage)        // 쉴드가 데미지보다 크거나 같으면
+                {
+                    shield -= damage;        // 쉴드만 감소
+                    return;                  // 체력은 감소하지 않음
+                }
+                else                        // 쉴드가 데미지보다 작으면
+                {
+                    float remainingDamage = damage - shield;
+                    shield = 0;             // 쉴드를 모두 소진
+                    _health -= remainingDamage; // 남은 데미지만큼 체력 감소
+                }
+            }
+            else                           // 쉴드가 없거나 회복의 경우
+            {
+                _health = Mathf.Clamp(value, 0, maxHealth);
+            }
+        }
+    }
+
+    public float shield
+    {
+        get => _shield;
+        set
+        {
+            _shield = Mathf.Max(0, value);
+            if (shieldObject != null)
+            {
+                shieldObject.SetActive(_shield > 0);
+            }
+        }
+    }
 
 }

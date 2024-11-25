@@ -9,20 +9,28 @@ public class Bullet : MonoBehaviour
     public int per;
     public Rigidbody2D rb;
     float duration;
-    void Awake() {
+    public bool canStun;
+    void Awake()
+    {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public virtual void Init(float damage, int per, Vector3 dir) {
+    public virtual void Init(float damage, int per, Vector3 dir, bool canStun = false, float duration = 0f)
+    {
         this.damage = damage;
         this.per = per;
-        if (per <= -100)
+        this.canStun = canStun;
+        if (duration == 0)
         {
-            duration = Random.Range(3f, 5f);
-            StartCoroutine(Stop());
+            if (per <= -100)
+            {
+                duration = Random.Range(3f, 5f);
+                StartCoroutine(Stop());
+            }
         }
 
-        if (per > -1) {
+        if (per > -1)
+        {
             rb.velocity = dir * 7f;
         }
     }
@@ -33,16 +41,35 @@ public class Bullet : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public virtual void OnTriggerEnter2D(Collider2D collision) {
-        if ((!collision.CompareTag("Enemy")&& ! collision.CompareTag("BossEnemy")) || per == -1) {
+    public virtual void OnTriggerEnter2D(Collider2D collision)
+    {
+        if ((!collision.CompareTag("Enemy") && !collision.CompareTag("BossEnemy")) || per == -1)
+        {
             return;
         }
-        
+
+        if (canStun)
+        {
+            Enemy enemy = collision.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                StartCoroutine(ApplyStun(enemy));
+            }
+        }
+
         per--;
 
-        if(per == -1) {
+        if (per == -1)
+        {
             rb.velocity = Vector2.zero;
             gameObject.SetActive(false);
         }
+    }
+
+    IEnumerator ApplyStun(Enemy enemy)
+    {
+        enemy.isStunned = true;
+        yield return new WaitForSeconds(1f);
+        enemy.isStunned = false;
     }
 }

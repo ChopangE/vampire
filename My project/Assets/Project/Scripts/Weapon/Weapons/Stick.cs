@@ -1,0 +1,23 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Cysharp.Threading.Tasks;
+
+public class Stick : Weapon
+{
+    public override void Init(ItemData data)
+    {
+        base.Init(data);
+        maxCooldown = 4f;
+    }
+    public override async void ExecuteAttack()
+    {
+        Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
+        float dir = player.GetComponent<SpriteRenderer>().flipX ? -1f : 1f;
+        
+        bullet.position = transform.position;
+        bullet.localScale = new Vector3(dir, 1, 1);
+        await UniTask.Delay(500);
+        bullet.gameObject.SetActive(false);
+    }
+}
