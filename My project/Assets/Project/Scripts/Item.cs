@@ -63,6 +63,7 @@ public class Item : ViewModel
         weaponController = GameManager.Instance.player.GetComponent<WeaponController>();
         textLevel.text = "Lv." + (Level + 1);
 
+
         switch (data.itemType)
         {
             case ItemData.ItemType.Melee:
@@ -86,6 +87,10 @@ public class Item : ViewModel
                 break;
             case ItemData.ItemType.Dagger:
                 textDesc.text = string.Format(data.itemDesc, data.itemDataInfo.damages[Level] * 100, data.itemDataInfo.ranges[Level]);
+                break;
+            case ItemData.ItemType.Pet:
+                textName.text = string.Format("{0} / 3", Level);
+                textDesc.text = string.Format(data.itemDesc);
                 break;
             default:
                 textDesc.text = string.Format(data.itemDesc);
@@ -139,6 +144,7 @@ public class Item : ViewModel
             case ItemData.ItemType.Breath:
             case ItemData.ItemType.HGDClone:
             case ItemData.ItemType.Stick:
+            case ItemData.ItemType.Pet:
                 UpgradeWeapon();
                 Level++;
                 break;

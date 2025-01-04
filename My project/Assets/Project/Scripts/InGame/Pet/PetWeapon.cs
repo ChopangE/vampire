@@ -41,11 +41,9 @@ public class PetWeapon : Weapon
 
     private bool isBuffActive = false;
 
-
     void Start()
     {
         speed = 1f;
-        StartBlessingCycle().Forget();
     }
 
     async UniTaskVoid StartBlessingCycle()
@@ -250,6 +248,17 @@ public class PetWeapon : Weapon
             _blessingCts.Cancel();
             _blessingCts.Dispose();
             _blessingCts = null;
+        }
+    }
+
+    public override void LevelUp(float damage, int count)
+    {
+        base.LevelUp(damage, count);
+        
+        // 레벨 3 이상일 때 스킬 활성화
+        if (count >= 3)
+        {
+            StartBlessingCycle().Forget();
         }
     }
 }

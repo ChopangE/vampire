@@ -47,7 +47,7 @@ public class Boss : MonoBehaviour
         else {
             if (BossManager.Instance.phase >= 2) {
                 Timer += Time.deltaTime;
-                if (Timer > 5f) {
+                if (Timer > 30f) {
                     Timer = 0f;
                     bossLevel[levelIndex++].SetActive(true);
                     levelIndex = Mathf.Min(bossLevel.Length - 1, levelIndex);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FloorWeapon : Weapon
 {
-    protected override      void Awake() {
+    protected override void Awake() {
         player = GameManager.Instance.player;
     }
 

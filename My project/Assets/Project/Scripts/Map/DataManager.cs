@@ -11,13 +11,13 @@ using UnityEngine;
 public class DataManager : MMSingleton<DataManager> {
     private const string itemPath = "Assets/Project/Data/Items";
 
-    public playerData[] datas = new playerData[GameManager.Instance.weaponController.Weapons.Count];
+    public playerData[] datas;
     
     public playerDataList list = new playerDataList();
     public Weapon[] weapons;
     public List<ItemData> items = new List<ItemData>();
-
     void Init() {
+        datas = new playerData[GameManager.Instance.weaponController.Weapons.Count];
         for (int i = 0; i < datas.Length; i++) {
             datas[i] = new playerData();
             datas[i].id = i;
@@ -103,6 +103,10 @@ public class DataManager : MMSingleton<DataManager> {
                 info = itemDataInfo;
                 return info;
             }
+        }
+
+        if(info == null) {
+            Debug.LogWarning($"WeaponId {itemId}에 해당하는 ItemDataInfo를 찾을 수 없습니다.");
         }
         return info;
     }

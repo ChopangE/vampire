@@ -14,9 +14,11 @@ public class WeaponController : MonoBehaviour
     public IReadOnlyList<Weapon> Weapons => weapons;
     private float damageMultiplier = 1f;
 
-    void Start()
+    void Awake()
     {
-        weapons = GetComponentsInChildren<Weapon>(true).ToList();
+        weapons = FindObjectsOfType<Weapon>().ToList();
+        weapons.AddRange(GetComponentsInChildren<Weapon>(true));
+        weapons = weapons.Distinct().ToList();
     }
 
     void Update()

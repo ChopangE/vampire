@@ -47,9 +47,13 @@ public class Weapon : MonoBehaviour
         }else
         {
             var dataInfo = DataManager.Instance.GetItemDataInfo(id);
-            baseDamage = dataInfo.baseDamage;
-            count = dataInfo.baseCount;
-            maxCooldown = dataInfo.baseCooldown;
+            if(dataInfo == null) {
+                Debug.Log($"WeaponId {id}에 해당하는 ItemDataInfo를 찾을 수 없습니다.");
+            }else{
+                baseDamage = dataInfo.baseDamage;
+                count = dataInfo.baseCount;
+                maxCooldown = dataInfo.baseCooldown;
+            }
         }
         damage = baseDamage;
 
@@ -58,7 +62,7 @@ public class Weapon : MonoBehaviour
         player.BroadcastMessage("ApplayGear", SendMessageOptions.DontRequireReceiver);
     }
 
-    public void LevelUp(float damage, int count)
+    public virtual void LevelUp(float damage, int count)
     {
         level++;
         OnSkillLevelUp?.Invoke(this, level);

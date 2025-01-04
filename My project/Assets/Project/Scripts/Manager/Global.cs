@@ -39,11 +39,11 @@ namespace Manager
             Application.targetFrameRate = 60;
             Input.multiTouchEnabled = false;
 
-            LoadManagerPrefabs();
-
             UserDataManager = new();
             UserDataManager.Load();
             UnityGoogleSheet.LoadAllData();
+
+            LoadManagerPrefabs();
 
         }
 

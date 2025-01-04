@@ -20,7 +20,7 @@ public class ItemDataInfo
 [CreateAssetMenu(fileName = "Item", menuName = "Scriptable Object/ItemData")]
 public class ItemData : ScriptableObject
 {
-    public enum ItemType { Melee, Range, Bomb, Raser, Breath, HGDClone, Stick, Floor, Glove, Shoe, Heal, Dagger }
+    public enum ItemType { Melee, Range, Bomb, Raser, Breath, HGDClone, Stick, Floor, Glove, Shoe, Heal, Dagger, Pet }
     public ItemDataInfo itemDataInfo;
     
     [Header("# Main Info")]

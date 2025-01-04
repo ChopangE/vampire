@@ -47,13 +47,10 @@ public class GameManager : MMSingleton<GameManager>
     protected override void Awake() {
         base.Awake();
         //* 인게임 UI 호출
-        Global.Create(true);
         DropItemPoolManager = FindObjectOfType<DropItemPoolManager>();
         DamageTextPoolManager = FindObjectOfType<DamageTextPoolManager>();
         isNewGame = true;
         Global.DataManager.LoadData(isNewGame);
-
-        
         inGameMainPage = Global.UIManager.OpenPage<InGameMainPage>();
 
         _health = maxHealth;

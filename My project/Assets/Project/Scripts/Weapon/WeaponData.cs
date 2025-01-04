@@ -20,6 +20,7 @@ namespace Data.WeaponData
         Stick = 10,
         Dagger = 11,
         Floor = 12,
+        Pet = 13,
     }
     public enum WeaponType { Rotate, Range, Bomb, Raser, Breath, Dagger }
 }
