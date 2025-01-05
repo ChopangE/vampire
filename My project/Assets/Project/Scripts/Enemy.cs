@@ -111,9 +111,9 @@ public class Enemy : DamageObject {
 
     }
     public override void OnTriggerEnter2D(Collider2D collision) {
-        if (!collision.CompareTag("Bullet") && !collision.CompareTag("Floor")) return;
+        if (!collision.CompareTag("Bullet")) return;
         if (collision.GetComponent<Bullet>()) {
-            float damage = collision.GetComponent<Bullet>().damage;
+            float damage = collision.GetComponent<Bullet>().CalculateDamage();
             health -= damage;
             GameManager.DamageTextPoolManager.SpawnDamageText(0, transform.position, damage);
 

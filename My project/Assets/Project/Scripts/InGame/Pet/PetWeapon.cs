@@ -11,7 +11,6 @@ public enum BlessingType
     WindShield,      // 실드
     Lightning,       // 번개
     WindSpeed,       // 이속
-    Clone,          // 분신
     Rain            // 비
 }
 
@@ -85,9 +84,6 @@ public class PetWeapon : Weapon
             case BlessingType.WindSpeed:
                 ApplySpeedBlessing();
                 break;
-            case BlessingType.Clone:
-                ApplyCloneBlessing();
-                break;
             case BlessingType.Rain:
                 await ApplyRainBlessing(cancellationToken);
                 break;
@@ -156,20 +152,9 @@ public class PetWeapon : Weapon
             case BlessingType.WindSpeed:
                 player.speed /= 1.1f;
                 break;
-            case BlessingType.Clone:
-                RemoveCloneBlessing();
-                break;
         }
     }
 
-    void RemoveCloneBlessing()
-    {
-        if (isBuffActive)
-        {
-            GameManager.Instance.weaponController.DamageBuffPercent(-0.1f);
-            isBuffActive = false;
-        }
-    }
 
     Vector3 GetRandomPositionInScreen()
     {
@@ -207,7 +192,6 @@ public class PetWeapon : Weapon
             BlessingType.WindShield => shieldColor,
             BlessingType.Lightning => lightningColor,
             BlessingType.WindSpeed => speedColor,
-            BlessingType.Clone => cloneColor,
             BlessingType.Rain => rainColor,
             _ => Color.white
         };

@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class WeaponController : MonoBehaviour
 {
     public event Action<Weapon> OnWeaponActivated;
 
+    [ShowInInspector]
     private List<Weapon> weapons = new List<Weapon>();
     
     public int maxActiveWeaponCount = 6;
@@ -14,11 +16,22 @@ public class WeaponController : MonoBehaviour
     public IReadOnlyList<Weapon> Weapons => weapons;
     private float damageMultiplier = 1f;
 
+    [LabelText("추가 무기 소스(펫 등 다른 친구들꺼)")]
+    [SerializeField] private List<GameObject> additionalWeaponSources;
+
     void Awake()
     {
-        weapons = FindObjectsOfType<Weapon>().ToList();
-        weapons.AddRange(GetComponentsInChildren<Weapon>(true));
-        weapons = weapons.Distinct().ToList();
+        // 자신의 자식들의 Weapon 찾기
+        var ownWeapons = GetComponentsInChildren<Weapon>(true);
+        
+        // 추가 소스들의 Weapon 찾기
+        var additionalWeapons = additionalWeaponSources
+            .SelectMany(source => source.GetComponentsInChildren<Weapon>(true));
+        
+        // 모든 무기 합치고 중복 제거
+        weapons = ownWeapons.Concat(additionalWeapons)
+            .Distinct()
+            .ToList();
     }
 
     void Update()

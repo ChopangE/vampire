@@ -14,9 +14,11 @@ public class Item : ViewModel
 {
     private bool _isInteractable = true;
     [Binding]
-    public bool IsInteractable {    
+    public bool IsInteractable
+    {
         get => _isInteractable;
-        set {
+        set
+        {
             _isInteractable = value;
             OnPropertyChanged(nameof(IsInteractable));
         }
@@ -24,9 +26,11 @@ public class Item : ViewModel
     public ItemData data;
     private int _level;
     [Binding]
-    public int Level {
+    public int Level
+    {
         get => _level;
-        set {
+        set
+        {
             _level = value;
             OnPropertyChanged(nameof(Level));
         }
@@ -37,9 +41,11 @@ public class Item : ViewModel
 
     private Sprite _icon;
     [Binding]
-    public Sprite Icon {
+    public Sprite Icon
+    {
         get => _icon;
-        set {
+        set
+        {
             _icon = value;
             OnPropertyChanged(nameof(Icon));
         }
@@ -49,9 +55,27 @@ public class Item : ViewModel
     Text textDesc;
 
     private WeaponController weaponController;
+
+    private void GetWeapon()
+    {
+        var weapons = GameManager.Instance.player.GetComponentInChildren<WeaponController>(true).Weapons;
+        foreach (var obj in weapons)
+        {
+            if (obj.id == data.itemDataInfo.itemId)
+            {
+                weapon = obj;
+                break;
+            }
+        }
+    }
     void OnEnable()
     {
-        Level = data.itemDataInfo.curLevel;
+        if (weapon == null)
+        {
+            GetWeapon();
+        }
+        Debug.Log($"weapon: {weapon.id}");
+        Level = weapon.level;
         Icon = data.itemIcon;
 
         Text[] texts = GetComponentsInChildren<Text>();
@@ -102,14 +126,18 @@ public class Item : ViewModel
 
     private void CheckInteractable()
     {
-        if(data.itemType == ItemData.ItemType.Heal) {
+        if (data.itemType == ItemData.ItemType.Heal)
+        {
             IsInteractable = true;
             return;
         }
         var weapons = GameManager.Instance.weaponController.ActiveWeapons;
-        if(weapons.Count >= GameManager.Instance.weaponController.maxActiveWeaponCount) {
+        if (weapons.Count >= GameManager.Instance.weaponController.maxActiveWeaponCount)
+        {
             IsInteractable = false;
-        }else {
+        }
+        else
+        {
             IsInteractable = true;
         }
     }
@@ -120,7 +148,8 @@ public class Item : ViewModel
         // Heal 타입 먼저 처리
         if (data.itemType == ItemData.ItemType.Heal)
         {
-            switch (data.itemDataInfo.itemId) {
+            switch (data.itemDataInfo.itemId)
+            {
                 case WeaponId.Drink:
                     GameManager.Instance.health = GameManager.Instance.maxHealth;
                     break;
@@ -162,23 +191,27 @@ public class Item : ViewModel
                 Level++;
                 break;
         }
-        
+
 
         if (Level == data.itemDataInfo.maxLevel)
         {
             GetComponent<Button>().interactable = false;
         }
+        Debug.Log($"Level: {Level}");
     }
 
     private void InitializeWeapon(Weapon[] weapons)
     {
-        foreach(var obj in weapons) {
-            if(obj.id == data.itemDataInfo.itemId) {
+        foreach (var obj in weapons)
+        {
+            if (obj.id == data.itemDataInfo.itemId)
+            {
                 weapon = obj;
                 break;
             }
         }
-        if(weapon == null) {
+        if (weapon == null)
+        {
             Debug.LogError($"Weapon {data.itemName} not found");
             return;
         }
@@ -191,7 +224,7 @@ public class Item : ViewModel
     {
         if (weapon == null)
         {
-            weapon = GameManager.Instance.player.GetComponentsInChildren<Weapon>(true)[(int)data.itemType];
+            GetWeapon();
         }
 
         float nextDamage = data.itemDataInfo.baseDamage * (1 + data.itemDataInfo.damages[Level]);
@@ -216,9 +249,9 @@ public class Item : ViewModel
         }
         else
         {
-            if (floorWeapon == null) 
+            if (floorWeapon == null)
                 floorWeapon = GameManager.Instance.player.GetComponentInChildren<FloorWeapon>(true);
-            
+
             float nextDamage = data.itemDataInfo.baseDamage * (1 + data.itemDataInfo.damages[Level]);
             floorWeapon.LevelUp(nextDamage);
         }

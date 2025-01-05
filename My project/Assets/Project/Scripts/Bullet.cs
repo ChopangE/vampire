@@ -72,4 +72,10 @@ public class Bullet : MonoBehaviour
         yield return new WaitForSeconds(1f);
         enemy.isStunned = false;
     }
+
+    public float CalculateDamage()
+    {
+        return damage;
+    }
 }
+
