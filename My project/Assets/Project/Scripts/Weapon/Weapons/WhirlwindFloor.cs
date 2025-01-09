@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -13,8 +14,9 @@ public class WhirlwindFloor : FloorWeapon
     CircleCollider2D coll;
     Vector3 spawnPos;
 
-    public override void Init(ItemData data) {
-        base.Init(data);
+    public override async UniTaskVoid Init(ItemData data) {
+        base.Init(data).Forget();
+        await UniTask.Yield();
         coll = projectile.GetComponent<CircleCollider2D>();
     }
 

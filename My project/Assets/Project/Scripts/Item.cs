@@ -70,12 +70,20 @@ public class Item : ViewModel
     }
     void OnEnable()
     {
-        if (weapon == null)
+        if (data.itemType != ItemData.ItemType.Heal)
         {
             GetWeapon();
+            if (weapon == null)
+            {
+                Debug.LogError($"Weapon {data.itemName} not found");
+                return;
+            }
+            Level = weapon.level;
         }
-        Debug.Log($"weapon: {weapon.id}");
-        Level = weapon.level;
+        else
+        {
+            Level = 00;
+        }
         Icon = data.itemIcon;
 
         Text[] texts = GetComponentsInChildren<Text>();
@@ -192,12 +200,11 @@ public class Item : ViewModel
                 break;
         }
 
-
-        if (Level == data.itemDataInfo.maxLevel)
+        DataManager.Instance.SetWeaponItemLevel(data, Level);
+        if (Level >= data.itemDataInfo.maxLevel)
         {
             GetComponent<Button>().interactable = false;
         }
-        Debug.Log($"Level: {Level}");
     }
 
     private void InitializeWeapon(Weapon[] weapons)
@@ -216,7 +223,6 @@ public class Item : ViewModel
             return;
         }
         weapon.gameObject.SetActive(true);
-        weapon.Init(data);
         weaponController.ActivateWeapon(weapon);
     }
 
@@ -245,7 +251,6 @@ public class Item : ViewModel
         {
             floorWeapon = GameManager.Instance.player.GetComponentInChildren<FloorWeapon>(true);
             floorWeapon.gameObject.SetActive(true);
-            floorWeapon.Init(data);
         }
         else
         {
@@ -270,12 +275,4 @@ public class Item : ViewModel
         }
     }
 
-    private void OnWeaponActivated(int weaponIndex)
-    {
-        if ((int)data.itemType == weaponIndex)
-        {
-            // 해당 무기가 활성화되었을 때의 처리
-            Debug.Log($"Weapon {data.itemName} has been activated!");
-        }
-    }
 }

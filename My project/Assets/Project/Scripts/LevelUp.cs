@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -16,14 +17,13 @@ public class LevelUp : MonoBehaviour
         Next();
         rect.localScale = Vector3.one;
         GameManager.Instance.Stop();
-        AudioManager.instance.EffectBgm(true);
+        Global.SoundManager.StopBGM(true);
     }
 
     public void Hide() {
         rect.localScale = Vector3.zero;
         GameManager.Instance.Resume();
-        AudioManager.instance.EffectBgm(false);
-
+        Global.SoundManager.StopBGM(false);
     }
 
     void Next() {

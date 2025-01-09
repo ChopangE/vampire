@@ -52,6 +52,20 @@ namespace Manager
                 Debug.Log("해당 사운드 찾기 실패");
             return s;
         }
+        public void StopSFX(bool isStop = true)
+        {
+            if(isStop)
+                sfxSource.Stop();
+            else
+                sfxSource.Play();
+        }
+        public void StopBGM(bool isStop = true)
+        {
+            if(isStop)
+                bgmSource.Stop();
+            else
+                bgmSource.Play();
+        }
         
         public bool MuteSFX(bool isMute) => sfxSource.mute = isMute; 
         public bool MuteBGM(bool isMute) => bgmSource.mute = isMute; 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 //using static UnityEditor.Progress;
 
@@ -13,12 +14,12 @@ public class Pause : MonoBehaviour
     public void Show() {
         rect.localScale = Vector3.one;
         GameManager.Instance.Stop();
-        AudioManager.instance.EffectBgm(true);
+        Global.SoundManager.StopBGM(true);
     }
     public void Hide() {
         rect.localScale = Vector3.zero;
         GameManager.Instance.Resume();
-        AudioManager.instance.EffectBgm(false);
+        Global.SoundManager.StopBGM(false);
 
     }
 }

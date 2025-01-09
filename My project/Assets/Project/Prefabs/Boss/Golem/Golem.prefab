@@ -138,6 +138,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4afb0cd54d6768247b5e15ebb2b08119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 0
+  health: 0
+  canKnockBack: 0
+  speed: 0
+  animCon: []
+  eliteanimCon: []
+  target: {fileID: 0}
+  outlineSprite: {fileID: 0}
+  canStun: 0
   isDoing: 0
   targetLayer:
     serializedVersion: 2

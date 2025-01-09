@@ -28,17 +28,12 @@ public class WhirlBullet : Bullet
             timer2 = 0f;
             Collider2D[] enemyColls = Physics2D.OverlapCircleAll(transform.position, coll.radius, LayerMask.NameToLayer("Enemy"));
             foreach (Collider2D enemyColl in enemyColls) {
-                Debug.Log("hi");
-                //enemyColl.GetComponent<Enemy>().GetAddForce(transform.position);
+                enemyColl.GetComponent<Enemy>().GetAddForce(transform.position);
 
             }
 
         }
     }
 
-    public override void OnTriggerEnter2D(Collider2D collision) {}
-
-
-    
 
 }

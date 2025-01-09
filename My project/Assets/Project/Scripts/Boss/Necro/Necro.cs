@@ -5,7 +5,6 @@ using UnityEngine;
 public class Necro : MiddleBoss
 {
     float castingTimer;
-    float timer;
     PoolManager pool;
 
     public GameObject savePrefabs;

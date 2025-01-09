@@ -49,13 +49,10 @@ public class GameManager : MMSingleton<GameManager>
         //* 인게임 UI 호출
         DropItemPoolManager = FindObjectOfType<DropItemPoolManager>();
         DamageTextPoolManager = FindObjectOfType<DamageTextPoolManager>();
-        isNewGame = true;
-        Global.DataManager.LoadData(isNewGame);
         inGameMainPage = Global.UIManager.OpenPage<InGameMainPage>();
 
         _health = maxHealth;
         _shield = 0;
-        AudioManager.instance.PlayBgm(true);
         
         curStage = Global.UserDataManager.curStage++;
         player.transform.position = stages[curStage].position;
@@ -81,7 +78,7 @@ public class GameManager : MMSingleton<GameManager>
 
     public void StageClear() {
         DataManager.Instance.SaveData();
-        Global.UIManager.ClosePage();
+        Global.UIManager.CloseAllPages();
         SceneManager.LoadScene(3);
     }
     public void GameOver() {
@@ -93,8 +90,7 @@ public class GameManager : MMSingleton<GameManager>
         isLive = false;
         yield return new WaitForSeconds(0.5f);
         Stop();
-
-        AudioManager.instance.PlayBgm(false);
+        
     }
     void Update() {
         if (!isLive) return;

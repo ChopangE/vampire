@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class FloorWeapon : Weapon
@@ -9,8 +10,9 @@ public class FloorWeapon : Weapon
     }
 
     
-    public override void Init(ItemData data) {
-        base.Init(data);
+    public override async UniTaskVoid Init(ItemData data) {
+        base.Init(data).Forget();
+        await UniTask.Yield();
     }
 
     public void LevelUp(float damage) {

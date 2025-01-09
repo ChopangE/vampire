@@ -242,6 +242,7 @@ public class PetWeapon : Weapon
         // 레벨 3 이상일 때 스킬 활성화
         if (count >= 3)
         {
+            Debug.Log("펫무기 활성화");
             StartBlessingCycle().Forget();
         }
     }

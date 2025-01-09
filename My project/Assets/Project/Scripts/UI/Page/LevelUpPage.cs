@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UI;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -24,7 +25,7 @@ public class LevelUpPage : ViewModel
         Next();
         rect.localScale = Vector3.one;
         GameManager.Instance.Stop();
-        AudioManager.instance.EffectBgm(true);
+        Global.SoundManager.StopBGM(true);
     }
 
     [Binding]
@@ -32,7 +33,7 @@ public class LevelUpPage : ViewModel
     {
         rect.localScale = Vector3.zero;
         GameManager.Instance.Resume();
-        AudioManager.instance.EffectBgm(false);
+        Global.SoundManager.StopBGM(false);
 
     }
 

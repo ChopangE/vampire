@@ -43,6 +43,11 @@ public class Bullet : MonoBehaviour
 
     public virtual void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.CompareTag("Bound"))
+        {
+            gameObject.SetActive(false);
+            return;
+        }
         if ((!collision.CompareTag("Enemy") && !collision.CompareTag("BossEnemy")) || per == -1)
         {
             return;

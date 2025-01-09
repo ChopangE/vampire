@@ -1,10 +1,11 @@
 using UnityEngine;
-
+using Cysharp.Threading.Tasks;
 public class Amulet : Weapon
 {
-    public override void Init(ItemData data)
+    public override async UniTaskVoid Init(ItemData data)
     {
-        base.Init(data);
+        base.Init(data).Forget();
+        await UniTask.Yield();
         maxCooldown = 5f;
     }
     public override void ExecuteAttack()

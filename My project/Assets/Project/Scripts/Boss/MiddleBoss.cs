@@ -4,19 +4,11 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.InputSystem.Processors;
 
-public class MiddleBoss : MonoBehaviour {
+public class MiddleBoss : Enemy {
 
-    protected float speed;
-    protected float health;
     public bool isDoing;
 
-    protected Animator anim;
     Transform playerPos;
-    SpriteRenderer spriter;
-    Rigidbody2D rigid;
-    Rigidbody2D target;
-
-    bool isLive;
 
     void Start() {
         Init();
@@ -24,15 +16,11 @@ public class MiddleBoss : MonoBehaviour {
 
     public virtual void Init() {
         playerPos = GameManager.Instance.player.GetComponent<Transform>();
-        spriter = GetComponent<SpriteRenderer>();
-        rigid = GetComponent<Rigidbody2D>();
         target = GameManager.Instance.player.GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
 
         speed = 5f;
         health = 100f;
 
-        isLive = true;
         isDoing = false;
         
     }
@@ -57,14 +45,6 @@ public class MiddleBoss : MonoBehaviour {
 
         if (isLive) {
             spriter.flipX = target.position.x < rigid.position.x;
-        }
-    }
-
-    public virtual void OnTriggerEnter2D(Collider2D collision) {
-        if (!collision.CompareTag("Bullet")) return;
-        Bullet bullet;
-        if (bullet = collision.GetComponent<Bullet>()) {
-            health -= bullet.damage;
         }
     }
 

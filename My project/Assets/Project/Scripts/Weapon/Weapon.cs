@@ -4,6 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using Random = UnityEngine.Random;
 using Data.WeaponData;
+using Cysharp.Threading.Tasks;
 
 public class Weapon : MonoBehaviour
 {
@@ -33,10 +34,10 @@ public class Weapon : MonoBehaviour
     }
     void OnEnable()
     {
-        Init();
+        Init().Forget();
     }
 
-    public virtual void Init(ItemData data = null)
+    public virtual async UniTaskVoid Init(ItemData data = null)
     {
         if (data != null)
         {
@@ -46,10 +47,11 @@ public class Weapon : MonoBehaviour
             count = data.itemDataInfo.baseCount;
         }else
         {
-            var dataInfo = DataManager.Instance.GetItemDataInfo(id);
+            var dataInfo = await DataManager.Instance.GetItemDataInfo(id);
             if(dataInfo == null) {
                 Debug.Log($"WeaponId {id}에 해당하는 ItemDataInfo를 찾을 수 없습니다.");
             }else{
+                level = dataInfo.curLevel;
                 baseDamage = dataInfo.baseDamage;
                 count = dataInfo.baseCount;
                 maxCooldown = dataInfo.baseCooldown;

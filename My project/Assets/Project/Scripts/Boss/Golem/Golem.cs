@@ -9,7 +9,6 @@ public class Golem : MiddleBoss
 {
     CameraControl CC;
     float castingTimer;
-    float timer;
     //PoolManager pool;
     public LayerMask targetLayer;
     public Vector2 attackSize;
@@ -21,7 +20,6 @@ public class Golem : MiddleBoss
         timer += Time.deltaTime;
         if (castingTimer < timer) {
             castingTimer = Random.Range(6.0f, 10.0f);
-            //StartCoroutine(Attacking());
             Attack();
             timer = 0f;
         }

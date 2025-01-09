@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Data;
 using UnityEngine;
 public class WindWeapon : Weapon
@@ -14,9 +15,10 @@ public class WindWeapon : Weapon
         bullet.GetComponent<Bullet>().Init(damage, 50, dir);
     }
 
-    public override void Init(ItemData data)
+    public override async UniTaskVoid Init(ItemData data)
     {
-        base.Init(data);
+        base.Init(data).Forget();
+        await UniTask.Yield();
         maxCooldown = 5f;
     }
 }

@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class Bomb : Weapon
 {
-    public override void Init(ItemData data)
+    public override async UniTaskVoid Init(ItemData data)
     {
-        base.Init(data);
+        base.Init(data).Forget();
+        await UniTask.Yield();
         maxCooldown = 3f;
     }
     public override void ExecuteAttack()

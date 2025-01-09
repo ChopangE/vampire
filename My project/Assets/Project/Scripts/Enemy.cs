@@ -20,28 +20,31 @@ public class Enemy : DamageObject {
 
     private EnemyType _enemyType = EnemyType.Normal;
     int coinNum;
-    bool isLive;
+    protected bool isLive;
     int level;
-    float timer;
+    protected float timer;
     bool isBack;
 
-    Rigidbody2D rigid;
-    Collider2D coll;
-    Animator anim;
-    SpriteRenderer spriter;
-    WaitForFixedUpdate wait;
-    Vector2 targetVec;
-
+    protected Rigidbody2D rigid;
+    protected Collider2D coll;
+    protected Animator anim;
+    protected SpriteRenderer spriter;
+    protected WaitForFixedUpdate wait;
+    protected Vector2 targetVec;
+    
+    public bool canStun = true;
     private bool _isStunned;
     public bool isStunned {
         get => _isStunned;
         set {
-            _isStunned = value;
-            outlineSprite.SetStunned(value);
-            
-            // 스턴 상태일 때는 이동 불가
-            if (value) {
-                rigid.velocity = Vector2.zero;
+            if(canStun) {
+                _isStunned = value;
+                outlineSprite.SetStunned(value);
+                
+                // 스턴 상태일 때는 이동 불가
+                if (value) {
+                    rigid.velocity = Vector2.zero;
+                }
             }
         }
     }

@@ -5,7 +5,6 @@ using UnityEngine;
 public class EvilDragon : MiddleBoss
 {
     float castingTimer;
-    float timer;
     PoolManager pool;
     public GameObject savingPrefabs;
     public override void Init() {
