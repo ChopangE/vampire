@@ -175,6 +175,11 @@ public class GameManager : MMSingleton<GameManager>
             else                           // 쉴드가 없거나 회복의 경우
             {
                 _health = Mathf.Clamp(value, 0, maxHealth);
+                // 체력이 0이 되면 게임오버
+                if (_health <= 0)
+                {
+                    GameOver();
+                }
             }
         }
     }

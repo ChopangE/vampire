@@ -26,17 +26,13 @@ public class Player : MonoBehaviour
     void FixedUpdate() {
         if (!GameManager.Instance.isLive) return;
         if (isKnockBack) return;
-        transform.Translate(inputVec * speed * Time.fixedDeltaTime);
-       
+        
+        Vector2 movePosition = rigid.position + inputVec * speed * Time.fixedDeltaTime;
+        rigid.MovePosition(movePosition);
     }
 
     void OnMove(InputValue value) {
-    
-        inputVec = value.Get<Vector2>();            //�̹� normalized ����
-        if (!isKnockBack) {
-            rigid.velocity = Vector2.zero;
-        }
-
+        inputVec = value.Get<Vector2>();
     }
 
     void LateUpdate() {

@@ -17,7 +17,10 @@ namespace InGame
         {
             await UniTask.WaitForSeconds(1);
             var Map = GameManager.Instance.CurStagePos().GetChild(0);
-            var coli = Map.AddComponent<PolygonCollider2D>();
+            var camConfiner = new GameObject("CameraConfiner");
+            camConfiner.transform.SetParent(Map.transform);
+            camConfiner.transform.position = Map.position;
+            var coli = camConfiner.AddComponent<PolygonCollider2D>();
             coli.isTrigger = true;
 
             // Get the bounds of the current stage
