@@ -10,24 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90c6a7228b761c8408ff4e7aa1892fed, type: 3}
-  m_Name: Item 12
+  m_Name: Item 13
   m_EditorClassIdentifier: 
   itemDataInfo:
-    itemId: 13
-    curLevel: 0
+    itemId: 14
+    curLevel: 1
     damages:
     - 1
-    - 1
-    - 1
-    counts: 010000000100000001000000
-    ranges: 010000000100000001000000
-    baseCooldown: 0
-    baseDamage: 10
-    baseCount: 1
-  itemType: 12
-  itemName: '{0} / 3'
-  itemDesc: '???
+    counts: 01000000
+    ranges: 01000000
+    baseCooldown: 5
+    baseDamage: 0
+    baseCount: 0
+  itemType: 13
+  itemName: "\uBD84\uC2E0"
+  itemDesc: '//
 
-    ???'
-  itemIcon: {fileID: 21300000, guid: 07c7525f535d40d40a1d19a58197a4e6, type: 3}
+'
+  itemIcon: {fileID: 21300000, guid: c848240821334de428ddbe9d9dd8a16b, type: 3}
   projectile: {fileID: 0}

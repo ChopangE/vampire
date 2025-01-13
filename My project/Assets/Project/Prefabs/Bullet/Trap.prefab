@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 6932365772735857771}
   - component: {fileID: 6932365772735857764}
-  - component: {fileID: 6932365772735857765}
   - component: {fileID: 6932365772735857769}
   - component: {fileID: 6932365772735857770}
   - component: {fileID: 1986117579607720795}
+  - component: {fileID: 4492174534887758658}
   m_Layer: 0
-  m_Name: Bullet 2
+  m_Name: Trap
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88,20 +88,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6932365772735857765
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6932365772735857766}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de42e593ec2402d4bb2fada5c6a40423, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  per: 0
 --- !u!70 &6932365772735857769
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -160,3 +146,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4492174534887758658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6932365772735857766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de42e593ec2402d4bb2fada5c6a40423, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  per: -100
+  rb: {fileID: 0}
+  canStun: 0

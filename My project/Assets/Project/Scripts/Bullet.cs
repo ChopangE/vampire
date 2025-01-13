@@ -24,8 +24,8 @@ public class Bullet : MonoBehaviour
         {
             if (per <= -100)
             {
-                duration = Random.Range(3f, 5f);
                 StartCoroutine(Stop());
+                this.duration = Random.Range(3f, 5f);
             }
         }
 
@@ -78,7 +78,7 @@ public class Bullet : MonoBehaviour
         enemy.isStunned = false;
     }
 
-    public float CalculateDamage()
+    public virtual float CalculateDamage()
     {
         return damage;
     }

@@ -1,18 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using InGame;
 using Manager;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
-public class Enemy : DamageObject {
+public class Enemy : DamageObject
+{
     enum EnemyType
     {
         Elite, Normal,
     }
 
     public float speed;
+    public Transform[] dropItemSpawnPoints;
     public RuntimeAnimatorController[] animCon;
     public RuntimeAnimatorController[] eliteanimCon;
     public Rigidbody2D target;
@@ -31,25 +35,30 @@ public class Enemy : DamageObject {
     protected SpriteRenderer spriter;
     protected WaitForFixedUpdate wait;
     protected Vector2 targetVec;
-    
+
     public bool canStun = true;
     private bool _isStunned;
-    public bool isStunned {
+    public bool isStunned
+    {
         get => _isStunned;
-        set {
-            if(canStun) {
+        set
+        {
+            if (canStun)
+            {
                 _isStunned = value;
                 outlineSprite.SetStunned(value);
-                
+
                 // 스턴 상태일 때는 이동 불가
-                if (value) {
+                if (value)
+                {
                     rigid.velocity = Vector2.zero;
                 }
             }
         }
     }
 
-    protected override void Awake() {
+    protected override void Awake()
+    {
         base.Awake();
         coinNum = 4;
         rigid = GetComponent<Rigidbody2D>();
@@ -59,7 +68,8 @@ public class Enemy : DamageObject {
         wait = new WaitForFixedUpdate();
     }
 
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         if (!GameManager.Instance.isLive) return;
         if (!isLive) return;
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Hit")) return;
@@ -70,22 +80,25 @@ public class Enemy : DamageObject {
         rigid.MovePosition(nextVec + rigid.position);
         //transform.Translate(nextVec);
         //rigid.velocity = Vector2.zero;
-        
-        
+
+
     }
-  
-    void LateUpdate() {
+
+    void LateUpdate()
+    {
         if (!GameManager.Instance.isLive) return;
 
-        if (isLive) {
+        if (isLive)
+        {
             spriter.flipX = target.position.x < rigid.position.x;
         }
     }
 
-    protected override void OnEnable() {
+    protected override void OnEnable()
+    {
         base.OnEnable();
         target = GameManager.Instance.player.GetComponent<Rigidbody2D>();
-        isLive = true; 
+        isLive = true;
         coll.enabled = true;
         rigid.simulated = true;
         spriter.sortingOrder = 2;
@@ -95,7 +108,8 @@ public class Enemy : DamageObject {
         isStunned = false; // 활성화될 때 스턴 해제
     }
 
-    public void Init(SpawnData data) {
+    public void Init(SpawnData data)
+    {
         base.OnEnable();
         anim.runtimeAnimatorController = animCon[data.spriteType];
         speed = data.speed;
@@ -104,7 +118,8 @@ public class Enemy : DamageObject {
         level = data.spriteType;
         _enemyType = EnemyType.Normal;
     }
-    public void InitElite(SpawnData data) {
+    public void InitElite(SpawnData data)
+    {
         anim.runtimeAnimatorController = eliteanimCon[data.spriteType];
         speed = data.speed;
         maxHealth = data.health;
@@ -113,25 +128,28 @@ public class Enemy : DamageObject {
         _enemyType = EnemyType.Elite;
 
     }
-    public override void OnTriggerEnter2D(Collider2D collision) {
+    public override void OnTriggerEnter2D(Collider2D collision)
+    {
         if (!collision.CompareTag("Bullet")) return;
-        if (collision.GetComponent<Bullet>()) {
-            float damage = collision.GetComponent<Bullet>().CalculateDamage();
-            health -= damage;
-            GameManager.DamageTextPoolManager.SpawnDamageText(0, transform.position, damage);
+        if (collision.GetComponent<Bullet>())
+        {
+            CalculateDamage(collision.GetComponent<Bullet>().CalculateDamage());
 
-            if (collision.GetComponent<WhirlBullet>()) {
+            if (collision.GetComponent<WhirlBullet>())
+            {
                 targetVec = collision.GetComponent<Rigidbody2D>().position;
-                if(gameObject.activeSelf) StartCoroutine(KnockBack());
+                if (gameObject.activeSelf) StartCoroutine(KnockBack());
 
             }
         }
-        
-        if (health> 0) {
+
+        if (health > 0)
+        {
             anim.SetTrigger("Hit");
 
         }
-        else {
+        else
+        {
             isLive = false;
             coll.enabled = false;
             rigid.simulated = false;
@@ -140,21 +158,45 @@ public class Enemy : DamageObject {
             Dead();
         }
     }
-    void OnTriggerExit2D(Collider2D collision) {
-        if(collision.CompareTag("Circle")) {
+
+    private void CalculateDamage(float damage)
+    {
+        health -= damage;
+        GameManager.DamageTextPoolManager.SpawnDamageText(transform.position, damage);
+        if (GameManager.Instance.player.isBonusDamage)
+        {
+            float bonusDamage = damage * 0.2f;
+            health -= bonusDamage;
+            DelayedSpawnDamageText(transform.position, bonusDamage, 0.1f).Forget();
+        }
+    }
+
+    private async UniTaskVoid DelayedSpawnDamageText(Vector3 position, float damage, float delay)
+    {
+        await UniTask.Delay((int)(delay * 1000));
+        GameManager.DamageTextPoolManager.SpawnDamageText(transform.position, damage);
+    }
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Circle"))
+        {
             Vector2 dir = targetVec - rigid.position;
             anim.SetTrigger("Hit");
             rigid.AddForce(dir.normalized * 7, ForceMode2D.Impulse);
 
         }
     }
-    public void GetDamage(float damage) {
+    public void GetDamage(float damage)
+    {
         health -= damage;
-        GameManager.DamageTextPoolManager.SpawnDamageText(0, transform.position, damage);
-        
-        if (health > 0) {
+        GameManager.DamageTextPoolManager.SpawnDamageText(transform.position, damage);
+
+        if (health > 0)
+        {
             anim.SetTrigger("Hit");
-        } else {
+        }
+        else
+        {
             isLive = false;
             coll.enabled = false;
             rigid.simulated = false;
@@ -163,13 +205,15 @@ public class Enemy : DamageObject {
             Dead();
         }
     }
-    void OnTriggerStay2D(Collider2D collision) {
+    void OnTriggerStay2D(Collider2D collision)
+    {
         if (!collision.CompareTag("Floor")) return;
         health -= collision.GetComponent<WhirlBullet>().damage / 10.0f;
         //Vector3 dir = collision.transform.position - transform.position;
         //rigid.AddForce(dir.normalized * 4, ForceMode2D.Impulse);
         //StartCoroutine(KnockBack(collision.transform.position));
-        if(health <=0) {
+        if (health <= 0)
+        {
             isLive = false;
             coll.enabled = false;
             rigid.simulated = false;
@@ -178,33 +222,48 @@ public class Enemy : DamageObject {
             Dead();
         }
     }
-    IEnumerator KnockBack() {
+    IEnumerator KnockBack()
+    {
         Vector2 dir = targetVec - rigid.position;
         yield return wait;          // 1물리 프레임 wait
         rigid.AddForce(dir.normalized * 5, ForceMode2D.Impulse);
         yield return wait;          // 1물리 프레임 wait
     }
 
-    public override void Dead() {
+    public override void Dead()
+    {
         // GameObject coin = GameManager.Instance.pool.Get(coinNum);
         // coin.transform.position = transform.position;
         // coin.transform.rotation = Quaternion.identity;
         // Coin cc = coin.GetComponent<Coin>();
         // cc.sprite.sprite = cc.sprites[Mathf.Min((level / 4),cc.sprites.Length-1)];
         // cc.exp = level + 1;                               //경험치 조절 여기서 가능
-        if(_enemyType == EnemyType.Normal)
-            Global.ExpManager.SpawnExpItem(level/4 + 1, transform);
+        if (_enemyType == EnemyType.Normal)
+        {
+            Global.ExpManager.SpawnExpItem(level / 4 + 1, transform.position);
+        }
         else
         {
-            Global.ExpManager.SpawnExpItem(0, transform);
+            Global.ExpManager.SpawnExpItem(0, transform.position);
             GameManager.Instance.ShowLevelUp();
+
             DropItem dropItem = Resources.Load<DropItem>("Prefabs/DropItem/GoldBarCoinGold");
-            GameManager.DropItemPoolManager.SpawnDropItem(dropItem,transform.position);
+            Vector3 dropPosition = dropItemSpawnPoints != null && dropItemSpawnPoints.Length > 0 
+                ? dropItemSpawnPoints[0].position 
+                : transform.position;
+            GameManager.DropItemPoolManager.SpawnDropItem(dropItem, dropPosition);
+
+            DropItem dropItem2 = Resources.Load<DropItem>("Prefabs/DropItem/SpecialItem/LevelUpScroll");
+            Vector3 dropPosition2 = dropItemSpawnPoints != null && dropItemSpawnPoints.Length > 1 
+                ? dropItemSpawnPoints[1].position 
+                : transform.position;
+            GameManager.DropItemPoolManager.SpawnDropItem(dropItem2, dropPosition2);
         }
         GameManager.Instance.kill++;
         gameObject.SetActive(false);
     }
-    public void GetAddForce(Vector3 pos) {
+    public void GetAddForce(Vector3 pos)
+    {
         Vector2 enemyToCircle = (pos - transform.position).normalized;
         rigid.AddForce(enemyToCircle * 10, ForceMode2D.Impulse);
     }

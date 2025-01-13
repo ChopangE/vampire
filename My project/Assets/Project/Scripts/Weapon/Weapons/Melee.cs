@@ -6,6 +6,7 @@ public class Melee : Weapon
     #region Fields
     [Header("Combat Settings")]
     public float coolTime = 1f;
+    public float duration = 0.5f;
     
     [Header("Attack Properties")]
     public Vector2 boxSize;
@@ -15,14 +16,15 @@ public class Melee : Weapon
     public GameObject sword;
     public GameObject stick;
 
-    private Vector3 dir;
+    protected Vector3 dir;
     private GameObject weaponInstance;
     private bool isAttacking;
-    private SpriteRenderer playerSprite;
+    protected SpriteRenderer playerSprite;
+    
     #endregion
 
     #region Unity Lifecycle
-    private void Start()
+    protected virtual void Start()
     {
         InitializeComponents();
         SetupBoxCollider();
@@ -36,7 +38,7 @@ public class Melee : Weapon
     #endregion
 
     #region Initialization
-    private void InitializeComponents()
+    protected void InitializeComponents()
     {
         Player player = GetComponentInParent<Player>();
         playerSprite = player.GetComponent<SpriteRenderer>();
@@ -60,7 +62,7 @@ public class Melee : Weapon
     #endregion
 
     #region Attack Execution
-    private void StartStickAttack()
+    protected virtual void StartStickAttack()
     {
         isAttacking = true;
         dir.x = playerSprite.flipX ? 2f : -2f;
@@ -68,7 +70,7 @@ public class Melee : Weapon
         weaponInstance.SetActive(true);
     }
 
-    private void UpdateStickAttack()
+    protected virtual void UpdateStickAttack()
     {
         remainingCooldown -= Time.deltaTime;
         transform.Rotate(Vector3.back * 360 * Time.deltaTime);
@@ -77,7 +79,7 @@ public class Melee : Weapon
             EndStickAttack();
     }
 
-    private void EndStickAttack()
+    protected virtual void EndStickAttack()
     {
         transform.rotation = Quaternion.identity;
         isAttacking = false;
@@ -98,16 +100,29 @@ public class Melee : Weapon
 
     public GameObject SpawnSword()
     {
-        return Instantiate(sword, pos.position + dir, Quaternion.identity);
+        return Instantiate(sword, pos.position, Quaternion.identity);
     }
 
-    public void ConfigureSword(GameObject swordInstance)
+    public void ConfigureSword(GameObject swordInstance, Transform parent = null, bool followPlayer = false, Vector3 offset = default)
     {
-        swordInstance.transform.parent = pos.transform;
-        swordInstance.transform.localScale = !playerSprite.flipX 
-            ? new Vector3(-1, 1, 1) 
-            : new Vector3(1, 1, 1);
-        Destroy(swordInstance, 0.5f);
+        if(parent == null)
+            swordInstance.transform.parent = pos.transform;
+        else
+            swordInstance.transform.parent = parent;
+        
+        if(followPlayer)    
+        {
+            swordInstance.transform.localScale = !playerSprite.flipX 
+                ? new Vector3(-1, 1, 1) 
+                : new Vector3(1, 1, 1);
+        }
+
+        if(offset != default)
+            swordInstance.transform.localPosition = offset;
+        else
+            swordInstance.transform.localPosition = dir;
+
+        Destroy(swordInstance, duration);
     }
     #endregion
 }

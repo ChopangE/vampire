@@ -51,6 +51,13 @@ public class DataManager : MMSingleton<DataManager>
                 LoadData();
             }
         }
+        LoadUserData().Forget();
+    }
+
+    private async UniTaskVoid LoadUserData()
+    {
+        await UniTask.WaitUntil(() => Global.UserDataManager != null);
+
         foreach (var itemDataInfo in Global.UserDataManager.storage.itemDataInfoList)
         {
             foreach (var item in items)

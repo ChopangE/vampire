@@ -32,7 +32,7 @@ namespace Manager
             ResetAllPools();
         }
 
-        public void SpawnDamageText(int index, Vector3 position, float damage)
+        public void SpawnDamageText(Vector3 position, float damage)
         {
             if (activeObjCount >= maxDamageTextCount) return;
 

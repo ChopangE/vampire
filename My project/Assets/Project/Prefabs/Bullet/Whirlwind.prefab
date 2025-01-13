@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 51766492268672387}
   m_Layer: 0
   m_Name: Whirlwind
-  m_TagString: Floor
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -141,6 +141,7 @@ MonoBehaviour:
   damage: 0.5
   per: -1
   rb: {fileID: 0}
+  canStun: 0
   duration_: 3
 --- !u!50 &51766492268672387
 Rigidbody2D:

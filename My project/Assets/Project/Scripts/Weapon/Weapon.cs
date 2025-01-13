@@ -15,7 +15,19 @@ public class Weapon : MonoBehaviour
     protected float baseDamage;
     public float damage;
     public int count;
-    public int level;
+    private int _level;
+    public int level
+    {
+        get => _level;
+        set
+        {
+            if (value > _level)
+            {
+                OnSkillLevelUp?.Invoke(this, value);
+            }
+            _level = value;
+        }
+    }
     public ItemData _data;
 
     public float remainingCooldown { get; protected set; }
@@ -67,12 +79,11 @@ public class Weapon : MonoBehaviour
     public virtual void LevelUp(float damage, int count)
     {
         level++;
-        OnSkillLevelUp?.Invoke(this, level);
         this.damage = damage;
         this.count += count;
     }
 
-    public void Attack()
+    public virtual void Attack()
     {
         if (!GameManager.Instance.isLive || !gameObject.activeSelf) return;
 

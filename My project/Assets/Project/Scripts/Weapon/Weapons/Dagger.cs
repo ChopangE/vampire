@@ -16,6 +16,6 @@ public class Dagger : Melee
     {
         SetAttackDirection();
         GameObject sword = SpawnSword();
-        ConfigureSword(sword);
+        ConfigureSword(sword, null, true);
     }
 }

@@ -25,14 +25,14 @@ namespace Manager.InGame
             LoadAllExpItems();
             ResetAllPools();
         }
-        public void SpawnRandomExpItem(Transform spawnPos)
+        public void SpawnRandomExpItem(Vector3 spawnPos)
         {
             int waitingExpItemIndex = Random.Range(0, expItemList.Count);
             SpawnExpItem(waitingExpItemIndex, spawnPos);
         }
-        public void SpawnExpItem(int index, Transform spawnPos)
+        public void SpawnExpItem(int index, Vector3 spawnPos)
         {
-            ExpItem item = expPool[index].PullGameObject(spawnPos.position, Quaternion.identity, ExpGroup)
+            ExpItem item = expPool[index].PullGameObject(spawnPos, Quaternion.identity, ExpGroup)
             .GetComponent<ExpItem>();
         }
         private void LoadAllExpItems()

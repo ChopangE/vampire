@@ -21,6 +21,7 @@ namespace Data.WeaponData
         Dagger = 11,
         Floor = 12,
         Pet = 13,
+        ShadowPlayer = 14,
     }
     public enum WeaponType { Rotate, Range, Bomb, Raser, Breath, Dagger }
 }

@@ -8,11 +8,13 @@ public class Player : MonoBehaviour
 {
     public Vector2 inputVec;
     public Rigidbody2D rigid;
-    SpriteRenderer sprite;
+    public SpriteRenderer sprite;
     Animator anim;
     public Scanner scan;
     public float speed;
+    public bool isBonusDamage;
     bool isKnockBack { get; set; }
+
     void Awake() {
         rigid = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();

@@ -108,6 +108,7 @@ public class Item : ViewModel
             case ItemData.ItemType.Floor:
             case ItemData.ItemType.HGDClone:
             case ItemData.ItemType.Stick:
+            case ItemData.ItemType.ShadowPlayer:
                 textDesc.text = string.Format(data.itemDesc, data.itemDataInfo.damages[Level] * 100);
                 break;
             case ItemData.ItemType.Glove:
@@ -182,11 +183,9 @@ public class Item : ViewModel
             case ItemData.ItemType.HGDClone:
             case ItemData.ItemType.Stick:
             case ItemData.ItemType.Pet:
-                UpgradeWeapon();
-                Level++;
-                break;
             case ItemData.ItemType.Floor:
-                HandleFloorWeapon();
+            case ItemData.ItemType.ShadowPlayer:
+                UpgradeWeapon();
                 Level++;
                 break;
             case ItemData.ItemType.Glove:
@@ -242,23 +241,6 @@ public class Item : ViewModel
         {
             float nextSize = 1f + (0.1f * Level);
             weapon.transform.localScale = Vector3.one * nextSize;
-        }
-    }
-
-    private void HandleFloorWeapon()
-    {
-        if (Level == 0)
-        {
-            floorWeapon = GameManager.Instance.player.GetComponentInChildren<FloorWeapon>(true);
-            floorWeapon.gameObject.SetActive(true);
-        }
-        else
-        {
-            if (floorWeapon == null)
-                floorWeapon = GameManager.Instance.player.GetComponentInChildren<FloorWeapon>(true);
-
-            float nextDamage = data.itemDataInfo.baseDamage * (1 + data.itemDataInfo.damages[Level]);
-            floorWeapon.LevelUp(nextDamage);
         }
     }
 
