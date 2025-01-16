@@ -32,14 +32,14 @@ namespace Manager
             ResetAllPools();
         }
 
-        public void SpawnDamageText(Vector3 position, float damage)
+        public void SpawnDamageText(Vector3 position, float damage, bool isCritical = false, bool isBonus = false)
         {
             if (activeObjCount >= maxDamageTextCount) return;
 
             DamageText damageText = damageTextPool.PullGameObject(position, Quaternion.identity, DamageTextGroup)
                 .GetComponent<DamageText>();
             
-            damageText.SetDamage(damage);
+            damageText.SetDamage(damage, isCritical, isBonus);
             spawnedDamageTextList.Add(damageText);
         }
 

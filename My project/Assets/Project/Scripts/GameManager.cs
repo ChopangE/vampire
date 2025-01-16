@@ -108,16 +108,21 @@ public class GameManager : MMSingleton<GameManager>
         curExp += exp; 
         if (curExp >= nextExp[level])
         {
-            level = Mathf.Min(level + 1, nextExp.Length-1);
             curExp = 0;
-            ShowLevelUp();
+            LevelUp();
         }
         
     }
 
-    public void ShowLevelUp()
+    public void LevelUp(bool isEvaluation = false)
     {
-        inGameMainPage.ShowLevelUP();
+        level = Mathf.Min(level + 1, nextExp.Length-1);
+        ShowLevelUp(isEvaluation);
+    }
+
+    public void ShowLevelUp(bool isEvaluation = false)
+    {
+        inGameMainPage.ShowLevelUP(isEvaluation);
 
     }
     public void Stop() {

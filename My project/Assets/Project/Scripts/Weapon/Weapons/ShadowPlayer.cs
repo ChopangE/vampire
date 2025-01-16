@@ -23,17 +23,17 @@ public class ShadowPlayer : Melee
         else
         {
             transform.localScale = new Vector3(1, 1, 1);
-            if(shadowPlayer != null)
-            {
-                GameManager.Instance.player.isBonusDamage = true;
-                curPlayerSprite = GameManager.Instance.player.GetComponent<SpriteRenderer>().sprite;
-                shadowPlayer.GetComponent<SpriteRenderer>().sprite = curPlayerSprite;
-                shadowPlayer.transform.localScale = new Vector3(1, 1, 1);
-            }
-            else
-            {
-                GameManager.Instance.player.isBonusDamage = false;
-            }
+        }
+        if(shadowPlayer != null)
+        {
+            GameManager.Instance.player.isBonusDamage = true;
+            curPlayerSprite = GameManager.Instance.player.GetComponent<SpriteRenderer>().sprite;
+            shadowPlayer.GetComponent<SpriteRenderer>().sprite = curPlayerSprite;
+            shadowPlayer.transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            GameManager.Instance.player.isBonusDamage = false;
         }
 
     }

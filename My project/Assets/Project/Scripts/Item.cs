@@ -24,6 +24,17 @@ public class Item : ViewModel
         }
     }
     public ItemData data;
+    private bool _isMaxLevel;
+    [Binding]
+    public bool IsMaxLevel
+    {
+        get => _isMaxLevel;
+        set
+        {
+            _isMaxLevel = value;
+            OnPropertyChanged(nameof(IsMaxLevel));
+        }
+    }
     private int _level;
     [Binding]
     public int Level
@@ -108,7 +119,6 @@ public class Item : ViewModel
             case ItemData.ItemType.Floor:
             case ItemData.ItemType.HGDClone:
             case ItemData.ItemType.Stick:
-            case ItemData.ItemType.ShadowPlayer:
                 textDesc.text = string.Format(data.itemDesc, data.itemDataInfo.damages[Level] * 100);
                 break;
             case ItemData.ItemType.Glove:
@@ -124,6 +134,13 @@ public class Item : ViewModel
             case ItemData.ItemType.Pet:
                 textName.text = string.Format("{0} / 3", Level);
                 textDesc.text = string.Format(data.itemDesc);
+                break;
+            case ItemData.ItemType.ShadowPlayer:
+                textDesc.text = string.Format(data.itemDesc, 
+                data.itemDataInfo.damages[Level] * 100,
+                data.itemDataInfo.counts[Level], 
+                data.itemDataInfo.cooldowns[Level], 
+                data.itemDataInfo.ranges[Level]);
                 break;
             default:
                 textDesc.text = string.Format(data.itemDesc);
@@ -232,10 +249,8 @@ public class Item : ViewModel
             GetWeapon();
         }
 
-        float nextDamage = data.itemDataInfo.baseDamage * (1 + data.itemDataInfo.damages[Level]);
-        int nextCount = data.itemDataInfo.baseCount + data.itemDataInfo.counts[Level];
 
-        weapon.LevelUp(nextDamage, nextCount);
+        weapon.LevelUp();
 
         if (includeSizeUpgrade)
         {

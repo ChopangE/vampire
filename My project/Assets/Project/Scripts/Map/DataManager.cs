@@ -151,6 +151,19 @@ public class DataManager : MMSingleton<DataManager>
         }
         return notMaxLevelItems.ToArray();
     }
+    public ItemData[] GetMaxLevelItems()
+    {
+        List<ItemData> maxLevelItems = new List<ItemData>();
+        foreach (var item in items)
+        {
+            var info = GetItemDataInfo(item);
+            if (info != null && info.curLevel >= info.maxLevel)
+            {
+                maxLevelItems.Add(item);
+            }
+        }
+        return maxLevelItems.ToArray();
+    }
     public void SetWeaponItemLevel(ItemData itemData, int level)
     {
         foreach (var item in Global.UserDataManager.storage.itemDataInfoList)

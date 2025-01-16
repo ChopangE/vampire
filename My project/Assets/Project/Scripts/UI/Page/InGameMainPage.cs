@@ -32,10 +32,10 @@ namespace UI.Page
             pausePage.Show();
         }
         [Binding]
-        public void ShowLevelUP()
+        public void ShowLevelUP(bool isEvaluation = false)
         {
             levelUpPage = GetComponentInChildren<LevelUpPage>();
-            levelUpPage.Show();
+            levelUpPage.Show(isEvaluation);
         }
         [Binding]
         public void OnClickExitButton()

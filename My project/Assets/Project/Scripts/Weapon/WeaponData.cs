@@ -22,6 +22,7 @@ namespace Data.WeaponData
         Floor = 12,
         Pet = 13,
         ShadowPlayer = 14,
+        SpikeFloor = 15,
     }
     public enum WeaponType { Rotate, Range, Bomb, Raser, Breath, Dagger }
 }

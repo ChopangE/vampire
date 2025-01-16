@@ -162,19 +162,19 @@ public class Enemy : DamageObject
     private void CalculateDamage(float damage)
     {
         health -= damage;
-        GameManager.DamageTextPoolManager.SpawnDamageText(transform.position, damage);
+        GameManager.DamageTextPoolManager.SpawnDamageText(transform.position, damage, false, false);
         if (GameManager.Instance.player.isBonusDamage)
         {
             float bonusDamage = damage * 0.2f;
             health -= bonusDamage;
-            DelayedSpawnDamageText(transform.position, bonusDamage, 0.1f).Forget();
+            DelayedSpawnDamageText(transform.position, bonusDamage, 0.1f, true).Forget();
         }
     }
 
-    private async UniTaskVoid DelayedSpawnDamageText(Vector3 position, float damage, float delay)
+    private async UniTaskVoid DelayedSpawnDamageText(Vector3 position, float damage, float delay, bool isBonus = false)
     {
         await UniTask.Delay((int)(delay * 1000));
-        GameManager.DamageTextPoolManager.SpawnDamageText(transform.position, damage);
+        GameManager.DamageTextPoolManager.SpawnDamageText(transform.position, damage, false, isBonus);
     }
     void OnTriggerExit2D(Collider2D collision)
     {

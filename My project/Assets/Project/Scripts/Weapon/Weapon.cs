@@ -15,6 +15,7 @@ public class Weapon : MonoBehaviour
     protected float baseDamage;
     public float damage;
     public int count;
+    public float size;
     private int _level;
     public int level
     {
@@ -76,11 +77,33 @@ public class Weapon : MonoBehaviour
         player.BroadcastMessage("ApplayGear", SendMessageOptions.DontRequireReceiver);
     }
 
-    public virtual void LevelUp(float damage, int count)
+    public virtual void LevelUp()
     {
         level++;
-        this.damage = damage;
-        this.count += count;
+        
+        // damages 배열이 있고 현재 레벨에 해당하는 인덱스가 있다면 데미지 수치 적용
+        if (_data.itemDataInfo.damages != null && level < _data.itemDataInfo.damages.Length)
+        {
+            damage = _data.itemDataInfo.baseDamage * (1 + _data.itemDataInfo.damages[level]);
+        }
+        
+        // counts 배열이 있고 현재 레벨에 해당하는 인덱스가 있다면 카운트 수치 적용
+        if (_data.itemDataInfo.counts != null && level < _data.itemDataInfo.counts.Length)
+        {
+            count = _data.itemDataInfo.baseCount + _data.itemDataInfo.counts[level];
+        }
+        
+        // cooldowns 배열이 있고 현재 레벨에 해당하는 인덱스가 있다면 쿨다운 수치 적용
+        if (_data.itemDataInfo.cooldowns != null && level < _data.itemDataInfo.cooldowns.Length)
+        {
+            maxCooldown = _data.itemDataInfo.baseCooldown - _data.itemDataInfo.cooldowns[level];
+        }
+        
+        // ranges 배열이 있고 현재 레벨에 해당하는 인덱스가 있다면 범위 수치 적용
+        if (_data.itemDataInfo.ranges != null && level < _data.itemDataInfo.ranges.Length)
+        {
+            size = _data.itemDataInfo.ranges[level];
+        }
     }
 
     public virtual void Attack()

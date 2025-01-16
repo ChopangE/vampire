@@ -235,9 +235,9 @@ public class PetWeapon : Weapon
         }
     }
 
-    public override void LevelUp(float damage, int count)
+    public override void LevelUp()
     {
-        base.LevelUp(damage, count);
+        base.LevelUp();
         
         // 레벨 3 이상일 때 스킬 활성화
         if (count >= 3)

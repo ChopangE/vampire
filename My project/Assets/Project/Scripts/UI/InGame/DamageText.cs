@@ -12,6 +12,7 @@ namespace UI.InGame
         [SerializeField] private float duration = 1f;
         [SerializeField] private Color normalColor = Color.white;
         [SerializeField] private Color criticalColor = Color.red;
+        [SerializeField] private Color bonusColor = Color.blue;
         [SerializeField] private float criticalThreshold = 100f;
         [SerializeField] private float holdDuration = 0.3f;
 
@@ -21,11 +22,11 @@ namespace UI.InGame
                 damageText = GetComponent<TextMeshPro>();
         }
 
-        public void SetDamage(float damage, bool isCritical = false)
+        public void SetDamage(float damage, bool isCritical = false, bool isBonus = false)
         {
             // 데미지 텍스트 설정
             damageText.text = damage.ToString("F0");
-            damageText.color = isCritical || damage >= criticalThreshold ? criticalColor : normalColor;
+            damageText.color = isCritical || damage >= criticalThreshold ? criticalColor : isBonus ? bonusColor : normalColor;
             
             // 현재 위치를 기준으로 상대적으로 이동
             Vector3 startPos = transform.localPosition;

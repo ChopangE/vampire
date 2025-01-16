@@ -13,6 +13,7 @@ public class ItemDataInfo
     public float[] damages;
     public int[] counts;
     public int[] ranges;
+    public int[] cooldowns;
     public float baseCooldown;
     public float baseDamage;
     public int baseCount;
