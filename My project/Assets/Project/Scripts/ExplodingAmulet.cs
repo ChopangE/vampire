@@ -10,6 +10,7 @@ public class ExplodingAmulet : MonoBehaviour
     Vector3 dir;
     SpriteRenderer sprite;
     public Animator childAnim;
+    public GameObject[] Explosions;
     
     void Awake() {
         player = GameManager.Instance.player;
@@ -20,6 +21,9 @@ public class ExplodingAmulet : MonoBehaviour
         sprite.color = new Color(1, 1, 1, 1);
         transform.GetChild(0).gameObject.SetActive(false);
         dir = player.GetComponent<SpriteRenderer>().flipX ? new Vector3(-1 * speed, 0, 0) : new Vector3(1 * speed, 0, 0);
+        foreach(var explosion in Explosions) {
+            explosion.SetActive(false);
+        }
     }
     public virtual void Update()
     {
@@ -33,5 +37,8 @@ public class ExplodingAmulet : MonoBehaviour
         sprite.color = new Color(1,1,1,0);
         transform.GetChild(0).gameObject.SetActive(true);
         dir = Vector3.zero;
+        foreach(var explosion in Explosions) {
+            explosion.SetActive(true);
+        }
     }
 }

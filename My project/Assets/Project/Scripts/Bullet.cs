@@ -10,7 +10,7 @@ public class Bullet : MonoBehaviour
     public Rigidbody2D rb;
     float duration;
     public bool canStun;
-    void Awake()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }

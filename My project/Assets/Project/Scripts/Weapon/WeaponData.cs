@@ -10,7 +10,7 @@ namespace Data.WeaponData
         Wind = 0,
         Fire = 1,
         Bomb = 2,
-        Raser = 3,
+        Explosion = 3,
         Breath = 4,
         Clone = 5,
         Glove = 6,
@@ -22,7 +22,8 @@ namespace Data.WeaponData
         Floor = 12,
         Pet = 13,
         ShadowPlayer = 14,
-        SpikeFloor = 15,
+        FollowSpike = 15,
+        SuperExplosion = 16,
     }
     public enum WeaponType { Rotate, Range, Bomb, Raser, Breath, Dagger }
 }
