@@ -15,19 +15,15 @@ MonoBehaviour:
   itemDataInfo:
     itemId: 0
     curLevel: 0
-    damages:
-    - 0.5
-    - 1
-    - 1.5
-    - 2
-    - 3
-    counts: 0100000001000000010000000100000001000000
-    ranges: 
+    maxLevel: 10
     baseCooldown: 3
     baseDamage: 4.5
     baseCount: 3
+    baseRange: 0
   itemType: 1
   itemName: "\uD68C\uC624\uB9AC \uBC14\uB78C"
   itemDesc: "\uB370\uBBF8\uC9C0 {0}% \uC99D\uAC00\n\uD68C\uC804\uCCB4 {1}\uAC1C \uCD94\uAC00"
   itemIcon: {fileID: 798416762, guid: 87fbe53a208ab54468564d32616beb0e, type: 3}
   projectile: {fileID: 3874241599156627709, guid: df1dc51518be55a4b8acf614f2f2ba4b, type: 3}
+  excludeUpgradeList:
+  - {fileID: 11400000, guid: 01c524a5c1d79034384a175b60334a90, type: 2}

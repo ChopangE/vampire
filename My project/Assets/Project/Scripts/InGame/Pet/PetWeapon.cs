@@ -5,6 +5,8 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using Manager.InGame;
+using SO;
 
 public enum BlessingType
 {
@@ -26,9 +28,6 @@ public class PetWeapon : Weapon
     [SerializeField] private GameObject lightningPrefab;
     [SerializeField] private GameObject rainPrefab;
     [SerializeField] private float blessingDuration = 30f;
-    [SerializeField] private float lightningArea = 3f;
-    [SerializeField] private float rainArea = 3f;
-    
     private BlessingType currentBlessing;
     private CancellationTokenSource _blessingCts = new CancellationTokenSource();
     
@@ -235,9 +234,9 @@ public class PetWeapon : Weapon
         }
     }
 
-    public override void LevelUp()
+    public override void LevelUp(UpgradeName prevUpgradeName, float prevUpgradeValue, DamageUpgradeValues damageUpgradeValues = null)
     {
-        base.LevelUp();
+        base.LevelUp(prevUpgradeName, prevUpgradeValue, damageUpgradeValues);
         
         // 레벨 3 이상일 때 스킬 활성화
         if (count >= 3)

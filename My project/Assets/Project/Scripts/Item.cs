@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Data.WeaponData;
+using I2.Loc;
 using Manager;
+using Manager.InGame;
+using SO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityWeld;
@@ -66,6 +69,9 @@ public class Item : ViewModel
     Text textDesc;
 
     private WeaponController weaponController;
+    private DamageUpgradeValues prevDamageUpgradeValues;
+    private float prevUpgradeValue;
+    private UpgradeName prevUpgradeName;
 
     private void GetWeapon()
     {
@@ -107,47 +113,64 @@ public class Item : ViewModel
         textLevel.text = "Lv." + (Level + 1);
 
 
-        switch (data.itemType)
-        {
-            case ItemData.ItemType.Melee:
-            case ItemData.ItemType.Range:
-                textDesc.text = string.Format(data.itemDesc, data.itemDataInfo.damages[Level] * 100, data.itemDataInfo.counts[Level]);
-                break;
-            case ItemData.ItemType.Bomb:
-            case ItemData.ItemType.Raser:
-            case ItemData.ItemType.Breath:
-            case ItemData.ItemType.Floor:
-            case ItemData.ItemType.HGDClone:
-            case ItemData.ItemType.Stick:
-                textDesc.text = string.Format(data.itemDesc, data.itemDataInfo.damages[Level] * 100);
-                break;
-            case ItemData.ItemType.Glove:
-            case ItemData.ItemType.Shoe:
-                textDesc.text = string.Format(data.itemDesc, data.itemDataInfo.damages[Level] * 100);
-                break;
-            case ItemData.ItemType.Heal:
-                textDesc.text = string.Format(data.itemDesc, data.itemDataInfo.damages[Level] * 100);
-                break;
-            case ItemData.ItemType.Dagger:
-                textDesc.text = string.Format(data.itemDesc, data.itemDataInfo.damages[Level] * 100, data.itemDataInfo.ranges[Level]);
-                break;
-            case ItemData.ItemType.Pet:
-                textName.text = string.Format("{0} / 3", Level);
-                textDesc.text = string.Format(data.itemDesc);
-                break;
-            case ItemData.ItemType.ShadowPlayer:
-                textDesc.text = string.Format(data.itemDesc, 
-                data.itemDataInfo.damages[Level] * 100,
-                data.itemDataInfo.counts[Level], 
-                data.itemDataInfo.cooldowns[Level], 
-                data.itemDataInfo.ranges[Level]);
-                break;
-            default:
-                textDesc.text = string.Format(data.itemDesc);
-                break;
-        }
+        UpdateDesc();
 
         CheckInteractable();
+    }
+
+    private void UpdateDesc()
+    {
+        prevDamageUpgradeValues = null;
+        prevUpgradeValue = 0;
+        prevUpgradeName = UpgradeName.Damage;
+
+        var desc = data.itemDesc;
+        switch(data.itemType)
+        {
+            case ItemData.ItemType.Glove:
+            case ItemData.ItemType.Shoe:
+                desc = string.Format(data.itemDesc, data.itemDataInfo.baseDamage);
+                textDesc.text = desc;
+                return;
+            case ItemData.ItemType.Heal:
+                desc = string.Format(data.itemDesc, data.itemDataInfo.baseDamage);
+                textDesc.text = desc;
+                return;
+            case ItemData.ItemType.Pet:
+                textName.text = string.Format("{0} / 3", Level);
+                desc = string.Format(data.itemDesc);
+                textDesc.text = desc;
+                return;
+        }
+
+        var upgrade = Global.UpgradeManager.GetRandomSkillUpgrade(data.excludeUpgradeList);
+        if(upgrade != null)
+        {
+            prevUpgradeName = upgrade.upgradeName;
+            if(upgrade.upgradeName == UpgradeName.Damage)
+            {
+                prevDamageUpgradeValues = Global.UpgradeManager.GetDamageUpgradeValues();
+                desc = string.Format(upgrade.upgradeNameKey + " + {0}%", prevDamageUpgradeValues.damagePercent * 100);
+                desc += string.Format("\n" + LocalizationManager.GetTranslation("Passive/Name/CritRateName") + " + {0}%", prevDamageUpgradeValues.critChancePercent * 100);
+                desc += string.Format("\n" + LocalizationManager.GetTranslation("Passive/Name/CritDamageName") + " + {0}%", prevDamageUpgradeValues.critDamagePercent * 100);
+            }else
+            {
+                var value = Global.UpgradeManager.GetUpgradeValue(upgrade.upgradeName);
+                switch (upgrade.upgradeName)
+                {
+                    case UpgradeName.Projectiles:
+                    case UpgradeName.PierceLimit:
+                        desc = string.Format(upgrade.upgradeNameKey + " + {0}", value);
+                        break;
+                        
+                    default:
+                        desc = string.Format(upgrade.upgradeNameKey + " + {0}%", value * 100);
+                        break;
+                }
+            }
+            
+        }
+        textDesc.text = desc;
     }
 
     private void CheckInteractable()
@@ -201,6 +224,7 @@ public class Item : ViewModel
             case ItemData.ItemType.Stick:
             case ItemData.ItemType.Pet:
             case ItemData.ItemType.Floor:
+            case ItemData.ItemType.Dagger:
             case ItemData.ItemType.ShadowPlayer:
                 UpgradeWeapon();
                 Level++;
@@ -208,10 +232,6 @@ public class Item : ViewModel
             case ItemData.ItemType.Glove:
             case ItemData.ItemType.Shoe:
                 HandleGear();
-                Level++;
-                break;
-            case ItemData.ItemType.Dagger:
-                UpgradeWeapon(true);
                 Level++;
                 break;
         }
@@ -242,21 +262,13 @@ public class Item : ViewModel
         weaponController.ActivateWeapon(weapon);
     }
 
-    private void UpgradeWeapon(bool includeSizeUpgrade = false)
+    private void UpgradeWeapon()
     {
         if (weapon == null)
         {
             GetWeapon();
         }
-
-
-        weapon.LevelUp();
-
-        if (includeSizeUpgrade)
-        {
-            float nextSize = 1f + (0.1f * Level);
-            weapon.transform.localScale = Vector3.one * nextSize;
-        }
+        weapon.LevelUp(prevUpgradeName, prevUpgradeValue, prevDamageUpgradeValues);
     }
 
     private void HandleGear()
@@ -268,7 +280,7 @@ public class Item : ViewModel
         }
         else
         {
-            gear.LevelUP(data.itemDataInfo.damages[Level]);
+            gear.LevelUP(data.itemDataInfo.baseDamage);
         }
     }
 

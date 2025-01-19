@@ -14,7 +14,7 @@ public class Gear : MonoBehaviour
         transform.localPosition = Vector3.zero;
 
         type = data.itemType;
-        rate = data.itemDataInfo.damages[0];
+        rate = data.itemDataInfo.baseDamage;
         ApplayGear();
     }
     public void LevelUP(float rate) {

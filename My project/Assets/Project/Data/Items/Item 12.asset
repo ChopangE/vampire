@@ -15,15 +15,11 @@ MonoBehaviour:
   itemDataInfo:
     itemId: 13
     curLevel: 0
-    damages:
-    - 1
-    - 1
-    - 1
-    counts: 010000000100000001000000
-    ranges: 010000000100000001000000
+    maxLevel: 10
     baseCooldown: 0
     baseDamage: 10
     baseCount: 1
+    baseRange: 0
   itemType: 12
   itemName: '{0} / 3'
   itemDesc: '???
@@ -31,3 +27,4 @@ MonoBehaviour:
     ???'
   itemIcon: {fileID: 21300000, guid: 07c7525f535d40d40a1d19a58197a4e6, type: 3}
   projectile: {fileID: 0}
+  excludeUpgradeList: []

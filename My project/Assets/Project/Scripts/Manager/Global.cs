@@ -33,6 +33,8 @@ namespace Manager
         // public static LocalizationManager LocalizationManager { get; private set; }
         // public static NewDialogueManager DialogueManager { get; private set; }
 
+        public static UpgradeManager UpgradeManager { get; set; }
+
         protected override void Awake()
         {
             base.Awake();
@@ -90,7 +92,11 @@ namespace Manager
                 ExpManager = Instantiate(Resources.Load<ExpManager>(prefixManager + nameof(ExpManager)), transform);
                 ExpManager.name = nameof(ExpManager);
             }
-
+            if (UpgradeManager == null)
+            {
+                UpgradeManager = Instantiate(Resources.Load<UpgradeManager>(prefixManager + nameof(UpgradeManager)), transform);
+                UpgradeManager.name = nameof(UpgradeManager);
+            }
 
         }
     }

@@ -15,19 +15,16 @@ MonoBehaviour:
   itemDataInfo:
     itemId: 10
     curLevel: 0
-    damages:
-    - 0.35
-    - 0.7
-    - 1
-    - 1.4
-    - 2
-    counts: 0100000001000000010000000100000001000000
-    ranges: 
+    maxLevel: 10
     baseCooldown: 3
     baseDamage: 20
     baseCount: 100
+    baseRange: 0
   itemType: 6
   itemName: StickSmash
   itemDesc: "\uB370\uBBF8\uC9C0 {0}% \uC99D\uAC00\n"
   itemIcon: {fileID: 21300000, guid: cb369505a646a0d4caa20511815d9a72, type: 3}
   projectile: {fileID: 2813218963295040058, guid: d84e5d8b746a8ff4cbccb9a66343f691, type: 3}
+  excludeUpgradeList:
+  - {fileID: 11400000, guid: 01c524a5c1d79034384a175b60334a90, type: 2}
+  - {fileID: 11400000, guid: 42d74f3569b6a1645be985e64672f4c2, type: 2}

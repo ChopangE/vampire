@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Data.WeaponData;
+using Sirenix.OdinInspector;
+using SO;
 using UnityEngine;
 using static Weapon;
 
@@ -9,14 +11,11 @@ public class ItemDataInfo
 {
     public WeaponId itemId;
     public int curLevel;
-    public int maxLevel => damages.Length;
-    public float[] damages;
-    public int[] counts;
-    public int[] ranges;
-    public int[] cooldowns;
+    public int maxLevel = 10;
     public float baseCooldown;
     public float baseDamage;
     public int baseCount;
+    public float baseRange;
 }
 [CreateAssetMenu(fileName = "Item", menuName = "Scriptable Object/ItemData")]
 public class ItemData : ScriptableObject
@@ -35,5 +34,8 @@ public class ItemData : ScriptableObject
 
     [Header("# Weapon")]
     public GameObject projectile;
+
+    [LabelText("제외할 업그레이드 속성")]
+    public List<SkillUpgradeSO> excludeUpgradeList = new List<SkillUpgradeSO>();
 
 }

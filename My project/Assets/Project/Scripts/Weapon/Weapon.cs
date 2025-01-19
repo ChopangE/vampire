@@ -5,6 +5,8 @@ using DG.Tweening;
 using Random = UnityEngine.Random;
 using Data.WeaponData;
 using Cysharp.Threading.Tasks;
+using Manager.InGame;
+using SO;
 
 public class Weapon : MonoBehaviour
 {
@@ -77,32 +79,29 @@ public class Weapon : MonoBehaviour
         player.BroadcastMessage("ApplayGear", SendMessageOptions.DontRequireReceiver);
     }
 
-    public virtual void LevelUp()
+    public virtual void LevelUp(UpgradeName prevUpgradeName, float prevUpgradeValue, DamageUpgradeValues damageUpgradeValues = null)
     {
         level++;
-        
-        // damages 배열이 있고 현재 레벨에 해당하는 인덱스가 있다면 데미지 수치 적용
-        if (_data.itemDataInfo.damages != null && level < _data.itemDataInfo.damages.Length)
+
+        switch(prevUpgradeName)
         {
-            damage = _data.itemDataInfo.baseDamage * (1 + _data.itemDataInfo.damages[level]);
-        }
-        
-        // counts 배열이 있고 현재 레벨에 해당하는 인덱스가 있다면 카운트 수치 적용
-        if (_data.itemDataInfo.counts != null && level < _data.itemDataInfo.counts.Length)
-        {
-            count = _data.itemDataInfo.baseCount + _data.itemDataInfo.counts[level];
-        }
-        
-        // cooldowns 배열이 있고 현재 레벨에 해당하는 인덱스가 있다면 쿨다운 수치 적용
-        if (_data.itemDataInfo.cooldowns != null && level < _data.itemDataInfo.cooldowns.Length)
-        {
-            maxCooldown = _data.itemDataInfo.baseCooldown - _data.itemDataInfo.cooldowns[level];
-        }
-        
-        // ranges 배열이 있고 현재 레벨에 해당하는 인덱스가 있다면 범위 수치 적용
-        if (_data.itemDataInfo.ranges != null && level < _data.itemDataInfo.ranges.Length)
-        {
-            size = _data.itemDataInfo.ranges[level];
+            case UpgradeName.Damage:
+                if(damageUpgradeValues != null)
+                {
+                    damage = baseDamage * (1 + damageUpgradeValues.damagePercent);
+                }
+                break;
+            case UpgradeName.Projectiles:
+                count = _data.itemDataInfo.baseCount + (int)prevUpgradeValue;
+                break;
+            case UpgradeName.PierceLimit:
+                break;
+            case UpgradeName.Cooldown:
+                maxCooldown = _data.itemDataInfo.baseCooldown - prevUpgradeValue;
+                break;
+            case UpgradeName.Range:
+                size = _data.itemDataInfo.baseRange + prevUpgradeValue;
+                break;
         }
     }
 
