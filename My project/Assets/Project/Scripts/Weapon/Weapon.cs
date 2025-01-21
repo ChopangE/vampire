@@ -16,6 +16,8 @@ public class Weapon : MonoBehaviour
     public int prefabId;
     protected float baseDamage;
     public float damage;
+    public float criticalDamagePercent;
+    public float criticalChancePercent;
     public int count;
     public float size;
     private int _level;
@@ -90,6 +92,8 @@ public class Weapon : MonoBehaviour
                 if(damageUpgradeValues != null)
                 {
                     damage = baseDamage * (1 + damageUpgradeValues.damagePercent);
+                    criticalDamagePercent += damageUpgradeValues.critDamagePercent;
+                    criticalChancePercent += damageUpgradeValues.critChancePercent;
                 }
                 break;
             case UpgradeName.Projectiles:

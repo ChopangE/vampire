@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using InGame;
+using InGame.Data;
 using Manager;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -162,15 +163,18 @@ public class Enemy : DamageObject
         }
     }
 
-    private void CalculateDamage(float damage)
+    private void CalculateDamage(DamageData damageData)
     {
-        health -= damage;
-        GameManager.DamageTextPoolManager.SpawnDamageText(transform.position, damage, false, false);
+        health -= damageData.damage;
+        GameManager.DamageTextPoolManager.SpawnDamageText(transform.position, damageData.damage, damageData.isCritical, false);
         if (weaponController.isBonusDamage)
         {
-            float bonusDamage = damage * weaponController.bonusDamage;
-            health -= bonusDamage;
-            DelayedSpawnDamageText(transform.position, bonusDamage, 0.1f, true).Forget();
+            if(damageData.isBonus)
+            {
+                float bonusDamage = damageData.damage * weaponController.bonusDamage;
+                health -= bonusDamage;
+                DelayedSpawnDamageText(transform.position, bonusDamage, 0.1f, true).Forget();
+            }
         }
     }
 

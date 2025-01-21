@@ -16,6 +16,6 @@ public class HGDClone : Weapon
         
         bullet.position = transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.right, dir);
-        bullet.GetComponent<Bullet>().Init(damage, 100, dir);
+        bullet.GetComponent<Bullet>().Init(damage, 100, dir, criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);
     }
 }

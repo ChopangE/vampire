@@ -12,6 +12,6 @@ public class SuperAmulet : Weapon
     {
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
         bullet.position = transform.position;
-        bullet.GetChild(0).GetComponent<Bullet>().Init(damage, -1, Vector3.zero);
+        bullet.GetChild(0).GetComponent<Bullet>().Init(damage, -1, Vector3.zero, criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);
     }
 }

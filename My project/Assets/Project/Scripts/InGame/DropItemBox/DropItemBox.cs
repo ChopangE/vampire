@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Data;
 using Manager;
 using ObjectPooling;
 using Sirenix.OdinInspector;
@@ -12,7 +13,7 @@ namespace InGame
     public abstract class DropItemBox : PoolObject
     {
         [LabelText("드랍가능한 아이템 리스트 설정")]
-        [SerializeField] protected Data.DropItemListSO dropItemListSO;
+        [SerializeField] protected DropItemListSO dropItemListSO;
         protected DropItemBoxTrigger dropItemBoxTrigger;
         public DropItemPoolManager dropItemPoolManager;
 

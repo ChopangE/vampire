@@ -21,7 +21,7 @@ public class RockWeapon : Weapon
         
         bullet.position = transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
-        bullet.GetComponent<Bullet>().Init(damage, count, dir);
+        bullet.GetComponent<Bullet>().Init(damage, count, dir, criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);
     }
 
 }

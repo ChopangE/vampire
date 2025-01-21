@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using InGame.Data;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     public float damage;
+    public float criticalDamagePercent;
+    public float criticalChancePercent;
     public int per;
     public Rigidbody2D rb;
     float duration;
@@ -15,9 +18,12 @@ public class Bullet : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public virtual void Init(float damage, int per, Vector3 dir, bool canStun = false, float duration = 0f)
+    public virtual void Init(float damage, int per, Vector3 dir, bool canStun = false,
+    float duration = 0f, float criticalDamagePercent = 0f, float criticalChancePercent = 0f)
     {
         this.damage = damage;
+        this.criticalDamagePercent = criticalDamagePercent;
+        this.criticalChancePercent = criticalChancePercent;
         this.per = per;
         this.canStun = canStun;
         if (duration == 0)
@@ -78,9 +84,26 @@ public class Bullet : MonoBehaviour
         enemy.isStunned = false;
     }
 
-    public virtual float CalculateDamage()
+    public virtual DamageData CalculateDamage()
     {
-        return damage;
+        DamageData damageData = new DamageData(damage, false, false);
+        
+        if (GameManager.Instance.weaponController.isBonusDamage)
+        {
+            damageData.isBonus = true;
+        }
+
+        if(criticalChancePercent > 0)
+        {
+            float random = Random.Range(0f, 1f);
+            if(random < criticalChancePercent)
+            {
+                damageData.isCritical = true;
+                damageData.damage = damage * (1f + (1f + criticalDamagePercent));
+            }
+        }
+        
+        return damageData;
     }
 }
 

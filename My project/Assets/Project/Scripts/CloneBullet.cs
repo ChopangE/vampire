@@ -13,7 +13,8 @@ public class CloneBullet : Bullet
         timer = 0f;
         curTime = 7f;
     }
-    public override void Init(float damage, int per, Vector3 dir, bool canStun = false, float duration = 0f) {
+    public override void Init(float damage, int per, Vector3 dir, bool canStun = false, float duration = 0f, float criticalChancePercent = 0f, float criticalDamagePercent = 0f) {
+        base.Init(damage, per, dir, canStun, duration, criticalChancePercent, criticalDamagePercent);
         this.damage = damage;
         this.per = per;
         

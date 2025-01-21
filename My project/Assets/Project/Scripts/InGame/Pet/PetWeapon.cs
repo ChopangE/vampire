@@ -171,7 +171,7 @@ public class PetWeapon : Weapon
     void SpawnLightning(Vector3 position)
     {
         Bullet lightning = Instantiate(lightningPrefab, position, Quaternion.identity).GetComponent<Bullet>();
-        lightning.Init(damage, -1, Vector3.zero, true, 5);
+        lightning.Init(damage, -1, Vector3.zero, true, 5, criticalDamagePercent, criticalChancePercent);
         // 번개 효과 설정
         // 데미지 = 몹 체력의 50%, 1초 스턴
     }
@@ -179,7 +179,7 @@ public class PetWeapon : Weapon
     void SpawnRain(Vector3 position)
     {
         Bullet rain = Instantiate(rainPrefab, position, Quaternion.identity).GetComponent<Bullet>();
-        rain.Init(damage, -1, Vector3.zero, true, 5);
+        rain.Init(damage, -1, Vector3.zero, true, 5, criticalDamagePercent, criticalChancePercent);
         // 비 효과 설정
         // 이속 30% 감소, 데미지 = 몹 체력의 10%
     }
