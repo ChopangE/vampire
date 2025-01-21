@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public Scanner scan;
     public float speed;
     public bool isBonusDamage;
+    public float bonusDamage = 0.2f;
     bool isKnockBack { get; set; }
 
     void Awake() {

@@ -19,6 +19,10 @@ public class WeaponController : MonoBehaviour
     [LabelText("추가 무기 소스(펫 등 다른 친구들꺼)")]
     [SerializeField] private List<GameObject> additionalWeaponSources;
 
+    [LabelText("보너스 데미지")]
+    public bool isBonusDamage;
+    public float bonusDamage = 0.2f;
+
     void Awake()
     {
         // 자신의 자식들의 Weapon 찾기

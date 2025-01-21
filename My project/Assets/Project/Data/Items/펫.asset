@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90c6a7228b761c8408ff4e7aa1892fed, type: 3}
-  m_Name: Item 12
+  m_Name: "\uD3AB"
   m_EditorClassIdentifier: 
   itemDataInfo:
     itemId: 13
     curLevel: 0
-    maxLevel: 10
+    maxLevel: 9
     baseCooldown: 0
     baseDamage: 10
     baseCount: 1
-    baseRange: 0
+    baseRange: 1
   itemType: 12
   itemName: '{0} / 3'
   itemDesc: '???
@@ -28,3 +28,4 @@ MonoBehaviour:
   itemIcon: {fileID: 21300000, guid: 07c7525f535d40d40a1d19a58197a4e6, type: 3}
   projectile: {fileID: 0}
   excludeUpgradeList: []
+  _prevItemData: {fileID: 0}

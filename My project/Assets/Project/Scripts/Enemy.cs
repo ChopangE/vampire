@@ -57,6 +57,8 @@ public class Enemy : DamageObject
         }
     }
 
+    public WeaponController weaponController;
+
     protected override void Awake()
     {
         base.Awake();
@@ -66,6 +68,7 @@ public class Enemy : DamageObject
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         wait = new WaitForFixedUpdate();
+        weaponController = GameManager.Instance.weaponController;
     }
 
     void FixedUpdate()
@@ -163,9 +166,9 @@ public class Enemy : DamageObject
     {
         health -= damage;
         GameManager.DamageTextPoolManager.SpawnDamageText(transform.position, damage, false, false);
-        if (GameManager.Instance.player.isBonusDamage)
+        if (weaponController.isBonusDamage)
         {
-            float bonusDamage = damage * 0.2f;
+            float bonusDamage = damage * weaponController.bonusDamage;
             health -= bonusDamage;
             DelayedSpawnDamageText(transform.position, bonusDamage, 0.1f, true).Forget();
         }

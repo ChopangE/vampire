@@ -150,7 +150,7 @@ public class Item : ViewModel
             if(upgrade.upgradeName == UpgradeName.Damage)
             {
                 prevDamageUpgradeValues = Global.UpgradeManager.GetDamageUpgradeValues();
-                desc = string.Format(upgrade.upgradeNameKey + " + {0}%", prevDamageUpgradeValues.damagePercent * 100);
+                desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}%", prevDamageUpgradeValues.damagePercent * 100);
                 desc += string.Format("\n" + LocalizationManager.GetTranslation("Passive/Name/CritRateName") + " + {0}%", prevDamageUpgradeValues.critChancePercent * 100);
                 desc += string.Format("\n" + LocalizationManager.GetTranslation("Passive/Name/CritDamageName") + " + {0}%", prevDamageUpgradeValues.critDamagePercent * 100);
             }else
@@ -160,11 +160,11 @@ public class Item : ViewModel
                 {
                     case UpgradeName.Projectiles:
                     case UpgradeName.PierceLimit:
-                        desc = string.Format(upgrade.upgradeNameKey + " + {0}", value);
+                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}", value);
                         break;
                         
                     default:
-                        desc = string.Format(upgrade.upgradeNameKey + " + {0}%", value * 100);
+                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}%", value * 100);
                         break;
                 }
             }

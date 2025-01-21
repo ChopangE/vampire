@@ -70,6 +70,7 @@ public class Weapon : MonoBehaviour
                 baseDamage = dataInfo.baseDamage;
                 count = dataInfo.baseCount;
                 maxCooldown = dataInfo.baseCooldown;
+                size = dataInfo.baseRange;
             }
         }
         damage = baseDamage;

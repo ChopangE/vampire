@@ -4,14 +4,13 @@ using Data.WeaponData;
 using Sirenix.OdinInspector;
 using SO;
 using UnityEngine;
-using static Weapon;
 
 [System.Serializable]
 public class ItemDataInfo
 {
     public WeaponId itemId;
     public int curLevel;
-    public int maxLevel = 10;
+    public int maxLevel;
     public float baseCooldown;
     public float baseDamage;
     public int baseCount;
@@ -38,4 +37,48 @@ public class ItemData : ScriptableObject
     [LabelText("제외할 업그레이드 속성")]
     public List<SkillUpgradeSO> excludeUpgradeList = new List<SkillUpgradeSO>();
 
+    [BoxGroup("진화무기 세팅")] [Button("수치 초기화")] 
+    public void Reset()
+    {
+        itemDataInfo.curLevel = 0;
+        itemDataInfo.baseCount = 1;
+        itemDataInfo.maxLevel = 9;
+        itemDataInfo.baseRange = 1f;
+    }
+    [Button("이름 변경")]
+    private void ChangeName()
+    {
+        #if UNITY_EDITOR
+        if (!string.IsNullOrEmpty(itemName))
+        {
+            string assetPath = UnityEditor.AssetDatabase.GetAssetPath(this);
+            if (!string.IsNullOrEmpty(assetPath))
+            {
+                this.name = itemName;
+                UnityEditor.EditorUtility.SetDirty(this);
+                UnityEditor.AssetDatabase.RenameAsset(assetPath, itemName);
+                UnityEditor.AssetDatabase.SaveAssets();
+            }
+        }
+        #endif
+    }
+    [BoxGroup("진화무기 세팅")] [SerializeField] private ItemData _prevItemData;
+    [BoxGroup("진화무기 세팅")] [Button("기존 무기 데이터 상속 (위의 데이터에 해당 ItemData 할당 필요)")]
+    public void InheritValues()
+    {
+        if(_prevItemData == null)
+        {
+            Debug.LogError("기존 무기 데이터가 할당되지 않았습니다.");
+            return;
+        }else
+        {
+            Debug.Log($"기존 무기 데이터 {_prevItemData.itemName} 상속");
+        }
+        itemDataInfo.baseCount = _prevItemData.itemDataInfo.baseCount;
+        itemDataInfo.maxLevel = _prevItemData.itemDataInfo.maxLevel;
+        itemDataInfo.baseRange = _prevItemData.itemDataInfo.baseRange;
+        itemDataInfo.baseDamage = _prevItemData.itemDataInfo.baseDamage;
+        itemDataInfo.baseCooldown = _prevItemData.itemDataInfo.baseCooldown;
+        itemDataInfo.baseCount = _prevItemData.itemDataInfo.baseCount;
+    }
 }

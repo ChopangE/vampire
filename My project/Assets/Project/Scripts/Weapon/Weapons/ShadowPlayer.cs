@@ -3,15 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System;
+using SO;
+using Manager.InGame;
 
 public class ShadowPlayer : Melee
 {
     private GameObject shadowPlayer;
 
     private Sprite curPlayerSprite;
+    private SpriteRenderer shadowPlayerSpriteRenderer;
     protected override void Start()
     {
         InitializeComponents();
+        curPlayerSprite = GameManager.Instance.player.GetComponent<SpriteRenderer>().sprite;
+    }
+
+    public override void LevelUp(UpgradeName prevUpgradeName, float prevUpgradeValue, DamageUpgradeValues damageUpgradeValues = null)
+    {
+        base.LevelUp(prevUpgradeName, prevUpgradeValue, damageUpgradeValues);
+        GameManager.Instance.weaponController.bonusDamage = 0.2f + ((level - 1) * 0.3f);
+
     }
     public override void Attack()
     {
@@ -26,14 +37,14 @@ public class ShadowPlayer : Melee
         }
         if(shadowPlayer != null)
         {
-            GameManager.Instance.player.isBonusDamage = true;
-            curPlayerSprite = GameManager.Instance.player.GetComponent<SpriteRenderer>().sprite;
-            shadowPlayer.GetComponent<SpriteRenderer>().sprite = curPlayerSprite;
-            shadowPlayer.transform.localScale = new Vector3(1, 1, 1);
+            GameManager.Instance.weaponController.isBonusDamage = true;
+            shadowPlayerSpriteRenderer = shadowPlayer.GetComponent<SpriteRenderer>();
+            shadowPlayerSpriteRenderer.sprite = curPlayerSprite;
+            shadowPlayer.transform.localScale = Vector3.one;
         }
         else
         {
-            GameManager.Instance.player.isBonusDamage = false;
+            GameManager.Instance.weaponController.isBonusDamage = false;
         }
 
     }
