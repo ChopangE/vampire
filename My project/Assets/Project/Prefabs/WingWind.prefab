@@ -159,6 +159,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  criticalDamagePercent: 0
+  criticalChancePercent: 0
   per: 0
   rb: {fileID: 0}
+  canStun: 0
   addPower: 10
+  spiralSpeed: 3
+  expandSpeed: 2

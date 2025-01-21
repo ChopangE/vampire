@@ -12,7 +12,7 @@ public class WindWeapon : Weapon
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
 
         bullet.position = transform.position;
-        bullet.GetComponent<Bullet>().Init(damage, 50, dir, criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);
+        bullet.GetComponent<Bullet>().Init(damage, -1, dir, criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);
     }
 
     public override async UniTaskVoid Init(ItemData data)
