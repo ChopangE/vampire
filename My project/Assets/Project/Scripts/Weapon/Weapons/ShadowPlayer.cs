@@ -10,12 +10,12 @@ public class ShadowPlayer : Melee
 {
     private GameObject shadowPlayer;
 
-    private Sprite curPlayerSprite;
+    private SpriteRenderer curPlayerSpriteRenderer;
     private SpriteRenderer shadowPlayerSpriteRenderer;
     protected override void Start()
     {
         InitializeComponents();
-        curPlayerSprite = GameManager.Instance.player.GetComponent<SpriteRenderer>().sprite;
+        curPlayerSpriteRenderer = GameManager.Instance.player.GetComponent<SpriteRenderer>();
     }
 
     public override void LevelUp(UpgradeName prevUpgradeName, float prevUpgradeValue, DamageUpgradeValues damageUpgradeValues = null)
@@ -39,7 +39,7 @@ public class ShadowPlayer : Melee
         {
             GameManager.Instance.weaponController.isBonusDamage = true;
             shadowPlayerSpriteRenderer = shadowPlayer.GetComponent<SpriteRenderer>();
-            shadowPlayerSpriteRenderer.sprite = curPlayerSprite;
+            shadowPlayerSpriteRenderer.sprite = curPlayerSpriteRenderer.sprite;
             shadowPlayer.transform.localScale = Vector3.one;
         }
         else
