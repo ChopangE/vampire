@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 90fea33054662f249a762ad6c8634e0d
+guid: 1f2fe5314f8874546876f72aacf7b4fb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -90,30 +90,6 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: iPhone
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
     buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -129,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WitchBroom-Sheet_0
+      name: WitchDying_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 128
-        height: 128
+        height: 119
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,20 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 11264b736381bbf4f8d85b1f4731abfc
-      internalID: -2015239276
+      spriteID: ce8e1ee58a669764cb394dd86ac7ecf8
+      internalID: 137846334
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WitchBroom-Sheet_1
+      name: WitchDying_1
       rect:
         serializedVersion: 2
         x: 128
         y: 0
         width: 128
-        height: 128
+        height: 119
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,20 +140,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b31fa37388548842a45d75cca427f20
-      internalID: -2110747991
+      spriteID: 902447149b5154743a0a088ef937b272
+      internalID: -1158667156
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: WitchBroom-Sheet_2
+      name: WitchDying_2
       rect:
         serializedVersion: 2
         x: 256
         y: 0
         width: 128
-        height: 128
+        height: 119
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,8 +161,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 95fa61da7ee11f04b9ec59f0bb647fb7
-      internalID: -1301619370
+      spriteID: 992cbd4fd3eac6d4f9631c733a36dc52
+      internalID: 1878316536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WitchDying_3
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 128
+        height: 119
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b78312da25f3504e99877628837d42c
+      internalID: 799557599
       vertices: []
       indices: 
       edges: []
@@ -202,9 +199,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      WitchBroom-Sheet_0: -2015239276
-      WitchBroom-Sheet_1: -2110747991
-      WitchBroom-Sheet_2: -1301619370
+      WitchDying_0: 137846334
+      WitchDying_1: -1158667156
+      WitchDying_2: 1878316536
+      WitchDying_3: 799557599
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
