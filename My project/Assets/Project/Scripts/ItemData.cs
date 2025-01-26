@@ -30,6 +30,7 @@ public class ItemData : ScriptableObject
     public string itemDesc;
     public Sprite itemIcon;
 
+    [LabelText("진화무기인가")] public bool isEvaluateWeapon = false;
 
     [Header("# Weapon")]
     public GameObject projectile;

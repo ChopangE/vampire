@@ -162,7 +162,15 @@ public class Item : ViewModel
                     case UpgradeName.PierceLimit:
                         desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}", value);
                         break;
-                        
+                    case UpgradeName.Cooldown:
+                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " - {0}%", (1 - value) * 100);
+                        break;
+                    case UpgradeName.Range:
+                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}%", value);
+                        break;
+                    case UpgradeName.Duration:
+                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}%", value * 100);
+                        break;
                     default:
                         desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}%", value * 100);
                         break;
