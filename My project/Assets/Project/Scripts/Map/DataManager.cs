@@ -58,16 +58,6 @@ public class DataManager : MMSingleton<DataManager>
     {
         await UniTask.WaitUntil(() => Global.UserDataManager != null);
 
-        foreach (var itemDataInfo in Global.UserDataManager.storage.itemDataInfoList)
-        {
-            foreach (var item in items)
-            {
-                if (itemDataInfo.itemId == item.itemDataInfo.itemId)
-                {
-                    item.itemDataInfo = itemDataInfo;
-                }
-            }
-        }
         isLoaded = true;
     }
     void saveDataToJson()

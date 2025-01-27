@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Data.WeaponData;
 using Sirenix.OdinInspector;
 using SO;
+using UnityEditor;
 using UnityEngine;
 
 [System.Serializable]
@@ -93,5 +94,10 @@ public class ItemData : ScriptableObject
         itemDataInfo.baseDamage = _prevItemData.itemDataInfo.baseDamage;
         itemDataInfo.baseCooldown = _prevItemData.itemDataInfo.baseCooldown;
         itemDataInfo.baseCount = _prevItemData.itemDataInfo.baseCount;
+    }
+    [Button("저장")]
+    public void Save()
+    {
+        EditorUtility.SetDirty(this);
     }
 }
