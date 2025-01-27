@@ -6,7 +6,6 @@ public class Melee : Weapon
     #region Fields
     [Header("Combat Settings")]
     public float coolTime = 1f;
-    public float duration = 0.5f;
     
     [Header("Attack Properties")]
     public Vector2 boxSize;

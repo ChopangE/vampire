@@ -5,9 +5,9 @@ using Cysharp.Threading.Tasks;
 
 public class Dagger : Melee
 {
-    public override async UniTaskVoid Init(ItemData data)
+    public override async UniTaskVoid Init()
     {
-        base.Init(data).Forget();
+        base.Init().Forget();
         await UniTask.Yield();
         maxCooldown = 1f;
         remainingCooldown = maxCooldown;

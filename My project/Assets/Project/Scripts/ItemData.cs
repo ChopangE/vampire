@@ -15,6 +15,17 @@ public class ItemDataInfo
     public float baseDamage;
     public int baseCount;
     public float baseRange;
+    public float baseDuration;
+
+
+    [HideInInspector] public float curCoolDown;
+    [HideInInspector] public float curDamage;
+    [HideInInspector] public int curCount;
+    [HideInInspector] public float curRange;
+    [HideInInspector] public float curDuration;
+    [HideInInspector] public float curCriticalDamagePercent;
+    [HideInInspector] public float curCriticalChancePercent;
+
 }
 [CreateAssetMenu(fileName = "Item", menuName = "Scriptable Object/ItemData")]
 public class ItemData : ScriptableObject
@@ -41,10 +52,11 @@ public class ItemData : ScriptableObject
     [BoxGroup("진화무기 세팅")] [Button("수치 초기화")] 
     public void Reset()
     {
-        itemDataInfo.curLevel = 0;
-        itemDataInfo.baseCount = 1;
-        itemDataInfo.maxLevel = 9;
-        itemDataInfo.baseRange = 1f;
+        // itemDataInfo.curLevel = 0;
+        // itemDataInfo.baseCount = 1;
+        // itemDataInfo.maxLevel = 9;
+        // itemDataInfo.baseRange = 1f;
+        itemDataInfo.baseDuration = 1f;
     }
     [Button("이름 변경")]
     private void ChangeName()

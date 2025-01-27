@@ -7,6 +7,7 @@ using Data.WeaponData;
 using Cysharp.Threading.Tasks;
 using Manager.InGame;
 using SO;
+using Unity.VisualScripting;
 
 public class Weapon : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class Weapon : MonoBehaviour
     public float damage;
     public float criticalDamagePercent;
     public float criticalChancePercent;
+    public float duration;
     public int count;
     public float size;
     private int _level;
@@ -54,26 +56,23 @@ public class Weapon : MonoBehaviour
         Init().Forget();
     }
 
-    public virtual async UniTaskVoid Init(ItemData data = null)
+    public virtual async UniTaskVoid Init()
     {
-        if (data != null)
+        var dataInfo = await DataManager.Instance.GetItemDataInfo(id);
+        if (dataInfo == null)
         {
-            _data = data;
-            id = data.itemDataInfo.itemId;
-            baseDamage = data.itemDataInfo.baseDamage;
-            count = data.itemDataInfo.baseCount;
-        }else
+            Debug.Log($"WeaponId {id}에 해당하는 ItemDataInfo를 찾을 수 없습니다.");
+        }
+        else
         {
-            var dataInfo = await DataManager.Instance.GetItemDataInfo(id);
-            if(dataInfo == null) {
-                Debug.Log($"WeaponId {id}에 해당하는 ItemDataInfo를 찾을 수 없습니다.");
-            }else{
-                level = dataInfo.curLevel;
-                baseDamage = dataInfo.baseDamage;
-                count = dataInfo.baseCount;
-                maxCooldown = dataInfo.baseCooldown;
-                size = dataInfo.baseRange;
-            }
+            level = dataInfo.curLevel;
+            baseDamage = dataInfo.curDamage == 0 ? dataInfo.baseDamage : dataInfo.curDamage;
+            count = dataInfo.curCount == 0 ? dataInfo.baseCount : dataInfo.curCount;
+            maxCooldown = dataInfo.curCoolDown == 0 ? dataInfo.baseCooldown : dataInfo.curCoolDown;
+            size = dataInfo.curRange == 0 ? dataInfo.baseRange : dataInfo.curRange;
+            duration = dataInfo.curDuration == 0 ? dataInfo.baseDuration : dataInfo.curDuration;
+            criticalChancePercent = dataInfo.curCriticalChancePercent;
+            criticalDamagePercent = dataInfo.curCriticalDamagePercent;
         }
         damage = baseDamage;
 
@@ -86,28 +85,38 @@ public class Weapon : MonoBehaviour
     {
         level++;
 
-        switch(prevUpgradeName)
+        switch (prevUpgradeName)
         {
             case UpgradeName.Damage:
-                if(damageUpgradeValues != null)
+                if (damageUpgradeValues != null)
                 {
-                    damage = baseDamage * (1 + damageUpgradeValues.damagePercent);
+                    damage += baseDamage * (1 + damageUpgradeValues.damagePercent) - baseDamage;
                     criticalDamagePercent += damageUpgradeValues.critDamagePercent;
                     criticalChancePercent += damageUpgradeValues.critChancePercent;
                 }
                 break;
             case UpgradeName.Projectiles:
-                count = _data.itemDataInfo.baseCount + (int)prevUpgradeValue;
+                count += _data.itemDataInfo.baseCount + (int)prevUpgradeValue - _data.itemDataInfo.baseCount;
                 break;
             case UpgradeName.PierceLimit:
                 break;
             case UpgradeName.Cooldown:
-                maxCooldown = _data.itemDataInfo.baseCooldown - prevUpgradeValue;
+                maxCooldown -= prevUpgradeValue;
                 break;
             case UpgradeName.Range:
-                size = _data.itemDataInfo.baseRange + prevUpgradeValue;
+                size += prevUpgradeValue;
+                break;
+            case UpgradeName.Duration:
+                duration += prevUpgradeValue;
                 break;
         }
+        _data.itemDataInfo.curDuration = duration;
+        _data.itemDataInfo.curCoolDown = maxCooldown;
+        _data.itemDataInfo.curRange = size;
+        _data.itemDataInfo.curDamage = damage;
+        _data.itemDataInfo.curCriticalDamagePercent = criticalDamagePercent;
+        _data.itemDataInfo.curCriticalChancePercent = criticalChancePercent;
+        DataManager.Instance.SaveWeaponData(_data);
     }
 
     public virtual void Attack()
@@ -124,7 +133,8 @@ public class Weapon : MonoBehaviour
         OnSkillCooldownUpdate?.Invoke(this, remainingCooldown / maxCooldown);
     }
 
-    public virtual void ExecuteAttack() { 
+    public virtual void ExecuteAttack()
+    {
     }
 
     #region Private Methods

@@ -20,10 +20,19 @@ MonoBehaviour:
     baseDamage: 0
     baseCount: 1
     baseRange: 1
+    baseDuration: 1
+    curCoolDown: 0
+    curDamage: 0
+    curCount: 0
+    curRange: 0
+    curDuration: 0
+    curCriticalDamagePercent: 0
+    curCriticalChancePercent: 0
   itemType: 10
   itemName: "\uC74C\uB8CC\uC218"
   itemDesc: "\uC0DD\uBA85\uB825 \uC804\uCCB4 \uD68C\uBCF5"
   itemIcon: {fileID: 927338625, guid: d71a3dc7aa20fad4f9a99fc76a9254ba, type: 3}
+  isEvaluateWeapon: 0
   projectile: {fileID: 0}
   excludeUpgradeList: []
   _prevItemData: {fileID: 0}

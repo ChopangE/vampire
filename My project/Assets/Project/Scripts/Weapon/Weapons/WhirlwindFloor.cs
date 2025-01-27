@@ -14,8 +14,8 @@ public class WhirlwindFloor : FloorWeapon
     CircleCollider2D coll;
     Vector3 spawnPos;
 
-    public override async UniTaskVoid Init(ItemData data) {
-        base.Init(data).Forget();
+    public override async UniTaskVoid Init() {
+        base.Init().Forget();
         await UniTask.Yield();
         coll = projectile.GetComponent<CircleCollider2D>();
     }

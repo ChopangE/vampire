@@ -15,9 +15,9 @@ public class Tornado : Weapon
         bullet.GetComponent<Bullet>().Init(damage, -1, dir, criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);
     }
 
-    public override async UniTaskVoid Init(ItemData data)
+    public override async UniTaskVoid Init()
     {
-        base.Init(data).Forget();
+        base.Init().Forget();
         await UniTask.Yield();
         maxCooldown = 5f;
     }

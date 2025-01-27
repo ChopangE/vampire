@@ -20,12 +20,21 @@ MonoBehaviour:
     baseDamage: 10
     baseCount: 1
     baseRange: 1
+    baseDuration: 1
+    curCoolDown: 0
+    curDamage: 0
+    curCount: 0
+    curRange: 0
+    curDuration: 0
+    curCriticalDamagePercent: 0
+    curCriticalChancePercent: 0
   itemType: 12
   itemName: '{0} / 3'
   itemDesc: '???
 
     ???'
   itemIcon: {fileID: 21300000, guid: 07c7525f535d40d40a1d19a58197a4e6, type: 3}
+  isEvaluateWeapon: 0
   projectile: {fileID: 0}
   excludeUpgradeList: []
   _prevItemData: {fileID: 0}

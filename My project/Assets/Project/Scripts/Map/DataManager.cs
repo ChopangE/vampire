@@ -176,6 +176,24 @@ public class DataManager : MMSingleton<DataManager>
         Global.UserDataManager.Save();
     }
 
+    public void SaveWeaponData(ItemData itemData)
+    {
+        foreach (var item in Global.UserDataManager.storage.itemDataInfoList)
+        {
+            if (item.itemId == itemData.itemDataInfo.itemId)
+            {
+                item.curCoolDown = itemData.itemDataInfo.curCoolDown;
+                item.curDuration = itemData.itemDataInfo.curDuration;
+                item.curDamage = itemData.itemDataInfo.curDamage;
+                item.curCount = itemData.itemDataInfo.curCount;
+                item.curRange = itemData.itemDataInfo.curRange;
+                item.curCriticalChancePercent = itemData.itemDataInfo.curCriticalChancePercent;
+                item.curCriticalDamagePercent = itemData.itemDataInfo.curCriticalDamagePercent;
+            }
+        }
+        Global.UserDataManager.Save();
+    }
+
     public void SaveData()
     {
         LoadInGameDatas();

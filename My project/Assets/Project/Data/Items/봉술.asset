@@ -20,6 +20,14 @@ MonoBehaviour:
     baseDamage: 20
     baseCount: 1
     baseRange: 1
+    baseDuration: 1
+    curCoolDown: 0
+    curDamage: 0
+    curCount: 0
+    curRange: 0
+    curDuration: 0
+    curCriticalDamagePercent: 0
+    curCriticalChancePercent: 0
   itemType: 6
   itemName: "\uBD09\uC220"
   itemDesc: "\uB370\uBBF8\uC9C0 {0}% \uC99D\uAC00\n"

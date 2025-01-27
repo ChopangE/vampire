@@ -6,9 +6,9 @@ using Cysharp.Threading.Tasks;
 
 public class Fire : Weapon
 {
-    public override async UniTaskVoid Init(ItemData data)
+    public override async UniTaskVoid Init()
     {
-        base.Init(data).Forget();
+        base.Init().Forget();
         await UniTask.Yield();
         maxCooldown = 0.5f;
     }

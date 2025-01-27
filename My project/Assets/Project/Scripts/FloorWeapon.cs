@@ -10,8 +10,8 @@ public class FloorWeapon : Weapon
     }
 
     
-    public override async UniTaskVoid Init(ItemData data) {
-        base.Init(data).Forget();
+    public override async UniTaskVoid Init() {
+        base.Init().Forget();
         await UniTask.Yield();
     }
 

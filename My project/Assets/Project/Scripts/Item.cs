@@ -144,13 +144,16 @@ public class Item : ViewModel
         }
 
         var upgrade = Global.UpgradeManager.GetRandomSkillUpgrade(data.excludeUpgradeList);
+        var baseDataInfo = weapon._data.itemDataInfo;
         if(upgrade != null)
         {
             prevUpgradeName = upgrade.upgradeName;
             if(upgrade.upgradeName == UpgradeName.Damage)
             {
                 prevDamageUpgradeValues = Global.UpgradeManager.GetDamageUpgradeValues();
-                desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}%", prevDamageUpgradeValues.damagePercent * 100);
+
+                var damageDesc = (weapon._data.itemDataInfo.baseDamage * (1 + prevDamageUpgradeValues.damagePercent)) - (weapon._data.itemDataInfo.baseDamage);
+                desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}", damageDesc);
                 desc += string.Format("\n" + LocalizationManager.GetTranslation("Passive/Name/CritRateName") + " + {0}%", prevDamageUpgradeValues.critChancePercent * 100);
                 desc += string.Format("\n" + LocalizationManager.GetTranslation("Passive/Name/CritDamageName") + " + {0}%", prevDamageUpgradeValues.critDamagePercent * 100);
             }else
@@ -161,18 +164,23 @@ public class Item : ViewModel
                     case UpgradeName.Projectiles:
                     case UpgradeName.PierceLimit:
                         desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}", value);
+                        prevUpgradeValue = value;
                         break;
-                    case UpgradeName.Cooldown:
-                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " - {0}%", (1 - value) * 100);
+                    case UpgradeName.Cooldown: // 곱연산
+                        prevUpgradeValue = baseDataInfo.curCoolDown - (value * baseDataInfo.curCoolDown);
+                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " - {0}s", prevUpgradeValue);
                         break;
-                    case UpgradeName.Range:
-                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}%", value);
+                    case UpgradeName.Duration: // 곱연산
+                        prevUpgradeValue = (value * baseDataInfo.curDuration) - baseDataInfo.curDuration;
+                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}s", prevUpgradeValue);
                         break;
-                    case UpgradeName.Duration:
-                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}%", value * 100);
+                    case UpgradeName.Range: // 곱연산
+                        prevUpgradeValue = (value * baseDataInfo.curRange) - baseDataInfo.curRange;
+                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}%", prevUpgradeValue);
                         break;
                     default:
-                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}%", value * 100);
+                        prevUpgradeValue = (value * 100) - 100;
+                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}%", prevUpgradeValue);
                         break;
                 }
             }
