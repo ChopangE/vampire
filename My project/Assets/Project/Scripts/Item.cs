@@ -168,19 +168,19 @@ public class Item : ViewModel
                         break;
                     case UpgradeName.Cooldown: // 곱연산
                         prevUpgradeValue = baseDataInfo.curCoolDown - (value * baseDataInfo.curCoolDown);
-                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " - {0}s", prevUpgradeValue);
+                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " - {0:F2}s", prevUpgradeValue);
                         break;
                     case UpgradeName.Duration: // 곱연산
                         prevUpgradeValue = (value * baseDataInfo.curDuration) - baseDataInfo.curDuration;
-                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}s", prevUpgradeValue);
+                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0:F2}s", prevUpgradeValue);
                         break;
                     case UpgradeName.Range: // 곱연산
                         prevUpgradeValue = (value * baseDataInfo.curRange) - baseDataInfo.curRange;
-                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}%", prevUpgradeValue);
+                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0:F2}%", prevUpgradeValue);
                         break;
                     default:
                         prevUpgradeValue = (value * 100) - 100;
-                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}%", prevUpgradeValue);
+                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0:F2}%", prevUpgradeValue);
                         break;
                 }
             }
