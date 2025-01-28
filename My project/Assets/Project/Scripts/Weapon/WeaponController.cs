@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Data.WeaponData;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -55,6 +56,25 @@ public class WeaponController : MonoBehaviour
         
         weapon.gameObject.SetActive(true);
         OnWeaponActivated?.Invoke(weapon);
+    }
+
+    public void RemoveWeapon(Weapon weapon)
+    {
+        weapon.gameObject.SetActive(false);
+        
+        if(weapons.Contains(weapon))
+        {
+            weapons.Remove(weapon);
+        }
+        OnWeaponActivated?.Invoke(weapon);
+    }
+    public void RemoveWeapon(WeaponId id)
+    {
+        var weapon = weapons.FirstOrDefault(w => w.id == id);
+        if(weapon != null)
+        {
+            RemoveWeapon(weapon);
+        }
     }
 
     public void DamageBuffPercent(float percent) {

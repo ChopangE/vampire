@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityWeld;
 using UnityWeld.Binding;
+using System.Linq;
 
 [Binding]
 public class LevelUpPage : ViewModel
@@ -46,8 +47,19 @@ public class LevelUpPage : ViewModel
             item.gameObject.SetActive(false);
         }
         
-        var notMaxLevelItems = DataManager.Instance.GetNotMaxLevelItems();
-        var maxLevelItems = isEvaluation ? DataManager.Instance.GetMaxLevelItems() : null;
+        var notMaxLevelItems = DataManager.Instance.GetNotMaxLevelItems()
+            .Where(item => !item.isEvaluateWeapon)
+            .ToArray();
+        var maxLevelItems = isEvaluation ? 
+            DataManager.Instance.GetMaxLevelItems()
+                .Where(item => !item.isEvaluateWeapon)
+                .ToArray() : null;
+
+        // 진화무기 목록 가져오기 (isEvaluation일 때만)
+        var evaluateWeapons = isEvaluation ? 
+            DataManager.Instance.GetMaxLevelItems()
+                .Where(item => item.isEvaluateWeapon)
+                .ToArray() : null;
 
         int[] ran = new int[3];
         int count = 0;
@@ -55,23 +67,34 @@ public class LevelUpPage : ViewModel
         {
             if (isEvaluation)
             {
-                int maxLevelSlot = Random.Range(0, 3);  // 만렙 아이템이 들어갈 위치
-                ran[maxLevelSlot] = Random.Range(0, maxLevelItems.Length);
-
-                maxLevelScrollNum = maxLevelSlot;
-                
-                // 나머지 두 슬롯에 일반 아이템 배치
-                int normalItemIndex = 0;
-                for (int i = 0; i < 3; i++)
+                if (evaluateWeapons != null && evaluateWeapons.Length > 0)
                 {
-                    if (i != maxLevelSlot)
+                    // 진화무기를 표시할 슬롯 선택
+                    int evolveSlot = Random.Range(0, 3);
+                    ran[evolveSlot] = Random.Range(0, evaluateWeapons.Length);
+                    maxLevelScrollNum = evolveSlot;
+
+                    // 나머지 슬롯에 일반 아이템 배치
+                    int normalItemIndex = 0;
+                    for (int i = 0; i < 3; i++)
                     {
-                        ran[i] = Random.Range(0, notMaxLevelItems.Length);
-                        if (normalItemIndex > 0 && ran[i] == ran[(maxLevelSlot + 1) % 3]) continue;
-                        normalItemIndex++;
+                        if (i != evolveSlot)
+                        {
+                            ran[i] = Random.Range(0, notMaxLevelItems.Length);
+                            if (normalItemIndex > 0 && ran[i] == ran[(evolveSlot + 1) % 3]) continue;
+                            normalItemIndex++;
+                        }
                     }
+                    if (normalItemIndex == 2) break;
                 }
-                if (normalItemIndex == 2) break;
+                else
+                {
+                    // 진화무기가 없는 경우 기존 로직대로 처리
+                    ran[0] = Random.Range(0, notMaxLevelItems.Length);
+                    ran[1] = Random.Range(0, notMaxLevelItems.Length);
+                    ran[2] = Random.Range(0, notMaxLevelItems.Length);
+                    if (ran[0] != ran[1] && ran[1] != ran[2] && ran[0] != ran[2]) break;
+                }
             }
             else
             {
@@ -93,9 +116,17 @@ public class LevelUpPage : ViewModel
 
         for (int i = 0; i < ran.Length; i++)
         {
-            ItemData itemData = isEvaluation && ran[i] >= notMaxLevelItems.Length 
-                ? maxLevelItems[ran[i]] 
-                : notMaxLevelItems[ran[i]];
+            ItemData itemData;
+            if (isEvaluation && i == maxLevelScrollNum && evaluateWeapons != null && evaluateWeapons.Length > 0)
+            {
+                // 진화무기 슬롯인 경우
+                itemData = evaluateWeapons[ran[i]];
+            }
+            else
+            {
+                // 일반 아이템 슬롯
+                itemData = notMaxLevelItems[ran[i]];
+            }
             items[i].data = itemData;
             items[i].gameObject.SetActive(true);
         }

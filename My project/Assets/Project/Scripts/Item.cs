@@ -199,7 +199,14 @@ public class Item : ViewModel
         var weapons = GameManager.Instance.weaponController.ActiveWeapons;
         if (weapons.Count >= GameManager.Instance.weaponController.maxActiveWeaponCount)
         {
-            IsInteractable = false;
+            if(data.isEvaluateWeapon)
+            {
+                IsInteractable = true;
+            }
+            else
+            {
+                IsInteractable = false;
+            }
         }
         else
         {
@@ -256,6 +263,14 @@ public class Item : ViewModel
         if (Level >= data.itemDataInfo.maxLevel)
         {
             GetComponent<Button>().interactable = false;
+        }
+
+        if(data.isEvaluateWeapon)
+        {
+            if(data._prevItemData != null)
+            {
+                weaponController.RemoveWeapon(data._prevItemData.itemDataInfo.itemId);
+            }
         }
     }
 

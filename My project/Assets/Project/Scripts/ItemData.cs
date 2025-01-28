@@ -42,7 +42,6 @@ public class ItemData : ScriptableObject
     public string itemDesc;
     public Sprite itemIcon;
 
-    [LabelText("진화무기인가")] public bool isEvaluateWeapon = false;
 
     [Header("# Weapon")]
     public GameObject projectile;
@@ -50,6 +49,18 @@ public class ItemData : ScriptableObject
     [LabelText("제외할 업그레이드 속성")]
     public List<SkillUpgradeSO> excludeUpgradeList = new List<SkillUpgradeSO>();
 
+    [BoxGroup("진화무기 세팅")] [Button("진화무기인지 자동 체크")] 
+    public void CheckEvaluateWeapon()
+    {
+        if(_prevItemData != null)
+        {
+            isEvaluateWeapon = true;
+        }else
+        {
+            isEvaluateWeapon = false;
+        }
+    }
+    [LabelText("진화무기인가")] public bool isEvaluateWeapon = false;
     [BoxGroup("진화무기 세팅")] [Button("수치 초기화")] 
     public void Reset()
     {
@@ -76,7 +87,7 @@ public class ItemData : ScriptableObject
         }
         #endif
     }
-    [BoxGroup("진화무기 세팅")] [SerializeField] private ItemData _prevItemData;
+    [BoxGroup("진화무기 세팅")] public ItemData _prevItemData;
     [BoxGroup("진화무기 세팅")] [Button("기존 무기 데이터 상속 (위의 데이터에 해당 ItemData 할당 필요)")]
     public void InheritValues()
     {
