@@ -14,20 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemDataInfo:
     itemId: 0
-    curLevel: 0
+    curLevel: 1
     maxLevel: 9
     baseCooldown: 10
     baseDamage: 50
     baseCount: 1
     baseRange: 1
     baseDuration: 1
-    curCoolDown: 0
-    curDamage: 0
+    curCoolDown: 10
+    curDamage: 54
     curCount: 0
-    curRange: 0
-    curDuration: 0
-    curCriticalDamagePercent: 0
-    curCriticalChancePercent: 0
+    curRange: 1
+    curDuration: 1
+    curCriticalDamagePercent: 0.06
+    curCriticalChancePercent: 0.06
   itemType: 1
   itemName: "\uB3CC\uD48D"
   itemDesc: "\uB370\uBBF8\uC9C0 {0}% \uC99D\uAC00\n\uD68C\uC804\uCCB4 {1}\uAC1C \uCD94\uAC00"

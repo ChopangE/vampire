@@ -16,7 +16,6 @@ public class GameManager : MMSingleton<GameManager>
     public WeaponController weaponController;
 
     [Header("# Game Control")]
-    public bool isNewGame = false;
     public bool isLive;
     public float gameTime;
     public float maxGameTime = 2 * 10f;

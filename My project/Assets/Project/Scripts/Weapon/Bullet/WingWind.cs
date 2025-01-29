@@ -14,20 +14,22 @@ public class WingWind : Bullet
     [SerializeField] private float expandSpeed = 2f;
     private Vector3 centerPosition;
     private Vector3 moveDirection;
+    private bool isClockwise;
 
     public void ExitWind()
     {
         gameObject.SetActive(false);
     }
 
-    public override void Init(float damage, int per, Vector3 dir, bool canStun = false, float duration = 0, float criticalDamagePercent = 0, float criticalChancePercent = 0)
+    public override void Init(float damage, int per, Vector3 dir, bool clockwise, float duration = 0, float criticalDamagePercent = 0, float criticalChancePercent = 0)
     {
-        base.Init(damage, per, dir, canStun, duration, criticalDamagePercent, criticalChancePercent);
+        base.Init(damage, per, dir, false, duration, criticalDamagePercent, criticalChancePercent);
         rb.velocity = Vector2.zero;
         
         spiralAngle = 0f;
         centerPosition = transform.position;
         moveDirection = dir;
+        isClockwise = clockwise;
         
         StartCoroutine(SpiralMovement());
     }
@@ -36,11 +38,11 @@ public class WingWind : Bullet
     {
         while (gameObject.activeSelf)
         {
-            // 나선형 움직임 계산
-            spiralAngle += spiralSpeed * Time.deltaTime;
-            float currentRadius = spiralRadius * (1 + expandSpeed * spiralAngle);
+            // 회전 방향에 따라 각도 증가/감소
+            float rotationDirection = isClockwise ? 1f : -1f;
+            spiralAngle += rotationDirection * spiralSpeed * Time.deltaTime;
+            float currentRadius = spiralRadius * (1 + expandSpeed * Mathf.Abs(spiralAngle));
             
-            // 진행 방향을 기준으로 회전하는 위치 계산
             Vector3 offset = new Vector3(
                 Mathf.Cos(spiralAngle) * currentRadius,
                 Mathf.Sin(spiralAngle) * currentRadius,

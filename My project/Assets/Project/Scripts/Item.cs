@@ -265,13 +265,6 @@ public class Item : ViewModel
             GetComponent<Button>().interactable = false;
         }
 
-        if(data.isEvaluateWeapon)
-        {
-            if(data._prevItemData != null)
-            {
-                weaponController.RemoveWeapon(data._prevItemData.itemDataInfo.itemId);
-            }
-        }
     }
 
     private void InitializeWeapon(Weapon[] weapons)

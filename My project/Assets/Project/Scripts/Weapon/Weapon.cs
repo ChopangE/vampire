@@ -74,8 +74,28 @@ public class Weapon : MonoBehaviour
             criticalChancePercent = dataInfo.curCriticalChancePercent;
             criticalDamagePercent = dataInfo.curCriticalDamagePercent;
         }
-        damage = baseDamage;
 
+
+        if (_data.isEvaluateWeapon)
+        {
+            var weapon = GameManager.Instance.weaponController.GetEvaluateWeaponValue(this);
+            if (weapon != null)
+            {
+                baseDamage = weapon._data.itemDataInfo.curDamage;
+                count = weapon._data.itemDataInfo.curCount;
+                maxCooldown = weapon._data.itemDataInfo.curCoolDown;
+                size = weapon._data.itemDataInfo.curRange;
+                duration = weapon._data.itemDataInfo.curDuration;
+                criticalChancePercent = weapon._data.itemDataInfo.curCriticalChancePercent;
+                criticalDamagePercent = weapon._data.itemDataInfo.curCriticalDamagePercent;
+                GameManager.Instance.weaponController.RemoveWeapon(_data._prevItemData.itemDataInfo.itemId);
+            }else
+            {
+                Debug.Log("진화무기의 이전 무기가 없습니다. 실제 출시할 때 이를 방지해야합니다.");
+            }
+        }
+
+        damage = baseDamage;
         SetPrefabId(_data);
         remainingCooldown = maxCooldown;
         player.BroadcastMessage("ApplayGear", SendMessageOptions.DontRequireReceiver);
@@ -121,7 +141,7 @@ public class Weapon : MonoBehaviour
 
     public virtual void Attack()
     {
-        if (!GameManager.Instance.isLive || !gameObject.activeSelf) return;
+        if (!GameManager.Instance.isLive || !gameObject.activeSelf || maxCooldown <= 0) return;
 
         remainingCooldown -= Time.deltaTime;
         if (remainingCooldown <= 0)

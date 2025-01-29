@@ -12,7 +12,7 @@ using OutGame;
 
 public class DataManager : MMSingleton<DataManager>
 {
-    private const string itemPath = "Assets/Project/Data/Items";
+    private const string itemPath = "Items";
 
     public playerDataList list = new playerDataList();
     public Weapon[] weapons;
@@ -43,15 +43,14 @@ public class DataManager : MMSingleton<DataManager>
 
     private void OnEnable()
     {
-        items = Util.Data.HelperFunctions.GetScriptableObjects<ItemData>(itemPath);
-        if (Global.CurrentScene is InGameScene && GameManager.Instance != null)
+        items = Resources.LoadAll<ItemData>(itemPath).ToList();
+        
+        if(Global.UserDataManager.storage.itemDataInfoList.Count == 0)
         {
-            if (GameManager.Instance.isNewGame)
-            {
-                LoadData();
-            }
+            LoadData();
         }
         LoadUserData().Forget();
+
     }
 
     private async UniTaskVoid LoadUserData()
@@ -89,7 +88,7 @@ public class DataManager : MMSingleton<DataManager>
     private void LoadInGameDatas()
     {
         weapons = GameManager.Instance.weaponController.Weapons.ToArray();
-        items = Util.Data.HelperFunctions.GetScriptableObjects<ItemData>(itemPath);
+        items = Resources.LoadAll<ItemData>(itemPath).ToList();
     }
 
     public ItemDataInfo GetItemDataInfo(ItemData itemData)

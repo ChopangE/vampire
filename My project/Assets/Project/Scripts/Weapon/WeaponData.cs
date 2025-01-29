@@ -24,6 +24,7 @@ namespace Data.WeaponData
         ShadowPlayer = 14,
         FollowSpike = 15,
         SuperExplosion = 16,
+        Tornado = 17,
     }
     public enum WeaponType { Rotate, Range, Bomb, Raser, Breath, Dagger }
 }

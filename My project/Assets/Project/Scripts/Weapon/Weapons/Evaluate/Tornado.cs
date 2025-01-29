@@ -3,22 +3,23 @@ using Data;
 using UnityEngine;
 public class Tornado : Weapon
 {
-    public override void ExecuteAttack()
-    {
-        if (!player.scan.nearestTarget) return;
-
-        Vector3 targetPos = player.scan.nearestTarget.position;
-        Vector3 dir = (targetPos - transform.position).normalized;
-        Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
-
-        bullet.position = transform.position;
-        bullet.GetComponent<Bullet>().Init(damage, -1, dir, criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);
-    }
-
     public override async UniTaskVoid Init()
     {
         base.Init().Forget();
         await UniTask.Yield();
-        maxCooldown = 5f;
+    }
+    public override void ExecuteAttack()
+    {
+        Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
+        bullet.position = transform.position + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0);
+        bullet.rotation = Quaternion.identity;
+        bullet.GetComponent<Bullet>().Init(
+            damage,
+            -1,
+            Vector3.zero,
+            criticalChancePercent: criticalChancePercent,
+            criticalDamagePercent: criticalDamagePercent,
+            duration: duration
+        );
     }
 }

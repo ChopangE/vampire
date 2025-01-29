@@ -7,19 +7,28 @@ public class WindWeapon : Weapon
 {
     public override void ExecuteAttack()
     {
-        float angleStep = 360f / count;  // count개 만큼 균등하게 나눈 각도
-        float radius = 2f;  // 시작 위치의 반경
+        float angleStep = 360f / count;  // count 기반으로 각도 간격 계산
+        float startDistance = 1.5f;
 
         for (int i = 0; i < count; i++)
         {
-            float angle = angleStep * i;
-            // 원형으로 시작 위치 배치
-            Vector3 startPos = transform.position + Quaternion.Euler(0, 0, angle) * Vector3.right * radius;
+            float angle = i * angleStep;  // 현재 돌풍의 각도
+            
+            // 각도를 라디안으로 변환하여 방향 벡터 계산
+            Vector3 direction = new Vector3(
+                Mathf.Cos(angle * Mathf.Deg2Rad),
+                Mathf.Sin(angle * Mathf.Deg2Rad),
+                0
+            );
+            
+            // 시계방향 회전 설정 (서쪽 방향(180도)에 가까운 경우 반시계 방향으로)
+            bool clockwise = !(angle > 135f && angle < 225f);
+            
+            Vector3 startPos = transform.position + direction * startDistance;
             
             Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
             bullet.position = startPos;
-            // 각 총알은 같은 방향(GetPlayerDirection)으로 나선형 움직임
-            bullet.GetComponent<WingWind>().Init(damage, -1, GetPlayerDirection(), false, 0f, criticalDamagePercent, criticalChancePercent);
+            bullet.GetComponent<WingWind>().Init(damage, -1, direction, clockwise, 0f, criticalDamagePercent, criticalChancePercent);
         }
     }
 

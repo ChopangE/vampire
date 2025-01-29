@@ -11,27 +11,33 @@ public class Bullet : MonoBehaviour
     public float criticalChancePercent;
     public int per;
     public Rigidbody2D rb;
-    float duration;
+    public float duration;
     public bool canStun;
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        if(duration == 0)
+        {
+            duration = Random.Range(3f, 5f);
+        }
     }
 
     public virtual void Init(float damage, int per, Vector3 dir, bool canStun = false,
     float duration = 0f, float criticalDamagePercent = 0f, float criticalChancePercent = 0f)
+
     {
         this.damage = damage;
         this.criticalDamagePercent = criticalDamagePercent;
         this.criticalChancePercent = criticalChancePercent;
         this.per = per;
         this.canStun = canStun;
+        this.duration = duration;
         if (duration == 0)
         {
             if (per <= -100)
             {
-                StartCoroutine(Stop());
                 this.duration = Random.Range(3f, 5f);
+                StartCoroutine(Stop());
             }
         }
 

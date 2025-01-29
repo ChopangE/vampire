@@ -83,4 +83,14 @@ public class WeaponController : MonoBehaviour
             weapon.UpdateDamage(damageMultiplier);
         }
     }
+
+    public Weapon GetEvaluateWeaponValue(Weapon weapon)
+    {
+        Weapon evaluatePrevWeapon = null;
+        if(weapon._data._prevItemData != null)
+        {
+            evaluatePrevWeapon = ActiveWeapons.FirstOrDefault(w => w.id == weapon._data._prevItemData.itemDataInfo.itemId);
+        }
+        return evaluatePrevWeapon;
+    }
 }
