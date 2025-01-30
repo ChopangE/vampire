@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 90c6a7228b761c8408ff4e7aa1892fed, type: 3}
-  m_Name: "\uAC15\uD654\uB41C \uD3ED\uBC1C \uBD80\uC801"
+  m_Name: "270\uB3C4 \uBD09\uC220"
   m_EditorClassIdentifier: 
   itemDataInfo:
-    itemId: 16
+    itemId: 19
     curLevel: 0
     maxLevel: 9
-    baseCooldown: 10
-    baseDamage: 50
+    baseCooldown: 3
+    baseDamage: 20
     baseCount: 1
     baseRange: 1
     baseDuration: 1
@@ -28,12 +28,13 @@ MonoBehaviour:
     curDuration: 0
     curCriticalDamagePercent: 0
     curCriticalChancePercent: 0
-  itemType: 3
-  itemName: "\uAC15\uD654\uB41C \uD3ED\uBC1C \uBD80\uC801"
-  itemDesc: "\uB370\uBBF8\uC9C0 {0}% \uC99D\uAC00\n\uBC94\uC704 \uC99D\uAC00"
-  itemIcon: {fileID: 21300000, guid: dcb56a83c2f474b4da43df43ed79b670, type: 3}
-  projectile: {fileID: 6179023894659837948, guid: 7de0151bc0e7d8a43b3e5a5255ee0267, type: 3}
+  itemType: 6
+  itemName: "270\uB3C4 \uBD09\uC220"
+  itemDesc: "\uB370\uBBF8\uC9C0 {0}% \uC99D\uAC00\n"
+  itemIcon: {fileID: 21300000, guid: 18172abbee5bd954787406de2dc16bb6, type: 3}
+  projectile: {fileID: 2813218963295040058, guid: c876cf154c7baf34d9eba8f561b96618, type: 3}
   excludeUpgradeList:
   - {fileID: 11400000, guid: 01c524a5c1d79034384a175b60334a90, type: 2}
+  - {fileID: 11400000, guid: 42d74f3569b6a1645be985e64672f4c2, type: 2}
   isEvaluateWeapon: 1
-  _prevItemData: {fileID: 11400000, guid: f577c79a5c822a1428d49ffed6b53509, type: 2}
+  _prevItemData: {fileID: 11400000, guid: bc3e32f7aedd6db4aa65cd9911f6c762, type: 2}

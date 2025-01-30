@@ -76,7 +76,7 @@ public class GameManager : MMSingleton<GameManager>
 
 
     public void StageClear() {
-        DataManager.Instance.SaveData();
+        Global.DataManager.SaveData();
         Global.UIManager.CloseAllPages();
         SceneManager.LoadScene(3);
     }

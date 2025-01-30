@@ -45,9 +45,16 @@ public class Melee : Weapon
 
     private void SetupBoxCollider()
     {
-        boxSize = stick.GetComponent<BoxCollider2D>().size;
+        if(stick != null)
+        {
+            boxSize = stick.GetComponent<BoxCollider2D>().size;
+        }else if(sword != null)
+        {
+            boxSize = sword.GetComponent<BoxCollider2D>().size;
+        }
     }
     #endregion
+
 
     #region Attack Handlers
     public override void ExecuteAttack()

@@ -186,8 +186,12 @@ public class Item : ViewModel
             }
             
         }
-        textDesc.text = desc;
+        // if(Level == 0 && data.itemType != ItemData.ItemType.Heal && data.itemType != ItemData.ItemType.Pet)
+        //     textDesc.text = "";
+        // else
+        //     textDesc.text = desc;
     }
+
 
     private void CheckInteractable()
     {
@@ -259,7 +263,7 @@ public class Item : ViewModel
                 break;
         }
 
-        DataManager.Instance.SetWeaponItemLevel(data, Level);
+        Global.DataManager.SetWeaponItemLevel(data, Level);
         if (Level >= data.itemDataInfo.maxLevel)
         {
             GetComponent<Button>().interactable = false;

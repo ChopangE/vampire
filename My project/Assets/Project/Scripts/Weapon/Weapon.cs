@@ -8,6 +8,7 @@ using Cysharp.Threading.Tasks;
 using Manager.InGame;
 using SO;
 using Unity.VisualScripting;
+using Manager;
 
 public class Weapon : MonoBehaviour
 {
@@ -58,7 +59,13 @@ public class Weapon : MonoBehaviour
 
     public virtual async UniTaskVoid Init()
     {
-        var dataInfo = await DataManager.Instance.GetItemDataInfo(id);
+        // DataManager가 초기화될 때까지 대기
+        while (Global.DataManager == null)
+        {
+            await UniTask.Yield();
+        }
+
+        var dataInfo = await Global.DataManager.GetItemDataInfo(id);
         if (dataInfo == null)
         {
             Debug.Log($"WeaponId {id}에 해당하는 ItemDataInfo를 찾을 수 없습니다.");
@@ -136,7 +143,7 @@ public class Weapon : MonoBehaviour
         _data.itemDataInfo.curDamage = damage;
         _data.itemDataInfo.curCriticalDamagePercent = criticalDamagePercent;
         _data.itemDataInfo.curCriticalChancePercent = criticalChancePercent;
-        DataManager.Instance.SaveWeaponData(_data);
+        Global.DataManager.SaveWeaponData(_data);
     }
 
     public virtual void Attack()

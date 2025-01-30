@@ -10,7 +10,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using OutGame;
 
-public class DataManager : MMSingleton<DataManager>
+public class DataManager : MonoBehaviour
 {
     private const string itemPath = "Items";
 
@@ -41,7 +41,7 @@ public class DataManager : MMSingleton<DataManager>
         Global.UserDataManager.Save();
     }
 
-    private void OnEnable()
+    private void Awake()
     {
         items = Resources.LoadAll<ItemData>(itemPath).ToList();
         
