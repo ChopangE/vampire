@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c6a7228b761c8408ff4e7aa1892fed, type: 3}
+  m_Name: "\uC218\uB9AC\uAC80"
+  m_EditorClassIdentifier: 
+  itemDataInfo:
+    itemId: 3
+    curLevel: 0
+    maxLevel: 9
+    baseCooldown: 7
+    baseDamage: 40
+    baseCount: 1
+    baseRange: 1
+    baseDuration: 1
+    curCoolDown: 10
+    curDamage: 50
+    curCount: 0
+    curRange: 1
+    curDuration: 1
+    curCriticalDamagePercent: 0
+    curCriticalChancePercent: 0
+  itemType: 3
+  itemName: "\uC218\uB9AC\uAC80"
+  itemDesc: "\uB370\uBBF8\uC9C0 {0}% \uC99D\uAC00\n\uBC94\uC704 \uC99D\uAC00"
+  itemIcon: {fileID: 1485946897, guid: f3f51a434d9749f4ba486236364b61c3, type: 3}
+  projectile: {fileID: 2914023840445098384, guid: 49fe92330edf62b409f5136b208b23b4, type: 3}
+  excludeUpgradeList:
+  - {fileID: 11400000, guid: afdc70460cf879847949065983d5fc3b, type: 2}
+  isEvaluateWeapon: 0
+  _prevItemData: {fileID: 0}
