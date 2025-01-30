@@ -21,6 +21,7 @@ public class Weapon : MonoBehaviour
     public float criticalDamagePercent;
     public float criticalChancePercent;
     public float duration;
+    public int pierce;
     public int count;
     public float size;
     private int _level;
@@ -78,8 +79,10 @@ public class Weapon : MonoBehaviour
             maxCooldown = dataInfo.curCoolDown == 0 ? dataInfo.baseCooldown : dataInfo.curCoolDown;
             size = dataInfo.curRange == 0 ? dataInfo.baseRange : dataInfo.curRange;
             duration = dataInfo.curDuration == 0 ? dataInfo.baseDuration : dataInfo.curDuration;
+            pierce = dataInfo.curPierce == 0 ? dataInfo.basePierce : dataInfo.curPierce;
             criticalChancePercent = dataInfo.curCriticalChancePercent;
             criticalDamagePercent = dataInfo.curCriticalDamagePercent;
+
         }
 
 
@@ -93,6 +96,7 @@ public class Weapon : MonoBehaviour
                 maxCooldown = weapon._data.itemDataInfo.curCoolDown;
                 size = weapon._data.itemDataInfo.curRange;
                 duration = weapon._data.itemDataInfo.curDuration;
+                pierce = weapon._data.itemDataInfo.curPierce;
                 criticalChancePercent = weapon._data.itemDataInfo.curCriticalChancePercent;
                 criticalDamagePercent = weapon._data.itemDataInfo.curCriticalDamagePercent;
                 GameManager.Instance.weaponController.RemoveWeapon(_data._prevItemData.itemDataInfo.itemId);
@@ -126,6 +130,7 @@ public class Weapon : MonoBehaviour
                 count += _data.itemDataInfo.baseCount + (int)prevUpgradeValue - _data.itemDataInfo.baseCount;
                 break;
             case UpgradeName.PierceLimit:
+                pierce += (int)prevUpgradeValue;
                 break;
             case UpgradeName.Cooldown:
                 maxCooldown -= prevUpgradeValue;
@@ -141,6 +146,7 @@ public class Weapon : MonoBehaviour
         _data.itemDataInfo.curCoolDown = maxCooldown;
         _data.itemDataInfo.curRange = size;
         _data.itemDataInfo.curDamage = damage;
+        _data.itemDataInfo.curPierce = pierce;
         _data.itemDataInfo.curCriticalDamagePercent = criticalDamagePercent;
         _data.itemDataInfo.curCriticalChancePercent = criticalChancePercent;
         Global.DataManager.SaveWeaponData(_data);

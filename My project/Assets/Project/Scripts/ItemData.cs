@@ -17,7 +17,7 @@ public class ItemDataInfo
     public int baseCount;
     public float baseRange;
     public float baseDuration;
-
+    public int basePierce;
 
     [HideInInspector] public float curCoolDown;
     [HideInInspector] public float curDamage;
@@ -26,6 +26,7 @@ public class ItemDataInfo
     [HideInInspector] public float curDuration;
     [HideInInspector] public float curCriticalDamagePercent;
     [HideInInspector] public float curCriticalChancePercent;
+    [HideInInspector] public int curPierce;
 
 }
 [CreateAssetMenu(fileName = "Item", menuName = "Scriptable Object/ItemData")]
@@ -105,6 +106,7 @@ public class ItemData : ScriptableObject
         itemDataInfo.baseDamage = _prevItemData.itemDataInfo.baseDamage;
         itemDataInfo.baseCooldown = _prevItemData.itemDataInfo.baseCooldown;
         itemDataInfo.baseCount = _prevItemData.itemDataInfo.baseCount;
+        itemDataInfo.basePierce = _prevItemData.itemDataInfo.basePierce;
     }
     [Button("저장")]
     public void Save()

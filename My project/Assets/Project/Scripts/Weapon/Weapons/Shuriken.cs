@@ -30,7 +30,7 @@ public class Shuriken : Weapon
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
         bullet.position = transform.position;
         var bulletScript = bullet.GetComponent<Bullet>();
-        bulletScript.Init(damage, -1, dir, 
+        bulletScript.Init(damage, pierce, dir, 
         criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);
         bulletScript.rb.velocity = dir * 7f;
     }
