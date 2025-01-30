@@ -10,9 +10,8 @@ public class FloorWeapon : Weapon
     }
 
     
-    public override async UniTaskVoid Init() {
-        base.Init().Forget();
-        await UniTask.Yield();
+    public override async UniTask Init() {
+        await base.Init();
     }
 
     public void LevelUp(float damage) {

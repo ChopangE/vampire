@@ -32,10 +32,8 @@ public class WindWeapon : Weapon
         }
     }
 
-    public override async UniTaskVoid Init()
+    public override async UniTask Init()
     {
-        base.Init().Forget();
-        await UniTask.Yield();
-        maxCooldown = 5f;
+        await base.Init();
     }
 }

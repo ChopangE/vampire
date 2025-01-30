@@ -6,10 +6,9 @@ using Cysharp.Threading.Tasks;
 
 public class Shuriken : Weapon
 {
-    public override async UniTaskVoid Init()
+    public override async UniTask Init()
     {
-        base.Init().Forget();
-        await UniTask.Yield();
+        await base.Init();
     }
     public override void ExecuteAttack()
     {

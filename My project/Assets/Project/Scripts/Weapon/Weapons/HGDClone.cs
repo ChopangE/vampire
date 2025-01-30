@@ -3,10 +3,9 @@ using Cysharp.Threading.Tasks;
 
 public class HGDClone : Weapon
 {
-    public override async UniTaskVoid Init()
+    public override async UniTask Init()
     {
-        base.Init().Forget();
-        await UniTask.Yield();
+        await base.Init();
         maxCooldown = 7f;
     }
     public override void ExecuteAttack()

@@ -5,11 +5,9 @@ using UnityEngine;
 
 public class Bomb : Weapon
 {
-    public override async UniTaskVoid Init()
+    public override async UniTask Init()
     {
-        base.Init().Forget();
-        await UniTask.Yield();
-        maxCooldown = 3f;
+        await base.Init();
     }
     public override void ExecuteAttack()
     {

@@ -10,12 +10,9 @@ public class DaggerWind : Melee
     public float windDelay = 0.1f;  // 검풍 사이 지연시간
 
 
-    public override async UniTaskVoid Init()
+    public override async UniTask Init()
     {
-        base.Init().Forget();
-        await UniTask.Yield();
-        maxCooldown = 1f;
-        remainingCooldown = maxCooldown;
+        await base.Init();
     }
 
     public override void ExecuteAttack()

@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class Breath : Weapon
 {
-    public override async UniTaskVoid Init()
+    public override async UniTask Init()
     {
-        base.Init().Forget();
-        await UniTask.Yield();
+        await base.Init();
         maxCooldown = 0.5f;
     }
     public override void ExecuteAttack()

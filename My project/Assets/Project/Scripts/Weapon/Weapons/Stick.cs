@@ -5,11 +5,9 @@ using Cysharp.Threading.Tasks;
 
 public class Stick : Weapon
 {
-    public override async UniTaskVoid Init()
+    public override async UniTask Init()
     {
-        base.Init().Forget();
-        await UniTask.Yield();
-        maxCooldown = 4f;
+        await base.Init();
     }
     public override async void ExecuteAttack()
     {

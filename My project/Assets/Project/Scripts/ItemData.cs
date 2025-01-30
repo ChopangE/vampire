@@ -19,7 +19,7 @@ public class ItemDataInfo
     public float baseDuration;
     public int basePierce;
 
-    public float curCoolDown = 0;
+    [HideInInspector] public float curCoolDown = 0;
     [HideInInspector] public float curDamage = 0;
     [HideInInspector] public int curCount = 0;
     [HideInInspector] public float curRange = 0;

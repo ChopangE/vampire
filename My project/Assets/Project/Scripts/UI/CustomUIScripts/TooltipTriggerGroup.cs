@@ -19,7 +19,6 @@ namespace UI
 
         private bool isMouseDown = false;
         private bool isHovering = false;
-        private bool isControlInGroup = false;
         private void OnEnable(){
             InitialTriggers();
         }

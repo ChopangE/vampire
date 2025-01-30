@@ -30,6 +30,7 @@ namespace Data.WeaponData
         WhirlWindOwner = 20,
         Shuriken = 21,
         WindShuriken = 22,
+        Bowling = 23,
     }
     public enum WeaponType { Rotate, Range, Bomb, Raser, Breath, Dagger }
 }

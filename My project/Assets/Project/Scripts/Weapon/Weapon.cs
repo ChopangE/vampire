@@ -58,7 +58,7 @@ public class Weapon : MonoBehaviour
         Init().Forget();
     }
 
-    public virtual async UniTaskVoid Init()
+    public virtual async UniTask Init()
     {
         // DataManager가 초기화될 때까지 대기
         while (Global.DataManager == null)

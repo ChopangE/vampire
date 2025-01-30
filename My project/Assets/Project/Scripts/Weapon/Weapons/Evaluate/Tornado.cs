@@ -3,10 +3,9 @@ using Data;
 using UnityEngine;
 public class Tornado : Weapon
 {
-    public override async UniTaskVoid Init()
+    public override async UniTask Init()
     {
-        base.Init().Forget();
-        await UniTask.Yield();
+        await base.Init();
     }
     public override void ExecuteAttack()
     {

@@ -24,11 +24,9 @@ public class Enemy : DamageObject
     public OutlineSprite outlineSprite;
 
     private EnemyType _enemyType = EnemyType.Normal;
-    int coinNum;
     protected bool isLive;
     int level;
     protected float timer;
-    bool isBack;
 
     protected Rigidbody2D rigid;
     protected Collider2D coll;
@@ -63,7 +61,6 @@ public class Enemy : DamageObject
     protected override void Awake()
     {
         base.Awake();
-        coinNum = 4;
         rigid = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
         spriter = GetComponent<SpriteRenderer>();
@@ -108,7 +105,6 @@ public class Enemy : DamageObject
         spriter.sortingOrder = 2;
         anim.SetBool("Dead", false);
         health = maxHealth;
-        isBack = false;
         isStunned = false; // 활성화될 때 스턴 해제
     }
 

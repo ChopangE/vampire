@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using SO;
+using Manager.InGame;
 
-
-public class Fire : Weapon
+public class Bowling : Weapon
 {
     public override async UniTask Init()
     {
         await base.Init();
+        maxCooldown = 5f;
+        remainingCooldown = maxCooldown;
     }
     public override void ExecuteAttack()
     {
