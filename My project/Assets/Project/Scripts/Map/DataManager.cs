@@ -34,6 +34,7 @@ public class DataManager : MonoBehaviour
                 item.itemDataInfo.curLevel = 1;
             }
         }
+        // 첫 판이라면 무기 데이터 SO들 Cur수치들 초기화
         foreach (var item in items)
         {
             item.Reset();
