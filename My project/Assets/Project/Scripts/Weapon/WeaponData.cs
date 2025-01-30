@@ -27,6 +27,7 @@ namespace Data.WeaponData
         Tornado = 17,
         DaggerWind = 18,
         SuperStick = 19,
+        WhirlWindOwner = 20,
     }
     public enum WeaponType { Rotate, Range, Bomb, Raser, Breath, Dagger }
 }

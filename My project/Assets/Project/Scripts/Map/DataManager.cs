@@ -14,15 +14,12 @@ public class DataManager : MonoBehaviour
 {
     private const string itemPath = "Items";
 
-    public playerDataList list = new playerDataList();
     public Weapon[] weapons;
     public List<ItemData> items = new List<ItemData>();
 
     public bool isLoaded = false;
     void Init()
     {
-        list.datalist = new playerData[GameManager.Instance.weaponController.Weapons.Count];
-        saveDataToJson();
         LoadInGameDatas();
     }
     public void LoadData()
@@ -59,32 +56,6 @@ public class DataManager : MonoBehaviour
 
         isLoaded = true;
     }
-    void saveDataToJson()
-    {
-        Debug.Log("Save!");
-        string result = JsonUtility.ToJson(list);
-        string path = Path.Combine(Application.dataPath, "playerData.json");
-        File.WriteAllText(path, result);
-    }
-    void loadDataFromJson()
-    {
-        string path = Path.Combine(Application.dataPath, "playerData.json");
-        string jsonData = File.ReadAllText(path);
-        list = JsonUtility.FromJson<playerDataList>(jsonData);
-    }
-
-    public void SetData(playerData[] datas)
-    {
-        list.datalist = datas;
-        saveDataToJson();
-    }
-
-    public playerData[] GetData()
-    {
-        loadDataFromJson();
-        return list.datalist;
-    }
-
     private void LoadInGameDatas()
     {
         weapons = GameManager.Instance.weaponController.Weapons.ToArray();
@@ -186,17 +157,6 @@ public class DataManager : MonoBehaviour
     public void SaveData()
     {
         LoadInGameDatas();
-        // for(int i = 0; i < weapons.Length; i++) {
-        //     if (weapons[i].gameObject.activeSelf) {
-        //         Debug.Log("Setting");
-        //         datas[i].isHave = weapons[i].gameObject.activeSelf;
-        //         datas[i].damage = weapons[i].damage;
-        //         datas[i].count = weapons[i].count;
-        //         datas[i].level = GetItemDataInfo(items[i]).curLevel;
-        //     }
-        // }
-        // DataManager.Instance.SetData(datas);
-
     }
 
     private async UniTask WaitForLoading()
@@ -206,22 +166,11 @@ public class DataManager : MonoBehaviour
             await UniTask.Yield();
         }
     }
+    public void ResetData()
+    {
+        Global.UserDataManager.storage.itemDataInfoList.Clear();
+        Global.UserDataManager.Save();
+        LoadData();
+    }
 
-}
-
-
-[System.Serializable]
-public class playerData
-{
-    public int id;
-    public int level;
-    public float damage;
-    public int count;
-    public bool isHave;
-}
-
-[System.Serializable]
-public class playerDataList
-{
-    public playerData[] datalist;
 }
