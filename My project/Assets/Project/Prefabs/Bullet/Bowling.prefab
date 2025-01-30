@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2914023840445098388}
   - component: {fileID: 2914023840445098387}
-  - component: {fileID: 2914023840445098385}
   - component: {fileID: 1452806910189625325}
   - component: {fileID: 4991876257893524905}
+  - component: {fileID: -2981447423213336392}
   m_Layer: 0
   m_Name: Bowling
   m_TagString: Bullet
@@ -87,25 +87,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2914023840445098385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2914023840445098384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de42e593ec2402d4bb2fada5c6a40423, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  criticalDamagePercent: 0
-  criticalChancePercent: 0
-  per: 0
-  rb: {fileID: 0}
-  duration: 0
-  canStun: 0
 --- !u!70 &1452806910189625325
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -143,3 +124,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-2981447423213336392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2914023840445098384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a572788023176d4ab95ff5b30298858, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+  criticalDamagePercent: 0
+  criticalChancePercent: 0
+  per: 0
+  rb: {fileID: 0}
+  duration: 0
+  canStun: 0

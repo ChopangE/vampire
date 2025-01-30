@@ -23,6 +23,8 @@ public class Bowling : Weapon
 
         bullet.position = transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
-        bullet.GetComponent<Bullet>().Init(damage, count, dir, criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);
+        var bulletScript = bullet.GetComponent<BowlingBullet>();
+        bulletScript.Init(damage, -1, dir, criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);
+        bulletScript.rb.velocity = dir * 6f;
     }
 }

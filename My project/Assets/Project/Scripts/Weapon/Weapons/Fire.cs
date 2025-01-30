@@ -20,6 +20,6 @@ public class Fire : Weapon
 
         bullet.position = transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
-        bullet.GetComponent<Bullet>().Init(damage, count, dir, criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);
+        bullet.GetComponent<Bullet>().Init(damage, pierce, dir, criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);
     }
 }
