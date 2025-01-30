@@ -10,7 +10,6 @@ public class Shuriken : Weapon
     {
         base.Init().Forget();
         await UniTask.Yield();
-        maxCooldown = 0.5f;
     }
     public override void ExecuteAttack()
     {

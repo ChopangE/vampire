@@ -40,4 +40,30 @@ public class Scanner : MonoBehaviour
         return result;
     }
 
+    public Transform GetNearstEliteOrBoss()
+    {
+        Transform result = null;
+        float diff = 100f;
+
+        foreach (RaycastHit2D target in targets)
+        {
+            Boss boss;
+            MiddleBoss middleBoss;
+            if (target.transform.TryGetComponent(out boss) || 
+                target.transform.TryGetComponent(out middleBoss))
+            {
+                Vector3 myPos = transform.position;
+                Vector3 targetPos = target.transform.position;
+                float curDiff = Vector3.Distance(myPos, targetPos);
+
+                if (curDiff < diff)
+                {
+                    diff = curDiff;
+                    result = target.transform;
+                }
+            }
+        }
+        return result;
+    }
+
 }

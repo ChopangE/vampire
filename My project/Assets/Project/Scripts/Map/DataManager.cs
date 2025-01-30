@@ -34,6 +34,10 @@ public class DataManager : MonoBehaviour
                 item.itemDataInfo.curLevel = 1;
             }
         }
+        foreach (var item in items)
+        {
+            item.Reset();
+        }
         Global.UserDataManager.storage.itemDataInfoList = items.Select(item => item.itemDataInfo).ToList();
         Global.UserDataManager.Save();
     }

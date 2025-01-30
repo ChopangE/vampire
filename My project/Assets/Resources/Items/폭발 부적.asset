@@ -21,6 +21,7 @@ MonoBehaviour:
     baseCount: 1
     baseRange: 1
     baseDuration: 1
+    basePierce: 1
     curCoolDown: 10
     curDamage: 50
     curCount: 0
@@ -28,6 +29,7 @@ MonoBehaviour:
     curDuration: 1
     curCriticalDamagePercent: 0
     curCriticalChancePercent: 0
+    curPierce: 0
   itemType: 3
   itemName: "\uD3ED\uBC1C \uBD80\uC801"
   itemDesc: "\uB370\uBBF8\uC9C0 {0}% \uC99D\uAC00\n\uBC94\uC704 \uC99D\uAC00"

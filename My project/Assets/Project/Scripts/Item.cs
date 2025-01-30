@@ -286,7 +286,6 @@ public class Item : ViewModel
             Debug.LogError($"Weapon {data.itemName} not found");
             return;
         }
-        weapon.gameObject.SetActive(true);
         weaponController.ActivateWeapon(weapon);
     }
 

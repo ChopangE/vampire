@@ -19,14 +19,14 @@ public class ItemDataInfo
     public float baseDuration;
     public int basePierce;
 
-    [HideInInspector] public float curCoolDown;
-    [HideInInspector] public float curDamage;
-    [HideInInspector] public int curCount;
-    [HideInInspector] public float curRange;
-    [HideInInspector] public float curDuration;
-    [HideInInspector] public float curCriticalDamagePercent;
-    [HideInInspector] public float curCriticalChancePercent;
-    [HideInInspector] public int curPierce;
+    public float curCoolDown = 0;
+    [HideInInspector] public float curDamage = 0;
+    [HideInInspector] public int curCount = 0;
+    [HideInInspector] public float curRange = 0;
+    [HideInInspector] public float curDuration = 0;
+    [HideInInspector] public float curCriticalDamagePercent = 0;
+    [HideInInspector] public float curCriticalChancePercent = 0;
+    [HideInInspector] public int curPierce = 0;
 
 }
 [CreateAssetMenu(fileName = "Item", menuName = "Scriptable Object/ItemData")]
@@ -65,11 +65,18 @@ public class ItemData : ScriptableObject
     [BoxGroup("진화무기 세팅")] [Button("수치 초기화")] 
     public void Reset()
     {
-        // itemDataInfo.curLevel = 0;
+        itemDataInfo.curPierce = 0;
+        itemDataInfo.curCoolDown = 0;
+        itemDataInfo.curDamage = 0;
+        itemDataInfo.curCount = 0;
+        itemDataInfo.curRange = 0;
+        itemDataInfo.curDuration = 0;
+        itemDataInfo.curCriticalDamagePercent = 0;
+        itemDataInfo.curCriticalChancePercent = 0;
         // itemDataInfo.baseCount = 1;
         // itemDataInfo.maxLevel = 9;
-        // itemDataInfo.baseRange = 1f;
-        itemDataInfo.baseDuration = 1f;
+        // itemDataInfo.baseRange = 1f; 
+        // itemDataInfo.baseDuration = 1f;
     }
     [Button("이름 변경")]
     private void ChangeName()

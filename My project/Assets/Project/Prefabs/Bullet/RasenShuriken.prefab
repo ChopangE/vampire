@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2914023840445098385}
   - component: {fileID: 4991876257893524905}
   - component: {fileID: 1400280021459327502}
-  - component: {fileID: 8859707522349073792}
+  - component: {fileID: 3974200878449896725}
   m_Layer: 0
   m_Name: RasenShuriken
   m_TagString: Bullet
@@ -149,7 +149,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!60 &8859707522349073792
+--- !u!60 &3974200878449896725
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,7 +166,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5, y: 5}
+    oldSize: {x: 2.5, y: 2.5}
     newSize: {x: 0.3888889, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -174,13 +174,13 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 2.09375, y: 0.65625}
-      - {x: 1.1875, y: 1.03125}
-      - {x: -0.9375, y: 1.15625}
-      - {x: -1.90625, y: 0.8125}
-      - {x: -2.5, y: -0.0625}
-      - {x: -1.21875, y: -1.1875}
-      - {x: 1.71875, y: -1.125}
-      - {x: 2.21875, y: -0.65625}
-      - {x: 2.28125, y: -0.25}
-      - {x: 2.3125, y: 0.09375}
+    - - {x: 1.046875, y: 0.328125}
+      - {x: 0.59375, y: 0.515625}
+      - {x: -0.46875, y: 0.578125}
+      - {x: -0.953125, y: 0.40625}
+      - {x: -1.25, y: -0.03125}
+      - {x: -0.609375, y: -0.59375}
+      - {x: 0.859375, y: -0.5625}
+      - {x: 1.109375, y: -0.328125}
+      - {x: 1.140625, y: -0.125}
+      - {x: 1.15625, y: 0.046875}
