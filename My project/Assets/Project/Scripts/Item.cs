@@ -189,7 +189,7 @@ public class Item : ViewModel
         // if(Level == 0 && data.itemType != ItemData.ItemType.Heal && data.itemType != ItemData.ItemType.Pet)
         //     textDesc.text = "";
         // else
-        //     textDesc.text = desc;
+        textDesc.text = desc;
     }
 
 
