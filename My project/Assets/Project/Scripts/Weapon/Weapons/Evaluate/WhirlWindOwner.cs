@@ -17,6 +17,10 @@ public class WhirlWindOwner : FloorWeapon
     public override async UniTask Init() {
         await base.Init();
         coll = projectile.GetComponent<CircleCollider2D>();
+
+        maxCooldown = 20f;
+        remainingCooldown = maxCooldown;
+        duration = 10f;
     }
 
     public override void ExecuteAttack() {
@@ -27,6 +31,8 @@ public class WhirlWindOwner : FloorWeapon
 
     public void SpawnWhirlwind() {
         projectile = GameManager.Instance.pool.Get(prefabId);
+        WhirlBullet whirlBullet = projectile.GetComponent<WhirlBullet>();
+        whirlBullet.Init(damage, -1, Vector2.zero, duration: duration, criticalChancePercent: criticalChancePercent, criticalDamagePercent: criticalDamagePercent);
         projectile.transform.SetParent(player.transform, worldPositionStays: false);
         projectile.transform.localPosition = new Vector3(0, -0.75f, 0);
         OnPlay();

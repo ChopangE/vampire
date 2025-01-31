@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using InGame.Data;
 using Unity.VisualScripting;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class Bullet : MonoBehaviour
 {
@@ -32,13 +33,18 @@ public class Bullet : MonoBehaviour
         this.per = per;
         this.canStun = canStun;
         this.duration = duration;
+        
         if (duration == 0)
         {
-            if (per <= -100)
+            if(per <= -100)
             {
                 this.duration = Random.Range(3f, 5f);
-                StartCoroutine(Stop());
             }
+        }
+        
+        if (per <= -1 && duration != 0)
+        {
+            StopAsync().Forget();
         }
 
         if (per > -1)
@@ -47,10 +53,13 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    IEnumerator Stop()
+    private async UniTaskVoid StopAsync()
     {
-        yield return new WaitForSeconds(duration);
-        gameObject.SetActive(false);
+        await UniTask.Delay(System.TimeSpan.FromSeconds(duration));
+        if (this != null && gameObject != null)
+        {
+            gameObject.SetActive(false);
+        }
     }
 
     public virtual void OnTriggerEnter2D(Collider2D collision)
@@ -70,7 +79,7 @@ public class Bullet : MonoBehaviour
             Enemy enemy = collision.GetComponent<Enemy>();
             if (enemy != null)
             {
-                StartCoroutine(ApplyStun(enemy));
+                ApplyStun(enemy).Forget();
             }
         }
 
@@ -83,11 +92,14 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    IEnumerator ApplyStun(Enemy enemy)
+    protected virtual async UniTask ApplyStun(Enemy enemy, float duration = 1f)
     {
         enemy.isStunned = true;
-        yield return new WaitForSeconds(1f);
-        enemy.isStunned = false;
+        await UniTask.Delay(System.TimeSpan.FromSeconds(duration));
+        if (enemy != null)
+        {
+            enemy.isStunned = false;
+        }
     }
 
     public virtual DamageData CalculateDamage()

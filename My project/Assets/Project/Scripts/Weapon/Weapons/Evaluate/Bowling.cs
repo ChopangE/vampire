@@ -17,14 +17,14 @@ public class Bowling : Weapon
     {
         if (!player.scan.nearestTarget) return;
 
-        Vector3 targetPos = player.scan.nearestTarget.position;
-        Vector3 dir = (targetPos - transform.position).normalized;
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
 
         bullet.position = transform.position;
-        bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
         var bulletScript = bullet.GetComponent<BowlingBullet>();
-        bulletScript.Init(damage, -1, dir, criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);
-        bulletScript.rb.velocity = dir * 6f;
+        bulletScript.Init(damage,
+        -1,
+        Vector3.zero,
+        criticalChancePercent:criticalChancePercent, 
+        criticalDamagePercent:criticalDamagePercent);
     }
 }

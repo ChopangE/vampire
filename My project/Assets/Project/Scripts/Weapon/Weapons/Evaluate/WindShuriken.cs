@@ -21,6 +21,7 @@ public class WindShuriken : Weapon
             
             Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
             bullet.position = transform.position;
+            bullet.transform.localScale = Vector3.one * 2;
             var bulletScript = bullet.GetComponent<Bullet>();
             bulletScript.Init(damage, -1, dir, 
             criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);
@@ -34,6 +35,7 @@ public class WindShuriken : Weapon
 
             Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
             bullet.position = transform.position;
+            bullet.transform.localScale = Vector3.one * 2;
             var bulletScript = bullet.GetComponent<Bullet>();
             bulletScript.Init(damage, -1, dir, 
             criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);

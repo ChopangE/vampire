@@ -17,6 +17,7 @@ public class WhirlwindFloor : FloorWeapon
     public override async UniTask Init() {
         await base.Init();
         coll = projectile.GetComponent<CircleCollider2D>();
+        
     }
 
     public override void ExecuteAttack() {
@@ -28,7 +29,16 @@ public class WhirlwindFloor : FloorWeapon
     public void SpawnWhirlwind() {
         Vector3 playerPos = player.transform.position;
         spawnPos = playerPos + new Vector3(Random.Range(-3f,3f), Random.Range(-3f, 3f),0f);
-        projectile = GameManager.Instance.pool.Get(8);
+        
+        Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
+        var projectile = bullet.GetComponent<Bullet>();
+        projectile.Init(damage, 
+        -1, 
+        Vector2.zero, 
+        duration: duration, 
+        criticalChancePercent: criticalChancePercent, 
+        criticalDamagePercent: criticalDamagePercent);
+        
         projectile.transform.position = spawnPos;
         OnPlay();
     }

@@ -39,8 +39,8 @@ public class DaggerWind : Melee
             bullet.localScale = Vector3.one * scaleFactor;
             
             var bulletComponent = bullet.GetComponent<Bullet>();
-            bulletComponent.Init(damage * 0.5f, -1, dir, criticalChancePercent: criticalChancePercent, criticalDamagePercent: criticalDamagePercent);
-            bulletComponent.rb.velocity = dir * 7f;
+            bulletComponent.Init(damage * 0.5f, -1, dir, duration: duration, criticalChancePercent: criticalChancePercent, criticalDamagePercent: criticalDamagePercent);
+            bulletComponent.rb.velocity = dir * 14f;
 
             if (i < windCount - 1)
             {
