@@ -47,22 +47,31 @@ public class LevelUpPage : ViewModel
             item.gameObject.SetActive(false);
         }
         
+        // 일반 아이템 목록 (패시브 아이템 제외)
         var notMaxLevelItems = Global.DataManager.GetNotMaxLevelItems()
-            .Where(item => !item.isEvaluateWeapon)
+            .Where(item => !item.isEvaluateWeapon && item.itemType != ItemType.Passive)
             .ToArray();
-        var maxLevelItems = isEvaluation ? 
 
+        // 패시브 아이템 목록
+        var passiveItems = Global.DataManager.items
+            .Where(item => item.itemType == ItemType.Passive)
+            .ToArray();
+
+        // 일반 아이템과 패시브 아이템 합치기
+        notMaxLevelItems = notMaxLevelItems.Concat(passiveItems).ToArray();
+
+        // 최대 레벨 아이템 목록
+        var maxLevelItems = isEvaluation ? 
             Global.DataManager.GetMaxLevelItems()
                 .Where(item => !item.isEvaluateWeapon)
                 .ToArray() : null;
 
-
-        // 진화무기 목록 가져오기 (isEvaluation일 때만)
+        // 진화무기 목록
         var evaluateWeapons = isEvaluation ? 
             Global.DataManager.GetMaxLevelItems()
                 .Where(item => item.isEvaluateWeapon)
+                .Where(item => item.itemType != ItemType.Passive)
                 .ToArray() : null;
-
 
         int[] ran = new int[3];
         int count = 0;

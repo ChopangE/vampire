@@ -100,10 +100,11 @@ public class Item : ViewModel
         }
         else
         {
-            var passive = Global.DataManager.GetItemDataInfo(data);
+            var passive = Global.DataManager.GetPassiveItemDataInfo(data.passiveItemDataInfo.passiveId);
             Level = passive.curLevel;
         }
         Icon = data.itemIcon;
+
 
 
 
