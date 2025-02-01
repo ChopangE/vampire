@@ -8,6 +8,7 @@ using Sirenix.OdinInspector;
 using UI.InGame;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using DG.Tweening;
 
 namespace Manager
 {
@@ -26,6 +27,11 @@ namespace Manager
 
         private ObjectPool<PoolObject> damageTextPool;
         private List<DamageText> spawnedDamageTextList = new List<DamageText>();
+
+        private void Awake()
+        {
+            DOTween.SetTweensCapacity(500, 200);
+        }
 
         private void OnEnable()
         {
