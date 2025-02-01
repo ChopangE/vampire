@@ -7,6 +7,6 @@ public class Burned : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D collision) {
         if (!collision.CompareTag("Player")) return;
-        GameManager.Instance.health -= Time.deltaTime * 10f;
+        GameManager.Instance.Health -= Time.deltaTime * 10f;
     }
 }

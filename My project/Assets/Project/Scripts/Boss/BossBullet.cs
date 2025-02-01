@@ -53,7 +53,7 @@ public class BossBullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision) {
         if (!collision.CompareTag("Player")) return;
-        GameManager.Instance.health -= damage;
+        GameManager.Instance.Health -= damage;
 
     }
 }

@@ -24,6 +24,6 @@ public class MiddleBossBullet : MonoBehaviour
     }
 
     protected virtual void Damaging() {
-        GameManager.Instance.health -= damage;
+        GameManager.Instance.Health -= damage;
     }
 }

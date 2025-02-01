@@ -107,6 +107,12 @@ public class DataManager : MonoBehaviour
             return info != null && info.curLevel >= info.maxLevel;
         }).ToArray();
     }
+    public void SetPassiveItemLevel(ItemData itemData, int level)
+    {
+        var targetItem = Global.UserDataManager.storage.passiveItemDataInfoList
+            .FirstOrDefault(item => item.passiveId == itemData.passiveItemDataInfo.passiveId);
+            
+    }
 
     public void SetWeaponItemLevel(ItemData itemData, int level)
     {

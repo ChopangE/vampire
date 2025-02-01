@@ -12,9 +12,11 @@ public class Player : MonoBehaviour
     Animator anim;
     public Scanner scan;
     public float speed;
+    public float baseSpeed = 3f;
     public bool isBonusDamage;
     public float bonusDamage = 0.2f;
     bool isKnockBack { get; set; }
+
 
     void Awake() {
         rigid = GetComponent<Rigidbody2D>();

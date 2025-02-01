@@ -45,6 +45,7 @@ public enum PassiveId
 public class PassiveItemDataInfo
 {
     public PassiveId passiveId;
+    public float passiveValue;
     public int curLevel;
     public int maxLevel = 1000;
 }

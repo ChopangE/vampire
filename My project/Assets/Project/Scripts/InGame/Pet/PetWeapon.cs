@@ -93,7 +93,7 @@ public class PetWeapon : Weapon
     void ApplyShieldBlessing()
     {
         float shieldAmount = GameManager.Instance.maxHealth * 0.5f;
-        GameManager.Instance.shield = shieldAmount;
+        GameManager.Instance.Shield = shieldAmount;
     }
 
     async UniTask ApplyLightningBlessing(CancellationToken cancellationToken)

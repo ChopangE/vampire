@@ -26,10 +26,11 @@ namespace InGame
         }
         void PlusHP()
         {
-            GameManager.Instance.health = Mathf.Min(GameManager.Instance.health += plusHP, GameManager.Instance.maxHealth);
+            GameManager.Instance.Health = Mathf.Min(GameManager.Instance.Health += plusHP, GameManager.Instance.maxHealth);
             //임시코드 stat 방식 바뀌면 교체
             DestroyItem();
         }
+
     }
 }
 

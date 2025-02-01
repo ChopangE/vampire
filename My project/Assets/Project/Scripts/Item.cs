@@ -230,18 +230,13 @@ public class Item : ViewModel
         // Heal 타입 먼저 처리
         if (data.itemType == ItemType.Passive)
         {
-            switch (data.passiveItemDataInfo.passiveId)
-            {
-                case PassiveId.Health:
-                    GameManager.Instance.maxHealth += 10;
-                    break;
-                case PassiveId.Speed:
-
-                    GameManager.Instance.player.speed *= 1.05f;
-                    break;
-            }
+            data.passiveItemDataInfo.curLevel++;
+            Global.DataManager.SetPassiveItemLevel(data, data.passiveItemDataInfo.curLevel);
+            GameManager.PassiveManager.SetPassiveItem(data.passiveItemDataInfo);
             return;
         }
+
+
 
         InitializeWeapon(GameManager.Instance.weaponController.Weapons.ToArray());
         switch (data.itemType)

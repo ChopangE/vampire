@@ -8,7 +8,7 @@ namespace InGame
     {
         void OnEnable()
         {
-            exp = (GameManager.Instance.curStage / 4 + 1) * 10; //에러가능성
+            exp = (GameManager.Instance.CurStage / 4 + 1) * 10; //에러가능성 있음
             dropItemTrigger.OnTriggered += ExpUp;
         }
         protected override void OnDisable()

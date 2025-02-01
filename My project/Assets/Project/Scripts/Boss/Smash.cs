@@ -116,7 +116,7 @@ public class Smash : MonoBehaviour
         Rigidbody2D rigid = collision.gameObject.GetComponent<Rigidbody2D>();
         rigid.AddForce(power * 10, ForceMode2D.Impulse);
 
-        GameManager.Instance.health -= 1;
+        GameManager.Instance.Health -= 1;
 
     }
 

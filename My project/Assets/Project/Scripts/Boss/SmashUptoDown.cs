@@ -25,7 +25,7 @@ public class SmashUptoDown : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D collision) {
         if (!collision.CompareTag("Player")) return;
-        GameManager.Instance.health -= 10f;
+        GameManager.Instance.Health -= 10f;
     }
     // Update is called once per frame
 
