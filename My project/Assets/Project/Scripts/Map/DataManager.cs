@@ -1,101 +1,89 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using Data;
 using Data.WeaponData;
 using Manager;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using OutGame;
 
 public class DataManager : MonoBehaviour
 {
     private const string itemPath = "Items";
+    private const string passiveItemPath = "Items/Passive";  // 패시브 아이템 경로 추가
 
     public Weapon[] weapons;
     public List<ItemData> items = new List<ItemData>();
 
     public bool isLoaded = false;
-    void Init()
-    {
-        LoadInGameDatas();
-    }
-    public void LoadData()
-    {
-        Init();
-        foreach (var item in items)
-        {
-            item.itemDataInfo.curLevel = 0;
-            // 새 게임이면 홍길동 단검 레벨 1로 시작
-            if (item.itemDataInfo.itemId == WeaponId.Dagger)
-            {
-                item.itemDataInfo.curLevel = 1;
-            }
-        }
-        // 첫 판이라면 무기 데이터 SO들 Cur수치들 초기화
-        foreach (var item in items)
-        {
-            item.Reset();
-        }
-        Global.UserDataManager.storage.itemDataInfoList = items.Select(item => item.itemDataInfo).ToList();
-        Global.UserDataManager.Save();
-    }
 
     private void Awake()
     {
-        items = Resources.LoadAll<ItemData>(itemPath).ToList();
+        InitializeItems();
         
         if(Global.UserDataManager.storage.itemDataInfoList.Count == 0)
         {
             LoadData();
         }
         LoadUserData().Forget();
-
     }
 
-    private async UniTaskVoid LoadUserData()
+    private void InitializeItems()
     {
-        await UniTask.WaitUntil(() => Global.UserDataManager != null);
-
-        isLoaded = true;
+        items = new List<ItemData>();
+        items.AddRange(Resources.LoadAll<ItemData>(itemPath));
+        items.AddRange(Resources.LoadAll<ItemData>(passiveItemPath));
     }
+
+    public void LoadData()
+    {
+        LoadInGameDatas();
+        InitializeNewGameData();
+        SaveToUserStorage();
+    }
+
+    private void InitializeNewGameData()
+    {
+        foreach (var item in items)
+        {
+            item.itemDataInfo.curLevel = item.itemDataInfo.itemId == WeaponId.Dagger ? 1 : 0;
+            item.Reset();
+        }
+    }
+
+    private void SaveToUserStorage()
+    {
+        Global.UserDataManager.storage.passiveItemDataInfoList = items.Where(item => item.itemType == ItemType.Passive)
+            .Select(item => item.passiveItemDataInfo).ToList();
+        Global.UserDataManager.storage.itemDataInfoList = items.Where(item => item.itemType != ItemType.Passive)
+            .Select(item => item.itemDataInfo).ToList();
+        Global.UserDataManager.Save();
+    }
+
+
     private void LoadInGameDatas()
     {
         weapons = GameManager.Instance.weaponController.Weapons.ToArray();
-        items = Resources.LoadAll<ItemData>(itemPath).ToList();
+        InitializeItems();
+    }
+
+    public PassiveItemDataInfo GetPassiveItemDataInfo(PassiveId passiveId)
+    {
+        return Global.UserDataManager.storage.passiveItemDataInfoList.Find(item => item.passiveId == passiveId);
     }
 
     public ItemDataInfo GetItemDataInfo(ItemData itemData)
     {
-        ItemDataInfo info = null;
-        foreach (var itemDataInfo in Global.UserDataManager.storage.itemDataInfoList)
-        {
-            if (itemData.itemDataInfo.itemId == itemDataInfo.itemId)
-            {
-                info = itemDataInfo;
-                return info;
-            }
-        }
-        return info;
+        return Global.UserDataManager.storage.itemDataInfoList
+            .FirstOrDefault(info => itemData.itemDataInfo.itemId == info.itemId);
     }
+
     public async UniTask<ItemDataInfo> GetItemDataInfo(WeaponId itemId)
     {
-        if (!isLoaded)
-        {
-            await WaitForLoading();
-        }
-        ItemDataInfo info = null;
+        if (!isLoaded) await WaitForLoading();
 
-        foreach (var itemDataInfo in Global.UserDataManager.storage.itemDataInfoList)
-        {
-            if (itemId == itemDataInfo.itemId)
-            {
-                info = itemDataInfo;
-                return info;
-            }
-        }
+        var info = Global.UserDataManager.storage.itemDataInfoList
+            .FirstOrDefault(info => itemId == info.itemId);
 
         if (info == null)
         {
@@ -103,65 +91,63 @@ public class DataManager : MonoBehaviour
         }
         return info;
     }
+
     public ItemData[] GetNotMaxLevelItems()
     {
-        List<ItemData> notMaxLevelItems = new List<ItemData>();
-        foreach (var item in items)
-        {
+        return items.Where(item => {
             var info = GetItemDataInfo(item);
-            if (info != null && info.curLevel < info.maxLevel)
-            {
-                notMaxLevelItems.Add(item);
-            }
-        }
-        return notMaxLevelItems.ToArray();
+            return info != null && info.curLevel < info.maxLevel;
+        }).ToArray();
     }
+
     public ItemData[] GetMaxLevelItems()
     {
-        List<ItemData> maxLevelItems = new List<ItemData>();
-        foreach (var item in items)
-        {
+        return items.Where(item => {
             var info = GetItemDataInfo(item);
-            if (info != null && info.curLevel >= info.maxLevel)
-            {
-                maxLevelItems.Add(item);
-            }
-        }
-        return maxLevelItems.ToArray();
+            return info != null && info.curLevel >= info.maxLevel;
+        }).ToArray();
     }
+
     public void SetWeaponItemLevel(ItemData itemData, int level)
     {
-        foreach (var item in Global.UserDataManager.storage.itemDataInfoList)
+        var targetItem = Global.UserDataManager.storage.itemDataInfoList
+            .FirstOrDefault(item => item.itemId == itemData.itemDataInfo.itemId);
+            
+        if (targetItem != null)
         {
-            if (item.itemId == itemData.itemDataInfo.itemId)
-            {
-                item.curLevel = level;
-            }
+            targetItem.curLevel = level;
+            Global.UserDataManager.Save();
         }
-        Global.UserDataManager.Save();
     }
 
     public void SaveWeaponData(ItemData itemData)
     {
-        foreach (var item in Global.UserDataManager.storage.itemDataInfoList)
+        var targetItem = Global.UserDataManager.storage.itemDataInfoList
+            .FirstOrDefault(item => item.itemId == itemData.itemDataInfo.itemId);
+            
+        if (targetItem != null)
         {
-            if (item.itemId == itemData.itemDataInfo.itemId)
-            {
-                item.curCoolDown = itemData.itemDataInfo.curCoolDown;
-                item.curDuration = itemData.itemDataInfo.curDuration;
-                item.curDamage = itemData.itemDataInfo.curDamage;
-                item.curCount = itemData.itemDataInfo.curCount;
-                item.curRange = itemData.itemDataInfo.curRange;
-                item.curCriticalChancePercent = itemData.itemDataInfo.curCriticalChancePercent;
-                item.curCriticalDamagePercent = itemData.itemDataInfo.curCriticalDamagePercent;
-            }
+            UpdateWeaponStats(targetItem, itemData.itemDataInfo);
+            Global.UserDataManager.Save();
         }
-        Global.UserDataManager.Save();
     }
 
-    public void SaveData()
+    private void UpdateWeaponStats(ItemDataInfo target, ItemDataInfo source)
     {
-        LoadInGameDatas();
+        target.curCoolDown = source.curCoolDown;
+        target.curDuration = source.curDuration;
+        target.curDamage = source.curDamage;
+        target.curCount = source.curCount;
+        target.curRange = source.curRange;
+        target.curCriticalChancePercent = source.curCriticalChancePercent;
+        target.curCriticalDamagePercent = source.curCriticalDamagePercent;
+    }
+
+    private async UniTaskVoid LoadUserData()
+    {
+        await UniTask.WaitUntil(() => Global.UserDataManager != null);
+
+        isLoaded = true;
     }
 
     private async UniTask WaitForLoading()
@@ -171,6 +157,7 @@ public class DataManager : MonoBehaviour
             await UniTask.Yield();
         }
     }
+
     public void ResetData()
     {
         Global.UserDataManager.storage.itemDataInfoList.Clear();
@@ -178,4 +165,27 @@ public class DataManager : MonoBehaviour
         LoadData();
     }
 
+    public void SaveData()
+    {
+        // 모든 아이템의 현재 상태를 저장
+        foreach (var item in items)
+        {
+            if (item.itemType == ItemType.Passive)
+            {
+                var targetItem = Global.UserDataManager.storage.passiveItemDataInfoList
+                    .FirstOrDefault(info => info.passiveId == item.passiveItemDataInfo.passiveId);
+                
+                if (targetItem != null)
+                {
+                    targetItem.curLevel = item.passiveItemDataInfo.curLevel;
+                }
+            }
+            else
+            {
+                SaveWeaponData(item);
+            }
+        }
+        
+        Global.UserDataManager.Save();
+    }
 }

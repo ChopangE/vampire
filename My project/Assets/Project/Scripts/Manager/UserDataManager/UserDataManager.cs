@@ -10,13 +10,16 @@ namespace Manager
             GoldData = "0";
             upgradeDataList = new List<Data.UpgradeData>();
             itemDataInfoList = new List<ItemDataInfo>();
+            passiveItemDataInfoList = new List<PassiveItemDataInfo>();
         }
         // public HashSet<int> CollectedItem = new();
         public string GoldData;
         public List<Data.UpgradeData> upgradeDataList;
         public List<ItemDataInfo> itemDataInfoList;
+        public List<PassiveItemDataInfo> passiveItemDataInfoList;
     }
     public partial class UserDataManager
+
     {
         public Storage storage { get; private set; } = new Storage();
         private string KeyName = "Storage";

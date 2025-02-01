@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class Gear : MonoBehaviour
 {
-    public ItemData.ItemType type;
+    public ItemType type;
     public float rate;
+
 
     public void Init(ItemData data) {
         name = "Gear" + data.itemDataInfo.itemId;
@@ -24,11 +25,12 @@ public class Gear : MonoBehaviour
 
     void ApplayGear() {
         switch (type) {
-            case ItemData.ItemType.Glove:
+            case ItemType.Glove:
                 RateUp();
                 break;
-            case ItemData.ItemType.Shoe:
+            case ItemType.Shoe:
                 SpeedUp();
+
                 break;
         }
     }

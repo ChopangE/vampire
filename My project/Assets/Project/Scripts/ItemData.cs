@@ -29,12 +29,34 @@ public class ItemDataInfo
     [HideInInspector] public int curPierce = 0;
 
 }
+
+public enum PassiveId
+{
+    Health,
+    Speed,
+    Damage,
+    ExpGainIncrease,        // 경험치 획득량 증가
+    ExpGainRangeIncrease,   // 경험치 획득 범위 증가
+    Defense,                // 방어력 증가
+    CriticalDamage,         // 치명타 데미지 증가
+    CriticalChance,         // 치명타 확률 증가
+}
+[System.Serializable]
+public class PassiveItemDataInfo
+{
+    public PassiveId passiveId;
+    public int curLevel;
+    public int maxLevel = 1000;
+}
+
+public enum ItemType { Melee, Range, Bomb, Raser, Breath, HGDClone, Stick, Floor, Glove, Shoe, Passive, Dagger, Pet,
+ShadowPlayer}
 [CreateAssetMenu(fileName = "Item", menuName = "Scriptable Object/ItemData")]
 public class ItemData : ScriptableObject
 {
-    public enum ItemType { Melee, Range, Bomb, Raser, Breath, HGDClone, Stick, Floor, Glove, Shoe, Heal, Dagger, Pet,
-    ShadowPlayer }
     public ItemDataInfo itemDataInfo;
+
+    public PassiveItemDataInfo passiveItemDataInfo;
     
     [Header("# Main Info")]
     public ItemType itemType;

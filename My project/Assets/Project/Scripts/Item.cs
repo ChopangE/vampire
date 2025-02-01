@@ -87,9 +87,10 @@ public class Item : ViewModel
     }
     void OnEnable()
     {
-        if (data.itemType != ItemData.ItemType.Heal)
+        if (data.itemType != ItemType.Passive)
         {
             GetWeapon();
+
             if (weapon == null)
             {
                 Debug.LogError($"Weapon {data.itemName} not found");
@@ -99,9 +100,12 @@ public class Item : ViewModel
         }
         else
         {
-            Level = 00;
+            var passive = Global.DataManager.GetItemDataInfo(data);
+            Level = passive.curLevel;
         }
         Icon = data.itemIcon;
+
+
 
         Text[] texts = GetComponentsInChildren<Text>();
         textLevel = texts[0];
@@ -127,20 +131,17 @@ public class Item : ViewModel
         var desc = data.itemDesc;
         switch(data.itemType)
         {
-            case ItemData.ItemType.Glove:
-            case ItemData.ItemType.Shoe:
-                desc = string.Format(data.itemDesc, data.itemDataInfo.baseDamage);
+            case ItemType.Passive:
+                desc = string.Format(data.itemDesc);
                 textDesc.text = desc;
                 return;
-            case ItemData.ItemType.Heal:
-                desc = string.Format(data.itemDesc, data.itemDataInfo.baseDamage);
-                textDesc.text = desc;
-                return;
-            case ItemData.ItemType.Pet:
+
+            case ItemType.Pet:
                 textName.text = string.Format("{0} / 3", Level);
                 desc = string.Format(data.itemDesc);
                 textDesc.text = desc;
                 return;
+
         }
 
         var upgrade = Global.UpgradeManager.GetRandomSkillUpgrade(data.excludeUpgradeList);
@@ -195,9 +196,14 @@ public class Item : ViewModel
 
     private void CheckInteractable()
     {
-        if (data.itemType == ItemData.ItemType.Heal)
+        if (data.itemType == ItemType.Passive)
         {
             IsInteractable = true;
+
+            if(data.passiveItemDataInfo.curLevel >= data.passiveItemDataInfo.maxLevel)
+            {
+                IsInteractable = false;
+            }
             return;
         }
         var weapons = GameManager.Instance.weaponController.ActiveWeapons;
@@ -222,18 +228,16 @@ public class Item : ViewModel
     {
 
         // Heal 타입 먼저 처리
-        if (data.itemType == ItemData.ItemType.Heal)
+        if (data.itemType == ItemType.Passive)
         {
-            switch (data.itemDataInfo.itemId)
+            switch (data.passiveItemDataInfo.passiveId)
             {
-                case WeaponId.Drink:
-                    GameManager.Instance.health = GameManager.Instance.maxHealth;
+                case PassiveId.Health:
+                    GameManager.Instance.maxHealth += 10;
                     break;
-                case WeaponId.Shoe:
-                    GameManager.Instance.player.speed *= (1 + 0.1f);
-                    break;
-                case WeaponId.Glove:
-                    GameManager.Instance.player.BroadcastMessage("ApplayGear", SendMessageOptions.DontRequireReceiver);
+                case PassiveId.Speed:
+
+                    GameManager.Instance.player.speed *= 1.05f;
                     break;
             }
             return;
@@ -242,25 +246,27 @@ public class Item : ViewModel
         InitializeWeapon(GameManager.Instance.weaponController.Weapons.ToArray());
         switch (data.itemType)
         {
-            case ItemData.ItemType.Melee:
-            case ItemData.ItemType.Range:
-            case ItemData.ItemType.Bomb:
-            case ItemData.ItemType.Raser:
-            case ItemData.ItemType.Breath:
-            case ItemData.ItemType.HGDClone:
-            case ItemData.ItemType.Stick:
-            case ItemData.ItemType.Pet:
-            case ItemData.ItemType.Floor:
-            case ItemData.ItemType.Dagger:
-            case ItemData.ItemType.ShadowPlayer:
+            case ItemType.Melee:
+            case ItemType.Range:
+            case ItemType.Bomb:
+            case ItemType.Raser:
+            case ItemType.Breath:
+            case ItemType.HGDClone:
+            case ItemType.Stick:
+            case ItemType.Pet:
+            case ItemType.Floor:
+
+            case ItemType.Dagger:
+            case ItemType.ShadowPlayer:
                 UpgradeWeapon();
                 Level++;
                 break;
-            case ItemData.ItemType.Glove:
-            case ItemData.ItemType.Shoe:
+
+            case ItemType.Shoe:
                 HandleGear();
                 Level++;
                 break;
+
         }
 
         Global.DataManager.SetWeaponItemLevel(data, Level);

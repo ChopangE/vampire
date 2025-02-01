@@ -14,7 +14,6 @@ namespace Data.WeaponData
         Breath = 4,
         Clone = 5,
         Glove = 6,
-        Shoe = 7,
         Drink = 8,
         HGDClone = 9,
         Stick = 10,
