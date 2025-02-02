@@ -21,7 +21,20 @@ public class ButtonOfStage : MonoBehaviour
     void Init() {
         title = GetComponent<Image>();
         button = GetComponent<Button>();
-        button.onClick.AddListener(() => UnityEngine.SceneManagement.SceneManager.LoadScene("LoadingScene"));
+        
+        button.onClick.AddListener(() => {
+            if(buttonNum == 0) {
+                // Global.DataManager.ResetData();
+                UnityEngine.SceneManagement.SceneManager.LoadScene("LoadingScene");
+            }
+            else {
+                UnityEngine.SceneManagement.SceneManager.LoadScene("LoadingScene");
+            }
+        });
+
+        
+
+
         isActive = buttonNum == Global.StageManager.stageCount;
         button.interactable = isActive;
         if (isActive) {

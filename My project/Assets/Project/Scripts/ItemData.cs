@@ -141,6 +141,8 @@ public class ItemData : ScriptableObject
     [Button("저장")]
     public void Save()
     {
+        #if UNITY_EDITOR
         EditorUtility.SetDirty(this);
+        #endif
     }
 }

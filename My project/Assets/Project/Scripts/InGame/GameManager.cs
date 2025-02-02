@@ -228,6 +228,8 @@ public class GameManager : MMSingleton<GameManager>
     #region Game Control Methods
     public void StageClear()
     {
+        Global.UserDataManager.curStage++;
+        Global.UserDataManager.Save();
         Global.DataManager.SaveData();
         Global.UIManager.CloseAllPages();
         SceneManager.LoadScene(3);

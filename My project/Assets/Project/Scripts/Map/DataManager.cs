@@ -12,7 +12,6 @@ public class DataManager : MonoBehaviour
     private const string itemPath = "Items";
     private const string passiveItemPath = "Items/Passive";  // 패시브 아이템 경로 추가
 
-    public Weapon[] weapons;
     public List<ItemData> items = new List<ItemData>();
 
     public bool isLoaded = false;
@@ -63,7 +62,6 @@ public class DataManager : MonoBehaviour
 
     private void LoadInGameDatas()
     {
-        weapons = GameManager.Instance.weaponController.Weapons.ToArray();
         InitializeItems();
     }
 
@@ -167,6 +165,7 @@ public class DataManager : MonoBehaviour
     public void ResetData()
     {
         Global.UserDataManager.storage.itemDataInfoList.Clear();
+        Global.UserDataManager.storage.passiveItemDataInfoList.Clear();
         Global.UserDataManager.Save();
         LoadData();
     }

@@ -70,5 +70,19 @@ namespace UI.Page
                 else view.gameObject.SetActive(false);
             }
         }
+        [Binding]
+        public void OnClickShopPageButton()
+        {
+            foreach (var view in mapPageViews)
+            {
+
+                if (view as ShopViewModel)
+                {
+                    view.gameObject.SetActive(true);
+                }
+
+                else view.gameObject.SetActive(false);
+            }
+        }
     }
 }

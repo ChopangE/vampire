@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 3284775923835660878}
   - component: {fileID: 3284775923835660876}
   - component: {fileID: 3284775923835660879}
-  - component: {fileID: 3284775923835660877}
+  - component: {fileID: 301163746442032591}
   m_Layer: 5
   m_Name: Coin
   m_TagString: Untagged
@@ -520,7 +520,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 12, y: -14}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &3284775923835660876
@@ -565,7 +565,7 @@ MonoBehaviour:
     m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 'Coin : 999'
---- !u!114 &3284775923835660877
+--- !u!114 &301163746442032591
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -574,10 +574,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 3284775923835660873}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d144ff8176d74a945ae8aae0ffcd6c4a, type: 3}
+  m_Script: {fileID: 11500000, guid: 43352902310e02e4895b9d70a80c740e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinText: {fileID: 0}
+  _isAutoConnection: 1
+  viewAdapterId: IntToString
+  viewAdapterOptions: {fileID: 0}
+  viewModelPropertyName: UI.Page.MapPageNew.Coin
+  viewPropertyName: UnityEngine.UI.Text.text
 --- !u!1 &3284775923886456400
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,7 +617,7 @@ RectTransform:
   - {fileID: 3284775924826976642}
   - {fileID: 3284775924669876478}
   m_Father: {fileID: 3284775924855934756}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1312,7 +1316,7 @@ RectTransform:
   m_Children:
   - {fileID: 3284775924252792167}
   m_Father: {fileID: 3284775924855934756}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2018,6 +2022,7 @@ RectTransform:
   - {fileID: 3284775923835660878}
   - {fileID: 3284775924165251638}
   - {fileID: 5518774639993394073}
+  - {fileID: 2147826789341854730}
   - {fileID: 3284775924313013656}
   - {fileID: 3284775923886456401}
   m_Father: {fileID: 3284775925377570850}
@@ -3286,6 +3291,164 @@ MonoBehaviour:
   _isAutoConnection: 1
   viewModelMethodName: UI.TrainingView.PrevTrainingGroup
   viewEventName: UnityEngine.UI.Button.onClick
+--- !u!1001 &1370085736373840239
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3284775924855934756}
+    m_Modifications:
+    - target: {fileID: 164503996086068582, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923938, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_Name
+      value: ShopPage
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923938, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 970
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 660
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -31
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6610278760003772995, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7882997969528204410, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+      propertyPath: mLocalizeTarget
+      value: 
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+--- !u!224 &2147826789341854730 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1066535771049923941, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+  m_PrefabInstance: {fileID: 1370085736373840239}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5417454827426241993 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6353787158269211814, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+  m_PrefabInstance: {fileID: 1370085736373840239}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6066669003667404317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5417454827426241993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed406354527c60646af11d782e6dd994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isAutoConnection: 1
+  viewModelMethodName: UI.Page.MapPageNew.OnClickShopPageButton
+  viewEventName: UnityEngine.UI.Button.onClick
+--- !u!1 &6675754349494542226 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5739431463271560957, guid: 39eda4094cb87c249b020f541be4b711, type: 3}
+  m_PrefabInstance: {fileID: 1370085736373840239}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1195138589068231489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6675754349494542226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed406354527c60646af11d782e6dd994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isAutoConnection: 1
+  viewModelMethodName: UI.Page.MapPageNew.OnClickStageMapPageButton
+  viewEventName: UnityEngine.UI.Button.onClick
 --- !u!1001 &2891383633749868582
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3447,6 +3610,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c8558d7c7a111c244b904f8b27d37a0d, type: 3}
+--- !u!1 &1209528325608395527 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4100907354581848865, guid: c8558d7c7a111c244b904f8b27d37a0d, type: 3}
+  m_PrefabInstance: {fileID: 2891383633749868582}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1510124525168981694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209528325608395527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed406354527c60646af11d782e6dd994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isAutoConnection: 1
+  viewModelMethodName: UI.Page.MapPageNew.OnClickShopPageButton
+  viewEventName: UnityEngine.UI.Button.onClick
 --- !u!1 &3284775924165251633 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 411406829083038231, guid: c8558d7c7a111c244b904f8b27d37a0d, type: 3}
@@ -3766,6 +3949,26 @@ MonoBehaviour:
   mGUI_ShowCallback: 0
   mLocalizeTarget: {fileID: 0}
   mLocalizeTargetName: I2.Loc.LocalizeTarget_TextMeshPro_UGUI
+--- !u!1 &1906877690871493210 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4779194047172245240, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
+  m_PrefabInstance: {fileID: 6351637339531363490}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &373432615072473895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906877690871493210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed406354527c60646af11d782e6dd994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isAutoConnection: 1
+  viewModelMethodName: UI.Page.MapPageNew.OnClickShopPageButton
+  viewEventName: UnityEngine.UI.Button.onClick
 --- !u!224 &4899275869009365369 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2006412938904964571, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}

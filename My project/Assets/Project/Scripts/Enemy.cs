@@ -5,9 +5,7 @@ using Cysharp.Threading.Tasks;
 using InGame;
 using InGame.Data;
 using Manager;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class Enemy : DamageObject
 {
