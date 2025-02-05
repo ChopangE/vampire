@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using Cysharp.Threading.Tasks;
 using Manager;
 using UI.Page;
 using Unity.VisualScripting;
@@ -164,6 +165,7 @@ public class GameManager : MMSingleton<GameManager>
     private void SetupStage()
     {
         _curStage = Global.UserDataManager.curStage++;
+        _curStage = 12;
         player.transform.position = stages[_curStage].position;
 
         if (_curStage == Global.StageManager.MAX_STAGE_COUNT * Global.StageManager.MAX_STAGE_LEVEL)
@@ -187,19 +189,24 @@ public class GameManager : MMSingleton<GameManager>
     {
         if (_curStage % Global.StageManager.MAX_STAGE_COUNT == Global.StageManager.MAX_STAGE_COUNT - 1)
         {
-            SpawnStageBoss();
+            SpawnStageBoss().Forget();
         }
         bossLevel.SetActive(false);
         spawner.SetActive(true);
         _inGameMainPage.ActiveTimer = true;
+
     }
 
-    private void SpawnStageBoss()
+    private async UniTaskVoid SpawnStageBoss()
     {
-        Transform bossTran = pool.Get(11 + Global.StageManager.stageCount).transform;
+        GameObject bossTran = await pool.GetAsync(11 + Global.StageManager.stageCount);
         Global.UserDataManager.curStage++;
-        bossTran.position = stages[_curStage].position + new Vector3(0, 10f, 0);
+        bossTran.transform.position = stages[_curStage].position + new Vector3(0, 10f, 0);
     }
+
+
+
+
     #endregion
 
     #region Game Progress Methods
