@@ -27,4 +27,11 @@ namespace Data
         Passive_CriticalDamage,
         Passive_CriticalRate, //* 치확
     }
+    public enum ShopItemStat //* 상점 아이템 스탯
+    {
+        ShopItem_MaxHealth, //* 체력
+        ShopItem_AttackDamage, //* 공격력
+        ShopItem_Defense,
+        
+    }
 }

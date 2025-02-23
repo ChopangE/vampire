@@ -14,12 +14,6 @@ namespace UI
     public class ShopItemViewModel : ViewModel
     {
         private PlayerPassiveLevelUpgradeSO _levelUpgradeSO;
-        [SerializeField] private LevelStarsGroup _levelStarsGroup;
-        private void UpdateLevelGroup()
-        {
-            _levelStarsGroup.SetStarCount(_levelUpgradeSO.GetMaxLevel(), _levelUpgradeSO.GetUpgradeLevel());
-        }
-
         [Binding]
         public void DoUpgrade()
         {
@@ -42,7 +36,6 @@ namespace UI
             PassiveLevel = string.Format("LV.{0}", _levelUpgradeSO.GetUpgradeLevel());
             PassiveCost = _levelUpgradeSO.GetUpgradeCost();
             PassiveInfo =  LocalizationManager.GetTranslation(_levelUpgradeSO.descriptionKey);
-            UpdateLevelGroup();
         }
         private Sprite _icon;
         [Binding]

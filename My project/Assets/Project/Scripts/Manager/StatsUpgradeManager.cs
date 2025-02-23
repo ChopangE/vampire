@@ -11,14 +11,17 @@ namespace Manager
     public class StatsUpgradeManager : MonoBehaviour
     {
         [SerializeField] private List<PlayerPassiveLevelUpgradeSO> playerPassiveStatsUpgradeList;
+        [SerializeField] private List<ShopItemLevelUpgradeSO> shopItemStatsUpgradeList;
         private const string playerStatsPath = "Assets/Project/Data/Upgrade/PlayerStat";
-        private const string playerPassiveStatsPath = "Assets/Project/Data/Upgrade/LevelStatUpgrade";
+        private const string playerPassiveStatsPath = "Assets/Project/Data/Upgrade/LevelStatUpgrade/Passive";
+        private const string shopItemStatsPath = "Assets/Project/Data/Upgrade/LevelStatUpgrade/ShopItem";
 
 #if UNITY_EDITOR
         [Button("SO 불러오기")]
         public void LoadAssets()
         {
             playerPassiveStatsUpgradeList = HelperFunctions.GetScriptableObjects<PlayerPassiveLevelUpgradeSO>(playerPassiveStatsPath);
+            shopItemStatsUpgradeList = HelperFunctions.GetScriptableObjects<ShopItemLevelUpgradeSO>(shopItemStatsPath);
         }
 #endif
         private void Start()
