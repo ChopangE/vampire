@@ -37,8 +37,20 @@ namespace UI
             {
                 var canvases = Resources.FindObjectsOfTypeAll<TooltipPanel>();
                 if (canvases.Length > 0)
+                {
                     tooltipPanel = canvases[0];
+                    if (!tooltipPanel.gameObject.activeInHierarchy)
+                    {
+                        Debug.LogWarning("찾은 TooltipPanel이 비활성화 상태입니다.");
+                        tooltipPanel = null;
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning("Scene에서 TooltipPanel을 찾을 수 없습니다.");
+                }
             }
+            
             if(isControlInGroup)
             {
                 TooltipTriggerGroup tooltipTriggerGroup = transform.GetComponentInParent<TooltipTriggerGroup>();
@@ -83,8 +95,19 @@ namespace UI
 
         private void ShowTooltip()
         {
-            if (tooltipPanel != null)
-                tooltipPanel.Show(text, rectTransform);
+            if (tooltipPanel == null)
+            {
+                Debug.LogWarning("TooltipPanel이 설정되지 않았습니다.");
+                return;
+            }
+            
+            if (!tooltipPanel.gameObject.activeInHierarchy)
+            {
+                Debug.LogWarning("TooltipPanel이 비활성화 상태입니다.");
+                return;
+            }
+            
+            tooltipPanel.Show(text, rectTransform);
         }
 
         private void HideTooltip()

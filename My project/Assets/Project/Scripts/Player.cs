@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     Animator anim;
     public Scanner scan;
     public float speed;
+    public float damageBonus = 0f;
     public float baseSpeed = 3f;
     public bool isBonusDamage;
     public float bonusDamage = 0.2f;

@@ -19,6 +19,9 @@ public class PassiveManager : MonoBehaviour
                 // 레벨 0은 기본 속도, 1레벨부터 5%씩 증가
                 GameManager.Instance.player.speed = GameManager.Instance.player.baseSpeed * (1 + (0.05f * Math.Max(0, currentLevel)));
                 break;
+            case PassiveId.Damage:
+                GameManager.Instance.player.damageBonus = GameManager.Instance.player.damageBonus + (10 * Math.Max(0, currentLevel));
+                break;
             case PassiveId.ExpGainIncrease:
                 // 레벨 0은 보너스 없음(1배수), 1레벨부터 5%씩 증가
                 GameManager.Instance.expBonus = 1 + (0.05f * Math.Max(0, currentLevel));
@@ -31,10 +34,10 @@ public class PassiveManager : MonoBehaviour
                 GameManager.Instance.Defense = GameManager.Instance.baseDefense + (10 * Math.Max(0, currentLevel));
                 break;
             case PassiveId.CriticalDamage:
-                GameManager.Instance.criticalDamage = GameManager.Instance.baseCriticalDamage + (10 * Math.Max(0, currentLevel));
+                GameManager.Instance.criticalDamage = GameManager.Instance.baseCriticalDamage + (0.1f * Math.Max(0, currentLevel));
                 break;
             case PassiveId.CriticalChance:
-                GameManager.Instance.criticalChance = GameManager.Instance.baseCriticalChance + (10 * Math.Max(0, currentLevel));
+                GameManager.Instance.criticalChance = GameManager.Instance.baseCriticalChance + (0.1f * Math.Max(0, currentLevel));
                 break;
             default:
                 break;

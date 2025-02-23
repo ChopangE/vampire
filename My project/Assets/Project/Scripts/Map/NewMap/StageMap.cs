@@ -3,28 +3,43 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityWeld.Binding;
 
+[Binding]
 public class StageMap : MonoBehaviour
 {
     [SerializeField] private GameObject[] stages;
-    // Start is called before the first frame update
-    void Start()
-    {
-        Init().Forget();
-    }
-    private async UniTaskVoid Init() {
-        await UniTask.WaitUntil(() => Manager.Global.Instance != null);
-
-        if(stages.Length == 0) return;
+    [Binding]
+    public void Stage1() {
         for(int i = 0; i < stages.Length; i++) {
-            if(i == Manager.Global.StageManager.stageLevel) {
+            if(i == 0) {
                 stages[i].SetActive(true);
             }
             else {
                 stages[i].SetActive(false);
             }
         }
-
     }
-    
+    [Binding]
+    public void Stage2() {
+        for(int i = 0; i < stages.Length; i++) {
+            if(i == 1) {
+                stages[i].SetActive(true);
+            }
+            else {
+                stages[i].SetActive(false);
+            }
+        }
+    }
+    [Binding]
+    public void Stage3() {
+        for(int i = 0; i < stages.Length; i++) {
+            if(i == 2) {
+                stages[i].SetActive(true);
+            }
+            else {
+                stages[i].SetActive(false);
+            }
+        }
+    }
 }

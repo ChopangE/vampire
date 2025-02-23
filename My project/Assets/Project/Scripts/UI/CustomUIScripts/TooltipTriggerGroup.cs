@@ -36,44 +36,67 @@ namespace UI
             if (Input.GetMouseButtonDown(0)) isMouseDown = true;
             if (Input.GetMouseButtonUp(0)) isMouseDown = false;
 
-            CheckLastTooltip();
+            bool foundHoveringTrigger = false;
+            TooltipTrigger currentHoveringTrigger = null;
+            int highestSiblingIndex = -1;
 
-            if(lastTooltipTrigger != null) return;
-            
+            // 모든 tooltip trigger를 검사하여 가장 위에 있는 것을 찾음
             foreach (var tooltipTrigger in tooltipTriggerList)
             {
-                isHovering = RectTransformUtility.RectangleContainsScreenPoint(tooltipTrigger.rectTransform,
-                 Manager.Global.InputManager.GetCurMousePos());
-                if(isHovering && !isMouseDown) lastTooltipTrigger = tooltipTrigger;
-            }
-        }
+                // 계층 구조상 비활성화된 오브젝트는 건너뛰기
+                if (!tooltipTrigger.gameObject.activeInHierarchy) continue;
 
-        private void CheckLastTooltip()
-        {
-            if(lastTooltipTrigger != null)
-            {
-                isHovering = RectTransformUtility.RectangleContainsScreenPoint(lastTooltipTrigger.rectTransform,
-                Manager.Global.InputManager.GetCurMousePos());
-                if (!isMouseDown)
+                bool isCurrentHovering = RectTransformUtility.RectangleContainsScreenPoint(
+                    tooltipTrigger.rectTransform,
+                    Manager.Global.InputManager.GetCurMousePos());
+
+                if (isCurrentHovering && !isMouseDown)
                 {
-                    if (mouseIsHovering)
+                    int currentSiblingIndex = tooltipTrigger.transform.GetSiblingIndex();
+                    if (currentSiblingIndex > highestSiblingIndex)
                     {
-                        mouseHoverTime += Time.unscaledDeltaTime;
-                        if (mouseHoverTime >= delay)
-                            ShowTooltip(lastTooltipTrigger.text, lastTooltipTrigger.rectTransform);
-                    }
-                    else
-                    {
-                        mouseIsHovering = true;
-                        mouseHoverTime = 0;
+                        highestSiblingIndex = currentSiblingIndex;
+                        currentHoveringTrigger = tooltipTrigger;
+                        foundHoveringTrigger = true;
                     }
                 }
             }
-            if (!isHovering)
+
+            // 어떤 트리거 위에도 없다면 tooltip 숨기기
+            if (!foundHoveringTrigger)
             {
-                mouseIsHovering = false;
                 HideTooltip();
                 lastTooltipTrigger = null;
+                mouseIsHovering = false;
+                mouseHoverTime = 0;
+                return;
+            }
+
+            // 새로운 트리거로 변경되었다면 초기화
+            if (currentHoveringTrigger != lastTooltipTrigger)
+            {
+                HideTooltip();
+                mouseIsHovering = false;
+                mouseHoverTime = 0;
+                lastTooltipTrigger = currentHoveringTrigger;
+            }
+
+            // 현재 호버링 중인 트리거 체크
+            if (lastTooltipTrigger != null && !isMouseDown)
+            {
+                if (mouseIsHovering)
+                {
+                    mouseHoverTime += Time.unscaledDeltaTime;
+                    if (mouseHoverTime >= delay)
+                    {
+                        ShowTooltip(lastTooltipTrigger.text, lastTooltipTrigger.rectTransform);
+                    }
+                }
+                else
+                {
+                    mouseIsHovering = true;
+                    mouseHoverTime = 0;
+                }
             }
         }
 

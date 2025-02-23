@@ -29,8 +29,8 @@ public class GameManager : MMSingleton<GameManager>
     public float baseDefense = 0;
     public float criticalDamage = 1.5f;
     public float baseCriticalDamage = 1.5f;
-    public float criticalChance = 0.1f;
-    public float baseCriticalChance = 0.1f;
+    public float criticalChance = 0f;
+    public float baseCriticalChance = 0f;
     public float expBonus = 1.0f;
     public float expRangeBonus = 1.0f;
 
@@ -165,7 +165,6 @@ public class GameManager : MMSingleton<GameManager>
     private void SetupStage()
     {
         _curStage = Global.UserDataManager.curStage++;
-        _curStage = 12;
         player.transform.position = stages[_curStage].position;
 
         if (_curStage == Global.StageManager.MAX_STAGE_COUNT * Global.StageManager.MAX_STAGE_LEVEL)

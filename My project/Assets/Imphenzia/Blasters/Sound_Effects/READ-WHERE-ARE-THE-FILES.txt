@@ -1,0 +1,36 @@
+IMPORTANT
+**********************
+The sound effects have been compressed into ZIP archive(s).
+
+WHAT NEEDS TO BE DONE?
+**********************
+It is recommended that you copy and uncompress the ZIP
+archives to folders outside of Unity and then import the
+appropriate WAV files to the Unity projects you work with.
+
+- 1X_SINGLE_SHOT.zip contains 1600 unique sound effects
+
+- 4X_ROUND_ROBIN.zip* contains 6400 sound effects.
+  *) if you purchased the LARGE version of this asset
+
+HOW ?
+**********************
+Your operating most likely already supports to uncompress ZIP
+archives. Try to double click on 1X_SINGLE_SHOT and see if
+the archive opens up. If it does, you can usually drag and drop
+the content to a folder of your choosing on your computer.
+
+If your operating system does not support opening archived
+files - you can download free tools, e.g. 7-Zip for Windows
+(http://www.7-zip.org) or iZip for Mac (http://www.izip.com)
+
+WHY ?
+**********************
+When importing assets packages containing thousands of audio
+files into Unity it taks a very long time for Unity to scan
+through the files and compress them into an approriate format.
+Every time the compile platform is switched, e.g. between PC 
+and WebGL, it may take half an hour, or even hours on some
+computers, to process thousands audio files.
+
+

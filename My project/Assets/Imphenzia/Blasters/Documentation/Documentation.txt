@@ -1,0 +1,183 @@
+Thanks for purchasing Blasters!
+
+There are 3 versions of this asset:
+
+ * Blasters Small
+   - demo sounds (42 blaster sounds, 5x4 round robin blaster sounds)
+   - demo scenes and turret, blaster and bullet scripts
+
+ * Blasters Medium
+   - 1600 unique blaster sound effects (132 MB)
+   - demo scenes and turrent, blaster, and bullet scripts 
+
+ * Blasters Large
+   - 1600 unique blaster sound effects (132 MB)
+   - 6400 round robin sound effects (4 for each blaster) (662 MB)
+   - demo scenes and turrent, blaster, and bullet scripts 
+
+*** INTRODUCTION ***
+
+This asset was created with the goal to provide a large selection of
+blaster sound effects. 
+
+Included with the asset, however, is a number of demo scripts and
+prefabs that can easily be reused and customized for your needs. 
+
+You can easily reuse the BL_Turret and BL_Blaster scripts in particular
+to quickly get a turret that can aim and fire bullets of your choice.
+The turret can have multiple blasters attached to it that can be fired
+sequentially or simultaneously at a rate of fire (rounds per minute),
+with a customizable velocity, and with a life time of your choice.
+
+The turret script handles the logic to pool bullets and impact effects
+to increase performance compared to instantiating and destroying each
+bullet.
+
+There is also a bullet script, BL_Bullet that you can use which uses
+raycasting to detect if it is hitting an object and it uses the
+SendMessage function to call the Hit method of the target object. If
+the target object has a Hit method it will be executed when hit by
+the bullet.
+
+All the scripts are found in the Blasters\Demo\Scripts folder.
+
+All the scripts are fully documented, nearly every line of code has
+a comment to describe what the purpose of the code is.
+
+
+*** SOUND EFFECTS ***
+
+Watch this video: https://youtu.be/8DT5QI-f8IA
+...or read these instructions:
+
+A small number of demo sound effects that are located in the 
+Blasters\Demo\Audio folder.
+
+If you purchased Blasters Medium or Blasters Large most sound effects
+have been compressed into ZIP archive(s). The reason for this is to
+speed up the asset import process and also when switching between
+build platforms. When all sound effects are present as WAV-files
+Unity will take a considerable amount of time to analyze and compress
+each audio file.
+
+It is advisable that you uncompress the 1X_SINGLE_SHOT.zip file (and
+the 4X_ROUND_ROBIN.zip if you purchased the large version of this asset)
+into folders outside of Unity. You can then preview sounds outside of
+Unity and drag the sound effects that you want to use into your Unity
+projects. This will save you time and preserve disk space instead of
+importing this asset for every game you need a few blaster effects for.
+
+Most operating systems will support and be able to uncompress ZIP archives.
+If yours do not, you do an Internet search for "software unompress zip"
+and install a ZIP archive software for your operating system.
+
+
+*** TURRET SCRIPTS ***
+
+TIP: Load the demo scenes in the Blasters\Demo folder and see how
+they are constructed.
+
+HOW TO CREATE A NEW TURRET
+
+Watch this video: https://youtu.be/xUaUui_fr6w
+...or read these instructions:
+
+1. Create a new gameobject and name it TURRET. This could be a 3D
+   model, a primitive object such as a cube or an empty gameobject.
+
+2. Drag the BL_Turret script onto the TURRET gameobject.
+
+3. Create a child gameobject to TURRET and name it BLASTER. This could
+   be a 3D model of a barrel/blaster, a primitive object such as a
+   cylinder, or even an empty gameobject. It is important that the
+   Z-axis (forward) is facing in the direction of the barrel.
+
+4. Drag the BL_Blaster script onto the BLASTER gameobject.
+
+5. Create an empty child gameobject to BLASTER and name it MUZZLE.
+   This is the placeholder for the position of where the bullets will
+   be fired and where the muzzle visual effect will be displayed.
+   Position the empty MUZZLE gameobject at the tip of the barrel of
+   the blaster. Make sure that the Z-axis (forward) of the MUZZLE
+   object is aligned with the barrel and facing forward.
+
+6. Select the BLASTER gameobject and drag the MUZZLE gameobject from
+   the hierarchy onto the Muzzle in the Inspector.
+
+7. In the inspector of the MUZZLE gameobject, set a value for the
+   "recoil distance". This is how far the barrel will move backwards
+   and back to simulate recoil effect.
+
+8. Create as many BLASTER child objects to TURRET as you want, the
+   scripts will use all child blasters automatically. Repeat steps 3-7
+   for each blaster (you can duplicate the BLASTER gameobject and
+   reposition it to save time.
+
+9. Select the TURRET gameobject in the hierarchy and configure it
+   according to your needs in the Inspector, for example:
+
+   * Drag one or more sound effects onto the sfxFire array
+     (When there are multiple sound effects it will be played in
+      a "round robin" fashion cycling through the sounds after each
+      time the blaster is fired.)
+
+   * Drag one or more sound effects onto the sfxImpact array
+     ("Round robin" is used here too if there are multiple sounds)
+
+   * Set the desired volumes for volumeFire and volumeImpact
+
+   * Set Rate Of Fire to how many rounds per minute the turret should
+     fire.
+
+   * Enable "Fire Sequential" if you want the turret to cycle through
+     the blasters and fire them one by one. Disable this if you want all
+     blasters to fire at once. Both options take into account the total
+     number of bullets to be fired per minute.
+
+   * Set "Rotation Speed" to how fast you want the turret to aim when
+     calling the Aim() method from other scripts.
+
+   * Enable or disable "Lock Y Axis" if you want the Aim() method to
+     aim left/right only or also include up/down.
+
+   * Set "Muzzle Flash Prefab" to the Muzzle Flash effect you want. You can
+     use one of the existing ones in Blasters\Demo\Prefabs\MuzzleFlashes
+     or you can create your own. If you make your own it's probably
+     easiest to duplicate one of the existing Muzzle Flash Prefabs and
+     modify the particle system as desired.
+
+     If you create your own muzzle flash, you must attach the BL_MuzzleFlash
+     script to the muzzle flash prefab gameobject.
+
+   * Set "Bullet Prefab" to the Bullet to be fired from the blaster. You
+     can use one of the existing ones in Blasters\Demo\Prefabs\Bullets or
+     you can create your own. If you make your own it's probably easiest
+     to duplicate one of the existing bullets and modify it.
+     You may want to play around with the Render Trail, Particle System,
+     and Light Source of the bullet to suit your look and performance needs.
+     
+     If you create your own bullet, you must attach the BL_Bullet script to
+     the bullet prefab.
+
+   * Set "Bullet Velocity" to the desired bullet velocity.
+     You may need to adjust the BL_Bullet script if you use velocities lower
+     than 50 or higher than 1000 and/or if bullets are passing through your
+     target objects. It's the RayCast of the BL_Bullet that detects if the
+     bullet hits something.
+
+   * Set the "Bullet Life" to the life in seconds.
+
+   * Set "Impact Prefab" to the prefab to be instantiated when a bullet hits
+     something. You can use an existing one in Blasters\Demo\Prefabs\Impacts
+     or you can create your own effect. It's probably easiest if you
+     duplicate an existing impact prefab and customize it to your needs.
+
+   * Your blaster is now ready for use:
+ 
+     - Call the Aim(<Vector3 Target>) method in BL_Turret from your Player
+       or AI scripts and supply a Vector3 as a target. The turret will aim
+       towards the target based on the Rotation Speed parameter.
+
+     - Call the Fire() method in BL_Turret from your Player or AI scripts
+       to fire the blasters of the turret according to rate of fire.
+     

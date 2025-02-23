@@ -3,6 +3,8 @@ using Cysharp.Threading.Tasks;
 
 public class BowlingBullet : Bullet
 {
+    [SerializeField] GameObject windVFX1;
+    [SerializeField] GameObject windVFX2;
     [SerializeField] private float stunRadius = 1.5f;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float maxHeight = 3f;
@@ -16,6 +18,8 @@ public class BowlingBullet : Bullet
     {
         base.Init(damage, per, dir, canStun, duration, criticalDamagePercent, criticalChancePercent);
         startPos = transform.position;
+        windVFX1.SetActive(false);
+        windVFX2.SetActive(false);
         InitializeBullet().Forget();
     }
 
@@ -76,6 +80,10 @@ public class BowlingBullet : Bullet
         transform.position = targetPos;
         transform.localScale = originalScale;
         
+        // VFX 활성화
+        windVFX1.SetActive(true);
+        windVFX2.SetActive(true);
+        
         // radius 변수를 사용하여 범위 내의 적들에게 기절 효과
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, stunRadius);
         foreach (Collider2D collision in colliders)
@@ -91,6 +99,8 @@ public class BowlingBullet : Bullet
         }
         
         await UniTask.Delay(System.TimeSpan.FromSeconds(rockDuration));
+        windVFX1.SetActive(false);
+        windVFX2.SetActive(false);
         gameObject.SetActive(false);
     }
 }
