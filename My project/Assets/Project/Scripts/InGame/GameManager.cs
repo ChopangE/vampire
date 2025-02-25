@@ -199,7 +199,7 @@ public class GameManager : MMSingleton<GameManager>
     private async UniTaskVoid SpawnStageBoss()
     {
         GameObject bossTran = await pool.GetAsync(11 + Global.StageManager.stageCount);
-        Global.UserDataManager.curStage++;
+        Global.StageManager.ChangeStage(Global.UserDataManager.curStage + 1);
         bossTran.transform.position = stages[_curStage].position + new Vector3(0, 10f, 0);
     }
 
