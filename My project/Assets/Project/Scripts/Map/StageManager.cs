@@ -25,7 +25,6 @@ namespace Manager
         {
             Global.UserDataManager.curStage = stage;
             OnStageChanged?.Invoke();
-            Global.UserDataManager.Save();
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Manager
             itemDataInfoList = new List<ItemDataInfo>();
             passiveItemDataInfoList = new List<PassiveItemDataInfo>();
             purchasedShopItems = new Dictionary<string, bool>();
+            curStage = 0;
         }
         // public HashSet<int> CollectedItem = new();
         public string GoldData;
@@ -19,6 +20,7 @@ namespace Manager
         public List<ItemDataInfo> itemDataInfoList;
         public List<PassiveItemDataInfo> passiveItemDataInfoList;
         public Dictionary<string, bool> purchasedShopItems;
+        public int curStage;
     }
     public partial class UserDataManager
 
