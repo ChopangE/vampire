@@ -12,10 +12,10 @@ namespace UI.Page
     [Binding]
     public class MapPageNew : PageViewModel
     {
-        private int _coin;
+        private string _coin;
 
         [Binding]
-        public int Coin
+        public string Coin
         {
             get => _coin;
             set
@@ -35,9 +35,16 @@ namespace UI.Page
             }
 
             OnClickStageMapPageButton();
+
+            // 초기 골드 값 설정
+            Coin = Global.GoldManager.GetGoldText();
+            // 골드 변경 이벤트 구독
+            Global.GoldManager.OnGoldValueChanged += OnGoldValueChanged;
         }
         private void OnDisable()
         {
+            // 이벤트 구독 해제
+            Global.GoldManager.OnGoldValueChanged -= OnGoldValueChanged;
             foreach (var view in mapPageViews)
             {
                 if (view as TrainingView)
@@ -45,6 +52,10 @@ namespace UI.Page
                     view.gameObject.SetActive(false);
                 }
             }
+        }
+        private void OnGoldValueChanged(object sender, string newGoldValue)
+        {
+            Coin = newGoldValue;
         }
         [Binding]
         public void OnClickTraingButton()

@@ -17,12 +17,12 @@ namespace SO
         
         [BoxGroup("디테일")] [PropertyOrder(-1)]
         public string upgradeName;
-        [BoxGroup("디테일")] [PropertyOrder(0)] [TermsPopup("Passive/Name/")]
+        [BoxGroup("디테일")] [PropertyOrder(0)] [TermsPopup()]
         public string upgradeNameKey;
 
         [BoxGroup("디테일")] [PropertyOrder(1)] [OdinSerialize] [LabelText("설명")]
         public string description { get; private set; }
-        [BoxGroup("디테일")] [PropertyOrder(2)] [LabelText("설명 번역")] [TermsPopup("Passive/Info/")]
+        [BoxGroup("디테일")] [PropertyOrder(2)] [LabelText("설명 번역")] [TermsPopup()]
         public string descriptionKey;
 
         [Button(Name = "업그레이드하기")]

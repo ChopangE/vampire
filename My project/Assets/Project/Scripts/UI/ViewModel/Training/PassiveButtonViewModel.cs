@@ -23,10 +23,17 @@ namespace UI
         [Binding]
         public void DoUpgrade()
         {
-            string remainGold = (int.Parse(Global.UserDataManager.GetGoldDataString())
-                                 -int.Parse(_levelUpgradeSO.GetUpgradeCost())).ToString();
-            Global.UserDataManager.SetGoldData(remainGold);
+            // 구매 가능한지 확인
+            if (!Global.GoldManager.CanPurchase(_levelUpgradeSO.GetUpgradeCost()))
+                return;
+
+            // 골드 차감
+            Global.GoldManager.SubGold(_levelUpgradeSO.GetUpgradeCost());
+            
+            // 업그레이드 실행
             _levelUpgradeSO.DoUpgrade();
+            
+            // UI 갱신
             RefreshData();
         }
         public void SetPassive(PlayerPassiveLevelUpgradeSO levelUpgradeSO)

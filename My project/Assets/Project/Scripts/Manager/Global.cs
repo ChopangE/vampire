@@ -25,6 +25,7 @@ namespace Manager
         public static StatsUpgradeManager StatsUpgradeManager { get; set; }
         public static InputManager InputManager { get; set; }
         public static ExpManager ExpManager { get; set; }
+        public static GoldManager GoldManager { get; set; }
 
         public static DataManager DataManager { get; set; }
         // public static OptionManager OptionManager { get; private set; }
@@ -43,6 +44,9 @@ namespace Manager
 
             UserDataManager = new();
             UserDataManager.Load();
+            GoldManager = new();
+            GoldManager.Initial();
+            
             UnityGoogleSheet.LoadAllData();
 
             LoadManagerPrefabs();
@@ -97,7 +101,6 @@ namespace Manager
                 UpgradeManager = Instantiate(Resources.Load<UpgradeManager>(prefixManager + nameof(UpgradeManager)), transform);
                 UpgradeManager.name = nameof(UpgradeManager);
             }
-
         }
     }
 }

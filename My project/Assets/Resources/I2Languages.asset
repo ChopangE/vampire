@@ -209,6 +209,198 @@ MonoBehaviour:
       - "\uBD80\uD65C\uD655\uB960"
       Flags: 0000
       Languages_Touch: []
+    - Term: Shop/Info/DamageUpPill
+      TermType: 0
+      Description: 
+      Languages:
+      - Damage Increased By 10%
+      - "\uB370\uBBF8\uC9C0 10% \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Info/DefenseUpPill
+      TermType: 0
+      Description: 
+      Languages:
+      - Damage Reduced By 5%
+      - "\uB370\uBBF8\uC9C0 5% \uAC10\uC18C"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Info/HealPill
+      TermType: 0
+      Description: 
+      Languages:
+      - Restore 50hp
+      - "50hp \uD68C\uBCF5"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Info/MasterBook
+      TermType: 0
+      Description: 
+      Languages:
+      - Master Book
+      - "\uD544\uC0B4\uAE30 \uBE44\uAE09\uC11C"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Info/SecretBook1
+      TermType: 0
+      Description: 
+      Languages:
+      - Master Book Paper 1
+      - "\uD544\uC0B4\uAE30 \uBE44\uAE09\uC11C \uC885\uC774 \uC870\uAC01 1"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Info/SecretBook2
+      TermType: 0
+      Description: 
+      Languages:
+      - Master Book Paper 2
+      - "\uD544\uC0B4\uAE30 \uBE44\uAE09\uC11C \uC885\uC774 \uC870\uAC01 2"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Info/SecretBook3
+      TermType: 0
+      Description: 
+      Languages:
+      - Master Book Paper 3
+      - "\uD544\uC0B4\uAE30 \uBE44\uAE09\uC11C \uC885\uC774 \uC870\uAC01 3"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Info/SpeedUpPill
+      TermType: 0
+      Description: 
+      Languages:
+      - Movement Speed Increased By 10%
+      - "\uC774\uB3D9\uC18D\uB3C4 10% \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Info/invinciblePotion
+      TermType: 0
+      Description: 
+      Languages:
+      - All Damage Is Nullified For 5 Seconds
+      - "5\uCD08\uAC04 \uBAA8\uB4E0 \uB370\uBBF8\uC9C0 \uBB34\uD6A8"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Name/DamageUpPill
+      TermType: 0
+      Description: 
+      Languages:
+      - Damage Up Pill
+      - "\uACF5\uACA9\uB825 \uAC15\uD654 \uB2E8\uC57D"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Name/DefenseUpPill
+      TermType: 0
+      Description: 
+      Languages:
+      - Defense Up Pill
+      - "\uBC29\uC5B4\uB825 \uC99D\uAC00 \uB2E8\uC57D"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Name/HealPill
+      TermType: 0
+      Description: 
+      Languages:
+      - Heal Pill
+      - "\uCCB4\uB825 \uD68C\uBCF5 \uB2E8\uC57D"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Name/MasterBook
+      TermType: 0
+      Description: 
+      Languages:
+      - Master Book
+      - "\uD544\uC0B4\uAE30 \uBE44\uAE09\uC11C"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Name/SecretBook1
+      TermType: 0
+      Description: 
+      Languages:
+      - Secret Book1
+      - "\uBE44\uAE09\uC11C1"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Name/SecretBook2
+      TermType: 0
+      Description: 
+      Languages:
+      - Secret Book2
+      - "\uBE44\uAE09\uC11C2"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Name/SecretBook3
+      TermType: 0
+      Description: 
+      Languages:
+      - Secret Book3
+      - "\uBE44\uAE09\uC11C3"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Name/SpeedUpPill
+      TermType: 0
+      Description: 
+      Languages:
+      - Speed Up Pill
+      - "\uC774\uC18D \uC99D\uAC00 \uB2E8\uC57D"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Name/invinciblePotion
+      TermType: 0
+      Description: 
+      Languages:
+      - Invincible Potion
+      - "\uBB34\uC801 \uD3EC\uC158"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Skill/Name/Cooldown
+      TermType: 0
+      Description: 
+      Languages:
+      - Cooldown
+      - "\uCFE8\uD0C0\uC784"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Skill/Name/Damage
+      TermType: 0
+      Description: 
+      Languages:
+      - Damage
+      - "\uB370\uBBF8\uC9C0"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Skill/Name/Duration
+      TermType: 0
+      Description: 
+      Languages:
+      - Duration
+      - "\uC9C0\uC18D \uC2DC\uAC04"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Skill/Name/PierceLimit
+      TermType: 0
+      Description: 
+      Languages:
+      - PierceLimit
+      - "\uAD00\uD1B5 \uD69F\uC218"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Skill/Name/Projectiles
+      TermType: 0
+      Description: 
+      Languages:
+      - Projectiles
+      - "\uD22C\uC0AC\uCCB4 \uAC2F\uC218"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Skill/Name/Range
+      TermType: 0
+      Description: 
+      Languages:
+      - Range
+      - "\uBC94\uC704"
+      Flags: 0000
+      Languages_Touch: []
     - Term: UI/Continue
       TermType: 0
       Description: 
@@ -241,60 +433,28 @@ MonoBehaviour:
       - Galmuri11 SDF
       Flags: 0000
       Languages_Touch: []
-    - Term: Skill/Name/Damage
-      TermType: 0
-      Description: 
-      Languages:
-      - Damage
-      - "\uB370\uBBF8\uC9C0"
-      Flags: 0000
-      Languages_Touch: []
-    - Term: Skill/Name/Projectiles
-      TermType: 0
-      Description: 
-      Languages:
-      - Projectiles
-      - "\uD22C\uC0AC\uCCB4 \uAC2F\uC218"
-      Flags: 0000
-      Languages_Touch: []
-    - Term: Skill/Name/PierceLimit
-      TermType: 0
-      Description: 
-      Languages:
-      - PierceLimit
-      - "\uAD00\uD1B5 \uD69F\uC218"
-      Flags: 0000
-      Languages_Touch: []
-    - Term: Skill/Name/Cooldown
-      TermType: 0
-      Description: 
-      Languages:
-      - Cooldown
-      - "\uCFE8\uD0C0\uC784"
-      Flags: 0000
-      Languages_Touch: []
-    - Term: Skill/Name/Range
-      TermType: 0
-      Description: 
-      Languages:
-      - Range
-      - "\uBC94\uC704"
-      Flags: 0000
-      Languages_Touch: []
-    - Term: Skill/Name/Duration
-      TermType: 0
-      Description: 
-      Languages:
-      - Duration
-      - "\uC9C0\uC18D \uC2DC\uAC04"
-      Flags: 0000
-      Languages_Touch: []
     - Term: tmpFont
       TermType: 9
       Description: 
       Languages:
       - PixelSerif_16px_normal_v02 SDF
       - Galmuri11 SDF
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Info/ExpMagnetUp
+      TermType: 0
+      Description: 
+      Languages:
+      - Gain surrounding EXP for 5 seconds
+      - "\uC8FC\uBCC0 \uACBD\uD5D8\uCE58\uB97C 5\uCD08\uAC04 \uD68D\uB4DD\uD569\uB2C8\uB2E4"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Name/ExpMagnetUp
+      TermType: 0
+      Description: 
+      Languages:
+      - Exp Magnet
+      - "\uACBD\uD5D8\uCE58 \uC790\uC11D"
       Flags: 0000
       Languages_Touch: []
     CaseInsensitiveTerms: 0
@@ -312,7 +472,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbwdPVAlDVP3iMK97Ytq04SaMrbkrgSDEMbtL6XuSGENq2oboE8ijiMLza3gYe9P9sAr/exec
     Google_SpreadsheetKey: 1p863SKW8MDiIdoIoCEeEKVeLVze0RoaihCjeu4er2_k
     Google_SpreadsheetName: I2Loc My project Localization
-    Google_LastUpdatedVersion: 1737297923240
+    Google_LastUpdatedVersion: 1740372046466
     Google_Password: a12345
     GoogleUpdateFrequency: 3
     GoogleInEditorCheckFrequency: 2

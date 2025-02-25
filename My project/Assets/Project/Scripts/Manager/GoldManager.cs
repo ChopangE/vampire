@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Numerics;
 using System;
-using Unity.VisualScripting;
+using System.Numerics;
+using UnityEngine;
 
 namespace Manager
 {
@@ -11,59 +8,64 @@ namespace Manager
     {
         public void Initial()
         {
-            Gold = Global.UserDataManager.GetGoldData();
+            Gold = Global.UserDataManager.GetGoldDataBigInteger();
         }
-        public event EventHandler<int> OnGoldValueChanged;
-        public event EventHandler<int> OnGoldValueIncreased;
-        public event EventHandler<int> OnGoldValueDecreased;
-        //* 저장할 땐 string 형식으로 바꿔서 큰 값을 저장
-        private int _gold;
-        public int Gold
-        {
-            get{return _gold;}
-            private set{
-                if (value > _gold) OnGoldValueIncreased?.Invoke(this, value);
-                else if (value < _gold) OnGoldValueDecreased?.Invoke(this, value);
 
+        public event EventHandler<string> OnGoldValueChanged;
+        public event EventHandler<int> OnGoldValueIncreasedParticle;
+
+        private BigInteger _gold;
+        public BigInteger Gold
+        {
+            get { return _gold; }
+            private set
+            {
                 _gold = value;
-                OnGoldValueChanged?.Invoke(this, _gold);
+                OnGoldValueChanged?.Invoke(this, GetGoldText());
             }
         }
 
-        // private string[] goldUnitArr = new string[] {"",
-    // "a","b","c","d","e","f","g","h","I","J","K","L","M","N","O","P","q","r","s","t","u","v","w","x","y","z"};
-        public void AddGold(int amt)
+        public void AddGold(BigInteger amt, int spawnParticleCount = 0)
         {
             Gold += amt;
             Global.UserDataManager.SetGoldData(Gold);
+            if (spawnParticleCount > 0)
+                OnGoldValueIncreasedParticle?.Invoke(this, spawnParticleCount);
         }
+
         public void AddGold(string amt)
         {
-            Gold += int.Parse(amt);
+            Gold += BigInteger.Parse(amt);
             Global.UserDataManager.SetGoldData(Gold);
         }
-        public void SubGold(int amt)
+
+        public void SubGold(BigInteger amt)
         {
             Gold -= amt;
             Global.UserDataManager.SetGoldData(Gold);
         }
+
         public void SubGold(string amt)
         {
-            Gold -= int.Parse(amt);
+            Gold -= BigInteger.Parse(amt);
             Global.UserDataManager.SetGoldData(Gold);
         }
+
         public string GetGoldText()
         {
-            return Global.UserDataManager.GetGoldDataString();
+            return Gold.ToString();
         }
-        public BigInteger GetGoldValue(){
+
+        public BigInteger GetGoldValue()
+        {
             return Gold;
         }
+
         public bool CanPurchase(string cost)
         {
-            return GetGoldValue() >= int.Parse(cost);
+            return GetGoldValue() >= BigInteger.Parse(cost);
         }
-        
+
         public bool CanPurchase(BigInteger cost)
         {
             return GetGoldValue() >= cost;

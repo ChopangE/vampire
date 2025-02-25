@@ -36,5 +36,9 @@ namespace Manager
         {
             return playerPassiveStatsUpgradeList;
         }
+        public List<ShopItemLevelUpgradeSO> GetAllShopItems()
+        {
+            return shopItemStatsUpgradeList;
+        }
     }
 }

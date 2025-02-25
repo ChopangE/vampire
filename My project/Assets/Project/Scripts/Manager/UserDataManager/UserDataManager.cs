@@ -11,12 +11,14 @@ namespace Manager
             upgradeDataList = new List<Data.UpgradeData>();
             itemDataInfoList = new List<ItemDataInfo>();
             passiveItemDataInfoList = new List<PassiveItemDataInfo>();
+            purchasedShopItems = new Dictionary<string, bool>();
         }
         // public HashSet<int> CollectedItem = new();
         public string GoldData;
         public List<Data.UpgradeData> upgradeDataList;
         public List<ItemDataInfo> itemDataInfoList;
         public List<PassiveItemDataInfo> passiveItemDataInfoList;
+        public Dictionary<string, bool> purchasedShopItems;
     }
     public partial class UserDataManager
 
