@@ -34,7 +34,7 @@ namespace UI.Page
                 if (child.transform.name != transform.name) mapPageViews.Add(child);
             }
 
-            OnClickStageMapPageButton();
+            OnClickTraingButton();
 
             // 초기 골드 값 설정
             Coin = Global.GoldManager.GetGoldText();
