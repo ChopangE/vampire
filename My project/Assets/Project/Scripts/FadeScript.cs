@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Manager;
 using UI.Page;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 public class FadeScript : MonoBehaviour
@@ -41,9 +42,11 @@ public class FadeScript : MonoBehaviour
         panel.gameObject.SetActive(true);
         Color alpha = panel.color;
         time = 0f;
-        while (alpha.a < 1f) {
+        float maxAlpha = 1f;
+        if(isGameOver) maxAlpha = 0.5f;
+        while (alpha.a < maxAlpha) {
             time += Time.deltaTime / F_time;
-            alpha.a = Mathf.Lerp(0, 1, time);
+            alpha.a = Mathf.Lerp(0, maxAlpha, time);
             panel.color = alpha;
             yield return null;
         }
