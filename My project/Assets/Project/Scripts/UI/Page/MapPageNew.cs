@@ -13,6 +13,7 @@ namespace UI.Page
     public class MapPageNew : PageViewModel
     {
         private string _coin;
+        private StageMap stageMap;
 
         [Binding]
         public string Coin
@@ -33,6 +34,9 @@ namespace UI.Page
             {
                 if (child.transform.name != transform.name) mapPageViews.Add(child);
             }
+
+            // StageMap 컴포넌트 찾기
+            stageMap = GetComponentInChildren<StageMap>(true);
 
             OnClickTraingButton();
 
@@ -68,6 +72,7 @@ namespace UI.Page
                 }
                 else view.gameObject.SetActive(false);
             }
+            if (stageMap != null) stageMap.HideAllStages();
         }
         [Binding]
         public void OnClickStageMapPageButton()
@@ -80,20 +85,20 @@ namespace UI.Page
                 }
                 else view.gameObject.SetActive(false);
             }
+            if (stageMap != null) stageMap.ShowStage();
         }
         [Binding]
         public void OnClickShopPageButton()
         {
             foreach (var view in mapPageViews)
             {
-
                 if (view as ShopViewModel)
                 {
                     view.gameObject.SetActive(true);
                 }
-
                 else view.gameObject.SetActive(false);
             }
+            if (stageMap != null) stageMap.HideAllStages();
         }
     }
 }

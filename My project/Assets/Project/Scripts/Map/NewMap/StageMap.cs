@@ -10,15 +10,40 @@ using UnityWeld.Binding;
 public class StageMap : MonoBehaviour
 {
     [SerializeField] private GameObject[] stages;
+    private int lastActiveStageIndex = 0;
+
     void OnEnable()
     {
         Global.StageManager.OnStageChanged += OnStageChanged;
-        OnStageChanged();
     }
     void OnDisable()
     {
         Global.StageManager.OnStageChanged -= OnStageChanged;
     }
+
+    public void HideAllStages() {
+        // 현재 활성화된 스테이지 찾기
+        for(int i = 0; i < stages.Length; i++) {
+            if(stages[i].activeSelf) {
+                lastActiveStageIndex = i;
+                break;
+            }
+        }
+        // 모든 스테이지 비활성화
+        foreach(var stage in stages) {
+            stage.SetActive(false);
+        }
+    }
+
+    public void ShowStage() {
+        stages[lastActiveStageIndex].SetActive(true);
+    }
+
+    public void ShowStage(int index) {
+        lastActiveStageIndex = index;
+        stages[index].SetActive(true);
+    }
+
     [Binding]
     public void Stage1() {
         for(int i = 0; i < stages.Length; i++) {

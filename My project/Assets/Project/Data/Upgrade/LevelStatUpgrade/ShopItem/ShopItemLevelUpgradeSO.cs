@@ -9,7 +9,8 @@ namespace SO
     public enum ShopItemType
     {
         Passive,
-        Active
+        Active,
+        Evolution
     }
 
     [CreateAssetMenu(menuName = "스탯/Upgrades/Level/Shop Item Level Upgrade")]
@@ -18,9 +19,17 @@ namespace SO
         [SerializeField] private int _price;
         [SerializeField] private string _id;
         [SerializeField] private ShopItemType _itemType;
+        
+        // 진화 관련 필드들
+        [SerializeField] private bool _isEvolutionItem;
+        [SerializeField] private ShopItemLevelUpgradeSO _nextEvolution;  // 다음 진화 단계
+        [SerializeField] private ShopItemLevelUpgradeSO _finalEvolution; // 최종 진화 형태
 
         public int Price => _price;
         public ShopItemType ItemType => _itemType;
+        public bool IsEvolutionItem => _isEvolutionItem;
+        public ShopItemLevelUpgradeSO NextEvolution => _nextEvolution;
+        public ShopItemLevelUpgradeSO FinalEvolution => _finalEvolution;
         public string Id 
         {
             get

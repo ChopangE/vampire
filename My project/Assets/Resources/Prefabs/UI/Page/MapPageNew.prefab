@@ -4381,6 +4381,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5969057140969660111, guid: c8558d7c7a111c244b904f8b27d37a0d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7359311772643069643, guid: c8558d7c7a111c244b904f8b27d37a0d, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -4528,21 +4532,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4130699633628924326, guid: a12b658aa095e7b4bbf5796484d01e2f, type: 3}
   m_PrefabInstance: {fileID: 2569197830756369599}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2939385659653608269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1942369474325368089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed406354527c60646af11d782e6dd994, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isAutoConnection: 1
-  viewModelMethodName: UI.Page.MapPageNew.OnClickStageMapPageButton
-  viewEventName: UnityEngine.UI.Button.onClick
 --- !u!114 &426995424391185661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4557,6 +4546,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isAutoConnection: 1
   viewModelMethodName: StageMap.Stage1
+  viewEventName: UnityEngine.UI.Button.onClick
+--- !u!114 &2939385659653608269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1942369474325368089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed406354527c60646af11d782e6dd994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isAutoConnection: 1
+  viewModelMethodName: UI.Page.MapPageNew.OnClickStageMapPageButton
   viewEventName: UnityEngine.UI.Button.onClick
 --- !u!1001 &2891383633749868582
 PrefabInstance:
@@ -5255,6 +5259,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 353
       objectReference: {fileID: 0}
+    - target: {fileID: 913003811243753776, guid: c8558d7c7a111c244b904f8b27d37a0d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3252124206726347949, guid: c8558d7c7a111c244b904f8b27d37a0d, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -5325,27 +5333,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 365352775407538130, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 365352775407538130, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 365352775407538130, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 365352775407538130, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 365352775407538130, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 62.5
       objectReference: {fileID: 0}
     - target: {fileID: 365352775407538130, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 604262815004005701, guid: 994b580d531f3e742b04c8807d9c53b9, type: 3}
       propertyPath: m_RootOrder
@@ -5873,21 +5881,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4130699633628924326, guid: a12b658aa095e7b4bbf5796484d01e2f, type: 3}
   m_PrefabInstance: {fileID: 7232363990290051442}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9164052750072929242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6705215344775624916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed406354527c60646af11d782e6dd994, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isAutoConnection: 1
-  viewModelMethodName: StageMap.Stage3
-  viewEventName: UnityEngine.UI.Button.onClick
 --- !u!114 &7979066068738061463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5902,4 +5895,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isAutoConnection: 1
   viewModelMethodName: UI.Page.MapPageNew.OnClickStageMapPageButton
+  viewEventName: UnityEngine.UI.Button.onClick
+--- !u!114 &9164052750072929242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6705215344775624916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed406354527c60646af11d782e6dd994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isAutoConnection: 1
+  viewModelMethodName: StageMap.Stage3
   viewEventName: UnityEngine.UI.Button.onClick

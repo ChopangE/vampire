@@ -15,6 +15,9 @@ namespace UI
     {
         private ShopItemLevelUpgradeSO _shopItem;
         private bool _isPurchased;
+        
+        // 진화 아이템 구매 완료 시 발생하는 이벤트
+        public event Action<ShopItemLevelUpgradeSO> OnEvolutionItemPurchased;
 
         [Binding]
         public bool IsPurchased
@@ -30,15 +33,35 @@ namespace UI
         [Binding]
         public void DoPurchase()
         {
-            if (IsPurchased)
+            // 진화형이 아닌 일반 아이템의 경우에만 구매 여부 체크
+            if (!_shopItem.IsEvolutionItem && IsPurchased)
                 return;
             
             if (!Global.GoldManager.CanPurchase(_shopItem.Price))
                 return;
 
             Global.GoldManager.SubGold(_shopItem.Price);
-            Global.UserDataManager.PurchaseItem(_shopItem.Id);
-            IsPurchased = true;
+            
+            if (_shopItem.IsEvolutionItem)
+            {
+                Global.UserDataManager.AdvanceEvolution(_shopItem.Id);
+                
+                if (Global.UserDataManager.IsFullyEvolved(_shopItem.Id))
+                {
+                    // 최종 진화 달성 시 최종 아이템으로 변경
+                    Global.UserDataManager.PurchaseItem(_shopItem.FinalEvolution.Id);
+                    // 필살기는 인게임에서 확인하여 해금
+                }
+                
+                // 진화 아이템 구매 완료 이벤트 발생
+                OnEvolutionItemPurchased?.Invoke(_shopItem);
+            }
+            else
+            {
+                Global.UserDataManager.PurchaseItem(_shopItem.Id);
+                IsPurchased = true;
+            }
+            
             RefreshData();
         }
 
