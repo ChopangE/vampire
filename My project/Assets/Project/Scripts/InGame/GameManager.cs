@@ -164,7 +164,7 @@ public class GameManager : MMSingleton<GameManager>
 
     private void SetupStage()
     {
-        _curStage = Global.UserDataManager.curStage++;
+        _curStage = Global.UserDataManager.curStage;
         player.transform.position = stages[_curStage].position;
 
         if (_curStage == Global.StageManager.MAX_STAGE_COUNT * Global.StageManager.MAX_STAGE_LEVEL)
@@ -235,10 +235,9 @@ public class GameManager : MMSingleton<GameManager>
     public void StageClear()
     {
         Global.UserDataManager.curStage++;
-        Global.UserDataManager.Save();
         Global.DataManager.SaveData();
         Global.UIManager.CloseAllPages();
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene("Map");
     }
 
     public void GameOver()
@@ -251,12 +250,14 @@ public class GameManager : MMSingleton<GameManager>
         isLive = false;
         yield return new WaitForSeconds(0.5f);
         Stop();
+        var pages = Global.UIManager.GetPages<InGameMainPage>();
+        FadeScript fade = pages[0].GetComponent<FadeScript>();
+        fade.FadeOut(true);
     }
 
     public void Stop()
     {
         isLive = false;
-        Time.timeScale = 0;
     }
 
     public void Resume()

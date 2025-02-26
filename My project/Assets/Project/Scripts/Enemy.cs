@@ -162,15 +162,16 @@ public class Enemy : DamageObject
         float finalDamage = damageData.damage;
         bool isCritical = damageData.isCritical;
 
+        finalDamage = finalDamage * (1 + GameManager.Instance.player.damageBonus);
+
         // Bullet에서 이미 크리티컬 계산이 되어있으므로, 여기서는 그 결과만 사용합니다
         health -= finalDamage;
         GameManager.DamageTextPoolManager.SpawnDamageText(transform.position, finalDamage, isCritical, false);
 
         if (weaponController.isBonusDamage && damageData.isBonus)
         {
-            float bonusDamage = finalDamage * weaponController.bonusDamage * (1 + GameManager.Instance.player.damageBonus);
+            float bonusDamage = finalDamage * weaponController.bonusDamage;
             health -= bonusDamage;
-            Debug.Log("bonusDamage: " + GameManager.Instance.player.damageBonus);
             DelayedSpawnDamageText(transform.position, bonusDamage, 0.1f, true).Forget();
         }
     }

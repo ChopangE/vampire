@@ -6,6 +6,7 @@ using Data.WeaponData;
 using Manager;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using System.IO;
 
 public class DataManager : MonoBehaviour
 {
@@ -30,8 +31,19 @@ public class DataManager : MonoBehaviour
     private void InitializeItems()
     {
         items = new List<ItemData>();
-        items.AddRange(Resources.LoadAll<ItemData>(itemPath));
-        items.AddRange(Resources.LoadAll<ItemData>(passiveItemPath));
+        var allItems = Resources.LoadAll<ItemData>(itemPath);
+        // 중복 제거를 위해 Dictionary 사용
+        var uniqueItems = new Dictionary<string, ItemData>();
+        
+        foreach (var item in allItems)
+        {
+            if (!uniqueItems.ContainsKey(item.name))
+            {
+                uniqueItems.Add(item.name, item);
+            }
+        }
+        
+        items.AddRange(uniqueItems.Values);
     }
 
     public void LoadData()
@@ -45,13 +57,25 @@ public class DataManager : MonoBehaviour
     {
         foreach (var item in items)
         {
-            item.itemDataInfo.curLevel = item.itemDataInfo.itemId == WeaponId.Dagger ? 1 : 0;
+            if (item.itemType == ItemType.Passive)
+            {
+                item.passiveItemDataInfo.curLevel = 0;
+            }
+            else
+            {
+                item.itemDataInfo.curLevel = item.itemDataInfo.itemId == WeaponId.Dagger ? 1 : 0;
+            }
             item.Reset();
         }
     }
 
     private void SaveToUserStorage()
     {
+        // 기존 데이터 초기화
+        Global.UserDataManager.storage.passiveItemDataInfoList.Clear();
+        Global.UserDataManager.storage.itemDataInfoList.Clear();
+        
+        // 새 데이터 저장
         Global.UserDataManager.storage.passiveItemDataInfoList = items.Where(item => item.itemType == ItemType.Passive)
             .Select(item => item.passiveItemDataInfo).ToList();
         Global.UserDataManager.storage.itemDataInfoList = items.Where(item => item.itemType != ItemType.Passive)
@@ -109,7 +133,12 @@ public class DataManager : MonoBehaviour
     {
         var targetItem = Global.UserDataManager.storage.passiveItemDataInfoList
             .FirstOrDefault(item => item.passiveId == itemData.passiveItemDataInfo.passiveId);
-            
+
+        if (targetItem != null)
+        {
+            targetItem.curLevel = level;
+            Global.UserDataManager.Save();
+        }
     }
 
     public void SetWeaponItemLevel(ItemData itemData, int level)

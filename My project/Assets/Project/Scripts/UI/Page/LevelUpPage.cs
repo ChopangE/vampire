@@ -97,6 +97,16 @@ public class LevelUpPage : ViewModel
                             normalItemIndex++;
                         }
                     }
+                    
+                    // 패시브 아이템 개수 체크
+                    int passiveCount = 0;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (i != evolveSlot && notMaxLevelItems[ran[i]].itemType == ItemType.Passive)
+                            passiveCount++;
+                    }
+                    if (passiveCount > 1) continue;
+                    
                     if (normalItemIndex == 2) break;
                 }
                 else
@@ -105,6 +115,16 @@ public class LevelUpPage : ViewModel
                     ran[0] = Random.Range(0, notMaxLevelItems.Length);
                     ran[1] = Random.Range(0, notMaxLevelItems.Length);
                     ran[2] = Random.Range(0, notMaxLevelItems.Length);
+                    
+                    // 패시브 아이템 개수 체크
+                    int passiveCount = 0;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (notMaxLevelItems[ran[i]].itemType == ItemType.Passive)
+                            passiveCount++;
+                    }
+                    if (passiveCount > 1) continue;
+                    
                     if (ran[0] != ran[1] && ran[1] != ran[2] && ran[0] != ran[2]) break;
                 }
             }
@@ -114,6 +134,15 @@ public class LevelUpPage : ViewModel
                 ran[0] = Random.Range(0, notMaxLevelItems.Length);
                 ran[1] = Random.Range(0, notMaxLevelItems.Length);
                 ran[2] = Random.Range(0, notMaxLevelItems.Length);
+
+                // 패시브 아이템 개수 체크
+                int passiveCount = 0;
+                for (int i = 0; i < 3; i++)
+                {
+                    if (notMaxLevelItems[ran[i]].itemType == ItemType.Passive)
+                        passiveCount++;
+                }
+                if (passiveCount > 1) continue;
 
                 if (ran[0] != ran[1] && ran[1] != ran[2] && ran[0] != ran[2]) break;
             }

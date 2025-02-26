@@ -21,9 +21,33 @@ namespace UI.Page
                 OnPropertyChanged(nameof(ActiveTimer));
             }
         }
+        private string _gold;
+        [Binding]
+        public string Gold
+        {
+            get => _gold;
+            set
+            {
+                _gold = value;
+                OnPropertyChanged(nameof(Gold));
+            }
+        }
 
         private LevelUpPage levelUpPage;
         private PausePage pausePage;
+        private void OnEnable() {
+            Global.GoldManager.OnGoldValueChanged += OnGoldValueChanged;
+            Gold = Global.GoldManager.GetGoldText();
+        }
+
+        private void OnDisable() {
+            Global.GoldManager.OnGoldValueChanged -= OnGoldValueChanged;
+        }
+
+        private void OnGoldValueChanged(object sender, string gold)
+        {
+            Gold = gold;
+        }
 
         [Binding]
         public void Pause()

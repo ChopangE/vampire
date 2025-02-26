@@ -114,10 +114,12 @@ public class Bullet : MonoBehaviour
         if(criticalChancePercent > 0)
         {
             float random = Random.Range(0f, 1f);
-            if(random < criticalChancePercent)
+            if(random < criticalChancePercent + GameManager.Instance.criticalChance)
             {
                 damageData.isCritical = true;
-                damageData.damage = damage * (1f + (1f + criticalDamagePercent));
+                float weaponCriticalMultiplier = 1f + criticalDamagePercent;
+                float passiveCriticalMultiplier = GameManager.Instance.criticalDamage;
+                damageData.damage = damage * weaponCriticalMultiplier * passiveCriticalMultiplier;
             }
         }
         

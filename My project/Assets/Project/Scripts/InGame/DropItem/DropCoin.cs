@@ -27,9 +27,7 @@ namespace InGame
        }
        void PlusCoin()
        {
-           int nowCoin = int.Parse(Global.UserDataManager.GetGoldDataString());
-           nowCoin += coin;
-           Global.UserDataManager.SetGoldData(nowCoin.ToString());
+           Global.GoldManager.AddGold(coin);
            DestroyItem();
        }
    } 

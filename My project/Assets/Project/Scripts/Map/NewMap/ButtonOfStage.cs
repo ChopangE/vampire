@@ -24,7 +24,7 @@ public class ButtonOfStage : MonoBehaviour
         
         button.onClick.AddListener(() => {
             if(buttonNum == 0) {
-                // Global.DataManager.ResetData();
+                Global.DataManager.ResetData();
                 UnityEngine.SceneManagement.SceneManager.LoadScene("LoadingScene");
             }
             else {
