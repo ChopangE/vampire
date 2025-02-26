@@ -36,12 +36,26 @@ public class StageMap : MonoBehaviour
     }
 
     public void ShowStage() {
-        stages[lastActiveStageIndex].SetActive(true);
+        for(int i = 0; i < stages.Length; i++) {
+            if(i == lastActiveStageIndex) {
+                stages[i].SetActive(true);
+            }
+            else {
+                stages[i].SetActive(false);
+            }
+        }
     }
 
     public void ShowStage(int index) {
         lastActiveStageIndex = index;
-        stages[index].SetActive(true);
+        for(int i = 0; i < stages.Length; i++) {
+            if(i == index) {
+                stages[i].SetActive(true);
+            }
+            else {
+                stages[i].SetActive(false);
+            }
+        }
     }
 
     [Binding]

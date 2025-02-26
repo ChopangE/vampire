@@ -22,6 +22,10 @@ namespace UI
             {
                 var currentStage = Global.UserDataManager.GetEvolutionStage(levelUpgradeSO.Id);
                 
+                // 마지막 진화 단계라면 추가하지 않음
+                if (Global.UserDataManager.IsFullyEvolved(levelUpgradeSO.Id))
+                    return;
+                    
                 // 이미 같은 계열의 진화 아이템이 있다면 추가하지 않음
                 var existingEvolutionItem = _levelUpgradeSOList.FirstOrDefault(x => 
                     x.IsEvolutionItem && x.Id == levelUpgradeSO.Id);
@@ -38,7 +42,7 @@ namespace UI
                 else if (currentStage > 0)
                 {
                     var nextEvolution = GetNextEvolutionItem(levelUpgradeSO, currentStage);
-                    if (nextEvolution != null)
+                    if (nextEvolution != null && !Global.UserDataManager.IsFullyEvolved(nextEvolution.Id))
                     {
                         _levelUpgradeSOList.Add(nextEvolution);
                     }
@@ -91,11 +95,28 @@ namespace UI
             // 아직 최종 진화가 아니라면 다음 단계 아이템 추가
             if (!Global.UserDataManager.IsFullyEvolved(purchasedItem.Id) && purchasedItem.NextEvolution != null)
             {
-                _levelUpgradeSOList.Add(purchasedItem.NextEvolution);
+                // 이미 같은 ID의 다음 단계 아이템이 있는지 확인
+                var existingNextEvolution = _levelUpgradeSOList.FirstOrDefault(x => 
+                    x.IsEvolutionItem && x.Id == purchasedItem.NextEvolution.Id);
+                    
+                if (existingNextEvolution == null)
+                {
+                    _levelUpgradeSOList.Add(purchasedItem.NextEvolution);
+                }
             }
 
-            // 상점 UI 갱신
-            InitialGorup();
+            // 상점 UI 갱신 - 기존 아이템 유지하면서 UI만 갱신
+            PrepareViewModels(_levelUpgradeSOList.Count);
+            var models = GetViewModels();
+
+            for (int i = 0; i < models.Count; i++)
+            {
+                if (models[i] is ShopItemViewModel model)
+                {
+                    model.SetShopItem(_levelUpgradeSOList[i]);
+                    model.OnEvolutionItemPurchased += OnEvolutionItemPurchased;
+                }
+            }
         }
 
         // 메모리 누수 방지를 위한 정리
