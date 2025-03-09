@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     public bool isBonusDamage;
     public float bonusDamage = 0.2f;
     bool isKnockBack { get; set; }
+    public bool IsFacingRight => sprite.flipX;
 
 
     void Awake() {

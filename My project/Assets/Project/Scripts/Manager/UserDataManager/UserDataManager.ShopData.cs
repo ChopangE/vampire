@@ -25,6 +25,23 @@ namespace Manager
             storage.purchasedShopItems[itemId] = true;
             Save();
         }
+        public bool IsShopItemPurchased(string itemId)
+        {
+            return storage.purchasedShopItems[itemId];
+        }
+
+        public void UseActiveItem(string itemId)
+        {
+            storage.purchasedShopItems[itemId] = false;
+            Save();
+        }
+
+        public void UseEvolutionItem(string itemId)
+        {
+            storage.purchasedShopItems[itemId] = false;
+            storage.evolutionStages[itemId] = 0;
+            Save();
+        }
 
         public int GetEvolutionStage(string itemId)
         {

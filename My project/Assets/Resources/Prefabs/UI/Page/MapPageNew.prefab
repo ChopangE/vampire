@@ -5042,21 +5042,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4130699633628924326, guid: a12b658aa095e7b4bbf5796484d01e2f, type: 3}
   m_PrefabInstance: {fileID: 3563795861552901044}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7625386070173799743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 587178904319943186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed406354527c60646af11d782e6dd994, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isAutoConnection: 1
-  viewModelMethodName: StageMap.Stage2
-  viewEventName: UnityEngine.UI.Button.onClick
 --- !u!114 &5091292889472175279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5071,6 +5056,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isAutoConnection: 1
   viewModelMethodName: UI.Page.MapPageNew.OnClickStageMapPageButton
+  viewEventName: UnityEngine.UI.Button.onClick
+--- !u!114 &7625386070173799743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 587178904319943186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed406354527c60646af11d782e6dd994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isAutoConnection: 1
+  viewModelMethodName: StageMap.Stage2
   viewEventName: UnityEngine.UI.Button.onClick
 --- !u!1001 &4811290429030547569
 PrefabInstance:
@@ -5438,21 +5438,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4130699633628924326, guid: a12b658aa095e7b4bbf5796484d01e2f, type: 3}
   m_PrefabInstance: {fileID: 5984281615834818670}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8890595719947490793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7664916568122712520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed406354527c60646af11d782e6dd994, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _isAutoConnection: 1
-  viewModelMethodName: StageMap.Stage3
-  viewEventName: UnityEngine.UI.Button.onClick
 --- !u!114 &5258411028715978504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5467,6 +5452,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isAutoConnection: 1
   viewModelMethodName: UI.Page.MapPageNew.OnClickStageMapPageButton
+  viewEventName: UnityEngine.UI.Button.onClick
+--- !u!114 &8890595719947490793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7664916568122712520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed406354527c60646af11d782e6dd994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isAutoConnection: 1
+  viewModelMethodName: StageMap.Stage3
   viewEventName: UnityEngine.UI.Button.onClick
 --- !u!1001 &6351637339531363490
 PrefabInstance:

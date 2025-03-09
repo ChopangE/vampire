@@ -78,7 +78,10 @@ public class GameManager : MMSingleton<GameManager>
 
             float reducedDamage = damage * (100f - _defense) / 100f;
             reducedDamage = Mathf.Max(0, reducedDamage);
-
+            if (isInvincible)
+            {
+                reducedDamage = 0;
+            }
             if (_shield > 0)
             {
                 if (_shield >= reducedDamage)
@@ -104,6 +107,8 @@ public class GameManager : MMSingleton<GameManager>
             }
         }
     }
+    public bool isInvincible { get; set; }
+    
 
 
     public float Shield

@@ -30,7 +30,7 @@ public class CloneBullet : Bullet
     }
 
 
-    public override void OnTriggerEnter2D(Collider2D collision) {
+    protected override void OnTriggerEnter2D(Collider2D collision) {
         if ((!collision.CompareTag("Enemy") && !collision.CompareTag("BossEnemy"))) {
             return;
         }

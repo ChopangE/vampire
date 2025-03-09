@@ -34,7 +34,7 @@ namespace UI.Page
         }
 
         private LevelUpPage levelUpPage;
-        private PausePage pausePage;
+        private OptionPage optionPage;
         private void OnEnable() {
             Global.GoldManager.OnGoldValueChanged += OnGoldValueChanged;
             Gold = Global.GoldManager.GetGoldText();
@@ -52,8 +52,7 @@ namespace UI.Page
         [Binding]
         public void Pause()
         {
-            pausePage = GetComponentInChildren<PausePage>();
-            pausePage.Show();
+            optionPage = Global.UIManager.OpenPage<OptionPage>();
         }
         [Binding]
         public void ShowLevelUP(bool isEvaluation = false)

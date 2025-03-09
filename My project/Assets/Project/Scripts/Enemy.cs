@@ -129,22 +129,38 @@ public class Enemy : DamageObject
     public override void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Bullet")) return;
-        if (collision.GetComponent<Bullet>())
+        if (collision.TryGetComponent(out Bullet bullet))
         {
-            CalculateDamage(collision.GetComponent<Bullet>().CalculateDamage());
+            if (bullet is SecretSmash)
+            {
+                // 일반 몹과 엘리트 몹만 즉사 처리 (중간 보스와 최종 보스는 SecretSmash에서 처리)
+                if (_enemyType == EnemyType.Elite || _enemyType == EnemyType.Normal)
+                {
+                    isLive = false;
+                    coll.enabled = false;
+                    rigid.simulated = false;
+                    spriter.sortingOrder = 1;
+                    //anim.SetBool("Dead", true);
+                    Dead();
+                    return; // 추가 처리 중단
+                }
+                // 중간 보스와 최종 보스는 SecretSmash 클래스에서 처리하므로 여기서는 추가 작업 없음
+            }
+            else
+            {
+                CalculateDamage(collision.GetComponent<Bullet>().CalculateDamage());
+            }
 
             if (collision.GetComponent<WhirlBullet>())
             {
                 targetVec = collision.GetComponent<Rigidbody2D>().position;
                 if (gameObject.activeSelf) StartCoroutine(KnockBack());
-
             }
         }
 
         if (health > 0)
         {
             anim.SetTrigger("Hit");
-
         }
         else
         {
@@ -253,14 +269,14 @@ public class Enemy : DamageObject
             GameManager.Instance.ShowLevelUp();
 
             DropItem dropItem = Resources.Load<DropItem>("Prefabs/DropItem/GoldBarCoinGold");
-            Vector3 dropPosition = dropItemSpawnPoints != null && dropItemSpawnPoints.Length > 0 
-                ? dropItemSpawnPoints[0].position 
+            Vector3 dropPosition = dropItemSpawnPoints != null && dropItemSpawnPoints.Length > 0
+                ? dropItemSpawnPoints[0].position
                 : transform.position;
             GameManager.DropItemPoolManager.SpawnDropItem(dropItem, dropPosition);
 
             DropItem dropItem2 = Resources.Load<DropItem>("Prefabs/DropItem/SpecialItem/LevelUpScroll");
-            Vector3 dropPosition2 = dropItemSpawnPoints != null && dropItemSpawnPoints.Length > 1 
-                ? dropItemSpawnPoints[1].position 
+            Vector3 dropPosition2 = dropItemSpawnPoints != null && dropItemSpawnPoints.Length > 1
+                ? dropItemSpawnPoints[1].position
                 : transform.position;
             GameManager.DropItemPoolManager.SpawnDropItem(dropItem2, dropPosition2);
         }

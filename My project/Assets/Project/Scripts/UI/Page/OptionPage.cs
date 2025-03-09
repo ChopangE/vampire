@@ -7,6 +7,15 @@ namespace UI.Page
     [Binding]
     public class OptionPage : PageViewModel
     {
+        private void OnEnable()
+        {
+            GameManager.Instance.Stop();
+            Global.SoundManager.StopBGM(true);
+        }
+        private void OnDisable() {
+            GameManager.Instance.Resume();
+            Global.SoundManager.StopBGM(false);
+        }
         [Binding]
         public void OnClickKorean()
         {

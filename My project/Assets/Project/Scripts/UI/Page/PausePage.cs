@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using Manager;
+using UI;
 using UnityEngine;
 using UnityWeld;
 //using static UnityEditor.Progress;
 
-public class PausePage : ViewModel
+public class PausePage : PageViewModel
 {
     RectTransform rect;
     protected override void Awake() {
