@@ -18,6 +18,6 @@ namespace Data
     public enum SFXEnum
     {
         NONE,
-        EAT,
+        Hit,
     }
 }

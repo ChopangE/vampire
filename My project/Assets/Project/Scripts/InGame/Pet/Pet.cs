@@ -12,18 +12,29 @@ public class Pet : MonoBehaviour
     SpriteRenderer sprite;
     void Awake()
     {
-        playerPos = GameManager.Instance.player.transform;
         sprite = GetComponent<SpriteRenderer>();
     }
 
     void Start()
     {
-        transform.position = playerPos.position;
+        if(GameManager.Instance != null && GameManager.Instance.player != null)
+        {
+            playerPos = GameManager.Instance.player.transform;
+            transform.position = playerPos.position;
+        }
 
     }
     void Update()
     {
-        if (!GameManager.Instance.isLive) return;
+        if (GameManager.Instance == null || !GameManager.Instance.isLive) return;
+        
+        if(playerPos == null && GameManager.Instance.player != null)
+        {
+            playerPos = GameManager.Instance.player.transform;
+        }
+        
+        if(playerPos == null) return;
+        
         if((transform.position - playerPos.position).magnitude > 10)
         {
             transform.position = playerPos.position;

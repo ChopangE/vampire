@@ -25,9 +25,9 @@ namespace Manager
         [BoxGroup("세부 설정")] [LabelText("최대 데미지 텍스트 수")] [SerializeField]
         private int maxDamageTextCount = 50;
 
+        public bool showDamageText = true;
         private ObjectPool<PoolObject> damageTextPool;
         private List<DamageText> spawnedDamageTextList = new List<DamageText>();
-
         private void Awake()
         {
             DOTween.SetTweensCapacity(500, 200);
@@ -40,6 +40,7 @@ namespace Manager
 
         public void SpawnDamageText(Vector3 position, float damage, bool isCritical = false, bool isBonus = false)
         {
+            if (!showDamageText) return;
             if (activeObjCount >= maxDamageTextCount) return;
 
             DamageText damageText = damageTextPool.PullGameObject(position, Quaternion.identity, DamageTextGroup)
