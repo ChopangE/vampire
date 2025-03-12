@@ -15,7 +15,7 @@ namespace UI
         [SerializeField] private AzePatternVideoViewModel azePatternVideoViewModel;
         private const int ARROW_COUNT = 10;
         private const float TIME_LIMIT = 5f;
-        private const float CLOSE_DELAY = 5f; // 성공 후 페이지 닫기까지의 지연 시간
+        private const float CLOSE_DELAY = 3f; // 성공 후 페이지 닫기까지의 지연 시간
         
         private List<Vector2> arrowDirections = new List<Vector2>();
         private int currentArrowIndex = 0;

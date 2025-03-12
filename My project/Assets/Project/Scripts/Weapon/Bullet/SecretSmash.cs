@@ -13,6 +13,12 @@ public class SecretSmash : Bullet
     [SerializeField] private float finalBossDamageRatio = 0.4f;
     private void OnEnable() {
         Init(0, -1, Vector3.zero, false, 1.05f, 0, 0);
+        var cc = FindObjectOfType<CameraControl>();
+        cc.ShakeCamera();
+    }
+    public void StopShake() {
+        var cc = FindObjectOfType<CameraControl>();
+        cc.StopCameraShake();
     }
     public override void Init(float damage, int per, Vector3 dir, bool canStun = false,
     float duration = 0f, float criticalDamagePercent = 0f, float criticalChancePercent = 0f)
