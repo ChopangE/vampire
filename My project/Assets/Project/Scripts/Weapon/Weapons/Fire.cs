@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Data;
+using Manager;
 
 
 public class Fire : Weapon
@@ -13,7 +15,7 @@ public class Fire : Weapon
     public override void ExecuteAttack()
     {
         if (!player.scan.nearestTarget) return;
-
+        Global.SoundManager.PlaySFX(SFXEnum.ThrowRock);
         Vector3 targetPos = player.scan.nearestTarget.position;
         Vector3 dir = (targetPos - transform.position).normalized;
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;

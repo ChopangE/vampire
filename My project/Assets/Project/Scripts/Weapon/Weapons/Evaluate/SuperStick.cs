@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Data;
+using Manager;
 
 public class SuperStick : Weapon
 {
@@ -11,6 +13,7 @@ public class SuperStick : Weapon
     }
     public override async void ExecuteAttack()
     {
+        Global.SoundManager.PlaySFX(SFXEnum.Staff_270Degree);
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
         float dir = player.GetComponent<SpriteRenderer>().flipX ? -1f : 1f;
         

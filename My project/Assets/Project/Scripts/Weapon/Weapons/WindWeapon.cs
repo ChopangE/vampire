@@ -1,15 +1,17 @@
 using Cysharp.Threading.Tasks;
 using Data;
+using Manager;
 using Manager.InGame;
 using SO;
 using UnityEngine;
 public class WindWeapon : Weapon
 {
+    [SerializeField] private SFXEnum sfxEnum;
     public override void ExecuteAttack()
     {
         float angleStep = 360f / count;  // count 기반으로 각도 간격 계산
         float startDistance = 1.5f;
-
+        Global.SoundManager.PlaySFX(sfxEnum);
         for (int i = 0; i < count; i++)
         {
             float angle = i * angleStep;  // 현재 돌풍의 각도

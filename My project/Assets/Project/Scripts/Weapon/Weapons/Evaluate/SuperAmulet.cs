@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Manager;
 public class SuperAmulet : Weapon
 {
     public override async UniTask Init()

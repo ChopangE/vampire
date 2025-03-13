@@ -4,6 +4,8 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using SO;
 using Manager.InGame;
+using Data;
+using Manager;
 public class DaggerWind : Melee
 {
     public int windCount = 2;  // 기본 검풍 개수
@@ -27,6 +29,7 @@ public class DaggerWind : Melee
     {
         for (int i = 0; i < windCount; i++)
         {
+            Global.SoundManager.PlaySFX(SFXEnum.SwordWind);
             Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
             bullet.position = transform.position;
             

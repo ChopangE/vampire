@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Data;
+using Manager;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -27,6 +29,7 @@ public class WhirlwindFloor : FloorWeapon
     }
 
     public void SpawnWhirlwind() {
+        Global.SoundManager.PlaySFX(SFXEnum.WindFloor);
         Vector3 playerPos = player.transform.position;
         spawnPos = playerPos + new Vector3(Random.Range(-3f,3f), Random.Range(-3f, 3f),0f);
         

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
+using Manager;
 using UnityEngine;
 
 public class TornadoBullet : Bullet
@@ -13,19 +15,25 @@ public class TornadoBullet : Bullet
     private float directionTimer;
     private Vector3 currentDirection;
     private float aliveTime;
+    private float soundPlayInterval = 0.5f;  // 효과음 재생 주기
+    private float soundTimer;  // 효과음 재생 타이머
 
     public override void Init(float damage, int per, Vector3 dir, bool clockwise, float duration = 0, float criticalDamagePercent = 0, float criticalChancePercent = 0)
     {
         base.Init(damage, per, dir, false, duration, criticalDamagePercent, criticalChancePercent);
         rb.velocity = Vector2.zero;
         
-
         // 초기 랜덤 방향 설정
         SetRandomDirection();
         directionTimer = directionChangeTime;
         aliveTime = 0f;
+        soundPlayInterval = Global.SoundManager.GetSFXClipLength(SFXEnum.Tornado);
+        soundTimer = 0;
         
         StartCoroutine(MovementCoroutine());
+    }
+    private void OnDisable() {
+        Global.SoundManager.StopSFX();
     }
 
     private void SetRandomDirection()
@@ -41,12 +49,20 @@ public class TornadoBullet : Bullet
             // 시간 업데이트
             aliveTime += Time.deltaTime;
             directionTimer -= Time.deltaTime;
+            soundTimer -= Time.deltaTime;  // 사운드 타이머 업데이트
 
             // 방향 전환 시간이 되면 새로운 랜덤 방향 설정
             if (directionTimer <= 0)
             {
                 SetRandomDirection();
                 directionTimer = directionChangeTime;
+            }
+
+            // 효과음 재생
+            if (soundTimer <= 0)
+            {
+                Global.SoundManager.PlaySFX(SFXEnum.Tornado);  // 효과음 재생
+                soundTimer = soundPlayInterval;  // 타이머 리셋
             }
 
             // 화면 경계 체크 및 방향 전환

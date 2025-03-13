@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Data;
+using Manager;
 
 public class Dagger : Melee
 {
@@ -12,6 +14,7 @@ public class Dagger : Melee
     public override void ExecuteAttack()
     {
         SetAttackDirection();
+        Global.SoundManager.PlaySFX(SFXEnum.DaggerSwing);
         GameObject sword = SpawnSword();
         ConfigureSword(sword, null, true);
     }

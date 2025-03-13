@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 using static UnityEngine.RuleTile.TilingRuleOutput;
 
@@ -42,6 +43,7 @@ public class ExplodingAmulet : MonoBehaviour
     }
 
     public void Exploding() {
+        Global.SoundManager.PlaySFX(Data.SFXEnum.ExplosionCharm);
         sprite.color = new Color(1,1,1,0);
         transform.GetChild(0).gameObject.SetActive(true);
         dir = Vector3.zero;

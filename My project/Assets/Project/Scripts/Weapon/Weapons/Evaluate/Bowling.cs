@@ -4,6 +4,8 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using SO;
 using Manager.InGame;
+using Data;
+using Manager;
 
 public class Bowling : Weapon
 {
@@ -16,7 +18,7 @@ public class Bowling : Weapon
     public override void ExecuteAttack()
     {
         if (!player.scan.nearestTarget) return;
-
+        Global.SoundManager.PlaySFX(SFXEnum.CatapultRockDrop);
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
 
         bullet.position = transform.position;

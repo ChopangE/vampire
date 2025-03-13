@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityWeld;
 using UnityWeld.Binding;
 using UnityEngine.Video;
+using Manager;
+using Data;
 
 namespace UI
 {
@@ -43,6 +45,7 @@ namespace UI
         // 비디오 재생
         public void PlayVideo()
         {
+            Global.SoundManager.PlaySFX(SFXEnum.UltimateEarthquake);
             IsVideoPlaying = true;
             videoPlayer.SetActive(true);
         }

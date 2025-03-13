@@ -98,6 +98,7 @@ public class GameManager : MMSingleton<GameManager>
             }
             else
             {
+                Global.SoundManager.PlayHitSFX(Data.SFXEnum.HGD_Hit);
                 _health = Mathf.Max(0, _health - reducedDamage);
             }
 
@@ -159,9 +160,9 @@ public class GameManager : MMSingleton<GameManager>
         DamageTextPoolManager = FindObjectOfType<DamageTextPoolManager>();
         PassiveManager = FindObjectOfType<PassiveManager>();
         _inGameMainPage = Global.UIManager.OpenPage<InGameMainPage>();
-
-
-        _health = maxHealth;
+        
+        maxHealth = baseMaxHealth;
+        Health = maxHealth;
         _shield = 0;
         _defense = baseDefense;
         PassiveManager.Init();
@@ -217,6 +218,7 @@ public class GameManager : MMSingleton<GameManager>
     public void GetExp(int exp)
     {
         curExp += (int)(exp * expBonus);
+        Global.SoundManager.PlaySFX(Data.SFXEnum.GetExpStone);
         if (curExp >= nextExp[level])
         {
             curExp = 0;
@@ -227,6 +229,7 @@ public class GameManager : MMSingleton<GameManager>
     public void LevelUp(bool isEvaluation = false)
     {
         level = Mathf.Min(level + 1, nextExp.Length - 1);
+        Global.SoundManager.PlaySFX(Data.SFXEnum.LevelUp);
         ShowLevelUp(isEvaluation);
     }
 
@@ -247,6 +250,7 @@ public class GameManager : MMSingleton<GameManager>
 
     public void GameOver()
     {
+        Global.SoundManager.PlaySFX(Data.SFXEnum.HGD_Death);
         StartCoroutine(GameOverRoutine());
     }
 

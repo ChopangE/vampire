@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using Data;
+using Manager;
 using UnityEngine;
 public class Tornado : Weapon
 {

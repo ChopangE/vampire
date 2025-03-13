@@ -98,7 +98,7 @@ Animator:
   m_GameObject: {fileID: 2813218963295040058}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: dca52ccedc08d7643a79250232cdcb0a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 68753aedefb5ad44a8c3a93a974d5a9f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -148,8 +148,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
+  criticalDamagePercent: 0
+  criticalChancePercent: 0
   per: -1
   rb: {fileID: 0}
+  duration: 0
+  canStun: 0
 --- !u!50 &6591151570960129298
 Rigidbody2D:
   serializedVersion: 4

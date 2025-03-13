@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6932365772735857769}
   - component: {fileID: 6932365772735857770}
   - component: {fileID: 1986117579607720795}
-  - component: {fileID: 4492174534887758658}
+  - component: {fileID: -1251660794942812751}
   m_Layer: 0
   m_Name: Trap
   m_TagString: Bullet
@@ -146,7 +146,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4492174534887758658
+--- !u!114 &-1251660794942812751
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -155,10 +155,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6932365772735857766}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de42e593ec2402d4bb2fada5c6a40423, type: 3}
+  m_Script: {fileID: 11500000, guid: 8e234fe42f55f444db62578c8e99066d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  criticalDamagePercent: 0
+  criticalChancePercent: 0
   per: -100
   rb: {fileID: 0}
+  duration: 0
   canStun: 0

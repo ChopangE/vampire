@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
+using Manager;
 using UnityEngine;
 
 public class SecretSmash : Bullet
@@ -13,6 +15,7 @@ public class SecretSmash : Bullet
     [SerializeField] private float finalBossDamageRatio = 0.4f;
     private void OnEnable() {
         Init(0, -1, Vector3.zero, false, 1.05f, 0, 0);
+        Global.SoundManager.PlaySFX(SFXEnum.UltimateSwing);
         var cc = FindObjectOfType<CameraControl>();
         cc.ShakeCamera();
     }

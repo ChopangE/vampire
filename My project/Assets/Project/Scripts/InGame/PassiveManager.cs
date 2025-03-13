@@ -13,7 +13,7 @@ public class PassiveManager : MonoBehaviour
         {
             case PassiveId.Health:
                 // 레벨 0은 기본 체력, 1레벨부터 10씩 증가
-                GameManager.Instance.maxHealth = GameManager.Instance.baseMaxHealth + (10 * Math.Max(0, currentLevel));
+                GameManager.Instance.baseMaxHealth = GameManager.Instance.baseMaxHealth + (10 * Math.Max(0, currentLevel));
                 break;
             case PassiveId.Speed:
                 // 레벨 0은 기본 속도, 1레벨부터 5%씩 증가

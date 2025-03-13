@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Data;
+using Manager;
 
 
 public class WindShuriken : Weapon
@@ -12,6 +14,7 @@ public class WindShuriken : Weapon
     }
     public override void ExecuteAttack()
     {
+        Global.SoundManager.PlaySFX(SFXEnum.WindShuriken);
         Transform eliteOrBoss = player.scan.GetNearstEliteOrBoss();
         if (eliteOrBoss != null)
         {

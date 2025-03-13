@@ -131,6 +131,7 @@ public class Enemy : DamageObject
         if (!collision.CompareTag("Bullet")) return;
         if (collision.TryGetComponent(out Bullet bullet))
         {
+            Global.SoundManager.PlayHitSFX(Data.SFXEnum.Monster_Hit_1, isShootCooldown: false);
             if (bullet is SecretSmash)
             {
                 // 일반 몹과 엘리트 몹만 즉사 처리 (중간 보스와 최종 보스는 SecretSmash에서 처리)
@@ -151,10 +152,18 @@ public class Enemy : DamageObject
                 CalculateDamage(collision.GetComponent<Bullet>().CalculateDamage());
             }
 
-            if (collision.GetComponent<WhirlBullet>())
+            if (collision.TryGetComponent(out WhirlBullet whirlBullet))
             {
                 targetVec = collision.GetComponent<Rigidbody2D>().position;
                 if (gameObject.activeSelf) StartCoroutine(KnockBack());
+            }
+            if (collision.TryGetComponent(out Trap trap))
+            {
+                Global.SoundManager.PlaySFX(Data.SFXEnum.SpikeFloor);
+            }
+            if (collision.TryGetComponent(out MoveSpikeBullet moveSpikeBullet))
+            {
+                Global.SoundManager.PlaySFX(Data.SFXEnum.SpikeFloor);
             }
         }
 
