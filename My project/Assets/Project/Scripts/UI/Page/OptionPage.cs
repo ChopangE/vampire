@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Data;
 using Manager;
 using UnityEngine;
 using UnityWeld;
@@ -31,6 +32,12 @@ namespace UI.Page
             Global.SoundManager.StopBGM(false);
         }
         [Binding]
+        public void OnClickKeepPlaying()
+        {
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
+            Global.UIManager.ClosePage();
+        }
+        [Binding]
         public void OnClickGeneralView()
         {
             foreach (var view in optionPageViews)
@@ -41,6 +48,7 @@ namespace UI.Page
                 }
                 else view.gameObject.SetActive(false);
             }
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
 
         [Binding]
@@ -54,6 +62,7 @@ namespace UI.Page
                 }
                 else view.gameObject.SetActive(false);
             }
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
 
 
@@ -68,6 +77,7 @@ namespace UI.Page
                 }
                 else view.gameObject.SetActive(false);
             }
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
         [Binding]
         public void OnClickKeyView()
@@ -80,6 +90,7 @@ namespace UI.Page
                 }
                 else view.gameObject.SetActive(false);
             }
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
     }
 }

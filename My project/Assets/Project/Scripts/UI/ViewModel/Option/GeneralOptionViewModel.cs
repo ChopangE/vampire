@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
 using Manager;
 using UnityEngine;
 using UnityWeld;
@@ -45,6 +46,7 @@ namespace UI
                 I2.Loc.LocalizationManager.CurrentLanguage = "Korean";
                 Language = "한국어";
             }
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
 
 
@@ -60,6 +62,7 @@ namespace UI
             else {
                 UnityEngine.SceneManagement.SceneManager.LoadScene("LoadingScene");
             }
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
 
         [Binding]
@@ -68,6 +71,7 @@ namespace UI
             Global.UIManager.ClosePage();
             // 게임 종료 또는 메인 메뉴로 돌아가기
             UnityEngine.SceneManagement.SceneManager.LoadScene("Map");
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
 
         [Binding]
@@ -76,6 +80,7 @@ namespace UI
             // 설정 저장 기능
             PlayerPrefs.SetString("Language", I2.Loc.LocalizationManager.CurrentLanguage);
             PlayerPrefs.Save();
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
     }
 }

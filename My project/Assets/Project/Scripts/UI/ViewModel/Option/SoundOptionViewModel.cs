@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
 using Manager;
 using UnityEngine;
 using UnityWeld;
@@ -164,6 +165,7 @@ namespace UI
         public void OnClickBgmMute()
         {
             BgmMute = !BgmMute;
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
             // 테스트용 사운드 재생 (선택 사항)
             if (Global.SoundManager != null && !BgmMute)
             {
@@ -176,6 +178,7 @@ namespace UI
         public void OnClickSfxMute()
         {
             SfxMute = !SfxMute;
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
             // 테스트용 사운드 재생 (선택 사항)
             if (Global.SoundManager != null && !SfxMute)
             {
@@ -188,6 +191,7 @@ namespace UI
         public void OnClickHitMute()
         {
             HitMute = !HitMute;
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
             // 테스트용 사운드 재생 (선택 사항)
             if (Global.SoundManager != null && !HitMute)
             {
@@ -237,6 +241,7 @@ namespace UI
             PlayerPrefs.SetInt("SFXMute", _sfxMute ? 1 : 0);
             PlayerPrefs.SetInt("HitMute", _hitMute ? 1 : 0);
             PlayerPrefs.Save();
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
 
         private void LoadSettings()

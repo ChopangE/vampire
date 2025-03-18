@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
 using Manager;
 using UnityEngine;
 using UnityWeld;
@@ -235,6 +236,7 @@ namespace UI
         public void OnClickFullScreen()
         {
             FullScreen = !FullScreen;
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
 
         [Binding]
@@ -243,6 +245,7 @@ namespace UI
             ShowDamage = !ShowDamage;
             GameManager.DamageTextPoolManager.showDamageText = ShowDamage;
             PlayerPrefs.SetInt("ShowDamage", ShowDamage ? 1 : 0);
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
 
         [Binding]
@@ -251,6 +254,7 @@ namespace UI
             _resolutionIndex = (_resolutionIndex + 1) % _resolutions.Length;
             OnPropertyChanged(nameof(ResolutionIndex));
             ApplyResolution();
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
 
         [Binding]
@@ -261,6 +265,7 @@ namespace UI
             PlayerPrefs.SetInt("ShowDamage", _showDamage ? 1 : 0);
             PlayerPrefs.SetInt("FullScreen", _fullScreen ? 1 : 0);
             PlayerPrefs.Save();
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
 
         private void LoadSettings()
