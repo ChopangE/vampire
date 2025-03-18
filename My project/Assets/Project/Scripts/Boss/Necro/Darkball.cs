@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
+using Manager;
 using UnityEngine;
 
 public class Darkball : MiddleBossBullet
@@ -19,6 +21,7 @@ public class Darkball : MiddleBossBullet
         transform.rotation = Quaternion.FromToRotation(Vector3.right, dir);
         addPower = 7.0f;
         rb.AddForce(dir * addPower, ForceMode2D.Impulse);
+        Global.SoundManager.PlaySFX(SFXEnum.DarkFireBall);
     }
     protected override void OnTriggerEnter2D(Collider2D collision) {
         base.OnTriggerEnter2D(collision);

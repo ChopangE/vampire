@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2290868338308937975}
   - component: {fileID: 2290868338308937974}
   - component: {fileID: 2290868338308937973}
-  - component: {fileID: 2290868338308937968}
+  - component: {fileID: 155277063897377115}
   m_Layer: 0
   m_Name: IceFall
   m_TagString: Untagged
@@ -103,7 +103,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &2290868338308937968
+--- !u!114 &155277063897377115
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2290868338308937972}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ad40b8bf8c8d8847a327b91399625ce, type: 3}
+  m_Script: {fileID: 11500000, guid: 642494378ca120b4c9fcfcdcbd160f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 10
@@ -190,7 +190,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_Sprite: {fileID: 375906794, guid: 7731bdd05a66e6e4fae8481544e2dd98, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

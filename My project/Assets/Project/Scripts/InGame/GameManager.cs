@@ -44,10 +44,11 @@ public class GameManager : MMSingleton<GameManager>
     public WeaponController weaponController;
     public Player player;
     public PoolManager pool;
-    public GameObject spawner;
+    public Spawner spawner;
     public GameObject shieldObject;
     public GameObject bossLevel;
     public Transform[] stages;
+    public bool isStageClear = false;
     #endregion
 
     #region Private Fields
@@ -56,6 +57,8 @@ public class GameManager : MMSingleton<GameManager>
     private float _defense;
     private int _curStage;
     private InGameMainPage _inGameMainPage;
+    private Queue<bool> _levelUpQueue = new Queue<bool>();  // 레벨업 대기열
+    private bool _isProcessingLevelUp;  // 레벨업 UI 처리 중인지 여부
     #endregion
 
     #region Properties
@@ -69,6 +72,7 @@ public class GameManager : MMSingleton<GameManager>
         get => _health;
         set
         {
+            if(!isLive) return;
             float damage = _health - value;
             if (damage <= 0)
             {
@@ -172,7 +176,6 @@ public class GameManager : MMSingleton<GameManager>
     {
         _curStage = Global.UserDataManager.curStage;
         player.transform.position = stages[_curStage].position;
-
         if (_curStage == Global.StageManager.MAX_STAGE_COUNT * Global.StageManager.MAX_STAGE_LEVEL)
         {
             SetupFinalBossStage();
@@ -186,29 +189,26 @@ public class GameManager : MMSingleton<GameManager>
     private void SetupFinalBossStage()
     {
         bossLevel.SetActive(true);
-        spawner.SetActive(false);
+        spawner.gameObject.SetActive(false);
         _inGameMainPage.ActiveTimer = false;
     }
 
     private void SetupNormalStage()
     {
+        bossLevel.SetActive(false);
+        spawner.gameObject.SetActive(true);
         if (_curStage % Global.StageManager.MAX_STAGE_COUNT == Global.StageManager.MAX_STAGE_COUNT - 1)
         {
-            SpawnStageBoss().Forget();
+            int bossIndex = 0;
+            if(_curStage == 3) bossIndex = 0;
+            else if(_curStage == 7) bossIndex = 1;
+            else if(_curStage == 11) bossIndex = 2;
+            spawner.SpawnMiddleBoss(bossIndex);
+            _inGameMainPage.ActiveTimer = false;
         }
-        bossLevel.SetActive(false);
-        spawner.SetActive(true);
         _inGameMainPage.ActiveTimer = true;
 
     }
-
-    private async UniTaskVoid SpawnStageBoss()
-    {
-        GameObject bossTran = await pool.GetAsync(11 + Global.StageManager.stageCount);
-        Global.StageManager.ChangeStage(Global.UserDataManager.curStage + 1);
-        bossTran.transform.position = stages[_curStage].position + new Vector3(0, 10f, 0);
-    }
-
 
 
 
@@ -217,35 +217,78 @@ public class GameManager : MMSingleton<GameManager>
     #region Game Progress Methods
     public void GetExp(int exp)
     {
+        if (!isLive) return;
+        
         curExp += (int)(exp * expBonus);
         Global.SoundManager.PlaySFX(Data.SFXEnum.GetExpStone);
-        if (curExp >= nextExp[level])
+        
+        // 경험치가 충분하면 레벨업 처리
+        while (curExp >= GetNextExpRequired())
         {
-            curExp = 0;
-            LevelUp();
+            curExp -= GetNextExpRequired();
+            QueueLevelUp();
+        }
+        
+        if (!_isProcessingLevelUp)
+        {
+            ProcessNextLevelUp();
         }
     }
 
-    public void LevelUp(bool isEvaluation = false)
+    public int GetNextExpRequired()
     {
-        level = Mathf.Min(level + 1, nextExp.Length - 1);
+        // 최대 레벨에 도달했을 경우 마지막 경험치 요구량 반환
+        return level >= nextExp.Length ? nextExp[nextExp.Length - 1] : nextExp[level];
+    }
+    public void QueueEvaluateLevelUp()
+    {
+        _levelUpQueue.Enqueue(true);  // 평가 레벨업
+        ProcessNextLevelUp();
+    }
+
+    private void QueueLevelUp()
+    {
+        level += 1;  // 레벨은 계속 증가 (표시용)
+        _levelUpQueue.Enqueue(false);  // 일반 레벨업
+    }
+
+    private void ProcessNextLevelUp()
+    {
+        if (_levelUpQueue.Count == 0) return;
+        
+        _isProcessingLevelUp = true;
+        isLive = false;  // 레벨업 처리 중 게임 일시정지
         Global.SoundManager.PlaySFX(Data.SFXEnum.LevelUp);
-        ShowLevelUp(isEvaluation);
+        ShowLevelUp(_levelUpQueue.Dequeue());
     }
 
     public void ShowLevelUp(bool isEvaluation = false)
     {
         _inGameMainPage.ShowLevelUP(isEvaluation);
     }
+
+    // InGameMainPage에서 레벨업 UI가 닫힐 때 호출할 메서드
+    public void OnLevelUpComplete()
+    {
+        _isProcessingLevelUp = false;
+        isLive = true;  // 게임 재개
+        
+        if (_levelUpQueue.Count > 0)
+        {
+            ProcessNextLevelUp();
+        }
+    }
     #endregion
 
     #region Game Control Methods
     public void StageClear()
     {
+        if(isStageClear) return;
+        isStageClear = true;
         Global.UserDataManager.curStage++;
         Global.DataManager.SaveData();
-        Global.UIManager.CloseAllPages();
-        SceneManager.LoadScene("Map");
+        Global.SoundManager.PlaySFX(Data.SFXEnum.Shop_StageOpen);
+        StartCoroutine(StageClearRoutine());
     }
 
     public void GameOver()
@@ -264,6 +307,14 @@ public class GameManager : MMSingleton<GameManager>
         fade.FadeOut(true);
     }
 
+    private IEnumerator StageClearRoutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Stop();
+        var pages = Global.UIManager.GetPages<InGameMainPage>();
+        FadeScript fade = pages[0].GetComponent<FadeScript>();
+        fade.FadeOut(isGameWin: true);
+    }
     public void Stop()
     {
         isLive = false;

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
+using Manager;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -38,6 +40,7 @@ public class Thunder : MiddleBossBullet {
     }
 
     void Attack() {
+        Global.SoundManager.PlaySFX(SFXEnum.Blink);
         sprite.color = new Color(1, 0, 0, 0);
         coll.enabled = true;
         Transform ch = transform.GetChild(0);

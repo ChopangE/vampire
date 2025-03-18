@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
+using Manager;
 using UnityEngine;
 
 public class RaserRange : MiddleBossBullet {
@@ -36,7 +38,6 @@ public class RaserRange : MiddleBossBullet {
         anim.speed = 0f;
         isDone = false;
         isAttack = false;
-
     }
     void Update() {
         transform.position = mBoss.transform.position;
@@ -63,6 +64,7 @@ public class RaserRange : MiddleBossBullet {
     void CallRaser() {
         sprite.color = Color.white;
         anim.speed = 1f;
+        Global.SoundManager.PlaySFX(SFXEnum.Dragon_Laser);
     }
     public void BoxOn() {
         isAttack = true;

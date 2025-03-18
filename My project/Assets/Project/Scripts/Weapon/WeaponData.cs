@@ -9,7 +9,7 @@ namespace Data.WeaponData
     {
         Wind = 0,
         Fire = 1,
-        Bomb = 2,
+        Spike = 2,
         Explosion = 3,
         Breath = 4,
         Clone = 5,

@@ -35,10 +35,19 @@ namespace UI
         {
             // 진화형이 아닌 일반 아이템의 경우에만 구매 여부 체크
             if (!_shopItem.IsEvolutionItem && IsPurchased)
+            {
+                Global.SoundManager.PlaySFX(SFXEnum.GetMapItem);
                 return;
+            }
             
             if (!Global.GoldManager.CanPurchase(_shopItem.Price))
+            {
+                Global.SoundManager.PlaySFX(SFXEnum.GetMapItem);
                 return;
+            }
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_ItemBuy);
+            if(_shopItem.ItemType == ShopItemType.Passive)
+                Global.SoundManager.PlaySFX(SFXEnum.Shop_SingleBuy, delay: 0.5f);
 
             Global.GoldManager.SubGold(_shopItem.Price);
             

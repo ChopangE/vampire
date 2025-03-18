@@ -5,6 +5,7 @@ using Data;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEditor;
+using Cysharp.Threading.Tasks; // UniTask를 사용하기 위한 네임스페이스 추가
 
 namespace Manager
 {
@@ -105,14 +106,29 @@ namespace Manager
             bgmSource.Play();
         }
 
-        public void PlaySFX(SFXEnum name, float volume = -1)
+        public void PlaySFX(SFXEnum name, float volume = -1, float delay = 0)
         {
             SFXSound s = FindSFX(name, sfxArr);
             if (s == null || s.name == SFXEnum.NONE) return;
 
             // volume이 -1이면 저장된 볼륨 사용, 아니면 지정된 볼륨 사용
             float playVolume = volume < 0 ? _sfxVolume : volume;
-            sfxSource.PlayOneShot(s.clip, playVolume);
+
+            // delay가 0 이상인 경우, 대기 후 사운드 재생
+            if (delay > 0)
+            {
+                PlaySFXWithDelay(s.clip, playVolume, delay).Forget(); // UniTask를 사용하여 비동기적으로 재생
+            }
+            else
+            {
+                sfxSource.PlayOneShot(s.clip, playVolume); // 즉시 재생
+            }
+        }
+
+        private async UniTaskVoid PlaySFXWithDelay(AudioClip clip, float volume, float delay)
+        {
+            await UniTask.Delay((int)(delay * 1000)); // 밀리초로 변환하여 대기
+            sfxSource.PlayOneShot(clip, volume); // 사운드 재생
         }
 
         public void PlayHitSFX(SFXEnum name, float volume = -1, bool isShootCooldown = true)
@@ -164,13 +180,41 @@ namespace Manager
             }
             return 0f;  // 클립이 없으면 0 반환
         }
-        public void StopSFX(bool isStop = true)
+        public void StopSFX(SFXEnum name = SFXEnum.NONE, bool isStop = true)
         {
             if (sfxSource == null) return;
-            if (isStop)
-                sfxSource.Stop();
+
+            // name이 NONE일 경우 모든 효과음 중지 또는 재생
+            if (name == SFXEnum.NONE)
+            {
+                if (isStop)
+                {
+                    sfxSource.Stop();
+                }
+                else
+                {
+                    if (sfxSource.clip != null)
+                    {
+                        sfxSource.Play(); // 현재 clip이 있을 때만 재생
+                    }
+                }
+            }
             else
-                sfxSource.Play();
+            {
+                // 특정 효과음이 재생 중일 때 중지
+                if (isStop && sfxSource.clip != null && sfxSource.clip.name == name.ToString())
+                {
+                    sfxSource.Stop(); // 효과음 중지
+                }
+                else if (!isStop)
+                {
+                    // 현재 clip이 없거나 다른 clip이 재생 중일 때만 재생
+                    if (sfxSource.clip == null || sfxSource.clip.name != name.ToString())
+                    {
+                        sfxSource.Play(); // 효과음 재생
+                    }
+                }
+            }
         }
 
         public void StopBGM(bool isStop = true)

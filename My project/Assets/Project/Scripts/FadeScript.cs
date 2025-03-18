@@ -19,8 +19,8 @@ public class FadeScript : MonoBehaviour
         StartCoroutine(FadeFlow());
     }
 
-    public void FadeOut(bool isGameOver = false) {
-        StartCoroutine(FadeOutFlow(isGameOver));
+    public void FadeOut(bool isGameOver = false, bool isGameWin = false) {
+        StartCoroutine(FadeOutFlow(isGameOver, isGameWin));
     }
 
 
@@ -38,21 +38,23 @@ public class FadeScript : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator FadeOutFlow(bool isGameOver = false) {
+    IEnumerator FadeOutFlow(bool isGameOver = false, bool isGameWin = false) {
         panel.gameObject.SetActive(true);
         Color alpha = panel.color;
         time = 0f;
         float maxAlpha = 1f;
-        if(isGameOver) maxAlpha = 0.5f;
+        if(isGameOver || isGameWin) maxAlpha = 0.5f;
         while (alpha.a < maxAlpha) {
             time += Time.deltaTime / F_time;
             alpha.a = Mathf.Lerp(0, maxAlpha, time);
             panel.color = alpha;
             yield return null;
         }
-        Global.UIManager.OpenPage<GameOverPage>();
+        if(isGameOver) Global.UIManager.OpenPage<GameOverPage>();
+        else if(isGameWin) Global.UIManager.OpenPage<GameWinPage>();
         yield return new WaitForSeconds(2f);
-        if(isGameOver) {
+        if(isGameOver || isGameWin) {
+            GameManager.Instance.isStageClear = false;
             SceneManager.LoadScene("Map");
         }
         yield return null;

@@ -49,7 +49,7 @@ public class MiddleBoss : Enemy {
     }
 
     protected virtual void MiddleBossDead() {
-        
+        GameManager.Instance.StageClear();
     }
 
     public void SetDoing() {

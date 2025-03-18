@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using Data;
+using Manager;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -60,6 +62,7 @@ public class Golem : MiddleBoss
         Gizmos.DrawWireCube(transform.position, attackSize);
     }
     public void Melee_() {
+        Global.SoundManager.PlaySFX(SFXEnum.Golem_Punch);
         Collider2D coll = Physics2D.OverlapBox(transform.position, attackSize, 0, targetLayer);
         if (coll) {
             coll.gameObject.GetComponent<Rigidbody2D>().AddForce((coll.transform.position - transform.position).normalized * 100f, ForceMode2D.Impulse);

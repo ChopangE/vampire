@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
+using Manager;
 using UnityEngine;
 
 public class GroundAttacking : MonoBehaviour
@@ -13,6 +15,7 @@ public class GroundAttacking : MonoBehaviour
 
     void OnEnable()
     {
+        Global.SoundManager.PlaySFX(SFXEnum.Golem_HandDown);
         coll.enabled = false;
     }
 

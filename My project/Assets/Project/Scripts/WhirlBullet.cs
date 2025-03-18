@@ -41,7 +41,7 @@ public class WhirlBullet : Bullet
         timer2 += Time.deltaTime;
         soundTimer -= Time.deltaTime;  // 사운드 타이머 업데이트
 
-        if (timer2 > 0.2f) {
+        if (timer2 > 0.01f) {
             timer2 = 0f;
             Collider2D[] enemyColls = Physics2D.OverlapCircleAll(transform.position, coll.radius, LayerMask.NameToLayer("Enemy"));
             foreach (Collider2D enemyColl in enemyColls) {

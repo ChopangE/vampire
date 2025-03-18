@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
+using Data;
 using Manager;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -68,6 +69,7 @@ public class StageMap : MonoBehaviour
                 stages[i].SetActive(false);
             }
         }
+        Global.SoundManager.PlaySFX(SFXEnum.Shop_PageTurn);
     }
     [Binding]
     public void Stage2() {
@@ -79,6 +81,7 @@ public class StageMap : MonoBehaviour
                 stages[i].SetActive(false);
             }
         }
+        Global.SoundManager.PlaySFX(SFXEnum.Shop_PageTurn);
     }
     [Binding]
     public void Stage3() {
@@ -90,6 +93,7 @@ public class StageMap : MonoBehaviour
                 stages[i].SetActive(false);
             }
         }
+        Global.SoundManager.PlaySFX(SFXEnum.Shop_PageTurn);
     }
     private void OnStageChanged()
     {

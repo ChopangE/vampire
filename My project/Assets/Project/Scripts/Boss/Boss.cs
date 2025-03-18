@@ -1,4 +1,7 @@
 using Cinemachine;
+using Cysharp.Threading.Tasks;
+using Data;
+using Manager;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -21,6 +24,8 @@ public class Boss : MonoBehaviour
     float Timer;
     float Timer2;
     int levelIndex;
+    private bool isPlayingWitchFireTile = false;
+
     void Awake() {
         coll = GetComponent<Collider2D>();
         sprite = GetComponent<SpriteRenderer>();
@@ -34,7 +39,25 @@ public class Boss : MonoBehaviour
         weapons[0].Shut(0, 5);
     }
     public void Crows() {
-        weapons[0].Range(2, 10);
+        
+        // 효과음 길이만큼 대기
+        WaitForCrowSound().Forget();
+    }
+
+    private async UniTask WaitForCrowSound()
+    {
+        
+        // 효과음 재생
+        Global.SoundManager.PlaySFX(SFXEnum.Witch_Crow_1);
+
+        // Witch_Crow_1 효과음의 길이 가져오기
+        float soundLength = Global.SoundManager.GetSFXClipLength(SFXEnum.Witch_Crow_1);
+        
+        // 효과음 길이만큼 대기
+        await UniTask.Delay((int)(soundLength * 1000)); // 밀리초로 변환하여 대기
+        
+        // 효과음 재생
+        Global.SoundManager.PlaySFX(SFXEnum.Witch_Crow_1);
     }
 
     void Update() {
@@ -42,9 +65,7 @@ public class Boss : MonoBehaviour
         if (!isLive) {
             transform.Translate(0, -5 * Time.deltaTime, 0);
             StartCoroutine(StageClear());
-        }
-
-        else {
+        } else {
             if (BossManager.Instance.phase >= 2) {
                 Timer += Time.deltaTime;
                 if (Timer > 30f) {
@@ -52,8 +73,17 @@ public class Boss : MonoBehaviour
                     bossLevel[levelIndex++].SetActive(true);
                     levelIndex = Mathf.Min(bossLevel.Length - 1, levelIndex);
                 }
+
+                if (IsAnyBossLevelActive() && !isPlayingWitchFireTile) {
+                    isPlayingWitchFireTile = true;
+                    Global.SoundManager.PlaySFX(SFXEnum.Witch_FireTile_1);
+                }
             }
 
+            if (isPlayingWitchFireTile && !IsAnyBossLevelActive()) {
+                isPlayingWitchFireTile = false;
+                Global.SoundManager.StopSFX(SFXEnum.Witch_FireTile_1);
+            }
 
             Collider2D hit = Physics2D.OverlapBox(transform.position - new Vector3(0, 7.5f, 0), new Vector2(13, 4), 0, LayerMask.GetMask("Player"));
 
@@ -108,6 +138,7 @@ public class Boss : MonoBehaviour
     }
 
     public void EarthQuakeOn() {
+        Global.SoundManager.PlaySFX(SFXEnum.Witch_MagicCharge);
         transform.GetChild(3).gameObject.SetActive(true);
         Collider2D hit = Physics2D.OverlapBox(transform.position - new Vector3(0, 7.5f, 0), new Vector2(13, 4), 0, LayerMask.GetMask("Player"));
         if (hit != null)
@@ -165,5 +196,14 @@ public class Boss : MonoBehaviour
             anim.SetBool("Dead", true);
             CC.ShakeCamera();
         }
+    }
+
+    private bool IsAnyBossLevelActive() {
+        foreach (var level in bossLevel) {
+            if (level.activeSelf) {
+                return true;
+            }
+        }
+        return false;
     }
 }

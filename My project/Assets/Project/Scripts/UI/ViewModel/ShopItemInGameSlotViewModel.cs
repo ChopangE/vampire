@@ -74,6 +74,8 @@ namespace UI
             // 예: 아이템 정보 표시, 하이라이트 효과 등
             if(ShopItemInGameManager.Instance.UseActiveItem(_shopItem))
             {
+                if(_shopItem.ItemType == ShopItemType.Active)
+                    Global.SoundManager.PlaySFX(SFXEnum.Shop_MultiBuy);
                 Destroy(gameObject);
             }
         }

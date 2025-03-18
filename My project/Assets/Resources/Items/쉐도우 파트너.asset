@@ -16,11 +16,11 @@ MonoBehaviour:
     itemId: 14
     curLevel: 0
     maxLevel: 9
-    baseCooldown: 5
+    baseCooldown: 15
     baseDamage: 20
     baseCount: 1
     baseRange: 1
-    baseDuration: 1
+    baseDuration: 6
     basePierce: 1
     curCoolDown: 0
     curDamage: 0
@@ -30,6 +30,11 @@ MonoBehaviour:
     curCriticalDamagePercent: 0
     curCriticalChancePercent: 0
     curPierce: 0
+  passiveItemDataInfo:
+    passiveId: 0
+    passiveValue: 0
+    curLevel: 0
+    maxLevel: 1000
   itemType: 13
   itemName: "\uC250\uB3C4\uC6B0 \uD30C\uD2B8\uB108"
   itemDesc: "\uB370\uBBF8\uC9C0 {0}% \uC99D\uAC00\n\uD22C\uC0AC\uCCB4 \uCD94\uAC00

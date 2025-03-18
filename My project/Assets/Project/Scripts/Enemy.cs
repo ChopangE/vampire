@@ -56,6 +56,11 @@ public class Enemy : DamageObject
 
     public WeaponController weaponController;
 
+    private bool isSoundPlaying = false; // 효과음 재생 상태 변수 추가
+
+    private float lastDamageTime = 0f; // 마지막으로 데미지를 받은 시간
+    private const float DAMAGE_INTERVAL = 1f; // 데미지 간격
+
     protected override void Awake()
     {
         base.Awake();
@@ -152,19 +157,7 @@ public class Enemy : DamageObject
                 CalculateDamage(collision.GetComponent<Bullet>().CalculateDamage());
             }
 
-            if (collision.TryGetComponent(out WhirlBullet whirlBullet))
-            {
-                targetVec = collision.GetComponent<Rigidbody2D>().position;
-                if (gameObject.activeSelf) StartCoroutine(KnockBack());
-            }
-            if (collision.TryGetComponent(out Trap trap))
-            {
-                Global.SoundManager.PlaySFX(Data.SFXEnum.SpikeFloor);
-            }
-            if (collision.TryGetComponent(out MoveSpikeBullet moveSpikeBullet))
-            {
-                Global.SoundManager.PlaySFX(Data.SFXEnum.SpikeFloor);
-            }
+
         }
 
         if (health > 0)
@@ -238,19 +231,35 @@ public class Enemy : DamageObject
     void OnTriggerStay2D(Collider2D collision)
     {
         if (!collision.CompareTag("Floor")) return;
-        health -= collision.GetComponent<WhirlBullet>().damage / 10.0f;
-        //Vector3 dir = collision.transform.position - transform.position;
-        //rigid.AddForce(dir.normalized * 4, ForceMode2D.Impulse);
-        //StartCoroutine(KnockBack(collision.transform.position));
-        if (health <= 0)
+        if (!collision.TryGetComponent(out Bullet bullet)) return;  // Bullet 컴포넌트 체크 추가
+        
+        // 현재 시간이 마지막 데미지 시간 + 간격보다 큰 경우에만 데미지 적용
+        if (Time.time >= lastDamageTime + DAMAGE_INTERVAL)
         {
-            isLive = false;
-            coll.enabled = false;
-            rigid.simulated = false;
-            spriter.sortingOrder = 1;
-            //anim.SetBool("Dead", true);
-            Dead();
+            CalculateDamage(bullet.CalculateDamage());
+            lastDamageTime = Time.time;
+            if (health > 0)
+            {
+                anim.SetTrigger("Hit");
+            }
+            else
+            {
+                isLive = false;
+                coll.enabled = false;
+                rigid.simulated = false;
+                spriter.sortingOrder = 1;
+                //anim.SetBool("Dead", true);
+                Dead();
+            }
         }
+
+        // if (collision.TryGetComponent(out WhirlBullet whirlBullet))
+        // {
+        //     targetVec = collision.GetComponent<Rigidbody2D>().position;
+        //     if (gameObject.activeSelf) StartCoroutine(KnockBack());
+        // }
+        
+
     }
     IEnumerator KnockBack()
     {
@@ -297,4 +306,5 @@ public class Enemy : DamageObject
         Vector2 enemyToCircle = (pos - transform.position).normalized;
         rigid.AddForce(enemyToCircle * 10, ForceMode2D.Impulse);
     }
+
 }

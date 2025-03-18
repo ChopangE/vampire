@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    public GameObject[] middleBossList;
     public Transform[] spawnPoint;
     public SpawnData[] spawnData;
     public float eliteSpawnTime = 30;
@@ -22,8 +24,8 @@ public class Spawner : MonoBehaviour
         timer += Time.deltaTime;
         eliteTimer += Time.deltaTime;
         
-        level = GameManager.Instance.level;      //FloorToInt������ int�� ��ȯ/ ceilToint �ø��� int�� ��ȯ
-
+        level = GameManager.Instance.level;      
+        if(level > spawnData.Length || GameManager.Instance.CurStage == Global.StageManager.MAX_STAGE_COUNT * Global.StageManager.MAX_STAGE_LEVEL) return;
         if(timer > spawnData[level].spawnTime) {
             Spawn();
             timer = 0f;
@@ -60,6 +62,12 @@ public class Spawner : MonoBehaviour
         else {
             enemy.GetComponent<Enemy>().InitElite(spawnData[GameManager.Instance.CurStage]);
         }
+    }
+
+    public void SpawnMiddleBoss(int index)
+    {
+        GameObject enemy = Instantiate(middleBossList[index]);
+        enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position; // 1 ˻ϴ  : GetComponentsInChildern 0°ε ڱڽ̴.
     }
 }
 

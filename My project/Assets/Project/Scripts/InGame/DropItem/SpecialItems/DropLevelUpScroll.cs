@@ -25,7 +25,7 @@ namespace InGame
        }
        void ShowLevelUpScroll()
        {
-            GameManager.Instance.LevelUp(true);  
+            GameManager.Instance.QueueEvaluateLevelUp();  
             DestroyItem();
        }
    } 

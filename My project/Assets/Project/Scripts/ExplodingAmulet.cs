@@ -30,8 +30,8 @@ public class ExplodingAmulet : MonoBehaviour
             0
         );
         
-        foreach(var explosion in Explosions) {
-            explosion.SetActive(false);
+        for(int i = 0; i < Explosions.Length; i++) {
+            Explosions[i].SetActive(false);
         }
     }
     public virtual void Update()
@@ -43,12 +43,13 @@ public class ExplodingAmulet : MonoBehaviour
     }
 
     public void Exploding() {
-        Global.SoundManager.PlaySFX(Data.SFXEnum.ExplosionCharm);
         sprite.color = new Color(1,1,1,0);
         transform.GetChild(0).gameObject.SetActive(true);
         dir = Vector3.zero;
-        foreach(var explosion in Explosions) {
-            explosion.SetActive(true);
+        for(int i = 0; i < Explosions.Length; i++) {
+            if(i == 1) Global.SoundManager.PlaySFX(Data.SFXEnum.ExplosionCharm, delay: 4f);
+            else if(i == 0) Global.SoundManager.PlaySFX(Data.SFXEnum.ExplosionCharm);
+            Explosions[i].SetActive(true);
         }
     }
 }

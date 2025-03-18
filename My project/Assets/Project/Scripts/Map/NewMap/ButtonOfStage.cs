@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
 using Manager;
+using UI.Page;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +16,8 @@ public class ButtonOfStage : MonoBehaviour
     bool isActive;
     Image title;
     Button button;
+    bool isPlayingSound = false; // 사운드 재생 중 여부
+
     void Start()
     {
         Init();
@@ -23,13 +27,19 @@ public class ButtonOfStage : MonoBehaviour
         button = GetComponent<Button>();
         
         button.onClick.AddListener(() => {
-            if(buttonNum == 0) {
-                Global.DataManager.ResetData();
-                UnityEngine.SceneManagement.SceneManager.LoadScene("LoadingScene");
-            }
-            else {
-                UnityEngine.SceneManagement.SceneManager.LoadScene("LoadingScene");
-            }
+            if (isPlayingSound) return; // 사운드 재생 중이면 클릭 무시
+
+            SFXEnum sfx = SFXEnum.Shop_StageClose;
+            if(buttonNum == 11)
+                sfx = SFXEnum.Shop_FinalBossStage;
+            else if(buttonNum % Global.StageManager.MAX_STAGE_COUNT == 3)
+                sfx = SFXEnum.Shop_BossStageClose;
+
+            isPlayingSound = true; // 사운드 재생 시작
+            Global.SoundManager.PlaySFX(sfx);
+            
+            // 사운드 재생 후 씬 전환 지연
+            StartCoroutine(LoadSceneAfterDelay("LoadingScene", Global.SoundManager.GetSFXClipLength(sfx)));
         });
 
         // 현재 스테이지와 버튼 번호 비교
@@ -50,4 +60,14 @@ public class ButtonOfStage : MonoBehaviour
         }
     }
     
+    // 새로운 코루틴 메서드 추가
+    private IEnumerator LoadSceneAfterDelay(string sceneName, float delay) {
+        Global.UIManager.OpenPage<MapPageBlock>();
+        yield return new WaitForSeconds(delay);
+        if(buttonNum == 0) {
+            Global.DataManager.ResetData();
+        }
+        isPlayingSound = false; // 사운드 재생 완료
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+    }
 }

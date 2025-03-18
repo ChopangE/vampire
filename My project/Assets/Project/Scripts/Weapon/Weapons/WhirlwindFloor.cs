@@ -15,6 +15,9 @@ public class WhirlwindFloor : FloorWeapon
 
     CircleCollider2D coll;
     Vector3 spawnPos;
+    private float pullEnemyTime = 0.5f;
+    private Coroutine pullEnemyCoroutine;
+
 
     public override async UniTask Init() {
         await base.Init();
@@ -25,7 +28,6 @@ public class WhirlwindFloor : FloorWeapon
     public override void ExecuteAttack() {
         base.ExecuteAttack();
         SpawnWhirlwind();
-        PullEnemy();
     }
 
     public void SpawnWhirlwind() {
@@ -34,8 +36,9 @@ public class WhirlwindFloor : FloorWeapon
         spawnPos = playerPos + new Vector3(Random.Range(-3f,3f), Random.Range(-3f, 3f),0f);
         
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
-        var projectile = bullet.GetComponent<Bullet>();
-        projectile.Init(damage, 
+        projectile = bullet.gameObject;
+        var projectileBullet = bullet.GetComponent<Bullet>();
+        projectileBullet.Init(damage, 
         -1, 
         Vector2.zero, 
         duration: duration, 
@@ -44,19 +47,31 @@ public class WhirlwindFloor : FloorWeapon
         
         projectile.transform.position = spawnPos;
         OnPlay();
+            
+        pullEnemyCoroutine = StartCoroutine(PullEnemyRoutine());
     }
 
     public void OffPlay() {
         projectile.SetActive(false);
+        if (pullEnemyCoroutine != null) {
+            StopCoroutine(pullEnemyCoroutine);
+            pullEnemyCoroutine = null;
+        }
     }
     
     public void OnPlay() {
         projectile.SetActive(true);
     }
     
+    IEnumerator PullEnemyRoutine() {
+        while (true) {
+            PullEnemy();
+            yield return new WaitForSeconds(pullEnemyTime);
+        }
+    }
+
     void PullEnemy() {
         if (!projectile || !projectile.activeInHierarchy) return;
-        
         Collider2D[] enemyColls = Physics2D.OverlapCircleAll(projectile.transform.position, coll.radius, 1 << LayerMask.NameToLayer("Enemy"));
         foreach (Collider2D enemyColl in enemyColls) {
             Enemy enemy = enemyColl.GetComponent<Enemy>();

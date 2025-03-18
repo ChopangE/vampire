@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Data;
 using Manager;
 using UI.Page;
 using UnityWeld;
@@ -73,6 +74,7 @@ namespace UI.Page
                 else view.gameObject.SetActive(false);
             }
             if (stageMap != null) stageMap.HideAllStages();
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_PageTurn);
         }
         [Binding]
         public void OnClickStageMapPageButton()
@@ -86,6 +88,7 @@ namespace UI.Page
                 else view.gameObject.SetActive(false);
             }
             if (stageMap != null) stageMap.ShowStage();
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_PageTurn);
         }
         [Binding]
         public void OnClickShopPageButton()
@@ -99,6 +102,7 @@ namespace UI.Page
                 else view.gameObject.SetActive(false);
             }
             if (stageMap != null) stageMap.HideAllStages();
+            Global.SoundManager.PlaySFX(SFXEnum.Shop_PageTurn);
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Data;
 using Data.WeaponData;
 using I2.Loc;
 using Manager;
@@ -227,7 +228,6 @@ public class Item : ViewModel
 
     public void OnClick()
     {
-
         // Heal 타입 먼저 처리
         if (data.itemType == ItemType.Passive)
         {
@@ -237,7 +237,10 @@ public class Item : ViewModel
             return;
         }
 
-
+        if(IsMaxLevel)
+            Global.SoundManager.PlaySFX(SFXEnum.SkillSelectEvaluate);
+        else
+            Global.SoundManager.PlaySFX(SFXEnum.SkillSelectOne);
 
         InitializeWeapon(GameManager.Instance.weaponController.Weapons.ToArray());
         switch (data.itemType)

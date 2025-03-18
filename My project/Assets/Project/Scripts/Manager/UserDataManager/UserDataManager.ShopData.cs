@@ -27,6 +27,11 @@ namespace Manager
         }
         public bool IsShopItemPurchased(string itemId)
         {
+            if (!storage.purchasedShopItems.ContainsKey(itemId))
+            {
+                storage.purchasedShopItems[itemId] = false;
+                Save();
+            }
             return storage.purchasedShopItems[itemId];
         }
 

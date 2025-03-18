@@ -14,7 +14,7 @@ namespace InGame
         public virtual void Triggered()
         {
             OnTriggered?.Invoke();
-            Global.SoundManager.PlaySFX(SFXEnum.GetMapItem);
+            Global.SoundManager.PlaySFX(SFXEnum.GetExpStone);
         }
 
 

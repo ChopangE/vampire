@@ -37,7 +37,7 @@ public class LevelUpPage : ViewModel
         rect.localScale = Vector3.zero;
         GameManager.Instance.Resume();
         Global.SoundManager.StopBGM(false);
-
+        GameManager.Instance.OnLevelUpComplete();
     }
 
     void Next(bool isEvaluation = false)
@@ -47,9 +47,17 @@ public class LevelUpPage : ViewModel
             item.gameObject.SetActive(false);
         }
         
+        var activeWeapons = GameManager.Instance.weaponController.ActiveWeapons;
+        bool isWeaponsFull = activeWeapons.Count >= GameManager.Instance.weaponController.maxActiveWeaponCount;
+        
         // 일반 아이템 목록 (패시브 아이템 제외)
         var notMaxLevelItems = Global.DataManager.GetNotMaxLevelItems()
             .Where(item => !item.isEvaluateWeapon && item.itemType != ItemType.Passive)
+            .ToArray();
+
+        // 현재 보유 중인 무기 중 최대 레벨이 아닌 것들
+        var currentWeapons = notMaxLevelItems
+            .Where(item => activeWeapons.Any(w => w.id == item.itemDataInfo.itemId))
             .ToArray();
 
         // 패시브 아이템 목록
@@ -57,8 +65,27 @@ public class LevelUpPage : ViewModel
             .Where(item => item.itemType == ItemType.Passive)
             .ToArray();
 
-        // 일반 아이템과 패시브 아이템 합치기
-        notMaxLevelItems = notMaxLevelItems.Concat(passiveItems).ToArray();
+        // 모든 일반 스킬이 최대 레벨인지 확인
+        bool allNormalSkillsMaxed = Global.DataManager.GetNotMaxLevelItems()
+            .Where(item => !item.isEvaluateWeapon && item.itemType != ItemType.Passive)
+            .Count() == 0;
+
+        // 무기가 가득 찼거나 모든 일반 스킬이 최대 레벨일 때의 아이템 풀 설정
+        if (isWeaponsFull || allNormalSkillsMaxed)
+        {
+            if (allNormalSkillsMaxed)
+            {
+                notMaxLevelItems = passiveItems;
+            }
+            else
+            {
+                notMaxLevelItems = currentWeapons.Concat(passiveItems).ToArray();
+            }
+        }
+        else
+        {
+            notMaxLevelItems = notMaxLevelItems.Concat(passiveItems).ToArray();
+        }
 
         // 최대 레벨 아이템 목록
         var maxLevelItems = isEvaluation ? 

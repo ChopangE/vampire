@@ -17,6 +17,9 @@ public class TornadoBullet : Bullet
     private float aliveTime;
     private float soundPlayInterval = 0.5f;  // 효과음 재생 주기
     private float soundTimer;  // 효과음 재생 타이머
+    private bool isChangingDirection = false;  // 방향 전환 중인지 확인
+    private float boundaryCheckCooldown = 1f;  // 경계 체크 쿨다운 시간
+    private float boundaryCheckTimer = 0f;     // 경계 체크 타이머
 
     public override void Init(float damage, int per, Vector3 dir, bool clockwise, float duration = 0, float criticalDamagePercent = 0, float criticalChancePercent = 0)
     {
@@ -39,7 +42,16 @@ public class TornadoBullet : Bullet
     private void SetRandomDirection()
     {
         float randomAngle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
-        currentDirection = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0).normalized;
+        currentDirection = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0);
+        
+        // 방향 벡터가 0이 되지 않도록 보장
+        if (Mathf.Approximately(currentDirection.magnitude, 0f))
+        {
+            currentDirection = Vector3.right;
+        }
+        
+        currentDirection = currentDirection.normalized;
+        // Debug.Log($"토네이도 속도: {moveSpeed}, 방향: {currentDirection}, 벡터 크기: {currentDirection.magnitude}");
     }
 
     private IEnumerator MovementCoroutine()
@@ -67,8 +79,10 @@ public class TornadoBullet : Bullet
 
             // 화면 경계 체크 및 방향 전환
             CheckScreenBounds();
-            // 이동
-            transform.position += currentDirection * moveSpeed * Time.deltaTime;
+            
+            // 이동 - 정규화된 방향 벡터 사용
+            Vector3 movement = currentDirection.normalized * moveSpeed * Time.deltaTime;
+            transform.position += movement;
 
             yield return null;
         }
@@ -79,24 +93,48 @@ public class TornadoBullet : Bullet
 
     private void CheckScreenBounds()
     {
-        Vector2 screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        // 방향 전환 쿨다운 중이면 체크 스킵
+        if (isChangingDirection)
+        {
+            boundaryCheckTimer -= Time.deltaTime;
+            if (boundaryCheckTimer <= 0)
+            {
+                isChangingDirection = false;
+            }
+            return;
+        }
+
+        // 화면의 경계 구하기
+        Vector2 screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
+        float minX = -screenBounds.x;
+        float maxX = screenBounds.x;
+        float minY = -screenBounds.y;
+        float maxY = screenBounds.y;
+
         Vector3 pos = transform.position;
         bool needsDirectionChange = false;
+        Vector3 newDirection = currentDirection;
 
-        if (Mathf.Abs(pos.x) > screenBounds.x - 1f)
+        // X축 경계 체크
+        if (pos.x < minX || pos.x > maxX)
         {
-            currentDirection.x *= -1;
-            needsDirectionChange = true;
-        }
-        if (Mathf.Abs(pos.y) > screenBounds.y - 1f)
-        {
-            currentDirection.y *= -1;
+            newDirection.x = -currentDirection.x;
             needsDirectionChange = true;
         }
 
+        // Y축 경계 체크
+        if (pos.y < minY || pos.y > maxY)
+        {
+            newDirection.y = -currentDirection.y;
+            needsDirectionChange = true;
+        }
+
+        // 방향 전환이 필요한 경우
         if (needsDirectionChange)
         {
-            directionTimer = directionChangeTime;
+            currentDirection = newDirection.normalized;
+            isChangingDirection = true;
+            boundaryCheckTimer = boundaryCheckCooldown;
         }
     }
 

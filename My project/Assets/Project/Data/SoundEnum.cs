@@ -44,7 +44,7 @@ namespace Data
         // === 행동 효과음 ===
         GetExpStone,           // 경험치 스톤 먹는 소리
         LevelUp,               // 레벨 업
-        SkillSelect,           // 레벨업 시 스크롤에서 스킬 3개 중 전화 스킬 선택
+        SkillSelectEvaluate,   // 레벨업 시 스크롤에서 스킬 3개 중 진화 스킬 선택
         SkillSelectOne,        // 레벨업 시 스크롤에서 스킬 3개중 1개 선택
         GetMapItem,            // 맵 드랍 아이템 먹는 소리
         Revive,                // 부활
@@ -64,12 +64,12 @@ namespace Data
         // === 스테이지1 마법사 효과음 ===
         DarkFireBall,          // 다크 파이어볼
         Blink,                 // 빈개
-        IceSpear,              // 아이스볼트
+        IceBolt,              // 아이스볼트
         FrozenMelt,            // 얼음 떨어뜨리기
 
         // === 스테이지2 용 효과음 ===
         Dragon_Laser,          // 용 레이저
-        Dragon_LaserCharge,    // 용 발톱 할퀴기
+        Dragon_Craw,    // 용 발톱 할퀴기
 
         // === 스테이지3 골렘 효과음 ===
         Golem_Punch,           // 골렘 강펀치

@@ -19,14 +19,22 @@ public class ItemDataInfo
     public float baseDuration;
     public int basePierce;
 
-    [HideInInspector] public float curCoolDown = 0;
-    [HideInInspector] public float curDamage = 0;
-    [HideInInspector] public int curCount = 0;
-    [HideInInspector] public float curRange = 0;
-    [HideInInspector] public float curDuration = 0;
-    [HideInInspector] public float curCriticalDamagePercent = 0;
-    [HideInInspector] public float curCriticalChancePercent = 0;
-    [HideInInspector] public int curPierce = 0;
+    [FoldoutGroup("현재 데이터")]
+    public float curCoolDown = 0;
+    [FoldoutGroup("현재 데이터")]
+    public float curDamage = 0;
+    [FoldoutGroup("현재 데이터")]
+    public int curCount = 0;
+    [FoldoutGroup("현재 데이터")]
+    public float curRange = 0;
+    [FoldoutGroup("현재 데이터")]
+    public float curDuration = 0;
+    [FoldoutGroup("현재 데이터")]
+    public float curCriticalDamagePercent = 0;
+    [FoldoutGroup("현재 데이터")]
+    public float curCriticalChancePercent = 0;
+    [FoldoutGroup("현재 데이터")]
+    public int curPierce = 0;
 
 }
 
@@ -135,6 +143,7 @@ public class ItemData : ScriptableObject
         itemDataInfo.baseRange = _prevItemData.itemDataInfo.baseRange;
         itemDataInfo.baseDamage = _prevItemData.itemDataInfo.baseDamage;
         itemDataInfo.baseCooldown = _prevItemData.itemDataInfo.baseCooldown;
+        itemDataInfo.baseDuration = _prevItemData.itemDataInfo.baseDuration;
         itemDataInfo.baseCount = _prevItemData.itemDataInfo.baseCount;
         itemDataInfo.basePierce = _prevItemData.itemDataInfo.basePierce;
     }

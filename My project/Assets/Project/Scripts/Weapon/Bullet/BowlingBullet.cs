@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using Manager;
 
 public class BowlingBullet : Bullet
 {
@@ -55,7 +56,7 @@ public class BowlingBullet : Bullet
             // 포물선 운동 계산
             float parabolicHeight = -4 * maxHeight * (percentComplete * percentComplete - percentComplete);
             Vector3 currentPos = Vector3.Lerp(startPos, targetPos, percentComplete);
-            currentPos.z = -parabolicHeight;
+            // currentPos.z = -parabolicHeight;
             
             // 처음 20% 구간에서 크기를 천천히 1.5배로 증가
             if (percentComplete < 0.2f)
@@ -79,6 +80,7 @@ public class BowlingBullet : Bullet
         // 도착 지점에서 정확한 위치와 크기 설정
         transform.position = targetPos;
         transform.localScale = originalScale;
+        Global.SoundManager.PlaySFX(Data.SFXEnum.CatapultRockDrop);
         
         // VFX 활성화
         windVFX1.SetActive(true);

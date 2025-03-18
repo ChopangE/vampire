@@ -1,5 +1,6 @@
 using Cinemachine;
 using Cysharp.Threading.Tasks;
+using Manager;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -16,6 +17,7 @@ namespace InGame
         private async UniTaskVoid ConfinerTimer()
         {
             await UniTask.WaitForSeconds(1);
+            if(GameManager.Instance.CurStage == Global.StageManager.MAX_STAGE_COUNT * Global.StageManager.MAX_STAGE_LEVEL) return;
             var Map = GameManager.Instance.CurStagePos().GetChild(0);
             var camConfiner = new GameObject("CameraConfiner");
             camConfiner.transform.SetParent(Map.transform);

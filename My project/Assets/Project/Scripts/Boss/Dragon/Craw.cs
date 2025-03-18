@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Data;
+using Manager;
 using UnityEngine;
 
 public class Craw : MiddleBossBullet
@@ -46,6 +48,7 @@ public class Craw : MiddleBossBullet
     void CallCraw() {
         sprite.color = Color.white;
         anim.speed = 1f;
+        Global.SoundManager.PlaySFX(SFXEnum.Dragon_Craw);
     }
     public void BoxOn() {
         isAttack = true;
