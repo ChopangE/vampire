@@ -49,7 +49,7 @@ public class Bullet : MonoBehaviour
 
         if (per > -1)
         {
-            rb.velocity = dir * 7f;
+            rb.velocity = dir * 7f * GameManager.Instance.projectileSpeedBonus;
         }
     }
 

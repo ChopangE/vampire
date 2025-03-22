@@ -15,7 +15,6 @@ public class WhirlwindFloor : FloorWeapon
 
     CircleCollider2D coll;
     Vector3 spawnPos;
-    private float pullEnemyTime = 0.5f;
     private Coroutine pullEnemyCoroutine;
 
 
@@ -28,6 +27,7 @@ public class WhirlwindFloor : FloorWeapon
     public override void ExecuteAttack() {
         base.ExecuteAttack();
         SpawnWhirlwind();
+        PullEnemy();
     }
 
     public void SpawnWhirlwind() {
@@ -47,8 +47,6 @@ public class WhirlwindFloor : FloorWeapon
         
         projectile.transform.position = spawnPos;
         OnPlay();
-            
-        pullEnemyCoroutine = StartCoroutine(PullEnemyRoutine());
     }
 
     public void OffPlay() {
@@ -61,13 +59,6 @@ public class WhirlwindFloor : FloorWeapon
     
     public void OnPlay() {
         projectile.SetActive(true);
-    }
-    
-    IEnumerator PullEnemyRoutine() {
-        while (true) {
-            PullEnemy();
-            yield return new WaitForSeconds(pullEnemyTime);
-        }
     }
 
     void PullEnemy() {

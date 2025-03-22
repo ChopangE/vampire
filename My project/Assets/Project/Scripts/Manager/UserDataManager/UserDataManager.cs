@@ -64,5 +64,17 @@ namespace Manager
                 Save();
             }   
         }
+
+        // 상점 구매 항목 초기화 메서드
+        public void ResetPurchasedShopItems()
+        {
+            storage.purchasedShopItems.Clear();
+            Save();
+        }
+        public void ResetStageData()
+        {
+            storage.curStage = 0;
+            Save();
+        }
     }
 }

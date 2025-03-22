@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using Data.WeaponData;
+using Manager;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -37,13 +39,32 @@ public class WeaponController : MonoBehaviour
         weapons = ownWeapons.Concat(additionalWeapons)
             .Distinct()
             .ToList();
+        
+        ActivateOwnedWeapons().Forget();
     }
+
 
     void Update()
     {
         foreach (Weapon weapon in ActiveWeapons)
         {
             weapon.Attack();
+        }
+    }
+    private async UniTask ActivateOwnedWeapons()
+    {
+        await UniTask.WaitUntil(() => Global.DataManager.isLoaded);
+        var weaponSavedDatas = Global.DataManager.GetItemDataInfos();
+        foreach(var weaponSavedData in weaponSavedDatas)
+        {
+            var weapon = weapons.FirstOrDefault(w => w.id == weaponSavedData.itemId);
+            if(weapon != null)
+            {
+                if(weaponSavedData.curLevel > 0)
+                {
+                    ActivateWeapon(weapon);
+                }
+            }
         }
     }
 

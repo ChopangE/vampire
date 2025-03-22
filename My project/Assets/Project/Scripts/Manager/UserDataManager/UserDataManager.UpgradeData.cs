@@ -31,7 +31,7 @@ namespace Manager
         {
             UpgradeData upgradeData = new UpgradeData();
             upgradeData.upgradeName = _upgradeName;
-            upgradeData.level = 1;
+            upgradeData.level = 0;
 
             SetUpgradeData(upgradeData);
             return upgradeData;

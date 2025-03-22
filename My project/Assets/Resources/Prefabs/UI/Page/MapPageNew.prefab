@@ -461,7 +461,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 320, y: 320}
+  m_SizeDelta: {x: 243.75, y: 332.8125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3284775923795580850
 CanvasRenderer:
@@ -1317,10 +1317,10 @@ RectTransform:
   m_Father: {fileID: 3284775924313013656}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 440, y: -20.01709}
-  m_SizeDelta: {x: -1348.5405, y: -540.46}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 223, y: 40}
+  m_SizeDelta: {x: 328.125, y: 403.125}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3284775924252792165
 CanvasRenderer:
@@ -1374,10 +1374,10 @@ GameObject:
   m_Layer: 5
   m_Name: Stage Boss
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3284775924313013656
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1394,10 +1394,10 @@ RectTransform:
   m_Father: {fileID: 3284775924855934756}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -31}
+  m_SizeDelta: {x: 970, y: 660}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3284775924313013662
 CanvasRenderer:
@@ -1427,7 +1427,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -695885708, guid: 12e86919221aa5b40be9fd34bf98ac51, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8920893607f149647838d2b9bd98a798, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

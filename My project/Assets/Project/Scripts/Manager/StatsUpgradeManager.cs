@@ -32,7 +32,7 @@ namespace Manager
             } 
         }
 
-        public List<PlayerPassiveLevelUpgradeSO> GetAllPassives()
+        public List<PlayerPassiveLevelUpgradeSO> GetAllPlayerPassives()
         {
             return playerPassiveStatsUpgradeList;
         }

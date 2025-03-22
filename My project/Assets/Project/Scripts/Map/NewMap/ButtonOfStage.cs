@@ -30,7 +30,7 @@ public class ButtonOfStage : MonoBehaviour
             if (isPlayingSound) return; // 사운드 재생 중이면 클릭 무시
 
             SFXEnum sfx = SFXEnum.Shop_StageClose;
-            if(buttonNum == 11)
+            if(buttonNum == 12)
                 sfx = SFXEnum.Shop_FinalBossStage;
             else if(buttonNum % Global.StageManager.MAX_STAGE_COUNT == 3)
                 sfx = SFXEnum.Shop_BossStageClose;

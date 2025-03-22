@@ -99,6 +99,10 @@ public class DataManager : MonoBehaviour
         return Global.UserDataManager.storage.itemDataInfoList
             .FirstOrDefault(info => itemData.itemDataInfo.itemId == info.itemId);
     }
+    public ItemDataInfo[] GetItemDataInfos()
+    {
+        return Global.UserDataManager.storage.itemDataInfoList.ToArray();
+    }
 
     public async UniTask<ItemDataInfo> GetItemDataInfo(WeaponId itemId)
     {
@@ -220,6 +224,35 @@ public class DataManager : MonoBehaviour
             }
         }
         
+        Global.UserDataManager.Save();
+    }
+
+    // 무기 데이터 초기화 메서드
+    public void ResetWeaponData()
+    {
+        // 초기화할 무기 데이터만 선택 (패시브 아이템은 유지)
+        foreach (var itemInfo in Global.UserDataManager.storage.itemDataInfoList)
+        {
+            // 단검은 레벨 1, 나머지는 레벨 0으로 초기화
+            itemInfo.curLevel = itemInfo.itemId == WeaponId.Dagger ? 1 : 0;
+            
+            // 기본 스탯으로 초기화
+            ItemData originalItem = items.Find(item => 
+                item.itemType != ItemType.Passive && item.itemDataInfo.itemId == itemInfo.itemId);
+            
+            if (originalItem != null)
+            {
+                itemInfo.curCoolDown = 0;
+                itemInfo.curDuration = 0;
+                itemInfo.curDamage = 0;
+                itemInfo.curCount = 0;
+                itemInfo.curRange = 0;
+                itemInfo.curCriticalChancePercent = 0;
+                itemInfo.curCriticalDamagePercent = 0;
+            }
+        }
+        
+        // 변경사항 저장
         Global.UserDataManager.Save();
     }
 }

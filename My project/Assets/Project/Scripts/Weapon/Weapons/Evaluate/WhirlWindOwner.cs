@@ -13,8 +13,6 @@ public class WhirlWindOwner : FloorWeapon
 
     CircleCollider2D coll;
     Vector3 spawnPos;
-    private float pullEnemyTime = 0.5f;
-    private Coroutine pullEnemyCoroutine;
 
     public override async UniTask Init() {
         await base.Init();
@@ -28,8 +26,7 @@ public class WhirlWindOwner : FloorWeapon
     public override void ExecuteAttack() {
         base.ExecuteAttack();
         SpawnWhirlwind();
-        
-        pullEnemyCoroutine = StartCoroutine(PullEnemyRoutine());
+        PullEnemy();
     }
 
     public void SpawnWhirlwind() {
@@ -43,10 +40,6 @@ public class WhirlWindOwner : FloorWeapon
 
     public void OffPlay() {
         projectile.SetActive(false);
-        if (pullEnemyCoroutine != null) {
-            StopCoroutine(pullEnemyCoroutine);
-            pullEnemyCoroutine = null;
-        }
     }
     
     public void OnPlay() {
@@ -63,13 +56,6 @@ public class WhirlWindOwner : FloorWeapon
                 Vector3 dir = (projectile.transform.position - enemyColl.transform.position).normalized;
                 enemy.GetAddForce(dir * addPower);
             }
-        }
-    }
-
-    IEnumerator PullEnemyRoutine() {
-        while (true) {
-            PullEnemy();
-            yield return new WaitForSeconds(pullEnemyTime);
         }
     }
 }

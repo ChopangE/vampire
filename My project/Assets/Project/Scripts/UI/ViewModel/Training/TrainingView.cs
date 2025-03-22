@@ -26,7 +26,7 @@ namespace UI
         }
         private void InitialTrainingGroup()
         {
-            var allPassives = Global.StatsUpgradeManager.GetAllPassives();
+            var allPassives = Global.StatsUpgradeManager.GetAllPlayerPassives();
             //* 책 한페이지당 패시브 4 X 2(그룹 수) 개씩 있으니 4개 묶음 수 구하기
             int passiveUnitCount = 
             (allPassives.Count > GCountElement) ? (allPassives.Count / GCountElement) + 1 : allPassives.Count;

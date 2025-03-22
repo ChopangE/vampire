@@ -114,6 +114,9 @@ public class GameManager : MMSingleton<GameManager>
     }
     public bool isInvincible { get; set; }
     
+    public float goldBonus = 1.0f;
+    public float projectileSpeedBonus = 1.0f;
+    public float healthRegeneration = 0.0f;
 
 
     public float Shield
@@ -154,6 +157,7 @@ public class GameManager : MMSingleton<GameManager>
         {
             _inGameMainPage.Pause();
         }
+        Health += healthRegeneration * Time.deltaTime;
     }
     #endregion
 
@@ -205,8 +209,8 @@ public class GameManager : MMSingleton<GameManager>
             else if(_curStage == 11) bossIndex = 2;
             spawner.SpawnMiddleBoss(bossIndex);
             _inGameMainPage.ActiveTimer = false;
-        }
-        _inGameMainPage.ActiveTimer = true;
+        }else
+            _inGameMainPage.ActiveTimer = true;
 
     }
 
@@ -302,6 +306,10 @@ public class GameManager : MMSingleton<GameManager>
         isLive = false;
         yield return new WaitForSeconds(0.5f);
         Stop();
+        // 게임 사망 시 데이터 초기화
+        Global.DataManager.ResetWeaponData();
+        Global.UserDataManager.ResetPurchasedShopItems();
+        Global.UserDataManager.ResetStageData();
         var pages = Global.UIManager.GetPages<InGameMainPage>();
         FadeScript fade = pages[0].GetComponent<FadeScript>();
         fade.FadeOut(true);

@@ -64,7 +64,7 @@ namespace SO
         private bool TryLevelUpgrade()
         {
             GetUpgradeLevel();
-            if(_curLevel == 0 || IsMaxLevel()) return false;
+            if(IsMaxLevel()) return false;
             _curLevel++;
             SetUpgradeLevel();
             return true;

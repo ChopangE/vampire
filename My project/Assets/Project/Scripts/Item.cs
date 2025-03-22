@@ -208,15 +208,23 @@ public class Item : ViewModel
             }
             return;
         }
-        var weapons = GameManager.Instance.weaponController.ActiveWeapons;
-        if (weapons.Count >= GameManager.Instance.weaponController.maxActiveWeaponCount)
+
+        var ActiveWeapons = GameManager.Instance.weaponController.ActiveWeapons;
+        var AllWeapons = GameManager.Instance.weaponController.Weapons;
+        
+        // 이미 활성화된 무기인지 확인
+        bool isAlreadyActive = ActiveWeapons.Any(w => w.id == data.itemDataInfo.itemId);
+        
+        if (ActiveWeapons.Count >= GameManager.Instance.weaponController.maxActiveWeaponCount)
         {
-            if(data.isEvaluateWeapon)
+            if(data.isEvaluateWeapon || isAlreadyActive)
             {
+                // 평가 무기이거나 이미 활성화된 무기는 업그레이드 가능
                 IsInteractable = true;
             }
             else
             {
+                // 새로운 무기 추가는 불가능
                 IsInteractable = false;
             }
         }

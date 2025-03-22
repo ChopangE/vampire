@@ -25,14 +25,19 @@ namespace UI
         {
             // 구매 가능한지 확인
             if (!Global.GoldManager.CanPurchase(_levelUpgradeSO.GetUpgradeCost()))
+            {
+                Global.SoundManager.PlaySFX(SFXEnum.GetMapItem);
                 return;
+            }
 
             // 골드 차감
             Global.GoldManager.SubGold(_levelUpgradeSO.GetUpgradeCost());
-            
+
             // 업그레이드 실행
-            _levelUpgradeSO.DoUpgrade();
-            
+            if (_levelUpgradeSO.DoUpgrade())
+            {
+                Global.SoundManager.PlaySFX(SFXEnum.Shop_ItemBuy);
+            }
             // UI 갱신
             RefreshData();
         }
@@ -48,7 +53,7 @@ namespace UI
             PassiveValue = _levelUpgradeSO.GetUpgradeValue();
             PassiveLevel = string.Format("LV.{0}", _levelUpgradeSO.GetUpgradeLevel());
             PassiveCost = _levelUpgradeSO.GetUpgradeCost();
-            PassiveInfo =  LocalizationManager.GetTranslation(_levelUpgradeSO.descriptionKey);
+            PassiveInfo = LocalizationManager.GetTranslation(_levelUpgradeSO.descriptionKey);
             UpdateLevelGroup();
         }
         private Sprite _icon;

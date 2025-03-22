@@ -19,6 +19,7 @@ public class MiddleBoss : Enemy {
         target = GameManager.Instance.player.GetComponent<Rigidbody2D>();
 
         speed = 5f;
+        maxHealth = 500 * (GameManager.Instance.CurStage + 1);
         health = 100f;
 
         isDoing = false;
@@ -46,6 +47,11 @@ public class MiddleBoss : Enemy {
         if (isLive) {
             spriter.flipX = target.position.x < rigid.position.x;
         }
+    }
+    public override void Dead()
+    {
+        MiddleBossDead();
+        gameObject.SetActive(false);
     }
 
     protected virtual void MiddleBossDead() {

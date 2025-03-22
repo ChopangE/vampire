@@ -5,31 +5,32 @@ using UnityEngine;
 
 namespace InGame
 {
-   public class DropCoin : DropItem
-   {
-       public int coin;
-       // Start is called before the first frame update
-       protected override void Awake()
-       {
-           base.Awake();
-       }
+    public class DropCoin : DropItem
+    {
+        public int coin;
+        // Start is called before the first frame update
+        protected override void Awake()
+        {
+            base.Awake();
+        }
 
-       void OnEnable()
-       {
-           dropItemTrigger.OnTriggered += PlusCoin;
-           
-       }
+        void OnEnable()
+        {
+            dropItemTrigger.OnTriggered += PlusCoin;
 
-       protected override void OnDisable()
-       {
-           base.OnDisable();
-           dropItemTrigger.OnTriggered -= PlusCoin;
-       }
-       void PlusCoin()
-       {
-           Global.GoldManager.AddGold(coin);
-           DestroyItem();
-       }
-   } 
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+            dropItemTrigger.OnTriggered -= PlusCoin;
+        }
+        void PlusCoin()
+        {
+            int gold = (int)(coin * GameManager.Instance.goldBonus);
+            Global.GoldManager.AddGold(gold);
+            DestroyItem();
+        }
+    }
 }
 

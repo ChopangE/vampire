@@ -104,12 +104,12 @@ public class TornadoBullet : Bullet
             return;
         }
 
-        // 화면의 경계 구하기
-        Vector2 screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
-        float minX = -screenBounds.x;
-        float maxX = screenBounds.x;
-        float minY = -screenBounds.y;
-        float maxY = screenBounds.y;
+        // 플레이어 위치 기준으로 7x7 영역의 경계 설정
+        Vector3 playerPos = GameManager.Instance.player.transform.position; // 현재 위치 기준
+        float minX = playerPos.x - 7f;
+        float maxX = playerPos.x + 7f;
+        float minY = playerPos.y - 7f;
+        float maxY = playerPos.y + 7f;
 
         Vector3 pos = transform.position;
         bool needsDirectionChange = false;
