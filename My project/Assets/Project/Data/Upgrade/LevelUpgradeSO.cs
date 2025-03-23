@@ -73,7 +73,7 @@ namespace SO
         //* 여기부턴 저장 코드를 담고 있기 때문에 레벨 관리는 자율로 구현하시기 바랍니다.
         public virtual int GetUpgradeLevel()
         {
-            UpgradeData data = GetUpgradeDataByName(upgradeName);
+            UpgradeData data = GetUpgradeDataByName(upgradeNameKey);
 
             if (data != null)
                 _curLevel = data.level;
@@ -81,16 +81,16 @@ namespace SO
         }
         public virtual void SetUpgradeLevel()
         {
-            UpgradeData data = GetUpgradeDataByName(upgradeName);
+            UpgradeData data = GetUpgradeDataByName(upgradeNameKey);
             if(data != null)
             {
                 data.level = _curLevel;
                 Global.UserDataManager.SetUpgradeData(data);
             }
         }
-        public UpgradeData GetUpgradeDataByName(string upgradeName)
+        public UpgradeData GetUpgradeDataByName(string upgradeNameKey)
         {
-            UpgradeData upgradeData = Global.UserDataManager.GetUpgradeData(upgradeName);
+            UpgradeData upgradeData = Global.UserDataManager.GetUpgradeData(upgradeNameKey);
 
             return upgradeData;
         }

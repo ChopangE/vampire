@@ -23,9 +23,24 @@ namespace UI
         [Binding]
         public void DoUpgrade()
         {
+            if(_levelUpgradeSO == null) 
+            {
+                Debug.LogWarning("PassiveButtonViewModel : DoUpgrade : _levelUpgradeSO is null");
+                Global.SoundManager.PlaySFX(SFXEnum.GetMapItem);
+                return;
+            }
+            
+            if(_levelUpgradeSO.GetUpgradeLevel() >= _levelUpgradeSO.GetMaxLevel())
+            {
+                Debug.LogWarning("PassiveButtonViewModel : DoUpgrade : _levelUpgradeSO is max level");
+                Global.SoundManager.PlaySFX(SFXEnum.GetMapItem);
+                return;
+            }
+
             // 구매 가능한지 확인
             if (!Global.GoldManager.CanPurchase(_levelUpgradeSO.GetUpgradeCost()))
             {
+                Debug.LogWarning("PassiveButtonViewModel : DoUpgrade : CanPurchase is false");
                 Global.SoundManager.PlaySFX(SFXEnum.GetMapItem);
                 return;
             }

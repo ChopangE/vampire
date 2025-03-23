@@ -15,8 +15,6 @@ namespace SO
         [PreviewField(75, ObjectFieldAlignment.Center)] [HideLabel]
         public Sprite icon { get; private set; }
         
-        [BoxGroup("디테일")] [PropertyOrder(-1)]
-        public string upgradeName;
         [BoxGroup("디테일")] [PropertyOrder(0)] [TermsPopup()]
         public string upgradeNameKey;
 

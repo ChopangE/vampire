@@ -19,7 +19,7 @@ namespace SO
         public override int GetMaxLevel()
         {
             //* 그룹이 있으면 Count 가져오고 아니면 1 리턴
-            _maxLevel = GetPassiveGroupData().Count;
+            _maxLevel = GetPassiveGroupData().Count - 1;
             return _maxLevel;
         }
         public override string GetUpgradeCost()

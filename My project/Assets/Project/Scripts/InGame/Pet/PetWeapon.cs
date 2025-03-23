@@ -42,6 +42,9 @@ public class PetWeapon : Weapon
     void Start()
     {
         speed = 1f;
+        if(level >= 3) {
+            StartBlessingCycle().Forget();
+        }
     }
 
     async UniTaskVoid StartBlessingCycle()
@@ -239,7 +242,7 @@ public class PetWeapon : Weapon
         base.LevelUp(prevUpgradeName, prevUpgradeValue, damageUpgradeValues);
         
         // 레벨 3 이상일 때 스킬 활성화
-        if (count >= 3)
+        if (level == 3)
         {
             Debug.Log("펫무기 활성화");
             StartBlessingCycle().Forget();

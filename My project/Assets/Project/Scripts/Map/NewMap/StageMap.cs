@@ -16,6 +16,10 @@ public class StageMap : MonoBehaviour
     void OnEnable()
     {
         Global.StageManager.OnStageChanged += OnStageChanged;
+        if(Global.UserDataManager.storage.curStage == 12)
+        {
+            BossStage();
+        }
     }
     void OnDisable()
     {
@@ -87,6 +91,18 @@ public class StageMap : MonoBehaviour
     public void Stage3() {
         for(int i = 0; i < stages.Length; i++) {
             if(i == 2) {
+                stages[i].SetActive(true);
+            }
+            else {
+                stages[i].SetActive(false);
+            }
+        }
+        Global.SoundManager.PlaySFX(SFXEnum.Shop_PageTurn);
+    }
+    [Binding]
+    public void BossStage() {
+        for(int i = 0; i < stages.Length; i++) {
+            if(i == 3) {
                 stages[i].SetActive(true);
             }
             else {

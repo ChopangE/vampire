@@ -125,14 +125,18 @@ public class LevelUpPage : ViewModel
                         }
                     }
                     
-                    // 패시브 아이템 개수 체크
-                    int passiveCount = 0;
-                    for (int i = 0; i < 3; i++)
+                    // 모든 아이템이 패시브가 아닌 경우에만 패시브 아이템 개수 제한
+                    if (!allNormalSkillsMaxed)
                     {
-                        if (i != evolveSlot && notMaxLevelItems[ran[i]].itemType == ItemType.Passive)
-                            passiveCount++;
+                        // 패시브 아이템 개수 체크
+                        int passiveCount = 0;
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (i != evolveSlot && notMaxLevelItems[ran[i]].itemType == ItemType.Passive)
+                                passiveCount++;
+                        }
+                        if (passiveCount > 1) continue;
                     }
-                    if (passiveCount > 1) continue;
                     
                     if (normalItemIndex == 2) break;
                 }
@@ -143,14 +147,18 @@ public class LevelUpPage : ViewModel
                     ran[1] = Random.Range(0, notMaxLevelItems.Length);
                     ran[2] = Random.Range(0, notMaxLevelItems.Length);
                     
-                    // 패시브 아이템 개수 체크
-                    int passiveCount = 0;
-                    for (int i = 0; i < 3; i++)
+                    // 모든 아이템이 패시브가 아닌 경우에만 패시브 아이템 개수 제한
+                    if (!allNormalSkillsMaxed)
                     {
-                        if (notMaxLevelItems[ran[i]].itemType == ItemType.Passive)
-                            passiveCount++;
+                        // 패시브 아이템 개수 체크
+                        int passiveCount = 0;
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (notMaxLevelItems[ran[i]].itemType == ItemType.Passive)
+                                passiveCount++;
+                        }
+                        if (passiveCount > 1) continue;
                     }
-                    if (passiveCount > 1) continue;
                     
                     if (ran[0] != ran[1] && ran[1] != ran[2] && ran[0] != ran[2]) break;
                 }
@@ -162,14 +170,18 @@ public class LevelUpPage : ViewModel
                 ran[1] = Random.Range(0, notMaxLevelItems.Length);
                 ran[2] = Random.Range(0, notMaxLevelItems.Length);
 
-                // 패시브 아이템 개수 체크
-                int passiveCount = 0;
-                for (int i = 0; i < 3; i++)
+                // 모든 아이템이 패시브가 아닌 경우에만 패시브 아이템 개수 제한
+                if (!allNormalSkillsMaxed)
                 {
-                    if (notMaxLevelItems[ran[i]].itemType == ItemType.Passive)
-                        passiveCount++;
+                    // 패시브 아이템 개수 체크
+                    int passiveCount = 0;
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (notMaxLevelItems[ran[i]].itemType == ItemType.Passive)
+                            passiveCount++;
+                    }
+                    if (passiveCount > 1) continue;
                 }
-                if (passiveCount > 1) continue;
 
                 if (ran[0] != ran[1] && ran[1] != ran[2] && ran[0] != ran[2]) break;
             }

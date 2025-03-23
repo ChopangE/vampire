@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonNum: 2
-  pushedImage: {fileID: 21300000, guid: c4f279051e2021c46b85d2721804347a, type: 3}
+  pushedImage: {fileID: 21300000, guid: 4525093cd8f3e9744b9deeb25d16e7a5, type: 3}
   image: {fileID: 21300000, guid: c78aa47547530364498a3e334fb2177b, type: 3}
 --- !u!1 &411406827926177738
 GameObject:
@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 411406827926177739}
   - component: {fileID: 411406827926177749}
   - component: {fileID: 411406827926177748}
+  - component: {fileID: 2245465785193563703}
   m_Layer: 5
   m_Name: Amulet
   m_TagString: Untagged
@@ -173,7 +174,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 210, y: 23.845}
+  m_AnchoredPosition: {x: 215, y: 23.845}
   m_SizeDelta: {x: -595.21, y: -292.3995}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &411406827926177749
@@ -214,6 +215,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2245465785193563703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411406827926177738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8db352819d9ebf840b59fa2cba320f83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonNum: 0
+  pushedImage: {fileID: 21300000, guid: adc7f30985e5a384b88394f1a961731f, type: 3}
+  image: {fileID: 21300000, guid: b1adbac74dfc47341a01167dbf5d8fa0, type: 3}
 --- !u!1 &411406828041739767
 GameObject:
   m_ObjectHideFlags: 0
@@ -358,7 +374,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -95.5181, y: -93.6858}
+  m_SizeDelta: {x: -88.9913, y: -87.2842}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &411406828551923957
 CanvasRenderer:
@@ -423,7 +439,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -604,7 +620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonNum: 0
-  pushedImage: {fileID: 21300000, guid: 755a658984c6c6f49995927e495d2c22, type: 3}
+  pushedImage: {fileID: 21300000, guid: 2eed5b6d527f399409667b94f3f91aaa, type: 3}
   image: {fileID: 21300000, guid: 6d568f80fa1b18d41b216bbcafa66287, type: 3}
 --- !u!1 &411406829083038231
 GameObject:
@@ -806,7 +822,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonNum: 1
-  pushedImage: {fileID: 21300000, guid: e3bcba36065a1544a989c7ec24c95ba4, type: 3}
+  pushedImage: {fileID: 21300000, guid: d48fc416810ca9f41a6c97493d79ee1f, type: 3}
   image: {fileID: 21300000, guid: 2146f93ab75117f4ca8622a27fce526d, type: 3}
 --- !u!1 &796040355122812728
 GameObject:

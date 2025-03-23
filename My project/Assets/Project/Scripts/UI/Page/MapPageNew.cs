@@ -39,7 +39,10 @@ namespace UI.Page
             // StageMap 컴포넌트 찾기
             stageMap = GetComponentInChildren<StageMap>(true);
 
-            OnClickTraingButton();
+            if(Global.UserDataManager.storage.curStage != 12)
+                OnClickTraingButton();
+            else
+                OnClickStageMapPageButton();
 
             // 초기 골드 값 설정
             Coin = Global.GoldManager.GetGoldText();
