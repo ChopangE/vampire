@@ -20,7 +20,7 @@ public class GameManager : MMSingleton<GameManager>
     #region Serialized Fields
     [Header("Game Control")]
     public bool isLive;
-    public float gameTime;
+    public float gameTime = 0;
     public float maxGameTime = 2 * 10f;
 
     [Header("Player Stats")]
@@ -137,6 +137,7 @@ public class GameManager : MMSingleton<GameManager>
         get => _curStage;
         set => _curStage = value;
     }
+
     #endregion
 
     #region Unity Methods
@@ -152,8 +153,7 @@ public class GameManager : MMSingleton<GameManager>
         if (!isLive) return;
 
         gameTime = Mathf.Min(gameTime + Time.deltaTime, maxGameTime);
-
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && gameTime > 1.5f)
         {
             _inGameMainPage.Pause();
         }
@@ -312,7 +312,7 @@ public class GameManager : MMSingleton<GameManager>
         Global.UserDataManager.ResetStageData();
         var pages = Global.UIManager.GetPages<InGameMainPage>();
         FadeScript fade = pages[0].GetComponent<FadeScript>();
-        fade.FadeOut(true);
+        fade.InGameFade(true);
     }
 
     private IEnumerator StageClearRoutine()
@@ -321,7 +321,7 @@ public class GameManager : MMSingleton<GameManager>
         Stop();
         var pages = Global.UIManager.GetPages<InGameMainPage>();
         FadeScript fade = pages[0].GetComponent<FadeScript>();
-        fade.FadeOut(isGameWin: true);
+        fade.InGameFade(isGameWin: true);
     }
     public void Stop()
     {

@@ -8,12 +8,8 @@ namespace Data
     public enum BGMEnum
     {
         NONE,
-        Title,
-        Huh,
-        AirHead,
-        FunOuting,
-        Chatter,
-        Silly
+        TitleSpace, //* 타이틀 우주 소리
+        TitleFireBurning, //* 타이틀 불 소리
     }
     public enum SFXEnum
     {
@@ -90,5 +86,6 @@ namespace Data
         Shop_BossStageClose,   // 중간 보스 스테이지 입장
         Shop_PageTurn,         // 책 페이지 넘기는 소리
         Shop_FinalBossStage,   // 최종 보스 마녀 스테이지 입장
+        OpenButton,            // 오픈 버튼 촤라락
     }
 }

@@ -25,7 +25,10 @@ public class ButtonOfStage : MonoBehaviour
     void Init()
     {
         title = GetComponent<Image>();
-
+        // 현재 스테이지와 버튼 번호 비교
+        int currentStage = Global.UserDataManager.curStage;
+        isActive = buttonNum == currentStage;
+        
         if (TryGetComponent(out button))
         {
 
@@ -55,13 +58,9 @@ public class ButtonOfStage : MonoBehaviour
                 // 사운드 재생 후 씬 전환 지연
                 StartCoroutine(LoadSceneAfterDelay("LoadingScene", Global.SoundManager.GetSFXClipLength(sfx)));
             });
-
-            // 현재 스테이지와 버튼 번호 비교
-            int currentStage = Global.UserDataManager.curStage;
-            isActive = buttonNum == currentStage;
-
             button.interactable = isActive;
         }
+
         if (isActive)
         {
             title.sprite = image;

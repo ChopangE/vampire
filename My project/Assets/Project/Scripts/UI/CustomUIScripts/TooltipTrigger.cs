@@ -41,7 +41,7 @@ namespace UI
                     tooltipPanel = canvases[0];
                     if (!tooltipPanel.gameObject.activeInHierarchy)
                     {
-                        Debug.LogWarning("찾은 TooltipPanel이 비활성화 상태입니다.");
+                        // Debug.LogWarning("찾은 TooltipPanel이 비활성화 상태입니다.");
                         tooltipPanel = null;
                     }
                 }

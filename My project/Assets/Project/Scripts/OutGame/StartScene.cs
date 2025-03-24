@@ -1,13 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening;
-using TMPro;
 using Manager;
-using Cysharp.Threading.Tasks;
-using UnityEngine.SceneManagement;
 using UI.Page;
+using UnityEngine;
 
 namespace OutGame
 {
@@ -16,11 +9,18 @@ namespace OutGame
         public static float Speed = 1;
         // public TextMeshProUGUI flashingText;
         
+        private OptionPage _optionPage;
         protected override void Start()
         {
             base.Start();
-            Global.UIManager.OpenPage<StartScenePage>();
+            Global.UIManager.OpenPage<IntroScenePage>();
             // SplashScreenTask().Forget();
+        }
+        private void Update() {
+            if (Input.GetKeyDown(KeyCode.Escape) && _optionPage == null)
+                _optionPage = Global.UIManager.OpenPage<OptionPage>();
+            else if (Input.GetKeyDown(KeyCode.Escape) && _optionPage != null)
+                Global.UIManager.ClosePage();
         }
     }
 }

@@ -67,7 +67,14 @@ namespace UI
             PassiveName = LocalizationManager.GetTranslation(_levelUpgradeSO.upgradeNameKey);
             PassiveValue = _levelUpgradeSO.GetUpgradeValue();
             PassiveLevel = string.Format("LV.{0}", _levelUpgradeSO.GetUpgradeLevel());
-            PassiveCost = _levelUpgradeSO.GetUpgradeCost();
+            if(_levelUpgradeSO.IsMaxLevel())
+            {
+                PassiveCost = "MAX";
+            }
+            else
+            {
+                PassiveCost = _levelUpgradeSO.GetUpgradeCost();
+            }
             PassiveInfo = LocalizationManager.GetTranslation(_levelUpgradeSO.descriptionKey);
             UpdateLevelGroup();
         }

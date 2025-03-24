@@ -21,14 +21,18 @@ namespace UI.Page
                 if (child.transform.name != transform.name) optionPageViews.Add(child);
             }
 
-            GameManager.Instance.Stop();
+            if(GameManager.HasInstance) {
+                GameManager.Instance.Stop();
+            }
             Global.SoundManager.StopBGM(true);
 
             OnClickGeneralView();
         }
 
         private void OnDisable() {
-            GameManager.Instance.Resume();
+            if(GameManager.HasInstance) {
+                GameManager.Instance.Resume();
+            }
             Global.SoundManager.StopBGM(false);
         }
         [Binding]
