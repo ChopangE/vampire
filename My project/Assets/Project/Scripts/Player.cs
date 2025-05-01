@@ -14,8 +14,6 @@ public class Player : MonoBehaviour
     public float speed;
     public float damageBonus = 0f;
     public float baseSpeed = 3f;
-    public bool isBonusDamage;
-    public float bonusDamage = 0.2f;
     bool isKnockBack { get; set; }
     public bool IsFacingRight => sprite.flipX;
 

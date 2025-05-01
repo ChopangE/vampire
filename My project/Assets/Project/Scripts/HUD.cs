@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class HUD : MonoBehaviour
 {
-    public enum InfoType { Exp, Level, Kill, Time, Health, Shield }
+    public enum InfoType { Exp, Level, Kill, Time, Health, Shield, BossHealth }
     public InfoType type;
     Text myText;
     Slider mySlider;
@@ -25,6 +25,17 @@ public class HUD : MonoBehaviour
         {
             InGameMainPage inGameMainPage = GetComponentInParent<InGameMainPage>();
             gameObject.SetActive(inGameMainPage.ActiveTimer);
+        }
+        if (type == InfoType.BossHealth)
+        {
+            if(GameManager.Instance.BossHealth > 0)
+            {
+                gameObject.SetActive(true);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
     void LateUpdate()
@@ -66,6 +77,12 @@ public class HUD : MonoBehaviour
                 float maxShield = GameManager.Instance.maxHealth;
                 mySlider.value = curShield / maxShield;
                 break;
+            case InfoType.BossHealth:
+                float curBossHealth = GameManager.Instance.BossHealth;
+                float maxBossHealth = GameManager.Instance.maxBossHealth;
+                mySlider.value = curBossHealth / maxBossHealth;
+                break;
+
 
         }
     }

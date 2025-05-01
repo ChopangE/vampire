@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -10,7 +11,7 @@ public enum BossWeaponType {
 }
 public class BossWeapon : MonoBehaviour
 {
-    
+    public float patternTime = 3;
     public BossPoolManager poolManager;
     public int id;
     public int prefabId;
@@ -31,7 +32,7 @@ public class BossWeapon : MonoBehaviour
     void Update() {
         if (!GameManager.Instance.isLive) return;
         timer += Time.deltaTime;
-        if (timer > 3f) {
+        if (timer > patternTime) {
             timer = 0f;
             bossWeaponPat = Random.Range(0, 2);
             string aniName = "Pattern" + bossWeaponPat;
@@ -40,40 +41,7 @@ public class BossWeapon : MonoBehaviour
 
         }
     }
-            /*
-            switch (WT) {
-                case BossWeaponType.Bomb:
-                    if (timer > 5f) {
-                        isPatterning = true;
-                        boss.anim.SetTrigger("Pattern0");
-                        timer = 0f;
-                    }
-                    break;
-                case BossWeaponType.Range:
-                    if (timer > 3f) {
-                        isPatterning = true;
-                        boss.anim.SetTrigger("Pattern1");
-                        timer = 0f;
-                    }
-                    break;
-                default:
-                    break;
-            }
-            */
-        
-        /*
-        if (BossManager.curTimer < 3f) {
-            BossManager.curTimer += Time.deltaTime;
-        }
-        else {
-            BossManager.curTimer = 0f;
-            BossManager.isPatterning = false;
-        }
-        */
-        //Invoke("isPatteringFalse", 3f);
-
-
-    public void Shut(int prefabId, int damage) {
+        public void Shut(int prefabId, int damage) {
         Transform bullet = poolManager.Get(prefabId).transform;
         bullet.parent = transform;
         bullet.position = player.transform.position + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0);

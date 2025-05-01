@@ -24,6 +24,17 @@ namespace UI
         }
         [SerializeField] private PlayableDirector _introCutScene;
         [SerializeField] private FadeScript _fadeScript;
+        private bool _isSkipButtonVisible = false;
+        [Binding]
+        public bool IsSkipButtonVisible
+        {
+            get => _isSkipButtonVisible;
+            set
+            {
+                _isSkipButtonVisible = value;
+                OnPropertyChanged(nameof(IsSkipButtonVisible));
+            }
+        }
         [Binding]
         public void PlayIntroCutScene()
         {
@@ -31,12 +42,22 @@ namespace UI
             {
                 _fadeScript.panel.gameObject.SetActive(false);
                 IsIntroCutScenePlaying = true;
+                IsSkipButtonVisible = true;
                 _introCutScene.Play();
                 Global.SoundManager.PlayMusic(BGMEnum.TitleFireBurning);
             });
         }
+        [Binding]
+        public void SkipIntroCutScene()
+        {
+            if (!IsIntroCutScenePlaying) return;
+            
+            _introCutScene.Stop();
+            OnIntroCutSceneEnd();
+        }
         public void OnIntroCutSceneEnd()
         {
+            IsSkipButtonVisible = false;
             _fadeScript.panel.gameObject.SetActive(true);
             _fadeScript.FadeIn(Color.black, () =>
             {

@@ -46,10 +46,16 @@ public class ExplodingAmulet : MonoBehaviour
         sprite.color = new Color(1,1,1,0);
         transform.GetChild(0).gameObject.SetActive(true);
         dir = Vector3.zero;
+        
+        Global.SoundManager.PlaySFX(Data.SFXEnum.ExplosionCharm);
+        StartCoroutine(ExplosionSequence());
+    }
+
+    private IEnumerator ExplosionSequence() {
+        yield return new WaitForSeconds(0.35f);
         for(int i = 0; i < Explosions.Length; i++) {
-            if(i == 1) Global.SoundManager.PlaySFX(Data.SFXEnum.ExplosionCharm, delay: 4f);
-            else if(i == 0) Global.SoundManager.PlaySFX(Data.SFXEnum.ExplosionCharm);
             Explosions[i].SetActive(true);
+            if(i == 0) Global.SoundManager.PlaySFX(Data.SFXEnum.ExplosionCharm);
         }
     }
 }

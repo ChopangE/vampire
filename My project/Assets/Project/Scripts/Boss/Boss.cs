@@ -1,6 +1,7 @@
 using Cinemachine;
 using Cysharp.Threading.Tasks;
 using Data;
+using InGame.Data;
 using Manager;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +10,17 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
-    public float health;
+    public Transform damageTextSpawnPoint;
+    private float _health;
+    public float health
+    {
+        get => _health;
+        set
+        {
+            _health = value;
+            GameManager.Instance.BossHealth = _health;
+        }
+    }
     public float maxHealth;
     public Rigidbody2D target;
     bool isLive;
@@ -25,8 +36,11 @@ public class Boss : MonoBehaviour
     float Timer2;
     int levelIndex;
     private bool isPlayingWitchFireTile = false;
+    private float lastDamageTime = 0f;
+    private const float DAMAGE_INTERVAL = 1f;
 
-    void Awake() {
+    void Awake()
+    {
         coll = GetComponent<Collider2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
@@ -34,69 +48,74 @@ public class Boss : MonoBehaviour
         smash = GetComponentInChildren<Smash>(true);
         CC = FindObjectOfType<CameraControl>();
     }
-    
-    public void Bottle() {
-        weapons[0].Shut(0, 5);
-    }
-    public void Crows() {
-        
-        // 효과음 길이만큼 대기
-        WaitForCrowSound().Forget();
-    }
 
-    private async UniTask WaitForCrowSound()
+    public void Bottle()
     {
-        
-        // 효과음 재생
-        Global.SoundManager.PlaySFX(SFXEnum.Witch_Crow_1);
-
-        // Witch_Crow_1 효과음의 길이 가져오기
-        float soundLength = Global.SoundManager.GetSFXClipLength(SFXEnum.Witch_Crow_1);
-        
-        // 효과음 길이만큼 대기
-        await UniTask.Delay((int)(soundLength * 1000)); // 밀리초로 변환하여 대기
-        
-        // 효과음 재생
-        Global.SoundManager.PlaySFX(SFXEnum.Witch_Crow_1);
+        weapons[0].Shut(0, (int)(GameManager.Instance.maxHealth * 0.05f));
     }
-
-    void Update() {
+    public void Crows()
+    {
+        weapons[0].Range(2, (int)(GameManager.Instance.maxHealth * 0.3f));
+        // 효과음 길이만큼 대기
+        Global.SoundManager.PlaySFX(SFXEnum.Witch_Crow_1);
+        Global.SoundManager.PlaySFX(SFXEnum.Witch_Crow_2, delay: 0.1f);
+    }
+    void Update()
+    {
         if (!GameManager.Instance.isLive) return;
-        if (!isLive) {
+        if (!isLive)
+        {
             transform.Translate(0, -5 * Time.deltaTime, 0);
             StartCoroutine(StageClear());
-        } else {
-            if (BossManager.Instance.phase >= 2) {
+            foreach (var weapon in weapons)
+            {
+                if (weapon.gameObject.activeSelf)
+                {
+                    weapon.gameObject.SetActive(false);
+                }
+            }
+        }
+        else
+        {
+            if (BossManager.Instance.phase >= 2)
+            {
                 Timer += Time.deltaTime;
-                if (Timer > 30f) {
+                if (Timer > 30f)
+                {
                     Timer = 0f;
                     bossLevel[levelIndex++].SetActive(true);
                     levelIndex = Mathf.Min(bossLevel.Length - 1, levelIndex);
                 }
 
-                if (IsAnyBossLevelActive() && !isPlayingWitchFireTile) {
+                if (IsAnyBossLevelActive() && !isPlayingWitchFireTile)
+                {
                     isPlayingWitchFireTile = true;
                     Global.SoundManager.PlaySFX(SFXEnum.Witch_FireTile_1);
                 }
             }
 
-            if (isPlayingWitchFireTile && !IsAnyBossLevelActive()) {
+            if (isPlayingWitchFireTile && !IsAnyBossLevelActive())
+            {
                 isPlayingWitchFireTile = false;
                 Global.SoundManager.StopSFX(SFXEnum.Witch_FireTile_1);
             }
 
             Collider2D hit = Physics2D.OverlapBox(transform.position - new Vector3(0, 7.5f, 0), new Vector2(13, 4), 0, LayerMask.GetMask("Player"));
 
-            if (BossManager.Instance.phase >= 1) {
+            if (BossManager.Instance.phase >= 1)
+            {
 
-                if (Timer2 > smashTime) {
+                if (Timer2 > smashTime)
+                {
 
                     Timer2 = 0f;
-                    if (hit != null) {
+                    if (hit != null)
+                    {
                         anim.SetBool("Hammer", true);
                         //GameManager.Instance.player.rigid.AddForce(new Vector2(0, -60), ForceMode2D.Impulse);
                     }
-                    else {
+                    else
+                    {
                         anim.SetBool("Smash", true);
                         //smash.gameObject.SetActive(true); Deleted
                     }
@@ -106,38 +125,50 @@ public class Boss : MonoBehaviour
             }
         }
     }
-    
-    IEnumerator StageClear() {
+
+    IEnumerator StageClear()
+    {
+        GameManager.Instance.isInvincible = true;
         yield return new WaitForSeconds(3f);
         GameManager.Instance.StageClear();
     }
-    void OnDrawGizmos() {
+    void OnDrawGizmos()
+    {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position - new Vector3(0,7.5f,0), new Vector2(13,4));
+        Gizmos.DrawWireCube(transform.position - new Vector3(0, 7.5f, 0), new Vector2(13, 4));
     }
-    void OnEnable() {
+    void OnEnable()
+    {
         target = GameManager.Instance.player.GetComponent<Rigidbody2D>();
         isLive = true;
         coll.enabled = true;
         sprite.sortingOrder = 1;
+        // 일반 몬스터 체력 계산식(10 * Mathf.Pow(1.2f, stage))의 70배
+        maxHealth = 10 * Mathf.Pow(1.2f, GameManager.Instance.CurStage) * 70;
         health = maxHealth;
+        GameManager.Instance.BossHealth = health;
+        GameManager.Instance.maxBossHealth = maxHealth;
     }
-   
-    public void Hammer() {
+
+    public void Hammer()
+    {
         anim.SetBool("Hammer", false);
         anim.SetBool("Hamming", true);
         Invoke("StartShake", 0.2f);
     }
-    
-   public void StartShake() {
+
+    public void StartShake()
+    {
         CC.ShakeCamera();
-   }
-    public void AnimOff() {
+    }
+    public void AnimOff()
+    {
         transform.GetChild(3).gameObject.SetActive(false);
         anim.SetBool("Hamming", false);
     }
 
-    public void EarthQuakeOn() {
+    public void EarthQuakeOn()
+    {
         Global.SoundManager.PlaySFX(SFXEnum.Witch_MagicCharge);
         transform.GetChild(3).gameObject.SetActive(true);
         Collider2D hit = Physics2D.OverlapBox(transform.position - new Vector3(0, 7.5f, 0), new Vector2(13, 4), 0, LayerMask.GetMask("Player"));
@@ -146,61 +177,106 @@ public class Boss : MonoBehaviour
             Player player = hit.GetComponent<Player>();
             player.rigid.AddForce(new Vector2(0, -60), ForceMode2D.Impulse);
             player.Stopping();
+            var damage = GameManager.Instance.maxHealth * 0.5f;
+            GameManager.Instance.Health -= damage;
         }
     }
 
-    public void TracePlayerOn() {
+    public void TracePlayerOn()
+    {
         transform.GetChild(2).GetChild(0).GetComponent<SmashUptoDown>().OnColor();
 
     }
 
-    public void StopToTracing() {
+    public void StopToTracing()
+    {
         transform.GetChild(2).GetComponent<SmashFinish>().StopPositionToTarget();
     }
 
-    public void SmashUptoDown() {
+    public void SmashUptoDown()
+    {
         anim.SetBool("Smash", false);
         anim.SetBool("Smashing", true);
         Transform child = transform.GetChild(2);
         child.GetChild(0).GetComponent<SmashUptoDown>().OffColor();
         child.gameObject.GetComponent<Animator>().SetTrigger("isSmash");
+        Global.SoundManager.PlaySFX(SFXEnum.Witch_SpaceMove);
 
     }
 
-    void OnTriggerEnter2D(Collider2D collision) {
+    private void CalculateDamage(DamageData damageData)
+    {
+        float finalDamage = damageData.damage;
+        bool isCritical = damageData.isCritical;
+
+        finalDamage = finalDamage * (1 + GameManager.Instance.player.damageBonus);
+
+        health -= finalDamage;
+        GameManager.DamageTextPoolManager.SpawnDamageText(damageTextSpawnPoint.position, finalDamage, isCritical, false);
+
+        if (GameManager.Instance.weaponController.isBonusDamage && damageData.isBonus)
+        {
+            float bonusDamage = finalDamage * GameManager.Instance.weaponController.bonusDamage;
+            health -= bonusDamage;
+            DelayedSpawnDamageText(transform.position, bonusDamage, 0.1f, true).Forget();
+        }
+    }
+
+    private async UniTaskVoid DelayedSpawnDamageText(Vector3 position, float damage, float delay, bool isBonus = false)
+    {
+        await UniTask.Delay((int)(delay * 1000));
+        GameManager.DamageTextPoolManager.SpawnDamageText(position, damage, false, isBonus);
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
         if (!collision.CompareTag("Bullet")) return;
         if (!isLive) return;
 
-        health -= collision.GetComponent<Bullet>().damage;
+        if (collision.TryGetComponent(out Bullet bullet))
+        {
+            Global.SoundManager.PlayHitSFX(SFXEnum.Monster_Hit_1, isShootCooldown: false);
+            CalculateDamage(bullet.CalculateDamage());
+        }
 
-        
-        if(health < 0) {
+        if (health <= 0)
+        {
             isLive = false;
             coll.enabled = false;
             sprite.sortingOrder = -2;
             anim.SetBool("Dead", true);
             CC.ShakeCamera();
         }
-
     }
-    void OnTriggerStay2D(Collider2D collision) {
+
+    void OnTriggerStay2D(Collider2D collision)
+    {
         if (!collision.CompareTag("Floor")) return;
         if (!isLive) return;
+        if (!collision.TryGetComponent(out Bullet bullet)) return;
 
-        health -= collision.GetComponent<FloorWeapon>().damage;
+        if (Time.time >= lastDamageTime + DAMAGE_INTERVAL)
+        {
+            CalculateDamage(bullet.CalculateDamage());
+            lastDamageTime = Time.time;
 
-        if (health <= 0) {
-            isLive = false;
-            coll.enabled = false;
-            sprite.sortingOrder = -2;
-            anim.SetBool("Dead", true);
-            CC.ShakeCamera();
+            if (health <= 0)
+            {
+                isLive = false;
+                coll.enabled = false;
+                sprite.sortingOrder = -2;
+                anim.SetBool("Dead", true);
+                CC.ShakeCamera();
+            }
         }
     }
 
-    private bool IsAnyBossLevelActive() {
-        foreach (var level in bossLevel) {
-            if (level.activeSelf) {
+    private bool IsAnyBossLevelActive()
+    {
+        foreach (var level in bossLevel)
+        {
+            if (level.activeSelf)
+            {
                 return true;
             }
         }

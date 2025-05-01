@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9195100151397136327}
-  - component: {fileID: 6240130366692616478}
   - component: {fileID: 7355153616949271378}
+  - component: {fileID: 8756370027539972812}
   m_Layer: 0
   m_Name: Crows
   m_TagString: Untagged
@@ -36,22 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!70 &6240130366692616478
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9195100151397136320}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 1}
-  m_Direction: 0
 --- !u!114 &7355153616949271378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,6 +50,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   duration: 5
+--- !u!60 &8756370027539972812
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9195100151397136320}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 1}
+      - {x: -0.95105654, y: 0.30901697}
+      - {x: -2.5790071, y: -1.818456}
+      - {x: 2.7725987, y: -1.7908001}
+      - {x: 0.9510565, y: 0.30901712}
 --- !u!1 &9195100151605005384
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,7 +90,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9195100151605005391}
   - component: {fileID: 9195100151605005388}
-  - component: {fileID: 9195100151605005389}
   - component: {fileID: 9195100151605005390}
   - component: {fileID: 1752854343436072506}
   m_Layer: 0
@@ -153,22 +166,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &9195100151605005389
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9195100151605005384}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 2, y: 2}
-  m_Direction: 1
 --- !u!114 &9195100151605005390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +211,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9195100151917083092}
   - component: {fileID: 9195100151917083098}
-  - component: {fileID: 9195100151917083099}
   - component: {fileID: 9195100151917083097}
   - component: {fileID: 3788759431929772922}
   m_Layer: 0
@@ -291,22 +287,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &9195100151917083099
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9195100151917083093}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 2, y: 2}
-  m_Direction: 1
 --- !u!114 &9195100151917083097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,7 +332,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9195100152177465810}
   - component: {fileID: 9195100152177465811}
-  - component: {fileID: 9195100152177465809}
   - component: {fileID: 9195100152177465808}
   - component: {fileID: 8286893828694916395}
   m_Layer: 0
@@ -429,22 +408,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &9195100152177465809
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9195100152177465804}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 2, y: 2}
-  m_Direction: 1
 --- !u!114 &9195100152177465808
 MonoBehaviour:
   m_ObjectHideFlags: 0

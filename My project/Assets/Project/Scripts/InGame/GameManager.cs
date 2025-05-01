@@ -31,6 +31,7 @@ public class GameManager : MMSingleton<GameManager>
     public float baseCriticalDamage = 1.5f;
     public float criticalChance = 0f;
     public float baseCriticalChance = 0f;
+    public float revivePossibility = 0f;
     public float expBonus = 1.0f;
     public float expRangeBonus = 1.0f;
 
@@ -62,6 +63,8 @@ public class GameManager : MMSingleton<GameManager>
     #endregion
 
     #region Properties
+    public float BossHealth { get; set; }
+    public float maxBossHealth { get; set; }
     public float Defense
     {
         get => _defense;
@@ -76,12 +79,11 @@ public class GameManager : MMSingleton<GameManager>
             float damage = _health - value;
             if (damage <= 0)
             {
-                _health = Mathf.Clamp(value, 0, maxHealth);
+                _health = value;
                 return;
             }
 
             float reducedDamage = damage * (100f - _defense) / 100f;
-            reducedDamage = Mathf.Max(0, reducedDamage);
             if (isInvincible)
             {
                 reducedDamage = 0;
@@ -97,13 +99,13 @@ public class GameManager : MMSingleton<GameManager>
                 {
                     float remainingDamage = reducedDamage - _shield;
                     Shield = 0;
-                    _health = Mathf.Max(0, _health - remainingDamage);
+                    _health = _health - remainingDamage;
                 }
             }
             else
             {
                 Global.SoundManager.PlayHitSFX(Data.SFXEnum.HGD_Hit);
-                _health = Mathf.Max(0, _health - reducedDamage);
+                _health = _health - reducedDamage;
             }
 
             if (_health <= 0)
@@ -298,6 +300,15 @@ public class GameManager : MMSingleton<GameManager>
     public void GameOver()
     {
         Global.SoundManager.PlaySFX(Data.SFXEnum.HGD_Death);
+                
+        // 부활 확률 체크 (revivePossibility가 백분율로 되어있음, 예: 20은 20%를 의미)
+        if (revivePossibility > 0 && UnityEngine.Random.Range(0f, 100f) < revivePossibility) {
+            Global.SoundManager.PlaySFX(Data.SFXEnum.Revive);
+            Health = maxHealth;
+            Resume();
+            return;
+        }
+        
         StartCoroutine(GameOverRoutine());
     }
 
@@ -306,7 +317,7 @@ public class GameManager : MMSingleton<GameManager>
         isLive = false;
         yield return new WaitForSeconds(0.5f);
         Stop();
-        // 게임 사망 시 데이터 초기화
+        // 부활 실패 시 게임오버 처리
         Global.DataManager.ResetWeaponData();
         Global.UserDataManager.ResetPurchasedShopItems();
         Global.UserDataManager.ResetStageData();

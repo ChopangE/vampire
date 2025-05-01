@@ -36,6 +36,11 @@ namespace Manager
         private float hitSoundCooldown = 0.1f;
         private Dictionary<SFXEnum, float> lastHitSoundTimes = new Dictionary<SFXEnum, float>();
 
+        private Dictionary<SFXEnum, AudioSource> activeSFXSources = new Dictionary<SFXEnum, AudioSource>();
+
+        private Queue<AudioSource> sfxSourcePool = new Queue<AudioSource>();
+        private int initialPoolSize = 10; // 초기 풀 크기
+
         private void Awake()
         {
             // 전역 참조 설정
@@ -50,6 +55,7 @@ namespace Manager
 
             // 저장된 볼륨 설정 불러오기
             LoadVolumeSettings();
+            InitializeSoundPool();
         }
 
         private void LoadVolumeSettings()
@@ -111,24 +117,47 @@ namespace Manager
             SFXSound s = FindSFX(name, sfxArr);
             if (s == null || s.name == SFXEnum.NONE) return;
 
-            // volume이 -1이면 저장된 볼륨 사용, 아니면 지정된 볼륨 사용
             float playVolume = volume < 0 ? _sfxVolume : volume;
 
-            // delay가 0 이상인 경우, 대기 후 사운드 재생
             if (delay > 0)
             {
-                PlaySFXWithDelay(s.clip, playVolume, delay).Forget(); // UniTask를 사용하여 비동기적으로 재생
+                PlaySFXWithDelay(s.clip, playVolume, delay, name).Forget();
             }
             else
             {
-                sfxSource.PlayOneShot(s.clip, playVolume); // 즉시 재생
+                // 이전 소스가 있다면 풀에 반환
+                if (activeSFXSources.ContainsKey(name))
+                {
+                    ReturnToPool(activeSFXSources[name]);
+                }
+
+                // 풀에서 AudioSource 가져오기
+                AudioSource newSource = GetAudioSourceFromPool();
+                newSource.gameObject.name = $"SFX_{name}";
+                newSource.clip = s.clip;
+                newSource.volume = playVolume;
+                newSource.Play();
+
+                activeSFXSources[name] = newSource;
             }
         }
 
-        private async UniTaskVoid PlaySFXWithDelay(AudioClip clip, float volume, float delay)
+        private async UniTaskVoid PlaySFXWithDelay(AudioClip clip, float volume, float delay, SFXEnum name)
         {
-            await UniTask.Delay((int)(delay * 1000)); // 밀리초로 변환하여 대기
-            sfxSource.PlayOneShot(clip, volume); // 사운드 재생
+            await UniTask.Delay((int)(delay * 1000));
+            
+            if (activeSFXSources.ContainsKey(name))
+            {
+                ReturnToPool(activeSFXSources[name]);
+            }
+
+            AudioSource newSource = GetAudioSourceFromPool();
+            newSource.gameObject.name = $"SFX_{name}_Delayed";
+            newSource.clip = clip;
+            newSource.volume = volume;
+            newSource.Play();
+
+            activeSFXSources[name] = newSource;
         }
 
         public void PlayHitSFX(SFXEnum name, float volume = -1, bool isShootCooldown = true)
@@ -182,38 +211,26 @@ namespace Manager
         }
         public void StopSFX(SFXEnum name = SFXEnum.NONE, bool isStop = true)
         {
-            if (sfxSource == null) return;
-
-            // name이 NONE일 경우 모든 효과음 중지 또는 재생
             if (name == SFXEnum.NONE)
             {
-                if (isStop)
+                // 모든 효과음 중지
+                foreach (var source in activeSFXSources.Values)
                 {
-                    sfxSource.Stop();
-                }
-                else
-                {
-                    if (sfxSource.clip != null)
+                    if (source != null)
                     {
-                        sfxSource.Play(); // 현재 clip이 있을 때만 재생
+                        ReturnToPool(source);
                     }
                 }
+                activeSFXSources.Clear();
             }
-            else
+            else if (activeSFXSources.ContainsKey(name))
             {
-                // 특정 효과음이 재생 중일 때 중지
-                if (isStop && sfxSource.clip != null && sfxSource.clip.name == name.ToString())
+                // 특정 효과음 중지
+                if (activeSFXSources[name] != null)
                 {
-                    sfxSource.Stop(); // 효과음 중지
+                    ReturnToPool(activeSFXSources[name]);
                 }
-                else if (!isStop)
-                {
-                    // 현재 clip이 없거나 다른 clip이 재생 중일 때만 재생
-                    if (sfxSource.clip == null || sfxSource.clip.name != name.ToString())
-                    {
-                        sfxSource.Play(); // 효과음 재생
-                    }
-                }
+                activeSFXSources.Remove(name);
             }
         }
 
@@ -299,5 +316,53 @@ namespace Manager
             Debug.Log($"로드된 오디오 클립 수: {guids.Length}개");
         }
 
+        private void InitializeSoundPool()
+        {
+            // 초기 오브젝트 풀 생성
+            for (int i = 0; i < initialPoolSize; i++)
+            {
+                GameObject soundObj = new GameObject($"SFX_Pool_{i}");
+                soundObj.transform.parent = sfxSource.gameObject.transform;
+                AudioSource source = soundObj.AddComponent<AudioSource>();
+                source.playOnAwake = false;
+                soundObj.SetActive(false);
+                sfxSourcePool.Enqueue(source);
+            }
+        }
+
+        private AudioSource GetAudioSourceFromPool()
+        {
+            AudioSource source;
+            
+            // 풀에 있는 비활성화된 오브젝트 찾기
+            while (sfxSourcePool.Count > 0)
+            {
+                source = sfxSourcePool.Dequeue();
+                if (source != null && !source.isPlaying)
+                {
+                    source.gameObject.SetActive(true);
+                    return source;
+                }
+            }
+
+            // 풀이 비었으면 새로 생성
+            GameObject newSoundObj = new GameObject($"SFX_Pool_{sfxSourcePool.Count}");
+            newSoundObj.transform.parent = sfxSource.gameObject.transform;
+            source = newSoundObj.AddComponent<AudioSource>();
+            source.playOnAwake = false;
+            
+            return source;
+        }
+
+        private void ReturnToPool(AudioSource source)
+        {
+            if (source != null)
+            {
+                source.Stop();
+                source.clip = null;
+                source.gameObject.SetActive(false);
+                sfxSourcePool.Enqueue(source);
+            }
+        }
     }
 }

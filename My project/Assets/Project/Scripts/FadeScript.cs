@@ -83,7 +83,12 @@ public class FadeScript : MonoBehaviour
         yield return new WaitForSeconds(2f);
         if(isGameOver || isGameWin) {
             GameManager.Instance.isStageClear = false;
-            SceneManager.LoadScene("Map");
+            if(Global.UserDataManager.curStage != 13)
+                SceneManager.LoadScene("Map");
+            else
+            {
+                Global.UIManager.OpenPage<CreditPage>();
+            }
         }
         // 완료 콜백 호출
         onComplete?.Invoke();

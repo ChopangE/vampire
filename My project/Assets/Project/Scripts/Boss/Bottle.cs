@@ -14,4 +14,10 @@ public class Bottle : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!collision.CompareTag("Player")) return;
+        GameManager.Instance.Health -= GameManager.Instance.Health * 0.1f;
+
+    }
 }

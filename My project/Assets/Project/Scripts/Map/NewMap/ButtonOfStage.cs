@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 public class ButtonOfStage : MonoBehaviour
 {
+    public bool isNormalStageCompletedShow = false;
+    [SerializeField] private Sprite normalStageCompletedImage;
+    [SerializeField] private GameObject normalStageSkull;
 
     public int buttonNum;
     public Sprite pushedImage;
@@ -68,6 +71,13 @@ public class ButtonOfStage : MonoBehaviour
         else
         {
             title.sprite = pushedImage;
+        }
+
+        if(isNormalStageCompletedShow && buttonNum < currentStage) {
+            title.sprite = normalStageCompletedImage;
+            if(normalStageSkull != null) {
+                normalStageSkull.SetActive(false);
+            }
         }
 
         // 각 레벨의 마지막 스테이지(3,7,11...)이고 아직 활성화되지 않은 경우 숨김

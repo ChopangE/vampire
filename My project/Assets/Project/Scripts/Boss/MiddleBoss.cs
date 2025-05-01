@@ -19,8 +19,9 @@ public class MiddleBoss : Enemy {
         target = GameManager.Instance.player.GetComponent<Rigidbody2D>();
 
         speed = 5f;
-        maxHealth = 500 * (GameManager.Instance.CurStage + 1);
-        health = 100f;
+        // 일반 몬스터 체력 계산식(10 * Mathf.Pow(1.2f, stage))의 50배
+        maxHealth = 10 * Mathf.Pow(1.2f, GameManager.Instance.CurStage) * 50;
+        health = maxHealth;
 
         isDoing = false;
         

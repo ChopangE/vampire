@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Manager;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -10,28 +11,34 @@ public class BossBullet : MonoBehaviour
     SpriteRenderer sprite;
     Collider2D coll;
     BossWeaponType type;
-    void Awake() {
+    void Awake()
+    {
         sprite = GetComponent<SpriteRenderer>();
         coll = GetComponent<Collider2D>();
     }
-    void Update() {
+    void Update()
+    {
         if (!GameManager.Instance.isLive) return;
-        if(type == BossWeaponType.Range) {
+        if (type == BossWeaponType.Range)
+        {
             transform.Translate(0, -3f * Time.deltaTime, 0);
         }
     }
 
-    public void Init(float Damage, Vector3 dir, BossWeaponType bwt) {
+    public void Init(float Damage, Vector3 dir, BossWeaponType bwt)
+    {
         type = bwt;
         damage = Damage;
-        switch (bwt) {
+        switch (bwt)
+        {
             case BossWeaponType.Bomb:
                 StartCoroutine(PreStop());
                 StartCoroutine(Stop());
                 break;
             case BossWeaponType.Range:
                 BossBullet[] childBullet = GetComponentsInChildren<BossBullet>();
-                foreach (BossBullet bb in childBullet) {
+                foreach (BossBullet bb in childBullet)
+                {
                     bb.damage = damage;
                 }
                 StartCoroutine(Stop());
@@ -39,21 +46,27 @@ public class BossBullet : MonoBehaviour
                 break;
         }
     }
-    IEnumerator PreStop() {
+    IEnumerator PreStop()
+    {
         sprite.color = new Color(0.8f, 0, 0, 0.5f);
         coll.enabled = false;
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.5f);
+        Global.SoundManager.PlaySFX(Data.SFXEnum.Witch_SpecialRemove);
+        Global.SoundManager.PlaySFX(Data.SFXEnum.Witch_SpecialPunch);
         sprite.color = Color.white;
         coll.enabled = true;
     }
-    IEnumerator Stop() {
+    IEnumerator Stop()
+    {
         yield return new WaitForSeconds(duration);
         gameObject.SetActive(false);
+        Global.SoundManager.StopSFX(Data.SFXEnum.Witch_SpecialPunch);
     }
 
-    void OnTriggerEnter2D(Collider2D collision) {
+    void OnTriggerStay2D(Collider2D collision)
+    {
         if (!collision.CompareTag("Player")) return;
-        GameManager.Instance.Health -= damage;
+        GameManager.Instance.Health -= Time.deltaTime * damage;
 
     }
 }

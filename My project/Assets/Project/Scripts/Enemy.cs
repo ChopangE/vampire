@@ -116,7 +116,7 @@ public class Enemy : DamageObject
         base.OnEnable();
         anim.runtimeAnimatorController = animCon[data.spriteType];
         speed = data.speed;
-        maxHealth = 10 * (GameManager.Instance.CurStage + 1);
+        maxHealth = 10 * Mathf.Pow(1.2f, GameManager.Instance.CurStage);
         health = maxHealth;
         level = data.spriteType;
         _enemyType = EnemyType.Normal;
@@ -125,7 +125,7 @@ public class Enemy : DamageObject
     {
         anim.runtimeAnimatorController = eliteanimCon[data.spriteType];
         speed = data.speed;
-        maxHealth = 10 * (GameManager.Instance.CurStage + 1);
+        maxHealth = 10 * Mathf.Pow(1.2f, GameManager.Instance.CurStage) * 20;
         health = maxHealth;
         level = data.spriteType;
         _enemyType = EnemyType.Elite;

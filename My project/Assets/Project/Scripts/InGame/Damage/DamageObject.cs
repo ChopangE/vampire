@@ -11,9 +11,9 @@ namespace InGame
     public class DamageObject : MonoBehaviour, IDamageHitable
     {
         public event Action<float> OnHit;
-        [Range(0,1000)] [BoxGroup("체력"), HideLabel] [LabelText("최대 체력")]
+        [BoxGroup("체력"), HideLabel] [LabelText("최대 체력")]
         public float maxHealth;
-        [ProgressBar(0, 10, 0, 1, 0, Segmented = true)] [Range(0,1000)] [BoxGroup("체력"), HideLabel] [LabelText("현재 체력")] 
+        [BoxGroup("체력"), HideLabel] [LabelText("현재 체력")] 
         public float health;
 
         [LabelText("넉백 옵션")] [SerializeField] 

@@ -98,6 +98,9 @@ public class PassiveManager : MonoBehaviour
                 case "CritRate":
                     GameManager.Instance.criticalChance *= (1 + value);
                     break;
+                case "RevivePossibility":
+                    GameManager.Instance.revivePossibility += value * 100f;
+                    break;
             }
         }
     }
