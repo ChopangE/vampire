@@ -42,7 +42,7 @@ public class Gear : MonoBehaviour
                 case WeaponId.Wind:
                     weapon.maxCooldown = 150 + (150 * rate);
                     break;
-                case WeaponId.Fire:
+                case WeaponId.Rock:
                     weapon.maxCooldown = 0.5f * (1f - rate);
                     break;
             }

@@ -8,7 +8,7 @@ namespace Data.WeaponData
     public enum WeaponId
     {
         Wind = 0,
-        Fire = 1,
+        Rock = 1,
         Spike = 2,
         Explosion = 3,
         Breath = 4,

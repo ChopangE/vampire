@@ -6,7 +6,7 @@ using Data;
 using Manager;
 
 
-public class Fire : Weapon
+public class Rock : Weapon
 {
     public override async UniTask Init()
     {
