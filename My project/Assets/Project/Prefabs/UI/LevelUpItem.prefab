@@ -34,10 +34,10 @@ RectTransform:
   m_Father: {fileID: 4813931283886031963}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 721.875, y: 900}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8296681139307870967
 CanvasRenderer:
@@ -477,10 +477,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isAutoConnection: 1
-  viewAdapterId: BoolInversion
-  viewAdapterOptions: {fileID: 0}
+  viewAdapterId: BoolToColor
+  viewAdapterOptions: {fileID: 11400000, guid: 30d2368521e7c014785bf72e4ef211de, type: 2}
   viewModelPropertyName: Item.IsMaxLevel
-  viewPropertyName: UnityEngine.UI.Image.enabled
+  viewPropertyName: UnityEngine.UI.Image.color
 --- !u!1 &4813931284200449445
 GameObject:
   m_ObjectHideFlags: 0
