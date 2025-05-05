@@ -24,7 +24,7 @@ public class Spawner : MonoBehaviour
         timer += Time.deltaTime;
         eliteTimer += Time.deltaTime;
         
-        level = GameManager.Instance.level;      
+        level = GameManager.Instance.CurStage;      
         if(level > spawnData.Length || GameManager.Instance.CurStage == Global.StageManager.MAX_STAGE_COUNT * Global.StageManager.MAX_STAGE_LEVEL) return;
         if(timer > spawnData[level].spawnTime) {
             Spawn();

@@ -127,6 +127,7 @@ public class ItemData : ScriptableObject
         #endif
     }
     [BoxGroup("진화무기 세팅")] public ItemData _prevItemData;
+    [BoxGroup("진화무기 세팅")] public ItemData _nextItemData;
     [BoxGroup("진화무기 세팅")] [Button("기존 무기 데이터 상속 (위의 데이터에 해당 ItemData 할당 필요)")]
     public void InheritValues()
     {

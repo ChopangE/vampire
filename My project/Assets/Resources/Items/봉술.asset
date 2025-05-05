@@ -22,14 +22,14 @@ MonoBehaviour:
     baseRange: 1
     baseDuration: 1
     basePierce: 1
-    curCoolDown: 0
-    curDamage: 0
+    curCoolDown: 2.6999998
+    curDamage: 22
     curCount: 0
-    curRange: 0
-    curDuration: 0
-    curCriticalDamagePercent: 0
-    curCriticalChancePercent: 0
-    curPierce: 0
+    curRange: 1
+    curDuration: 1.1024998
+    curCriticalDamagePercent: 0.05
+    curCriticalChancePercent: 0.05
+    curPierce: 1
   passiveItemDataInfo:
     passiveId: 0
     passiveValue: 0
@@ -45,3 +45,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 42d74f3569b6a1645be985e64672f4c2, type: 2}
   isEvaluateWeapon: 0
   _prevItemData: {fileID: 0}
+  _nextItemData: {fileID: 11400000, guid: fb37cca7a5eb8864b9146e1c42ae66a8, type: 2}
