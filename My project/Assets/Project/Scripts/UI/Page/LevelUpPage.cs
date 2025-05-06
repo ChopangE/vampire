@@ -68,6 +68,7 @@ public class LevelUpPage : ViewModel
             .Where(item => !(item.itemDataInfo.curLevel >= item.itemDataInfo.maxLevel && item._nextItemData == null))
             .ToArray();
 
+
         // 모든 일반 스킬이 최대 레벨인지 확인
         bool allNormalSkillsMaxed = Global.DataManager.GetNotMaxLevelItems()
             .Where(item => !item.isEvaluateWeapon && item.itemType != ItemType.Passive)
@@ -126,74 +127,188 @@ public class LevelUpPage : ViewModel
 
         int[] ran = new int[3];
         int count = 0;
-        while (true)
+        
+        // 사용 가능한 아이템이 3개 미만인 경우 대비
+        int availableItemCount = isEvaluation && evaluateWeapons != null && evaluateWeapons.Length > 0 ?
+            evaluateWeapons.Length + notMaxLevelItems.Length : notMaxLevelItems.Length;
+            
+        // 아이템 수가 3개 미만이면 중복을 허용
+        bool allowDuplicates = availableItemCount < 3;
+        
+        // 진화 무기 관련 초기화
+        int evolveSlot = -1;
+        
+        try
         {
-            // isEvaluation이 false면 진화무기 관련 로직 스킵하고 일반 레벨업 로직만 실행
-            if (isEvaluation && evaluateWeapons != null && evaluateWeapons.Length > 0)
+            // 디버깅용 로그 추가
+            Debug.Log($"사용 가능한 아이템 수: {availableItemCount}, 중복 허용: {allowDuplicates}, 패시브: {passiveItems.Length}");
+            
+            // 최대 시도 횟수를 제한하여 무한 루프 방지
+            for (count = 0; count < 50; count++)
             {
-                // 진화무기를 표시할 슬롯 선택
-                int evolveSlot = Random.Range(0, 3);
-                ran[evolveSlot] = Random.Range(0, evaluateWeapons.Length);
-                maxLevelScrollNum = evolveSlot;
-
-                // 나머지 슬롯에 일반 아이템 배치
-                int normalItemIndex = 0;
-                for (int i = 0; i < 3; i++)
+                // isEvaluation이 false면 진화무기 관련 로직 스킵하고 일반 레벨업 로직만 실행
+                if (isEvaluation && evaluateWeapons != null && evaluateWeapons.Length > 0)
                 {
-                    if (i != evolveSlot)
-                    {
-                        ran[i] = Random.Range(0, notMaxLevelItems.Length);
-                        if (normalItemIndex > 0 && ran[i] == ran[(evolveSlot + 1) % 3]) continue;
-                        normalItemIndex++;
-                    }
-                }
-                
-                // 모든 아이템이 패시브가 아닌 경우에만 패시브 아이템 개수 제한
-                if (!allNormalSkillsMaxed)
-                {
-                    // 패시브 아이템 개수 체크
-                    int passiveCount = 0;
+                    // 진화무기를 표시할 슬롯 선택
+                    evolveSlot = Random.Range(0, 3);
+                    ran[evolveSlot] = Random.Range(0, evaluateWeapons.Length);
+                    maxLevelScrollNum = evolveSlot;
+    
+                    // 나머지 슬롯에 일반 아이템 배치
+                    bool isValid = true;
+                    int normalItemIndex = 0;
+                    
                     for (int i = 0; i < 3; i++)
                     {
-                        if (i != evolveSlot && notMaxLevelItems[ran[i]].itemType == ItemType.Passive)
-                            passiveCount++;
+                        if (i != evolveSlot)
+                        {
+                            if (notMaxLevelItems.Length == 0) 
+                            {
+                                // 일반 아이템이 없는 경우 같은 진화 무기를 표시
+                                ran[i] = ran[evolveSlot];
+                                normalItemIndex++;
+                                continue;
+                            }
+                            
+                            ran[i] = Random.Range(0, notMaxLevelItems.Length);
+                            
+                            // 중복을 허용하는 경우 검사 스킵
+                            if (!allowDuplicates && normalItemIndex > 0 && ran[i] == ran[(evolveSlot + 1) % 3]) 
+                            {
+                                isValid = false;
+                                break;
+                            }
+                            normalItemIndex++;
+                        }
                     }
-                    if (passiveCount > 1) continue;
+                    
+                    if (!isValid) continue;
+                    
+                    // 모든 아이템이 패시브가 아닌 경우에만 패시브 아이템 개수 제한
+                    if (!allNormalSkillsMaxed && notMaxLevelItems.Length > 0)
+                    {
+                        // 패시브 아이템 개수 체크
+                        int passiveCount = 0;
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (i != evolveSlot && ran[i] < notMaxLevelItems.Length && notMaxLevelItems[ran[i]].itemType == ItemType.Passive)
+                                passiveCount++;
+                        }
+                        if (passiveCount > 1 && !allowDuplicates) continue;
+                    }
+                    
+                    // 조건 만족
+                    if (normalItemIndex == 2 || allowDuplicates) break;
+                }
+                else
+                {
+                    // 진화모드가 아니거나 진화무기가 없는 경우 - 일반 레벨업 로직
+                    maxLevelScrollNum = -1;
+                    
+                    // 사용 가능한 아이템이 없는 경우 처리
+                    if (notMaxLevelItems.Length == 0)
+                    {
+                        Debug.LogWarning("레벨업 가능한 아이템이 없습니다.");
+                        Hide();
+                        return;
+                    }
+                    
+                    ran[0] = Random.Range(0, notMaxLevelItems.Length);
+                    ran[1] = Random.Range(0, notMaxLevelItems.Length);
+                    ran[2] = Random.Range(0, notMaxLevelItems.Length);
+    
+                    // 모든 아이템이 패시브가 아닌 경우에만 패시브 아이템 개수 제한
+                    if (!allNormalSkillsMaxed)
+                    {
+                        // 패시브 아이템 개수 체크
+                        int passiveCount = 0;
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (notMaxLevelItems[ran[i]].itemType == ItemType.Passive)
+                                passiveCount++;
+                        }
+                        if (passiveCount > 1 && !allowDuplicates) continue;
+                    }
+    
+                    // 중복을 허용하거나 모든 아이템이 서로 다른 경우
+                    if (allowDuplicates || (ran[0] != ran[1] && ran[1] != ran[2] && ran[0] != ran[2])) break;
                 }
                 
-                if (normalItemIndex == 2) break;
-            }
-            else
-            {
-                // 진화모드가 아니거나 진화무기가 없는 경우 - 일반 레벨업 로직
-                maxLevelScrollNum = -1;
-                ran[0] = Random.Range(0, notMaxLevelItems.Length);
-                ran[1] = Random.Range(0, notMaxLevelItems.Length);
-                ran[2] = Random.Range(0, notMaxLevelItems.Length);
-
-                // 모든 아이템이 패시브가 아닌 경우에만 패시브 아이템 개수 제한
-                if (!allNormalSkillsMaxed)
+                // 25번 시도 후에는 중복 허용
+                if (count >= 25)
                 {
-                    // 패시브 아이템 개수 체크
-                    int passiveCount = 0;
-                    for (int i = 0; i < 3; i++)
-                    {
-                        if (notMaxLevelItems[ran[i]].itemType == ItemType.Passive)
-                            passiveCount++;
-                    }
-                    if (passiveCount > 1) continue;
+                    Debug.LogWarning("LevelUpPage: Next() 아이템 선택 반복 횟수 초과 - 중복 허용");
+                    allowDuplicates = true;
                 }
-
-                if (ran[0] != ran[1] && ran[1] != ran[2] && ran[0] != ran[2]) break;
             }
             
-            count++;
-            if(count > 200) {
-                Debug.LogError("LevelUpPage: Next() 200번 이상 반복" + notMaxLevelItems.Length);
-                Hide();
-                break;
+            // 최대 시도 횟수를 초과한 경우 (무한 루프 방지)
+            if (count >= 50)
+            {
+                Debug.LogError("LevelUpPage: Next() 50번 이상 반복" + notMaxLevelItems.Length);
+                // 중복을 허용하여 강제로 선택
+                allowDuplicates = true;
+                
+                if (isEvaluation && evaluateWeapons != null && evaluateWeapons.Length > 0)
+                {
+                    // 진화 무기 슬롯 처리
+                    if (evolveSlot == -1) evolveSlot = 0;
+                    maxLevelScrollNum = evolveSlot;
+                    ran[evolveSlot] = evaluateWeapons.Length > 0 ? 0 : 0;
+                    
+                    // 나머지 슬롯 처리
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (i != evolveSlot)
+                        {
+                            ran[i] = notMaxLevelItems.Length > 0 ? Random.Range(0, notMaxLevelItems.Length) : 0;
+                        }
+                    }
+                }
+                else
+                {
+                    // 진화 무기가 없는 경우 - 각 슬롯마다 다른 랜덤값 설정
+                    if (notMaxLevelItems.Length > 0)
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            if (i == 0 || allowDuplicates)
+                            {
+                                ran[i] = Random.Range(0, notMaxLevelItems.Length);
+                            }
+                            else
+                            {
+                                // 이전 슬롯과 다른 값 설정 시도
+                                int attempts = 0;
+                                int prevIndex = ran[i-1];
+                                int randIndex;
+                                
+                                do {
+                                    randIndex = Random.Range(0, notMaxLevelItems.Length);
+                                    attempts++;
+                                } while (randIndex == prevIndex && attempts < 10 && notMaxLevelItems.Length > 1);
+                                
+                                ran[i] = randIndex;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // 사용 가능한 아이템이 없는 경우 처리
+                        Debug.LogWarning("레벨업 가능한 아이템이 없습니다. 화면을 닫습니다.");
+                        Hide();
+                        return;
+                    }
+                }
             }
         }
+        catch (System.Exception e)
+        {
+            Debug.LogError("LevelUpPage: Next() 예외 발생: " + e.Message);
+            Hide();
+            return;
+        }
+        
         CheckMaxLevelScroll();
 
         for (int i = 0; i < ran.Length; i++)

@@ -55,6 +55,7 @@ public class WeaponController : MonoBehaviour
     {
         await UniTask.WaitUntil(() => Global.DataManager.isLoaded);
         var weaponSavedDatas = Global.DataManager.GetItemDataInfos();
+        // 일단 모든 무기를 활성화
         foreach(var weaponSavedData in weaponSavedDatas)
         {
             var weapon = weapons.FirstOrDefault(w => w.id == weaponSavedData.itemId);
@@ -63,6 +64,27 @@ public class WeaponController : MonoBehaviour
                 if(weaponSavedData.curLevel > 0)
                 {
                     ActivateWeapon(weapon);
+                }
+            }
+        }
+        
+        // 진화무기가 활성화된 경우 이전 무기 비활성화
+        foreach(var weapon in ActiveWeapons.ToList())
+        {
+            if(weapon._data.isEvaluateWeapon && weapon._data._prevItemData != null)
+            {
+                var prevWeaponId = weapon._data._prevItemData.itemDataInfo.itemId;
+                var prevWeapon = ActiveWeapons.FirstOrDefault(w => w.id == prevWeaponId);
+                if(prevWeapon != null)
+                {
+                    RemoveWeapon(prevWeapon);
+                }
+            }
+            else if(!weapon._data.isEvaluateWeapon && weapon._data._nextItemData != null)
+            {
+                if(ActiveWeapons.FirstOrDefault(w => w.id == weapon._data._nextItemData.itemDataInfo.itemId) != null)
+                {
+                    RemoveWeapon(weapon);
                 }
             }
         }

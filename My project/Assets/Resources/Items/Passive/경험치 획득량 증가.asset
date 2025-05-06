@@ -15,7 +15,7 @@ MonoBehaviour:
   itemDataInfo:
     itemId: 8
     curLevel: 0
-    maxLevel: 9
+    maxLevel: 999
     baseCooldown: 0
     baseDamage: 0
     baseCount: 1
@@ -33,7 +33,7 @@ MonoBehaviour:
   passiveItemDataInfo:
     passiveId: 3
     passiveValue: 0
-    curLevel: 0
+    curLevel: 10
     maxLevel: 1000
   itemType: 10
   itemName: "\uACBD\uD5D8\uCE58 \uD68D\uB4DD\uB7C9 \uC99D\uAC00"
@@ -43,3 +43,4 @@ MonoBehaviour:
   excludeUpgradeList: []
   isEvaluateWeapon: 0
   _prevItemData: {fileID: 0}
+  _nextItemData: {fileID: 0}
