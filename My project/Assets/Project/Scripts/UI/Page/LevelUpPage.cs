@@ -123,7 +123,15 @@ public class LevelUpPage : ViewModel
                 .Where(item => item.isEvaluateWeapon)
                 .Where(item => item.itemType != ItemType.Passive)
                 .Where(item => item._prevItemData != null)
+                .Where(item => Global.DataManager.GetMaxLevelItems().Any(maxLevelItem => maxLevelItem.itemDataInfo.itemId == item._prevItemData.itemDataInfo.itemId))
                 .ToArray() : null;
+        if(evaluateWeapons != null)
+        {
+            foreach(var item in evaluateWeapons)
+            {
+                Debug.Log("진화무기: " + item._prevItemData.itemDataInfo.curLevel + " " + item._prevItemData.itemDataInfo.maxLevel + " " + item.itemDataInfo.itemId.ToString());
+            }
+        }
 
         int[] ran = new int[3];
         int count = 0;
