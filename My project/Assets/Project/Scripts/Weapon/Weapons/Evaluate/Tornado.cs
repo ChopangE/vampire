@@ -2,13 +2,13 @@ using Cysharp.Threading.Tasks;
 using Data;
 using Manager;
 using UnityEngine;
-public class Tornado : Weapon
+public class Tornado : BulletWeapon
 {
     public override async UniTask Init()
     {
         await base.Init();
     }
-    public override void ExecuteAttack()
+    public override void SpawnBullet()
     {
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
         bullet.position = transform.position + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0);

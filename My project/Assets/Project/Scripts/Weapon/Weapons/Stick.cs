@@ -5,13 +5,13 @@ using Cysharp.Threading.Tasks;
 using Data;
 using Manager;
 
-public class Stick : Weapon
+public class Stick : BulletWeapon
 {
     public override async UniTask Init()
     {
         await base.Init();
     }
-    public override async void ExecuteAttack()
+    public override void SpawnBullet()
     {
         Global.SoundManager.PlaySFX(SFXEnum.StaffSkill);
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
@@ -19,7 +19,5 @@ public class Stick : Weapon
         
         bullet.position = transform.position;
         bullet.localScale = new Vector3(dir, 1, 1);
-        await UniTask.Delay(500);
-        bullet.gameObject.SetActive(false);
     }
 }

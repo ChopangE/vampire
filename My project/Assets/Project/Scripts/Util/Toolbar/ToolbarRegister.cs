@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityToolbarExtender;
 
 namespace NKStudio
@@ -16,3 +17,4 @@ namespace NKStudio
         }
     }
 }
+#endif

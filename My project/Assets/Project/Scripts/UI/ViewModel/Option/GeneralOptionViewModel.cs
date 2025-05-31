@@ -69,8 +69,19 @@ namespace UI
         public void OnClickExit()
         {
             Global.UIManager.ClosePage();
-            // 게임 종료 또는 메인 메뉴로 돌아가기
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Map");
+            // 현재 씬이 Map이나 StartScene이면 게임 종료, 아니면 Map으로 이동
+            string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            if (currentScene == "Map" || currentScene == "StartScene")
+            {
+                Application.Quit();
+                #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+                #endif
+            }
+            else
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene("Map");
+            }
             Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
 

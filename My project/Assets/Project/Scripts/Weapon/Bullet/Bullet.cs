@@ -61,6 +61,10 @@ public class Bullet : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+    public void HideBullet()
+    {
+        gameObject.SetActive(false);
+    }
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {

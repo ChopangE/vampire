@@ -6,13 +6,13 @@ using Data;
 using Manager;
 
 
-public class WindShuriken : Weapon
+public class WindShuriken : BulletWeapon
 {
     public override async UniTask Init()
     {
         await base.Init();
     }
-    public override void ExecuteAttack()
+    public override void SpawnBullet()
     {
         Global.SoundManager.PlaySFX(SFXEnum.WindShuriken);
         Transform eliteOrBoss = player.scan.GetNearstEliteOrBoss();

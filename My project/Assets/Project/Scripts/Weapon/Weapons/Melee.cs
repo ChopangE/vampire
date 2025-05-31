@@ -1,7 +1,7 @@
 using Data.WeaponData;
 using UnityEngine;
 
-public class Melee : Weapon
+public class Melee : BulletWeapon
 {
     #region Fields
     [Header("Combat Settings")]
@@ -57,9 +57,9 @@ public class Melee : Weapon
 
 
     #region Attack Handlers
-    public override void ExecuteAttack()
+    public override void SpawnBullet()
     {
-        if (Input.GetKeyDown(KeyCode.Z) && !isAttacking)
+        if (Input.GetKeyDown(KeyCode.Z))
             StartStickAttack();
         
         if (isAttacking)

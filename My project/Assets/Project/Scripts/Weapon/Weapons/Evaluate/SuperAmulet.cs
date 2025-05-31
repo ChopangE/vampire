@@ -1,13 +1,13 @@
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Manager;
-public class SuperAmulet : Weapon
+public class SuperAmulet : BulletWeapon
 {
     public override async UniTask Init()
     {
         await base.Init();
     }
-    public override void ExecuteAttack()
+    public override void SpawnBullet()
     {
         // 랜덤한 각도 생성 (0~360도)
         float randomAngle = Random.Range(0f, 360f);

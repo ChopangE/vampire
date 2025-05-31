@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class Spike : Weapon
+public class Spike : BulletWeapon
 {
     public override async UniTask Init()
     {
         await base.Init();
     }
-    public override void ExecuteAttack()
+    public override void SpawnBullet()
     {
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
         bullet.position = transform.position + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0);

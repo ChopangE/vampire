@@ -5,15 +5,17 @@ using Data;
 using Manager;
 using UnityEngine;
 
-public class RockWeapon : Weapon
+public class RockWeapon : BulletWeapon
 {
     public override async UniTask Init()
     {
         await base.Init();
     }
-    public override void ExecuteAttack()
+    
+    public override void SpawnBullet()
     {
         if (!player.scan.nearestTarget) return;
+        
         Global.SoundManager.PlaySFX(SFXEnum.ThrowRock);
         Vector3 targetPos = player.scan.nearestTarget.position;
         Vector3 dir = (targetPos - transform.position).normalized;
@@ -21,7 +23,10 @@ public class RockWeapon : Weapon
         
         bullet.position = transform.position;
         bullet.rotation = Quaternion.FromToRotation(Vector3.up, dir);
-        bullet.GetComponent<Bullet>().Init(damage, count, dir, criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);
+        bullet.GetComponent<Bullet>().Init(
+            damage, 
+            pierce,
+            dir, 
+            criticalChancePercent:criticalChancePercent, criticalDamagePercent:criticalDamagePercent);
     }
-
 }

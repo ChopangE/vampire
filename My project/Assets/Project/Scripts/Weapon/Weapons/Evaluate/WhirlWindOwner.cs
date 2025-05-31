@@ -23,8 +23,8 @@ public class WhirlWindOwner : FloorWeapon
         duration = 10f;
     }
 
-    public override void ExecuteAttack() {
-        base.ExecuteAttack();
+    public override void SpawnBullet() {
+        base.SpawnBullet();
         SpawnWhirlwind();
         PullEnemy();
     }

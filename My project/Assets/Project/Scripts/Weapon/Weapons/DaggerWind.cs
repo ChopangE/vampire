@@ -17,7 +17,7 @@ public class DaggerWind : Melee
         await base.Init();
     }
 
-    public override void ExecuteAttack()
+    public override void SpawnBullet()
     {
         SetAttackDirection();
         GameObject sword = SpawnSword();

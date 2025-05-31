@@ -24,8 +24,8 @@ public class WhirlwindFloor : FloorWeapon
         
     }
 
-    public override void ExecuteAttack() {
-        base.ExecuteAttack();
+    public override void SpawnBullet() {
+        base.SpawnBullet();
         SpawnWhirlwind();
         PullEnemy();
     }

@@ -11,7 +11,7 @@ public class Dagger : Melee
     {
         await base.Init();
     }
-    public override void ExecuteAttack()
+    public override void SpawnBullet()
     {
         SetAttackDirection();
         Global.SoundManager.PlaySFX(SFXEnum.DaggerSwing);

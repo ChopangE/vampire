@@ -7,7 +7,7 @@ using Manager.InGame;
 using Data;
 using Manager;
 
-public class Bowling : Weapon
+public class Bowling : BulletWeapon
 {
     public override async UniTask Init()
     {
@@ -15,7 +15,7 @@ public class Bowling : Weapon
         maxCooldown = 5f;
         remainingCooldown = maxCooldown;
     }
-    public override void ExecuteAttack()
+    public override void SpawnBullet()
     {
         if (!player.scan.nearestTarget) return;
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;

@@ -273,7 +273,7 @@ namespace Manager
 
             Debug.Log($"SFX 배열 초기화 완료: {sfxArr.Length}개");
         }
-
+#if UNITY_EDITOR
         [Button("LoadSFXFile")]
         public void LoadSFXFile()
         {
@@ -315,6 +315,7 @@ namespace Manager
 
             Debug.Log($"로드된 오디오 클립 수: {guids.Length}개");
         }
+#endif
 
         private void InitializeSoundPool()
         {

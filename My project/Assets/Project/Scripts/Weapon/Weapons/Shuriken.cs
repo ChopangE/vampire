@@ -6,13 +6,13 @@ using Data;
 using Manager;
 
 
-public class Shuriken : Weapon
+public class Shuriken : BulletWeapon
 {
     public override async UniTask Init()
     {
         await base.Init();
     }
-    public override void ExecuteAttack()
+    public override void SpawnBullet()
     {
         if (!player.scan.nearestTarget) return;
         Global.SoundManager.PlaySFX(SFXEnum.Shuriken);

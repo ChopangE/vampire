@@ -147,6 +147,7 @@ public class Weapon : MonoBehaviour
         _data.itemDataInfo.curRange = size;
         _data.itemDataInfo.curDamage = damage;
         _data.itemDataInfo.curPierce = pierce;
+        _data.itemDataInfo.curCount = count;
         _data.itemDataInfo.curCriticalDamagePercent = criticalDamagePercent;
         _data.itemDataInfo.curCriticalChancePercent = criticalChancePercent;
         Global.DataManager.SaveWeaponData(_data);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-public class FloorWeapon : Weapon
+public class FloorWeapon : BulletWeapon
 {
     protected override void Awake() {
         player = GameManager.Instance.player;
@@ -20,7 +20,7 @@ public class FloorWeapon : Weapon
         player.BroadcastMessage("ApplayGear", SendMessageOptions.DontRequireReceiver);
 
     }
-    public override void ExecuteAttack() {
+    public override void SpawnBullet() {
         
     }
 }
