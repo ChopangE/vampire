@@ -126,7 +126,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 1258629898, guid: cb172bf1a3a514f488f34c17d84919cf, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -210,10 +210,12 @@ MonoBehaviour:
   health: 0
   canKnockBack: 0
   speed: 0
+  dropItemSpawnPoints: []
   animCon: []
   eliteanimCon: []
   target: {fileID: 0}
   outlineSprite: {fileID: 0}
   canStun: 0
+  weaponController: {fileID: 0}
   isDoing: 0
   savingPrefabs: {fileID: 0}

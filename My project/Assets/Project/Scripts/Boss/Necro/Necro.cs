@@ -10,6 +10,10 @@ public class Necro : MiddleBoss
     public GameObject savePrefabs;
     protected override void Update() {
         base.Update();
+        if (!GameManager.Instance.isLive) {
+            rigid.velocity = Vector2.zero;
+            return;
+        }
         timer += Time.deltaTime;
         if(castingTimer < timer) {
             castingTimer = Random.Range(4.0f, 7.0f);

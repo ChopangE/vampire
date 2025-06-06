@@ -74,7 +74,11 @@ public class Enemy : DamageObject
 
     void FixedUpdate()
     {
-        if (!GameManager.Instance.isLive) return;
+        if (!GameManager.Instance.isLive) 
+        {
+            rigid.velocity = Vector2.zero;
+            return;
+        }
         if (!isLive) return;
         if (anim.GetCurrentAnimatorStateInfo(0).IsName("Hit")) return;
         if (_isStunned) return; // 스턴 상태일 때는 이동하지 않음
@@ -90,7 +94,11 @@ public class Enemy : DamageObject
 
     void LateUpdate()
     {
-        if (!GameManager.Instance.isLive) return;
+        if (!GameManager.Instance.isLive) 
+        {
+            rigid.velocity = Vector2.zero;
+            return;
+        }
 
         if (isLive)
         {

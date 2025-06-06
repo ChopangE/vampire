@@ -29,11 +29,19 @@ public class MiddleBoss : Enemy {
 
     // Update is called once per frame
     protected virtual void Update() {
+        if (!GameManager.Instance.isLive) {
+            rigid.velocity = Vector2.zero;
+            return;
+        }
         if(health < 0.0f) {
             MiddleBossDead();
         }
     }
     void FixedUpdate() {
+        if (!GameManager.Instance.isLive) {
+            rigid.velocity = Vector2.zero;
+            return;
+        }
         if (isDoing) {
             rigid.velocity = Vector2.zero;
             return;
@@ -43,7 +51,11 @@ public class MiddleBoss : Enemy {
         rigid.MovePosition(nextVec + rigid.position);
     }
     void LateUpdate() {
-        if (!GameManager.Instance.isLive) return;
+        if (!GameManager.Instance.isLive) 
+        {
+            rigid.velocity = Vector2.zero;
+            return;
+        }
 
         if (isLive) {
             spriter.flipX = target.position.x < rigid.position.x;

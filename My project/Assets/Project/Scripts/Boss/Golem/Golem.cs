@@ -19,6 +19,10 @@ public class Golem : MiddleBoss
     public GameObject savePrefabs;
     protected override void Update() {
         base.Update();
+        if (!GameManager.Instance.isLive) {
+            rigid.velocity = Vector2.zero;
+            return;
+        }
         timer += Time.deltaTime;
         if (castingTimer < timer) {
             castingTimer = Random.Range(6.0f, 10.0f);
