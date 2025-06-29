@@ -23,7 +23,7 @@ public class Weapon : MonoBehaviour
     public float duration;
     public int pierce;
     public int count;
-    public float size;
+    public float size = 1f;
     private int _level;
     public int level
     {
@@ -104,6 +104,10 @@ public class Weapon : MonoBehaviour
             {
                 Debug.Log("진화무기의 이전 무기가 없습니다. 실제 출시할 때 이를 방지해야합니다.");
             }
+        }
+        if(size == 0)
+        {
+            size = 1f;
         }
 
         damage = baseDamage;

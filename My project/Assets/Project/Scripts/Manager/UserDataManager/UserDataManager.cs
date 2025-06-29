@@ -13,6 +13,7 @@ namespace Manager
             passiveItemDataInfoList = new List<PassiveItemDataInfo>();
             purchasedShopItems = new Dictionary<string, bool>();
             curStage = 0;
+            level = 0;
             evolutionStages = new Dictionary<string, int>();
         }
         // public HashSet<int> CollectedItem = new();
@@ -22,6 +23,7 @@ namespace Manager
         public List<PassiveItemDataInfo> passiveItemDataInfoList;
         public Dictionary<string, bool> purchasedShopItems;
         public int curStage;
+        public int level;
         public Dictionary<string, int> evolutionStages;
     }
     public partial class UserDataManager
@@ -73,8 +75,8 @@ namespace Manager
         }
         public void ResetStageData()
         {
-            storage.curStage = 0;
-            Save();
+            curStage = 0;
+            level = 0;
         }
     }
 }

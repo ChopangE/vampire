@@ -175,6 +175,7 @@ public class GameManager : MMSingleton<GameManager>
         Health = maxHealth;
         _shield = 0;
         _defense = baseDefense;
+        level = Global.UserDataManager.level; // 저장된 레벨 불러오기
         PassiveManager.Init();
     }
 
@@ -255,6 +256,7 @@ public class GameManager : MMSingleton<GameManager>
     private void QueueLevelUp()
     {
         level += 1;  // 레벨은 계속 증가 (표시용)
+        Global.UserDataManager.level = level; // 레벨 저장 (프로퍼티가 자동으로 Save 호출)
         _levelUpQueue.Enqueue(false);  // 일반 레벨업
     }
 

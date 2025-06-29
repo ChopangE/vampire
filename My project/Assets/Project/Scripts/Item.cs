@@ -170,15 +170,18 @@ public class Item : ViewModel
                         prevUpgradeValue = value;
                         break;
                     case UpgradeName.Cooldown: // 곱연산
-                        prevUpgradeValue = baseDataInfo.curCoolDown - (value * baseDataInfo.curCoolDown);
+                        float currentCooldown = baseDataInfo.curCoolDown == 0 ? baseDataInfo.baseCooldown : baseDataInfo.curCoolDown;
+                        prevUpgradeValue = currentCooldown - (value * currentCooldown);
                         desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " - {0:F2}s", prevUpgradeValue);
                         break;
                     case UpgradeName.Duration: // 곱연산
-                        prevUpgradeValue = (value * baseDataInfo.curDuration) - baseDataInfo.curDuration;
+                        float currentDuration = baseDataInfo.curDuration == 0 ? baseDataInfo.baseDuration : baseDataInfo.curDuration;
+                        prevUpgradeValue = (value * currentDuration) - currentDuration;
                         desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0:F2}s", prevUpgradeValue);
                         break;
                     case UpgradeName.Range: // 곱연산
-                        prevUpgradeValue = (value * baseDataInfo.curRange) - baseDataInfo.curRange;
+                        float currentRange = baseDataInfo.curRange == 0 ? baseDataInfo.baseRange : baseDataInfo.curRange;
+                        prevUpgradeValue = (value * currentRange) - currentRange;
                         desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0:F2}%", prevUpgradeValue);
                         break;
                     default:

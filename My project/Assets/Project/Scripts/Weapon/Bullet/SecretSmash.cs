@@ -24,9 +24,9 @@ public class SecretSmash : Bullet
         cc.StopCameraShake();
     }
     public override void Init(float damage, int per, Vector3 dir, bool canStun = false,
-    float duration = 0f, float criticalDamagePercent = 0f, float criticalChancePercent = 0f)
+    float duration = 0f, float criticalDamagePercent = 0f, float criticalChancePercent = 0f, float size = 0f)
     {
-        base.Init(damage, per, dir, canStun, duration, criticalDamagePercent, criticalChancePercent);
+        base.Init(damage, per, dir, canStun, duration, criticalDamagePercent, criticalChancePercent, size);
 
         // 플레이어 방향에 따라 회전 설정
         if(GameManager.Instance.player != null)

@@ -21,9 +21,9 @@ public class WhirlBullet : Bullet
     }
 
     public override void Init(float damage, int per, Vector3 dir, bool canStun = false,
-    float duration = 0f, float criticalDamagePercent = 0f, float criticalChancePercent = 0f)
+    float duration = 0f, float criticalDamagePercent = 0f, float criticalChancePercent = 0f, float size = 0f)
     {
-        base.Init(damage, per, dir, canStun, duration, criticalDamagePercent, criticalChancePercent);
+        base.Init(damage, per, dir, canStun, duration, criticalDamagePercent, criticalChancePercent, size);
         
         // 사운드 타이머 초기화
         soundTimer = soundPlayInterval;

@@ -14,6 +14,7 @@ public class Bullet : MonoBehaviour
     public Rigidbody2D rb;
     public float duration;
     public bool canStun;
+    public float size = 1f;
     protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -24,7 +25,7 @@ public class Bullet : MonoBehaviour
     }
 
     public virtual void Init(float damage, int per, Vector3 dir, bool canStun = false,
-    float duration = 0f, float criticalDamagePercent = 0f, float criticalChancePercent = 0f)
+    float duration = 0f, float criticalDamagePercent = 0f, float criticalChancePercent = 0f, float size = 1f)
 
     {
         this.damage = damage;
@@ -33,7 +34,9 @@ public class Bullet : MonoBehaviour
         this.per = per;
         this.canStun = canStun;
         this.duration = duration;
-        
+        this.size = size;
+
+        transform.localScale = new Vector3(size, size, size);
         if (duration == 0)
         {
             if(per <= -100)

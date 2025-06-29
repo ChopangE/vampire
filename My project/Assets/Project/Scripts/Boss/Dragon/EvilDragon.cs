@@ -9,7 +9,7 @@ public class EvilDragon : MiddleBoss
     public GameObject savingPrefabs;
     public override void Init() {
         base.Init();
-        speed = 1.9f;
+        speed = 1.6f;
         castingTimer = 5f;
         timer = 0f;
         pool = GetComponentInChildren<PoolManager>();

@@ -516,8 +516,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   creditPanel: {fileID: 8339892569078197634}
-  scrollSpeed: 50
-  totalScrollDistance: 1000
+  scrollSpeed: 150
+  totalScrollDistance: 5102
   scrollDirection: {x: 0, y: 1}
 --- !u!222 &6631447036180079311
 CanvasRenderer:
@@ -592,8 +592,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -1080}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_AnchoredPosition: {x: 0, y: -5045.7915}
+  m_SizeDelta: {x: 1920, y: 5102}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &5960210471094959108
 CanvasRenderer:
@@ -623,9 +623,22 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Programmer - Kimyir
-
-    Art - Hanso'
+  m_text: "<size=100> HGD Survivor\r </size>\n\r\n\n<size=85>Main Staff\r</size>\n\r\nExecutive
+    Producer - Hanseo Cho\r\n\r\nLead Programmer - Yir Kim\r\n\r\nArtwork - Hanseo
+    Cho\r\n\r\nSound Director - Hanseo Cho\r\n\r\n\n<size=85>Tools & Licenses\r</size>\n\r\nMade
+    with Aseprite & Unity\r\n\r\nFont\r\n\r\nPixel Art Serif Font 900+ characters
+    by Reff Pixels\r\n\n<size=40>\uAC08\uBB34\uB9AC</size>9 by Minseo Lee\r\n\r \nArt
+    - GameDev Market\r\n\r\n2D Pixel - RPG Icon Pack\r\n\r\nAdmurin's Items Mega
+    Pack A\r\n\r\nMonster Mega Pack\r\n\r\npixel_animations_gfxpack\r\n\r\nSummerwind
+    Saga - Mountains and Winter Mountains\r\n\r\nSummerwind Sage - Grasslands 4 Seasons\r\n\r\nSound
+    effects - Unity Asset Store \r\n\r\nBlasters\r\n\r\nCombatMagicSpellsVII\r\n\r\nDestruction
+    demolition\r\n\r\nEverything Bundle SFX 2024\r\n\r\nMedieval Fantasy SFX Bundle\r\n\r\nMelee
+    Weapons Pack 1\r\n\r\nRPG Magic Sound Effects Pack 3 [ELEMENTAL]\r\n\r\nBGM -
+    Unity Asset Store \r\n\r\nFantasy Music Starter Pack - Orchestral Music\n\r\nUltimate
+    Game Music Collection\r\n\r\nFantasy Medieval Combat\r\n\r\nBoss Battles, Combat
+    & Stingers \n- Epic Adventure/Action Music\r\n\r\nLUShvalleySound: Fantasy BGM
+    \u2013 Free Pack Vol.01\r\n\r\n\n<size=80>Special thanks to Sungwoo Cho</size>\r\n\r\n\n\n\nand..\r\n\r\n\n\n\n\n<size=120>
+    Very special thanks\nto YOU</size>\n\n\n\n\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e092b8fd273741348aac71e0cea5877e, type: 2}
   m_sharedMaterial: {fileID: -1550692066752300325, guid: e092b8fd273741348aac71e0cea5877e, type: 2}
@@ -657,7 +670,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 54
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 256

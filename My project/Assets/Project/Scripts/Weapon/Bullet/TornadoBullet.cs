@@ -21,9 +21,10 @@ public class TornadoBullet : Bullet
     private float boundaryCheckCooldown = 1f;  // 경계 체크 쿨다운 시간
     private float boundaryCheckTimer = 0f;     // 경계 체크 타이머
 
-    public override void Init(float damage, int per, Vector3 dir, bool clockwise, float duration = 0, float criticalDamagePercent = 0, float criticalChancePercent = 0)
+    public override void Init(float damage, int per, Vector3 dir, bool clockwise,
+     float duration = 0, float criticalDamagePercent = 0, float criticalChancePercent = 0, float size = 0)
     {
-        base.Init(damage, per, dir, false, duration, criticalDamagePercent, criticalChancePercent);
+        base.Init(damage, per, dir, false, duration, criticalDamagePercent, criticalChancePercent, size);
         rb.velocity = Vector2.zero;
         
         // 초기 랜덤 방향 설정

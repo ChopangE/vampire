@@ -23,7 +23,7 @@ public class Necro : MiddleBoss
     }
     public override void Init() {
         base.Init();
-        speed = 2.0f;
+        speed = 1.6f;
         castingTimer = 3f;
         timer = 0f;
         pool = GetComponentInChildren<PoolManager>();

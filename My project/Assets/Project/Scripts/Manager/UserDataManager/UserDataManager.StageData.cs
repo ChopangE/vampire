@@ -15,5 +15,15 @@ namespace Manager
                 Save();
             }
         }
+
+        public int level 
+        { 
+            get => storage.level;
+            set
+            {
+                storage.level = value;
+                Save();
+            }
+        }
     }
 }

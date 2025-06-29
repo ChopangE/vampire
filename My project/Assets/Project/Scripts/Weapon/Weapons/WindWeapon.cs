@@ -30,7 +30,7 @@ public class WindWeapon : Weapon
             
             Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
             bullet.position = startPos;
-            bullet.GetComponent<WingWind>().Init(damage, -1, direction, clockwise, 0f, criticalDamagePercent, criticalChancePercent);
+            bullet.GetComponent<WingWind>().Init(damage, -1, direction, clockwise, 0f, criticalDamagePercent, criticalChancePercent, size);
         }
     }
 

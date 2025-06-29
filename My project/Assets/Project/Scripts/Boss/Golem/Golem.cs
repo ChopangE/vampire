@@ -32,7 +32,7 @@ public class Golem : MiddleBoss
     }
     public override void Init() {
         base.Init();
-        speed = 1.7f;
+        speed = 1.6f;
         castingTimer = 7f;
         timer = 0f;
         //pool = GetComponentInChildren<PoolManager>();

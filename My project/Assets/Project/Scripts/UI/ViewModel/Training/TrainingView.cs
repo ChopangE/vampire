@@ -65,6 +65,16 @@ namespace UI
             }
         }
         [Binding]
+        public void ResetTrainingPassive()
+        {
+            foreach(var upgrade in Global.StatsUpgradeManager.GetAllPlayerPassives())
+            {
+                Debug.Log(upgrade.upgradeNameKey + " : " + upgrade.GetUpgradeLevel());
+            }
+            Global.UserDataManager.Save();
+            InitialTrainingGroup();
+        }
+        [Binding]
         public void PrevTrainingGroup()
         {
             var models = GetViewModels();

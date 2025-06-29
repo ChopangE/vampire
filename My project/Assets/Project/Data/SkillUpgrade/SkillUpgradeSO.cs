@@ -17,7 +17,7 @@ namespace SO
         Duration, // 지속 시간
     }
     [CreateAssetMenu(menuName = "업그레이드/Skill Upgrade SO")]
-    public class SkillUpgradeSO : SerializedScriptableObject
+    public class SkillUpgradeSO : ScriptableObject
     {
         [BoxGroup("디테일")] [PropertyOrder(-1)] [LabelText("강화 효과 이름")]
         public UpgradeName upgradeName;

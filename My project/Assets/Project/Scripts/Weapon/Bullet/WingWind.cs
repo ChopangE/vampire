@@ -21,9 +21,9 @@ public class WingWind : Bullet
         gameObject.SetActive(false);
     }
 
-    public override void Init(float damage, int per, Vector3 dir, bool clockwise, float duration = 0, float criticalDamagePercent = 0, float criticalChancePercent = 0)
+    public override void Init(float damage, int per, Vector3 dir, bool clockwise, float duration = 0, float criticalDamagePercent = 0, float criticalChancePercent = 0, float size = 0)
     {
-        base.Init(damage, per, dir, false, duration, criticalDamagePercent, criticalChancePercent);
+        base.Init(damage, per, dir, false, duration, criticalDamagePercent, criticalChancePercent, size);
         rb.velocity = Vector2.zero;
         
         spiralAngle = 0f;

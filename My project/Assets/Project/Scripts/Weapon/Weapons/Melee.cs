@@ -1,5 +1,10 @@
 using Data.WeaponData;
+using Data;
+using Manager;
+using Manager.InGame;
 using UnityEngine;
+using SO;
+using Cysharp.Threading.Tasks;
 
 public class Melee : BulletWeapon
 {
@@ -19,6 +24,7 @@ public class Melee : BulletWeapon
     private GameObject weaponInstance;
     private bool isAttacking;
     protected SpriteRenderer playerSprite;
+    private Vector3 originalSwordScale;
     
     #endregion
 
@@ -27,6 +33,7 @@ public class Melee : BulletWeapon
     {
         InitializeComponents();
         SetupBoxCollider();
+        StoreOriginalSwordScale();
     }
 
     private void OnDrawGizmos()
@@ -53,8 +60,46 @@ public class Melee : BulletWeapon
             boxSize = sword.GetComponent<BoxCollider2D>().size;
         }
     }
+
+    private void StoreOriginalSwordScale()
+    {
+        if (sword != null)
+        {
+            originalSwordScale = Vector3.one;
+        }
+    }
+
+    public override async UniTask Init()
+    {
+        await base.Init();
+        
+        // 초기화 완료 후 sword 크기 설정
+        UpdateSwordSize();
+    }
     #endregion
 
+    #region Level Up Override
+    public override void LevelUp(UpgradeName prevUpgradeName, float prevUpgradeValue, DamageUpgradeValues damageUpgradeValues = null)
+    {
+        base.LevelUp(prevUpgradeName, prevUpgradeValue, damageUpgradeValues);
+        
+        // Range 업그레이드 시 sword 크기 업데이트
+        if (prevUpgradeName == UpgradeName.Range)
+        {
+            UpdateSwordSize();
+        }
+    }
+
+    private void UpdateSwordSize()
+    {
+        if (sword != null)
+        {
+            // size 값에 비례하여 sword 크기 조정
+            float sizeMultiplier = size / _data.itemDataInfo.baseRange;
+            sword.transform.localScale = originalSwordScale * sizeMultiplier;
+        }
+    }
+    #endregion
 
     #region Attack Handlers
     public override void SpawnBullet()
@@ -106,7 +151,13 @@ public class Melee : BulletWeapon
 
     public GameObject SpawnSword()
     {
-        return Instantiate(sword, pos.position, Quaternion.identity);
+        GameObject swordInstance = Instantiate(sword, pos.position, Quaternion.identity);
+        
+        // size 값에 따라 sword 크기 조정
+        float sizeMultiplier = size / _data.itemDataInfo.baseRange;
+        swordInstance.transform.localScale = originalSwordScale * sizeMultiplier;
+        
+        return swordInstance;
     }
 
     public void ConfigureSword(GameObject swordInstance, Transform parent = null, bool followPlayer = false, Vector3 offset = default)
@@ -118,9 +169,19 @@ public class Melee : BulletWeapon
         
         if(followPlayer)    
         {
+            // 플레이어 방향에 따라 크기 조정 (size 값 포함)
+            float sizeMultiplier = size / _data.itemDataInfo.baseRange;
+            Vector3 adjustedScale = originalSwordScale * sizeMultiplier;
+            
             swordInstance.transform.localScale = !playerSprite.flipX 
-                ? new Vector3(-1, 1, 1) 
-                : new Vector3(1, 1, 1);
+                ? new Vector3(-adjustedScale.x, adjustedScale.y, adjustedScale.z) 
+                : new Vector3(adjustedScale.x, adjustedScale.y, adjustedScale.z);
+        }
+        else
+        {
+            // followPlayer가 false일 때도 size 값 적용
+            float sizeMultiplier = size / _data.itemDataInfo.baseRange;
+            swordInstance.transform.localScale = originalSwordScale * sizeMultiplier;
         }
 
         if(offset != default)
