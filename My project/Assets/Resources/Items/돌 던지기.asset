@@ -17,19 +17,19 @@ MonoBehaviour:
     curLevel: 0
     maxLevel: 9
     baseCooldown: 1.5
-    baseDamage: 3
+    baseDamage: 10
     baseCount: 1
     baseRange: 1
     baseDuration: 1
     basePierce: 2
-    curCoolDown: 1.3499999
-    curDamage: 3.48
+    curCoolDown: 0
+    curDamage: 0
     curCount: 0
-    curRange: 1
-    curDuration: 1.05
-    curCriticalDamagePercent: 0.16
-    curCriticalChancePercent: 0.11
-    curPierce: 3
+    curRange: 0
+    curDuration: 0
+    curCriticalDamagePercent: 0
+    curCriticalChancePercent: 0
+    curPierce: 0
   passiveItemDataInfo:
     passiveId: 0
     passiveValue: 0
@@ -42,6 +42,7 @@ MonoBehaviour:
   projectile: {fileID: 2914023840445098384, guid: 00cdc5fd3f0a1b248bdeb7e148a25959, type: 3}
   excludeUpgradeList:
   - {fileID: 11400000, guid: afdc70460cf879847949065983d5fc3b, type: 2}
+  - {fileID: 11400000, guid: a24908e1b88c87c4db8e253003e7e288, type: 2}
   isEvaluateWeapon: 0
   _prevItemData: {fileID: 0}
   _nextItemData: {fileID: 11400000, guid: d828c7d67ab79c844aad1d229fb5dc5e, type: 2}

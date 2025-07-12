@@ -23,6 +23,30 @@ namespace UI
         private void OnEnable()
         {
             InitialTrainingGroup();
+            
+            // 골드 변경 이벤트 구독
+            Global.GoldManager.OnGoldValueChanged += OnGoldValueChanged;
+            // 현재 골드 값 초기화
+            Coin = int.Parse(Global.GoldManager.GetGoldText());
+        }
+        
+        private void OnDisable()
+        {
+            // 골드 변경 이벤트 해제
+            Global.GoldManager.OnGoldValueChanged -= OnGoldValueChanged;
+        }
+        
+        private void OnGoldValueChanged(object sender, string goldText)
+        {
+            if (int.TryParse(goldText, out int goldValue))
+            {
+                Coin = goldValue;
+            }
+            else
+            {
+                // 매우 큰 값의 경우 int.MaxValue로 제한
+                Coin = int.MaxValue;
+            }
         }
         private void InitialTrainingGroup()
         {
@@ -67,10 +91,38 @@ namespace UI
         [Binding]
         public void ResetTrainingPassive()
         {
-            foreach(var upgrade in Global.StatsUpgradeManager.GetAllPlayerPassives())
+            var allPassives = Global.StatsUpgradeManager.GetAllPlayerPassives();
+            System.Numerics.BigInteger totalRefund = 0;
+
+            // 각 패시브의 환급 금액을 계산합니다
+            foreach(var upgrade in allPassives)
             {
-                Debug.Log(upgrade.upgradeNameKey + " : " + upgrade.GetUpgradeLevel());
+                var currentLevel = upgrade.GetUpgradeLevel();
+                if (currentLevel > 0)
+                {
+                    var refundAmount = upgrade.GetTotalCostUpToCurrentLevel();
+                    if (System.Numerics.BigInteger.TryParse(refundAmount, out var refundValue))
+                    {
+                        totalRefund += refundValue;
+                    }
+                    
+                    Debug.Log($"{upgrade.upgradeNameKey} 레벨 {currentLevel} -> 환급 금액: {refundAmount}");
+                }
             }
+
+            // 총 환급 금액을 플레이어에게 지급
+            if (totalRefund > 0)
+            {
+                Global.GoldManager.AddGold(totalRefund);
+                Debug.Log($"총 환급 금액: {totalRefund}");
+            }
+
+            // 모든 패시브 레벨을 초기화
+            foreach(var upgrade in allPassives)
+            {
+                upgrade.ResetLevel();
+            }
+
             Global.UserDataManager.Save();
             InitialTrainingGroup();
         }

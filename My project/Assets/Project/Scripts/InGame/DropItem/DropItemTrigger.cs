@@ -10,6 +10,10 @@ namespace InGame
     public abstract class DropItemTrigger : MonoBehaviour, ITriggerable
     {
         public event Action OnTriggered;
+        void OnEnable()
+        {
+            GetComponent<Collider2D>().enabled = true;
+        }
 
         public virtual void Triggered()
         {

@@ -8,8 +8,22 @@ namespace Data
     public enum BGMEnum
     {
         NONE,
-        TitleSpace, //* 타이틀 우주 소리
-        TitleFireBurning, //* 타이틀 불 소리
+        HeavyCombatMysticMelee, // 3 stage 잡몹
+        FranticBattleLoop, // 1 stage 잡몹
+        AnnulusLoop, // 마녀 1 phase
+        EchoesOfValhallaCombatVer, // 마녀 2 phase
+        OurHerosTheme, // 아웃트로
+        SeaBattleLoop, // 2 stage 잡몹
+        Showdown, // 2 stage boss 드래곤
+        AdventurerPreparingFull, // 책 페이지 대기 씬
+        TheDarkestNightAddedFunk, // 3 stage boss 골렘
+        TheOddsAreAgainstUs, // 1 stage boss 마법사
+        TitleSpace, // 인트로 우주 효과음
+        TitleFireBurning, // 인트로 컷신 불타는 소리
+        // 이하 기존 값 유지
+        RisingDarkness, // 1스테이지
+        PowerSurge,     // 2스테이지
+        ApexFury,       // 3스테이지
     }
     public enum SFXEnum
     {

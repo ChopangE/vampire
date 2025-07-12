@@ -41,6 +41,60 @@ namespace SO
             return _levelValue;
         }
 
+        /// <summary>
+        /// 현재 레벨까지 소모된 총 골드를 계산하여 반환합니다.
+        /// </summary>
+        /// <returns>소모된 총 골드 문자열</returns>
+        public string GetTotalCostUpToCurrentLevel()
+        {
+            var currentLevel = GetUpgradeLevel();
+            if (currentLevel <= 0) return "0";
+
+            var groupData = GetPassiveGroupData();
+            System.Numerics.BigInteger totalCost = 0;
+
+            Debug.Log($"[환급 계산] {upgradeNameKey} - 현재 레벨: {currentLevel}");
+            
+            // 먼저 데이터 구조를 확인해보자
+            Debug.Log($"[환급 계산] 패시브 데이터 구조 확인:");
+            foreach (var data in groupData)
+            {
+                Debug.Log($"[환급 계산] Level: {data.level}, GoldCost: {data.goldCost}");
+            }
+
+            // 각 업그레이드 단계에서 지불한 비용 계산
+            for (int fromLevel = 0; fromLevel < currentLevel; fromLevel++)
+            {
+                int toLevel = fromLevel + 1;
+                
+                // 출발 레벨의 GoldCost가 해당 업그레이드 비용
+                var levelElement = groupData.Find(x => x.level == fromLevel);
+                if (levelElement != null)
+                {
+                    if (System.Numerics.BigInteger.TryParse(levelElement.goldCost, out var cost))
+                    {
+                        totalCost += cost;
+                        Debug.Log($"[환급 계산] 레벨 {fromLevel} → {toLevel} 비용: {cost}");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"[환급 계산] 레벨 {fromLevel} 데이터를 찾을 수 없음");
+                }
+            }
+            Debug.Log($"[환급 계산] {upgradeNameKey} - 총 환급 금액: {totalCost}");
+            return totalCost.ToString();
+        }
+
+        /// <summary>
+        /// 패시브 레벨을 초기화합니다.
+        /// </summary>
+        public void ResetLevel()
+        {
+            _curLevel = 0;
+            SetUpgradeLevel();
+        }
+
         private Passive.PlayerStat GetLevelElement()
         {
             Passive.PlayerStat value = null;

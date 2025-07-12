@@ -24,6 +24,7 @@ namespace Manager
     public class SoundManager : MonoBehaviour
     {
         [SerializeField] private string sfxPath = "Assets/Project/Audio/최종 효과음 모음집/HGD 스킬 효과음";
+        [SerializeField] private string bgmPath = "Assets/Project/Audio/BGM"; // BGM 자동 로드 경로 추가
 
         public BGMSound[] bgmArr;
         public SFXSound[] sfxArr;
@@ -314,6 +315,65 @@ namespace Manager
             }
 
             Debug.Log($"로드된 오디오 클립 수: {guids.Length}개");
+        }
+
+        [Button("InitializeBGMArray")]
+        public void InitializeBGMArray()
+        {
+            // BGMEnum의 크기만큼 배열 초기화
+            bgmArr = new BGMSound[System.Enum.GetValues(typeof(BGMEnum)).Length];
+
+            // NONE 초기화
+            bgmArr[0] = new BGMSound { name = BGMEnum.NONE, clip = null };
+
+            // 나머지 인덱스 초기화
+            for (int i = 1; i < bgmArr.Length; i++)
+            {
+                bgmArr[i] = new BGMSound { name = (BGMEnum)i, clip = null };
+            }
+
+            Debug.Log($"BGM 배열 초기화 완료: {bgmArr.Length}개");
+        }
+
+        [Button("LoadBGMFile")]
+        public void LoadBGMFile()
+        {
+            if (string.IsNullOrEmpty(bgmPath))
+            {
+                Debug.LogError("BGM 경로가 설정되지 않았습니다.");
+                return;
+            }
+
+            string[] guids = AssetDatabase.FindAssets("t:AudioClip", new[] { bgmPath });
+
+            foreach (var guid in guids)
+            {
+                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+                AudioClip clip = AssetDatabase.LoadAssetAtPath<AudioClip>(assetPath);
+
+                if (clip != null)
+                {
+                    // 현재 비어있는 clip 자리를 찾아서 할당
+                    for (int i = 1; i < bgmArr.Length; i++)
+                    {
+                        if (bgmArr[i].clip == null)
+                        {
+                            bgmArr[i].clip = clip;
+                            Debug.Log($"Loaded BGM to index {i}: {clip.name}");
+                            break;
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < bgmArr.Length; i++)
+            {
+                if (bgmArr[i].name == BGMEnum.NONE && i != 0)
+                {
+                    bgmArr[i].name = (BGMEnum)i;
+                }
+            }
+
+            Debug.Log($"로드된 BGM 오디오 클립 수: {guids.Length}개");
         }
 #endif
 

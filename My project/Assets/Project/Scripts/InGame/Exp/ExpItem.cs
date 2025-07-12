@@ -19,6 +19,7 @@ namespace InGame
         }
         protected virtual void DestroyItem()
         {
+            // ReturnToPool() 호출 제거 - OnDisable에서 자동으로 호출됨
             gameObject.SetActive(false);
         }
     }

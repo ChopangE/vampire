@@ -36,6 +36,7 @@ public class Boss : MonoBehaviour
     float Timer2;
     int levelIndex;
     private bool isPlayingWitchFireTile = false;
+    private bool isPhase2BGMChanged = false;
     private float lastDamageTime = 0f;
     private const float DAMAGE_INTERVAL = 1f;
 
@@ -79,6 +80,13 @@ public class Boss : MonoBehaviour
         {
             if (BossManager.Instance.phase >= 2)
             {
+                // 2페이즈 진입 시 BGM 변경 (한 번만)
+                if (GameManager.Instance.CurStage == 12 && !isPhase2BGMChanged)
+                {
+                    Global.SoundManager.PlayMusic(BGMEnum.EchoesOfValhallaCombatVer);
+                    isPhase2BGMChanged = true;
+                }
+                
                 Timer += Time.deltaTime;
                 if (Timer > 30f)
                 {
@@ -148,6 +156,9 @@ public class Boss : MonoBehaviour
         health = maxHealth;
         GameManager.Instance.BossHealth = health;
         GameManager.Instance.maxBossHealth = maxHealth;
+        
+        // BGM 변경 플래그 리셋
+        isPhase2BGMChanged = false;
     }
 
     public void Hammer()

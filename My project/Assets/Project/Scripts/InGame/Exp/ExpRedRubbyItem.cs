@@ -20,7 +20,8 @@ namespace InGame
         public void ExpUp()
         {
             GameManager.Instance.GetExp(exp);
-            ReturnToPool();
+            // ReturnToPool() 호출 제거 - OnDisable에서 자동으로 호출됨
+            gameObject.SetActive(false);
         }
     }
 }
