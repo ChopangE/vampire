@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Data;
 using Manager;
 using UnityEngine;
@@ -21,15 +22,26 @@ namespace UI
         private string _currentResolutionText;
         private string _brightnessText;
 
+        // 1. 필드 수정
+        private FullScreenMode[] _fullScreenModes = new[]
+        {
+            FullScreenMode.Windowed,
+            FullScreenMode.ExclusiveFullScreen
+        };
+        private int _fullScreenModeIndex = 0;
+
         [Binding]
         public int ResolutionIndex
         {
             get => _resolutionIndex;
             set
             {
-                _resolutionIndex = value;
-                OnPropertyChanged(nameof(ResolutionIndex));
-                ApplyResolution();
+                if (_resolutionIndex != value)
+                {
+                    _resolutionIndex = value;
+                    OnPropertyChanged(nameof(ResolutionIndex));
+                    ApplyResolution();
+                }
             }
         }
 
@@ -53,6 +65,7 @@ namespace UI
                 _brightness = value;
                 OnPropertyChanged(nameof(Brightness));
                 ApplyBrightness();
+                SaveSettings(); // 변경 즉시 저장
             }
         }
 
@@ -115,24 +128,48 @@ namespace UI
 
         private void OnEnable()
         {
-            InitializeResolutions();
-            LoadSettings();
+            InitializeResolutions(); // 해상도 목록만 초기화 (인덱스 세팅 X)
+            LoadSettings();          // 저장된 값만 적용
         }
 
         private void InitializeResolutions()
         {
-            _resolutions = Screen.resolutions;
+            // 모든 해상도 가져오기
+            Resolution[] allResolutions = Screen.resolutions;
             
-            if (_resolutions == null || _resolutions.Length == 0)
+            if (allResolutions == null || allResolutions.Length == 0)
             {
-                _resolutions = new Resolution[] 
+                // 원하는 해상도 프리셋 직접 추가
+                allResolutions = new Resolution[]
                 {
-                    new Resolution { width = 1280, height = 720 },
-                    new Resolution { width = 1920, height = 1080 }
+                    new Resolution { width = 640, height = 480 },    // SD
+                    new Resolution { width = 800, height = 600 },    // SD
+                    new Resolution { width = 1024, height = 768 },   // XGA
+                    new Resolution { width = 1280, height = 720 },   // HD
+                    new Resolution { width = 1280, height = 800 },
+                    new Resolution { width = 1366, height = 768 },
+                    new Resolution { width = 1440, height = 900 },
+                    new Resolution { width = 1600, height = 900 },
+                    new Resolution { width = 1680, height = 1050 },
+                    new Resolution { width = 1920, height = 1080 },  // FHD
+                    new Resolution { width = 1920, height = 1200 },
+                    new Resolution { width = 2048, height = 1280 },
+                    new Resolution { width = 2560, height = 1440 },  // QHD
+                    new Resolution { width = 2560, height = 1600 },
+                    new Resolution { width = 2880, height = 1800 },
+                    new Resolution { width = 3840, height = 2160 },  // UHD(4K)
                 };
-                Debug.LogWarning("Screen.resolutions가 비어있습니다. 기본 해상도를 사용합니다.");
+                Debug.LogWarning("Screen.resolutions가 비어있습니다. 프리셋 해상도를 사용합니다.");
             }
             
+            // 중복 제거 및 필터링 (너무 낮은 해상도 제외)
+            var filteredResolutions = allResolutions
+                .GroupBy(r => $"{r.width}x{r.height}") // 중복 제거
+                .Select(g => g.First()) // 첫 번째 항목 선택
+                .OrderByDescending(r => r.width * r.height) // 해상도 높은 순으로 정렬
+                .ToArray();
+            
+            _resolutions = filteredResolutions;
             _resolutionOptions = new string[_resolutions.Length];
 
             for (int i = 0; i < _resolutions.Length; i++)
@@ -141,19 +178,9 @@ namespace UI
             }
 
             OnPropertyChanged(nameof(ResolutionOptions));
-
-            int currentResolutionIndex = 0;
-            for (int i = 0; i < _resolutions.Length; i++)
-            {
-                if (_resolutions[i].width == Screen.width && _resolutions[i].height == Screen.height)
-                {
-                    currentResolutionIndex = i;
-                    break;
-                }
-            }
-
-            _resolutionIndex = currentResolutionIndex;
-            UpdateCurrentResolutionText();
+            
+            Debug.Log($"사용 가능한 해상도: {string.Join(", ", _resolutionOptions)}");
+            Debug.Log($"현재 해상도 인덱스: {_resolutionIndex}, 해상도: {_resolutionOptions[_resolutionIndex]}");
         }
 
         private void UpdateCurrentResolutionText()
@@ -176,21 +203,14 @@ namespace UI
 
         private void ApplyResolution()
         {
-            if (_resolutions == null || _resolutions.Length == 0)
-            {
-                Debug.LogError("해상도 배열이 초기화되지 않았습니다.");
-                return;
-            }
-            
+            if (_resolutions == null || _resolutions.Length == 0) return;
             if (_resolutionIndex >= 0 && _resolutionIndex < _resolutions.Length)
             {
                 Resolution resolution = _resolutions[_resolutionIndex];
-                Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+                // 반드시 ViewModel의 _fullScreen 사용!
+                Screen.SetResolution(resolution.width, resolution.height, _fullScreen);
                 UpdateCurrentResolutionText();
-            }
-            else
-            {
-                Debug.LogError($"해상도 인덱스가 범위를 벗어났습니다: {_resolutionIndex}, 배열 크기: {_resolutions.Length}");
+                SaveSettings(); // 변경 즉시 저장
             }
         }
 
@@ -224,6 +244,7 @@ namespace UI
                 _brightness = 0;
             
             OnPropertyChanged(nameof(Brightness));
+            SaveSettings(); // 변경 즉시 저장
             ApplyBrightness();
         }
 
@@ -232,11 +253,33 @@ namespace UI
             Screen.fullScreen = _fullScreen;
         }
 
+        // 2. OnClickFullScreen 그대로 사용
         [Binding]
         public void OnClickFullScreen()
         {
-            FullScreen = !FullScreen;
+            // 다음 모드로 순환
+            _fullScreenModeIndex = (_fullScreenModeIndex + 1) % _fullScreenModes.Length;
+
+            if (_fullScreenModes[_fullScreenModeIndex] == FullScreenMode.Windowed)
+            {
+                Screen.fullScreen = false; // 반드시 먼저 false!
+                Screen.fullScreenMode = FullScreenMode.Windowed;
+
+                // 창 크기 재설정 (현재 선택된 해상도 사용)
+                if (_resolutions != null && _resolutions.Length > 0 && _resolutionIndex >= 0)
+                {
+                    var res = _resolutions[_resolutionIndex];
+                    Screen.SetResolution(res.width, res.height, false);
+                }
+            }
+            else
+            {
+                Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+                Screen.fullScreen = true;
+            }
+
             Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
+            SaveSettings(); // 변경 즉시 저장
         }
 
         [Binding]
@@ -251,17 +294,64 @@ namespace UI
         [Binding]
         public void OnClickResolution()
         {
+            // 다음 해상도로 순환
             _resolutionIndex = (_resolutionIndex + 1) % _resolutions.Length;
             OnPropertyChanged(nameof(ResolutionIndex));
             ApplyResolution();
             Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
 
+        // 새로운 메서드: 특정 해상도 인덱스로 직접 설정 (드롭다운용)
+        [Binding]
+        public void SetResolutionByIndex(int index)
+        {
+            if (index >= 0 && index < _resolutions.Length)
+            {
+                _resolutionIndex = index;
+                OnPropertyChanged(nameof(ResolutionIndex));
+                ApplyResolution();
+                Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
+            }
+        }
+
+        // 새로운 메서드: 해상도 증가 (화살표 버튼용)
+        [Binding]
+        public void IncreaseResolution()
+        {
+            if (_resolutions.Length > 1)
+            {
+                _resolutionIndex = (_resolutionIndex + 1) % _resolutions.Length;
+                OnPropertyChanged(nameof(ResolutionIndex));
+                ApplyResolution();
+                Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
+            }
+        }
+
+        // 새로운 메서드: 해상도 감소 (화살표 버튼용)
+        [Binding]
+        public void DecreaseResolution()
+        {
+            if (_resolutions.Length > 1)
+            {
+                _resolutionIndex = (_resolutionIndex - 1 + _resolutions.Length) % _resolutions.Length;
+                OnPropertyChanged(nameof(ResolutionIndex));
+                ApplyResolution();
+                Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
+            }
+        }
+
+        // 드롭다운에서 선택된 값이 변경될 때 호출되는 메서드
+        [Binding]
+        public void OnResolutionDropdownChanged(int selectedIndex)
+        {
+            SetResolutionByIndex(selectedIndex);
+        }
+
         [Binding]
         public void SaveSettings()
         {
             PlayerPrefs.SetInt("ResolutionIndex", _resolutionIndex);
-            PlayerPrefs.SetFloat("Brightness", _brightness);
+            PlayerPrefs.SetFloat("Brightness", _brightness > 0 ? _brightness : 50);
             PlayerPrefs.SetInt("ShowDamage", _showDamage ? 1 : 0);
             PlayerPrefs.SetInt("FullScreen", _fullScreen ? 1 : 0);
             PlayerPrefs.Save();
@@ -270,23 +360,27 @@ namespace UI
 
         private void LoadSettings()
         {
-            ResolutionIndex = PlayerPrefs.GetInt("ResolutionIndex", 0);
-            Brightness = PlayerPrefs.GetFloat("Brightness", 50f);
-            ShowDamage = PlayerPrefs.GetInt("ShowDamage", 1) == 1;
-            FullScreen = PlayerPrefs.GetInt("FullScreen", 1) == 1;
+            // 이미 세팅된 값이 있으면 덮어쓰지 않음
+            if (PlayerPrefs.HasKey("ResolutionIndex"))
+                ResolutionIndex = PlayerPrefs.GetInt("ResolutionIndex");
+            // 없으면 현재 값 유지 (기본값)
+            if (PlayerPrefs.HasKey("Brightness"))
+                Brightness = PlayerPrefs.GetFloat("Brightness");
+            if (PlayerPrefs.HasKey("ShowDamage"))
+                ShowDamage = PlayerPrefs.GetInt("ShowDamage") == 1;
+            else
+                ShowDamage = true;
+            if (PlayerPrefs.HasKey("FullScreen"))
+                FullScreen = PlayerPrefs.GetInt("FullScreen") == 1;
+
+            ApplyFullScreen(); // <<<<< 먼저 호출
 
             if (_resolutions != null && _resolutions.Length > 0)
-            {
                 ApplyResolution();
-            }
-            
             ApplyBrightness();
-            ApplyFullScreen();
-            
+
             if (GameManager.DamageTextPoolManager != null)
-            {
                 GameManager.DamageTextPoolManager.showDamageText = _showDamage;
-            }
         }
     }
 }

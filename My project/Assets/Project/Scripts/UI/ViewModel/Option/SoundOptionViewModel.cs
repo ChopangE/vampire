@@ -30,10 +30,15 @@ namespace UI
             get => _bgmVolume;
             set
             {
-                _bgmVolume = value;
-                BgmVolumeText = $"BGM : {(int)_bgmVolume}";
-                OnPropertyChanged(nameof(BgmVolume));
-                ApplyBgmVolume();
+                float newValue = Mathf.Round(value);
+                if (!Mathf.Approximately(_bgmVolume, newValue))
+                {
+                    _bgmVolume = newValue;
+                    BgmVolumeText = $"BGM : {(int)_bgmVolume}";
+                    OnPropertyChanged(nameof(BgmVolume));
+                    ApplyBgmVolume();
+                    SaveSettings();
+                }
             }
         }
 
@@ -43,10 +48,15 @@ namespace UI
             get => _sfxVolume;
             set
             {
-                _sfxVolume = value;
-                SfxVolumeText = $"SFX : {(int)_sfxVolume}";
-                OnPropertyChanged(nameof(SfxVolume));
-                ApplySfxVolume();
+                float newValue = Mathf.Round(value);
+                if (!Mathf.Approximately(_sfxVolume, newValue))
+                {
+                    _sfxVolume = newValue;
+                    SfxVolumeText = $"SFX : {(int)_sfxVolume}";
+                    OnPropertyChanged(nameof(SfxVolume));
+                    ApplySfxVolume();
+                    SaveSettings();
+                }
             }
         }
 
@@ -56,10 +66,15 @@ namespace UI
             get => _hitVolume;
             set
             {
-                _hitVolume = value;
-                HitVolumeText = $"Hit : {(int)_hitVolume}";
-                OnPropertyChanged(nameof(HitVolume));
-                ApplyHitVolume();
+                float newValue = Mathf.Round(value);
+                if (!Mathf.Approximately(_hitVolume, newValue))
+                {
+                    _hitVolume = newValue;
+                    HitVolumeText = $"Hit : {(int)_hitVolume}";
+                    OnPropertyChanged(nameof(HitVolume));
+                    ApplyHitVolume();
+                    SaveSettings();
+                }
             }
         }
 
@@ -105,6 +120,7 @@ namespace UI
                 _bgmMute = value;
                 OnPropertyChanged(nameof(BgmMute));
                 ApplyBgmVolume();
+                SaveSettings();
             }
         }
 
@@ -117,6 +133,7 @@ namespace UI
                 _sfxMute = value;
                 OnPropertyChanged(nameof(SfxMute));
                 ApplySfxVolume();
+                SaveSettings();
             }
         }
 
@@ -129,7 +146,13 @@ namespace UI
                 _hitMute = value;
                 OnPropertyChanged(nameof(HitMute));
                 ApplyHitVolume();
+                SaveSettings();
             }
+        }
+
+        private void Start()
+        {
+            LoadSettings();
         }
 
         private void OnEnable()
@@ -196,7 +219,7 @@ namespace UI
             if (Global.SoundManager != null && !HitMute)
             {
                 // Hit 음소거 해제 시 테스트 사운드 재생 (필요한 경우)
-                // Global.SoundManager.PlayHitSound(SFXEnum.HIT);
+                Global.SoundManager.PlayHitSFX(SFXEnum.HGD_Hit);
             }
         }
 
@@ -207,33 +230,14 @@ namespace UI
             if (Global.SoundManager != null)
             {
                 // 테스트 BGM 재생
-                // Global.SoundManager.PlayMusic(BGMEnum.MENU);
             }
         }
 
-        [Binding]
-        public void PlayTestSfx()
-        {
-            if (Global.SoundManager != null)
-            {
-                // 테스트 SFX 재생
-                // Global.SoundManager.PlaySFX(SFXEnum.BUTTON);
-            }
-        }
-
-        [Binding]
-        public void PlayTestHit()
-        {
-            if (Global.SoundManager != null)
-            {
-                // 테스트 Hit 사운드 재생
-                // Global.SoundManager.PlayHitSound(SFXEnum.HIT);
-            }
-        }
 
         [Binding]
         public void SaveSettings()
         {
+            Debug.Log($"SaveSettings called - BGM: {_bgmVolume}, SFX: {_sfxVolume}, Hit: {_hitVolume}");
             PlayerPrefs.SetFloat("BGMVolume", _bgmVolume);
             PlayerPrefs.SetFloat("SFXVolume", _sfxVolume);
             PlayerPrefs.SetFloat("HitVolume", _hitVolume);
@@ -241,17 +245,21 @@ namespace UI
             PlayerPrefs.SetInt("SFXMute", _sfxMute ? 1 : 0);
             PlayerPrefs.SetInt("HitMute", _hitMute ? 1 : 0);
             PlayerPrefs.Save();
+            Debug.Log("Settings saved to PlayerPrefs");
             Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
 
         private void LoadSettings()
         {
-            // 볼륨 값 불러오기 (0-100 범위)
+            Debug.Log("LoadSettings called");
+            // 볼륨 값 불러오기 (0-100 범위) - 반드시 필드에만 할당!
             _bgmVolume = PlayerPrefs.GetFloat("BGMVolume", 100f);
             _sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 100f);
             _hitVolume = PlayerPrefs.GetFloat("HitVolume", 100f);
-            
-            // 음소거 상태 불러오기
+
+            Debug.Log($"Loaded values - BGM: {_bgmVolume}, SFX: {_sfxVolume}, Hit: {_hitVolume}");
+
+            // 음소거 상태 불러오기 - 반드시 필드에만 할당!
             _bgmMute = PlayerPrefs.GetInt("BGMMute", 0) == 1;
             _sfxMute = PlayerPrefs.GetInt("SFXMute", 0) == 1;
             _hitMute = PlayerPrefs.GetInt("HitMute", 0) == 1;
@@ -261,7 +269,7 @@ namespace UI
             SfxVolumeText = $"SFX : {(int)_sfxVolume}";
             HitVolumeText = $"Hit : {(int)_hitVolume}";
 
-            // 속성 변경 알림
+            // 속성 변경 알림 (UI 갱신)
             OnPropertyChanged(nameof(BgmVolume));
             OnPropertyChanged(nameof(SfxVolume));
             OnPropertyChanged(nameof(HitVolume));
@@ -273,6 +281,21 @@ namespace UI
             ApplyBgmVolume();
             ApplySfxVolume();
             ApplyHitVolume();
+        }
+
+        // 수동으로 설정을 다시 로드하는 메서드 (UI에서 호출 가능)
+        [Binding]
+        public void RefreshSettings()
+        {
+            LoadSettings();
+        }
+
+        // 수동으로 설정을 저장하는 메서드 (UI에서 호출 가능)
+        [Binding]
+        public void ManualSaveSettings()
+        {
+            Debug.Log("ManualSaveSettings called");
+            SaveSettings();
         }
     }
 }

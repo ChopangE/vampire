@@ -78,6 +78,8 @@ namespace UI.Page
                 if (view as SoundOptionViewModel)
                 {
                     view.gameObject.SetActive(true);
+                    // 사운드 설정 새로고침
+                    ((SoundOptionViewModel)view).RefreshSettings();
                 }
                 else view.gameObject.SetActive(false);
             }
