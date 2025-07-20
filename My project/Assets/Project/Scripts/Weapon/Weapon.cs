@@ -131,7 +131,7 @@ public class Weapon : MonoBehaviour
                 }
                 break;
             case UpgradeName.Projectiles:
-                count += _data.itemDataInfo.baseCount + (int)prevUpgradeValue - _data.itemDataInfo.baseCount;
+                count += (int)prevUpgradeValue;
                 break;
             case UpgradeName.PierceLimit:
                 pierce += (int)prevUpgradeValue;
