@@ -25,12 +25,34 @@ namespace UI
         public void SetShopItem(ShopItemLevelUpgradeSO shopItem, int slotKey)
         {
             _shopItem = shopItem;
-            _isPurchased = Global.UserDataManager.IsShopItemPurchased(_shopItem.Id);
-            RefreshData();
+            
+            // shopItem이 null인 경우 (빈 슬롯)
+            if (_shopItem == null)
+            {
+                _isPurchased = false;
+                RefreshDataForEmptySlot();
+            }
+            else
+            {
+                _isPurchased = true; // shopItem이 있으면 항상 구매된 상태로 처리
+                RefreshData();
+            }
+            
             SlotKey = slotKey;
             
             // InputManager 이벤트 구독
             SubscribeToInputEvents();
+        }
+
+        // 빈 슬롯을 위한 데이터 설정 메서드
+        private void RefreshDataForEmptySlot()
+        {
+            Icon = null;
+            ShopName = "빈 슬롯";
+            ShopValue = "";
+            ShopLevel = "";
+            ShopCost = "";
+            ShopInfo = "";
         }
 
         // InputManager 이벤트 구독 메서드
@@ -70,6 +92,10 @@ namespace UI
         // 슬롯 선택 처리 메서드
         private void SelectSlot()
         {
+            // 빈 슬롯인 경우 아무것도 하지 않음
+            if (_shopItem == null)
+                return;
+                
             // 슬롯 선택 시 필요한 로직 구현
             // 예: 아이템 정보 표시, 하이라이트 효과 등
             if(ShopItemInGameManager.Instance.UseActiveItem(_shopItem))
@@ -88,6 +114,13 @@ namespace UI
 
         private void RefreshData()
         {
+            // _shopItem이 null인 경우 빈 슬롯 데이터로 설정
+            if (_shopItem == null)
+            {
+                RefreshDataForEmptySlot();
+                return;
+            }
+            
             Icon = _shopItem.icon;
             ShopName = LocalizationManager.GetTranslation(_shopItem.upgradeNameKey);
             ShopValue = _shopItem.GetUpgradeValue();

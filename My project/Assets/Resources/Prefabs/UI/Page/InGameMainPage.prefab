@@ -1359,6 +1359,7 @@ GameObject:
   - component: {fileID: 7899435373347992764}
   - component: {fileID: 2629867922072928492}
   - component: {fileID: 5308883929330544855}
+  - component: {fileID: 3866684430672039173}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -1441,6 +1442,23 @@ MonoBehaviour:
   viewAdapterOptions: {fileID: 0}
   viewModelPropertyName: UI.ShopItemInGameSlotViewModel.Icon
   viewPropertyName: UnityEngine.UI.Image.sprite
+--- !u!114 &3866684430672039173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2408400848507205545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43352902310e02e4895b9d70a80c740e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isAutoConnection: 1
+  viewAdapterId: 
+  viewAdapterOptions: {fileID: 0}
+  viewModelPropertyName: UI.ShopItemInGameSlotViewModel.IsPurchased
+  viewPropertyName: UnityEngine.UI.Image.enabled
 --- !u!1 &4167353766775203520
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -113,16 +114,27 @@ namespace UI
                 .ThenBy(item => item.IsEvolutionItem) // 진화형 아이템은 나중에
                 .ToList();
 
-            PrepareViewModels(_levelUpgradeSOList.Count);
+            // 최소 3개의 슬롯을 항상 표시
+            int slotCount = Math.Max(3, _levelUpgradeSOList.Count);
+            PrepareViewModels(slotCount);
             var models = GetViewModels();
 
             for (int i = 0; i < models.Count; i++)
             {
                 if (models[i] is ShopItemInGameSlotViewModel model)
                 {
-                    model.SetShopItem(_levelUpgradeSOList[i], i+1);
-                    // 이벤트 구독
-                    model.OnEvolutionItemPurchased += OnEvolutionItemPurchased;
+                    if (i < _levelUpgradeSOList.Count)
+                    {
+                        // 아이템이 있는 경우
+                        model.SetShopItem(_levelUpgradeSOList[i], i+1);
+                        // 이벤트 구독
+                        model.OnEvolutionItemPurchased += OnEvolutionItemPurchased;
+                    }
+                    else
+                    {
+                        // 빈 슬롯인 경우
+                        model.SetShopItem(null, i+1);
+                    }
                 }
             }
         }
@@ -145,16 +157,26 @@ namespace UI
                 }
             }
 
-            // 상점 UI 갱신 - 기존 아이템 유지하면서 UI만 갱신
-            PrepareViewModels(_levelUpgradeSOList.Count);
+            // 상점 UI 갱신 - 최소 3개의 슬롯 유지
+            int slotCount = Math.Max(3, _levelUpgradeSOList.Count);
+            PrepareViewModels(slotCount);
             var models = GetViewModels();
 
             for (int i = 0; i < models.Count; i++)
             {
-                if (models[i] is ShopItemViewModel model)
+                if (models[i] is ShopItemInGameSlotViewModel model)
                 {
-                    model.SetShopItem(_levelUpgradeSOList[i]);
-                    model.OnEvolutionItemPurchased += OnEvolutionItemPurchased;
+                    if (i < _levelUpgradeSOList.Count)
+                    {
+                        // 아이템이 있는 경우
+                        model.SetShopItem(_levelUpgradeSOList[i], i+1);
+                        model.OnEvolutionItemPurchased += OnEvolutionItemPurchased;
+                    }
+                    else
+                    {
+                        // 빈 슬롯인 경우
+                        model.SetShopItem(null, i+1);
+                    }
                 }
             }
         }

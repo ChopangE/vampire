@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using Manager;
+using Cysharp.Threading.Tasks;
 
 namespace InGame
 {
@@ -51,16 +52,23 @@ namespace InGame
             transform.DOShakePosition(duration, new Vector3(0, 0.3f, 0), 1, 0f, false, false);
             
             // 아이템 끌어당기기 시작
-            StartCoroutine(PullItems());
+            PullItems().Forget();
         }
         
-        private IEnumerator PullItems()
+        private async UniTaskVoid PullItems()
         {
             // 효과 지속 시간 동안 반복
             float endTime = Time.time + duration;
             
             while (Time.time < endTime)
             {
+                // GameManager가 isLive가 false면 일시 중지 (시간도 함께 중단)
+                if (GameManager.Instance != null && !GameManager.Instance.isLive)
+                {
+                    await UniTask.Yield();
+                    continue;
+                }
+                
                 if (player != null)
                 {
                     // 주변 경험치 아이템 찾기
@@ -78,7 +86,7 @@ namespace InGame
                     }
                 }
                 
-                yield return null;
+                await UniTask.Yield();
             }
             
             Debug.Log("자석 효과 종료");
@@ -87,8 +95,7 @@ namespace InGame
         
         protected override void EndEffect()
         {
-            // 모든 코루틴과 트윈 중지
-            StopAllCoroutines();
+            // 모든 트윈 중지
             DOTween.Kill(transform);
             
             // 기본 종료 처리

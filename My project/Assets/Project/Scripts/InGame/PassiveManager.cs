@@ -28,7 +28,7 @@ public class PassiveManager : MonoBehaviour
                 GameManager.Instance.expRangeBonus *= (1 + (0.1f * Math.Max(0, currentLevel)));
                 break;
             case PassiveId.Defense:
-                GameManager.Instance.Defense += (1 * Math.Max(0, currentLevel)); // 방어력 1당 0.8% 데미지 감소
+                GameManager.Instance.Defense += (1 * Math.Max(0, currentLevel)); // 방어력 1당 5% 데미지 감소
                 break;
             case PassiveId.CriticalDamage:
                 GameManager.Instance.criticalDamage += (0.1f * Math.Max(0, currentLevel));
