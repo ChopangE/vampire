@@ -87,7 +87,7 @@ namespace UI.Page
                 }
                 else view.gameObject.SetActive(false);
             }
-            if (stageMap != null) stageMap.ShowStage();
+            if (stageMap != null) stageMap.ShowStageByCurrentStage();
             Global.SoundManager.PlaySFX(SFXEnum.Shop_PageTurn);
         }
         [Binding]

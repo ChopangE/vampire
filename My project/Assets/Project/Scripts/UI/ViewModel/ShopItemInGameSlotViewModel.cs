@@ -29,12 +29,12 @@ namespace UI
             // shopItem이 null인 경우 (빈 슬롯)
             if (_shopItem == null)
             {
-                _isPurchased = false;
+                IsPurchased = false;
                 RefreshDataForEmptySlot();
             }
             else
             {
-                _isPurchased = true; // shopItem이 있으면 항상 구매된 상태로 처리
+                IsPurchased = true; // shopItem이 있으면 항상 구매된 상태로 처리
                 RefreshData();
             }
             
@@ -102,7 +102,7 @@ namespace UI
             {
                 if(_shopItem.ItemType == ShopItemType.Active)
                     Global.SoundManager.PlaySFX(SFXEnum.Shop_MultiBuy);
-                Destroy(gameObject);
+                IsPurchased = false;
             }
         }
         

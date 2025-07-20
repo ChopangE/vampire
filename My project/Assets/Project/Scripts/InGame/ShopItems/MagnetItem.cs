@@ -14,6 +14,7 @@ namespace InGame
         private Collider2D coll;
         private Vector3 offset;
         private Player player;
+        private bool isEffectActive = false;
         
         protected override void Start()
         {
@@ -51,18 +52,22 @@ namespace InGame
             // 흔들림 효과 적용
             transform.DOShakePosition(duration, new Vector3(0, 0.3f, 0), 1, 0f, false, false);
             
+            // 효과 활성화 플래그 설정
+            isEffectActive = true;
+            
             // 아이템 끌어당기기 시작
             PullItems().Forget();
+            
+            // duration 후 효과 종료
+            EndEffectAfterDuration().Forget();
         }
         
         private async UniTaskVoid PullItems()
         {
-            // 효과 지속 시간 동안 반복
-            float endTime = Time.time + duration;
-            
-            while (Time.time < endTime)
+            // 효과가 활성화되어 있는 동안 반복
+            while (isEffectActive)
             {
-                // GameManager가 isLive가 false면 일시 중지 (시간도 함께 중단)
+                // GameManager가 isLive가 false면 일시 중지
                 if (GameManager.Instance != null && !GameManager.Instance.isLive)
                 {
                     await UniTask.Yield();
@@ -90,11 +95,35 @@ namespace InGame
             }
             
             Debug.Log("자석 효과 종료");
-            EndEffect();
+        }
+        
+        private async UniTaskVoid EndEffectAfterDuration()
+        {
+            float elapsedTime = 0f;
+            
+            while (elapsedTime < duration && isEffectActive)
+            {
+                // 게임이 일시정지되면 시간 카운트를 멈춤
+                if (GameManager.Instance != null && GameManager.Instance.isLive)
+                {
+                    elapsedTime += Time.deltaTime;
+                }
+                
+                await UniTask.Yield();
+            }
+            
+            // 시간이 다 되면 효과 종료
+            if (isEffectActive)
+            {
+                EndEffect();
+            }
         }
         
         protected override void EndEffect()
         {
+            // 효과 비활성화
+            isEffectActive = false;
+            
             // 모든 트윈 중지
             DOTween.Kill(transform);
             

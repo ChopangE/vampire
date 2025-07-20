@@ -16,10 +16,7 @@ public class StageMap : MonoBehaviour
     void OnEnable()
     {
         Global.StageManager.OnStageChanged += OnStageChanged;
-        if(Global.UserDataManager.storage.curStage == 12)
-        {
-            BossStage();
-        }
+        ShowStageByCurrentStage();
     }
     void OnDisable()
     {
@@ -60,6 +57,37 @@ public class StageMap : MonoBehaviour
             else {
                 stages[i].SetActive(false);
             }
+        }
+    }
+
+    /// <summary>
+    /// 현재 스테이지에 따라 적절한 스테이지 책을 표시합니다.
+    /// 0-3: Stage1, 4-7: Stage2, 8-11: Stage3, 12: BossStage
+    /// </summary>
+    public void ShowStageByCurrentStage()
+    {
+        int curStage = Global.UserDataManager.storage.curStage;
+        
+        if (curStage == 12)
+        {
+            BossStage();
+        }
+        else if (curStage >= 0 && curStage <= 3)
+        {
+            Stage1();
+        }
+        else if (curStage >= 4 && curStage <= 7)
+        {
+            Stage2();
+        }
+        else if (curStage >= 8 && curStage <= 11)
+        {
+            Stage3();
+        }
+        else
+        {
+            // 기본값으로 Stage1 표시
+            Stage1();
         }
     }
 
