@@ -229,6 +229,7 @@ MonoBehaviour:
   target: {fileID: 0}
   outlineSprite: {fileID: 2325408326989757108}
   canStun: 1
+  weaponController: {fileID: 0}
 --- !u!114 &2325408326989757108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,7 +260,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6800467228253778900
 Transform:
   m_ObjectHideFlags: 0

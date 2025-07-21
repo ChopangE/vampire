@@ -45,6 +45,12 @@ public class IceFall : MiddleBossBullet {
         coll.enabled = true;
         Transform ch = transform.GetChild(0);
         ch.gameObject.SetActive(true);
-        
+    }
+    
+    protected override void Damaging() {
+        var damage = GameManager.Instance.maxHealth * 0.4f;
+        GameManager.Instance.Health -= damage;
+        // 2초 동안 30% 슬로우 적용
+        GameManager.Instance.player.ApplySlow(2f, 0.3f);
     }
 }

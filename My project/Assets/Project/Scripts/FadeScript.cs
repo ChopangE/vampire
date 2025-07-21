@@ -38,14 +38,14 @@ public class FadeScript : MonoBehaviour
         StartCoroutine(FadeFlow(onComplete));
     }
 
-    public void InGameFade(bool isGameOver = false, bool isGameWin = false, System.Action onComplete = null) {
-        StartCoroutine(InGameFadeFlow(isGameOver, isGameWin, onComplete));
+    public void InGameFade(bool isGameOver = false, bool isGameWin = false, bool isGameClear = false, System.Action onComplete = null) {
+        StartCoroutine(InGameFadeFlow(isGameOver, isGameWin, isGameClear, onComplete));
     }
     
     // 지정된 색상으로 페이드 아웃
-    public void InGameFade(Color color, bool isGameOver = false, bool isGameWin = false, System.Action onComplete = null) {
+    public void InGameFade(Color color, bool isGameOver = false, bool isGameWin = false, bool isGameClear = false, System.Action onComplete = null) {
         SetFadeColor(color);
-        StartCoroutine(InGameFadeFlow(isGameOver, isGameWin, onComplete));
+        StartCoroutine(InGameFadeFlow(isGameOver, isGameWin, isGameClear, onComplete));
     }
 
     IEnumerator FadeFlow(System.Action onComplete = null) {
@@ -66,7 +66,7 @@ public class FadeScript : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator InGameFadeFlow(bool isGameOver = false, bool isGameWin = false, System.Action onComplete = null) {
+    IEnumerator InGameFadeFlow(bool isGameOver = false, bool isGameWin = false, bool isGameClear = false, System.Action onComplete = null) {
         panel.gameObject.SetActive(true);
         Color alpha = panel.color;
         time = 0f;
@@ -83,12 +83,10 @@ public class FadeScript : MonoBehaviour
         yield return new WaitForSeconds(2f);
         if(isGameOver || isGameWin) {
             GameManager.Instance.isStageClear = false;
-            if(Global.UserDataManager.curStage != 13)
-                SceneManager.LoadScene("Map");
+            if(isGameClear)  // 게임 클리어 시 크레딧으로
+                SceneManager.LoadScene("Credit");
             else
-            {
-                Global.UIManager.OpenPage<CreditPage>();
-            }
+                SceneManager.LoadScene("Map");
         }
         // 완료 콜백 호출
         onComplete?.Invoke();
@@ -120,7 +118,7 @@ public class FadeScript : MonoBehaviour
     // 게임 상태를 고려한 페이드 아웃
     public void FadeOut(Color color, bool isGameOver = false, bool isGameWin = false, System.Action onComplete = null) {
         SetFadeColor(color);
-        StartCoroutine(InGameFadeFlow(isGameOver, isGameWin, onComplete));
+        StartCoroutine(InGameFadeFlow(isGameOver, isGameWin, false, onComplete));
     }
 
     // 페이드 인 코루틴 (화면이 어두워지는 효과)

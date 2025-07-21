@@ -90,7 +90,7 @@ namespace UI
             // 여기에 크레딧이 끝났을 때의 처리를 추가
             // 예: 다른 씬으로 이동하거나 페이지를 닫는 등
             Global.UIManager.ClosePage();
-            Global.UserDataManager.curStage = 0;
+            Global.UserDataManager.ResetStageData();
             SceneManager.LoadScene("StartScene");
         }
 

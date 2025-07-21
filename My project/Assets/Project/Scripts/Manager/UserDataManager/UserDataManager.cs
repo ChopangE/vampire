@@ -73,6 +73,11 @@ namespace Manager
             storage.purchasedShopItems.Clear();
             Save();
         }
+        public void ResetPassiveItemData()
+        {
+            storage.passiveItemDataInfoList.Clear();
+            Save();
+        }
         public void ResetStageData()
         {
             curStage = 0;

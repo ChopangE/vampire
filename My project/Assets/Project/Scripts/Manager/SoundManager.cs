@@ -235,13 +235,20 @@ namespace Manager
             }
         }
 
-        public void StopBGM(bool isStop = true)
+        public void StopBGM(bool shouldPause = true)
         {
             if (bgmSource == null) return;
-            if (isStop)
-                bgmSource.Stop();
+            if (shouldPause)
+                bgmSource.Pause();
             else
-                bgmSource.Play();
+                bgmSource.UnPause();
+        }
+
+        // 완전히 BGM을 멈추고 처음부터 재생하고 싶을 때 사용
+        public void StopBGMCompletely()
+        {
+            if (bgmSource == null) return;
+            bgmSource.Stop();
         }
 
         public void StopHit(bool isStop = true)

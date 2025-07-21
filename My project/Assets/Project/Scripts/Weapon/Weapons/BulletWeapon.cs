@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using System;
 
 public class BulletWeapon : Weapon
 {
@@ -9,10 +10,10 @@ public class BulletWeapon : Weapon
 
     public override void ExecuteAttack()
     {
-        StartCoroutine(SpawnBullets());
+        SpawnBullets().Forget();
     }
     
-    public virtual IEnumerator SpawnBullets()
+    public virtual async UniTask SpawnBullets()
     {
         for (int i = 0; i < count; i++)
         {
@@ -20,7 +21,7 @@ public class BulletWeapon : Weapon
             
             if (i < count - 1)
             {
-                yield return new WaitForSeconds(bulletSpawnInterval);
+                await UniTask.Delay(TimeSpan.FromSeconds(bulletSpawnInterval));
             }
         }
     }

@@ -3,7 +3,6 @@ using Cysharp.Threading.Tasks;
 using Data;
 using InGame.Data;
 using Manager;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
@@ -67,7 +66,7 @@ public class Boss : MonoBehaviour
         if (!isLive)
         {
             transform.Translate(0, -5 * Time.deltaTime, 0);
-            StartCoroutine(StageClear());
+            StageClearAsync().Forget();
             foreach (var weapon in weapons)
             {
                 if (weapon.gameObject.activeSelf)
@@ -134,10 +133,11 @@ public class Boss : MonoBehaviour
         }
     }
 
-    IEnumerator StageClear()
+    async UniTaskVoid StageClearAsync()
     {
         GameManager.Instance.isInvincible = true;
-        yield return new WaitForSeconds(3f);
+        Global.SoundManager.StopBGMCompletely(); // 보스 클리어 시 BGM 정지
+        await UniTask.Delay(3000); // 3초를 밀리초로 변환
         GameManager.Instance.StageClear();
     }
     void OnDrawGizmos()

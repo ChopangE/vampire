@@ -294,10 +294,18 @@ public class GameManager : MMSingleton<GameManager>
     {
         if(isStageClear) return;
         isStageClear = true;
-        Global.UserDataManager.curStage++;
-        Global.DataManager.SaveData();
+        
+        // 최종 스테이지 클리어 여부 확인 (데이터 초기화 전에)
+        bool isFinalStageClear = _curStage == 12;
+        
+        // GameOverRoutine과 동일한 데이터 초기화
+        Global.DataManager.ResetWeaponData();
+        Global.UserDataManager.ResetPurchasedShopItems();
+        Global.UserDataManager.ResetPassiveItemData();
+        Global.UserDataManager.ResetStageData();
+        
         Global.SoundManager.PlaySFX(Data.SFXEnum.Shop_StageOpen);
-        StartCoroutine(StageClearRoutine());
+        StartCoroutine(StageClearRoutine(isFinalStageClear));
     }
 
     public void GameOver()
@@ -323,19 +331,20 @@ public class GameManager : MMSingleton<GameManager>
         // 부활 실패 시 게임오버 처리
         Global.DataManager.ResetWeaponData();
         Global.UserDataManager.ResetPurchasedShopItems();
+        Global.UserDataManager.ResetPassiveItemData();
         Global.UserDataManager.ResetStageData();
         var pages = Global.UIManager.GetPages<InGameMainPage>();
         FadeScript fade = pages[0].GetComponent<FadeScript>();
         fade.InGameFade(true);
     }
 
-    private IEnumerator StageClearRoutine()
+    private IEnumerator StageClearRoutine(bool isFinalStageClear = false)
     {
         yield return new WaitForSeconds(0.5f);
         Stop();
         var pages = Global.UIManager.GetPages<InGameMainPage>();
         FadeScript fade = pages[0].GetComponent<FadeScript>();
-        fade.InGameFade(isGameWin: true);
+        fade.InGameFade(isGameWin: true, isGameClear: isFinalStageClear);
     }
     public void Stop()
     {

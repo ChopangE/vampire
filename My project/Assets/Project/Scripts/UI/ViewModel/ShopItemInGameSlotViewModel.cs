@@ -34,6 +34,7 @@ namespace UI
             }
             else
             {
+                Debug.Log("ShopItemInGameSlotViewModel.SetShopItem: " + _shopItem.upgradeNameKey);
                 IsPurchased = true; // shopItem이 있으면 항상 구매된 상태로 처리
                 RefreshData();
             }
@@ -96,6 +97,13 @@ namespace UI
             if (_shopItem == null)
                 return;
                 
+            // 진화형 아이템인 경우 사용할 수 없음
+            if (_shopItem.ItemType == ShopItemType.Evolution)
+            {
+                Debug.Log("진화형 아이템은 사용할 수 없습니다.");
+                return;
+            }
+                
             // 슬롯 선택 시 필요한 로직 구현
             // 예: 아이템 정보 표시, 하이라이트 효과 등
             if(ShopItemInGameManager.Instance.UseActiveItem(_shopItem))
@@ -124,7 +132,17 @@ namespace UI
             Icon = _shopItem.icon;
             ShopName = LocalizationManager.GetTranslation(_shopItem.upgradeNameKey);
             ShopValue = _shopItem.GetUpgradeValue();
-            ShopLevel = IsPurchased ? "구매완료" : "미구매";
+            
+            // 진화형 아이템인 경우 사용불가로 표시
+            if (_shopItem.ItemType == ShopItemType.Evolution)
+            {
+                ShopLevel = "사용불가";
+            }
+            else
+            {
+                ShopLevel = IsPurchased ? "구매완료" : "미구매";
+            }
+            
             ShopCost = _shopItem.Price.ToString();
             ShopInfo = LocalizationManager.GetTranslation(_shopItem.descriptionKey);
         }

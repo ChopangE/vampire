@@ -81,4 +81,9 @@ public class RaserRange : MiddleBossBullet {
         if (!isAttack) return;
         base.OnTriggerEnter2D(collision);
     }
+
+    protected override void Damaging() {
+        var damage = GameManager.Instance.maxHealth * 0.4f;
+        GameManager.Instance.Health -= damage;
+    }
 }

@@ -35,7 +35,7 @@ public class Thunder : MiddleBossBullet {
             sprite.color = new Color(1, 0, 0, Mathf.Lerp(startColor, endColor, timer / duration));
             yield return null;
         }
-        yield return new WaitForSeconds(0.3f);  //½Ã°£ Á¶Àı °¡´É
+        yield return new WaitForSeconds(0.3f);  //ï¿½Ã°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Attack();
     }
 
@@ -45,6 +45,12 @@ public class Thunder : MiddleBossBullet {
         coll.enabled = true;
         Transform ch = transform.GetChild(0);
         ch.gameObject.SetActive(true);
-        
+    }
+    
+    protected override void Damaging() {
+        var damage = GameManager.Instance.maxHealth * 0.4f;
+        GameManager.Instance.Health -= damage;
+        // 1ì´ˆ ìŠ¤í„´ ì ìš©
+        GameManager.Instance.player.ApplyStun(1f);
     }
 }

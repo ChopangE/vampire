@@ -32,17 +32,14 @@ namespace UI
             foreach (var item in allShopItems)
             {
                 bool isPurchased = Global.UserDataManager.IsShopItemPurchased(item.Id);
-                
                 if (isPurchased)
                 {
+                    // 진화형 아이템: 구매한 모든 진화형 아이템 표시 (사용 가능 여부는 별도 처리)
                     if (item.ItemType == ShopItemType.Evolution)
                     {
-                        if (Global.UserDataManager.IsFullyEvolved(item.Id))
-                        {
-                            if(item.NextEvolution == null)
-                                _levelUpgradeSOList.Add(item);
-                        }
+                        _levelUpgradeSOList.Add(item);
                     }
+                    // 액티브 아이템: 그대로 추가
                     if(item.ItemType == ShopItemType.Active)
                     {
                         _levelUpgradeSOList.Add(item);
