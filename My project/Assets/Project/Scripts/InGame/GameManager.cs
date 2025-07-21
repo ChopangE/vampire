@@ -111,6 +111,7 @@ public class GameManager : MMSingleton<GameManager>
 
             if (_health <= 0)
             {
+                _health = 0; // 체력을 0으로 고정
                 GameOver();
             }
         }

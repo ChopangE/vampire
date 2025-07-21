@@ -22,12 +22,14 @@ public class Player : MonoBehaviour
     public Sprite slowSprite;
     public Sprite burnSprite;
     public Sprite poisonSprite;
+    public Sprite bleedSprite;
     
     // 상태이상 관련
     public bool isStunned { get; private set; }
     public bool isSlowed { get; private set; }
     public bool isBurning { get; private set; }
     public bool isPoisoned { get; private set; }
+    public bool isBleeding { get; private set; }
     private float currentSpeedMultiplier = 1f;
 
 
@@ -37,6 +39,9 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         scan = GetComponent<Scanner>();
         isKnockBack = false;
+        
+        // 게임 시작 시 상태 이상 스프라이트 초기화
+        UpdateStatusSprite();
     }
 
     
@@ -113,6 +118,14 @@ public class Player : MonoBehaviour
         }
     }
     
+    public void ApplyBleed(float statusDuration, float damageDuration, float damagePercent)
+    {
+        if (!isBleeding)
+        {
+            BleedAsync(statusDuration, damageDuration, damagePercent).Forget();
+        }
+    }
+    
     async UniTaskVoid StunAsync(float duration)
     {
         isStunned = true;
@@ -177,14 +190,59 @@ public class Player : MonoBehaviour
         UpdateStatusSprite();
     }
     
+    async UniTaskVoid BleedAsync(float statusDuration, float damageDuration, float damagePercent)
+    {
+        isBleeding = true;
+        UpdateStatusSprite();
+        
+        float elapsed = 0f;
+        float tickInterval = 1f; // 1초마다 데미지
+        
+        while (elapsed < damageDuration && isBleeding)
+        {
+            await UniTask.Delay((int)(tickInterval * 1000)); // 1초 대기
+            elapsed += tickInterval;
+            
+            if (isBleeding) // 여전히 출혈 상태인지 확인
+            {
+                var damage = GameManager.Instance.maxHealth * damagePercent;
+                GameManager.Instance.Health -= damage;
+            }
+        }
+        
+        // 데미지는 끝났지만 출혈 상태는 더 지속 (statusDuration - damageDuration)
+        if (isBleeding && statusDuration > damageDuration)
+        {
+            float remainingDuration = statusDuration - damageDuration;
+            await UniTask.Delay((int)(remainingDuration * 1000));
+        }
+        
+        isBleeding = false;
+        UpdateStatusSprite();
+    }
+    
     void UpdateStatusSprite()
     {
         if (currentStatus == null) return;
         
-        // 우선순위: 스턴 > 중독 > 화상 > 슬로우
+        // 상태 이상이 하나라도 있는지 확인
+        bool hasStatusEffect = isStunned || isBleeding || isPoisoned || isBurning || isSlowed;
+        
+        if (!hasStatusEffect)
+        {
+            currentStatus.gameObject.SetActive(false);
+            return;
+        }
+        
+        // 우선순위: 스턴 > 출혈 > 중독 > 화상 > 슬로우
         if (isStunned)
         {
             currentStatus.sprite = stunSprite;
+            currentStatus.gameObject.SetActive(true);
+        }
+        else if (isBleeding)
+        {
+            currentStatus.sprite = bleedSprite;
             currentStatus.gameObject.SetActive(true);
         }
         else if (isPoisoned)
@@ -201,10 +259,6 @@ public class Player : MonoBehaviour
         {
             currentStatus.sprite = slowSprite;
             currentStatus.gameObject.SetActive(true);
-        }
-        else
-        {
-            currentStatus.gameObject.SetActive(false);
         }
     }
     
