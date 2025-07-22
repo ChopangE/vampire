@@ -75,7 +75,7 @@ public class GameManager : MMSingleton<GameManager>
         get => _health;
         set
         {
-            if(!isLive) return;
+            if (!isLive) return;
             float damage = _health - value;
             if (damage <= 0)
             {
@@ -117,7 +117,7 @@ public class GameManager : MMSingleton<GameManager>
         }
     }
     public bool isInvincible { get; set; }
-    
+
     public float goldBonus = 1.0f;
     public float projectileSpeedBonus = 1.0f;
     public float healthRegeneration = 0.0f;
@@ -172,7 +172,7 @@ public class GameManager : MMSingleton<GameManager>
         DamageTextPoolManager = FindObjectOfType<DamageTextPoolManager>();
         PassiveManager = FindObjectOfType<PassiveManager>();
         _inGameMainPage = Global.UIManager.OpenPage<InGameMainPage>();
-        
+
         maxHealth = baseMaxHealth;
         Health = maxHealth;
         _shield = 0;
@@ -209,12 +209,13 @@ public class GameManager : MMSingleton<GameManager>
         if (_curStage % Global.StageManager.MAX_STAGE_COUNT == Global.StageManager.MAX_STAGE_COUNT - 1)
         {
             int bossIndex = 0;
-            if(_curStage == 3) bossIndex = 0;
-            else if(_curStage == 7) bossIndex = 1;
-            else if(_curStage == 11) bossIndex = 2;
+            if (_curStage == 3) bossIndex = 0;
+            else if (_curStage == 7) bossIndex = 1;
+            else if (_curStage == 11) bossIndex = 2;
             spawner.SpawnMiddleBoss(bossIndex);
             _inGameMainPage.ActiveTimer = false;
-        }else
+        }
+        else
             _inGameMainPage.ActiveTimer = true;
 
     }
@@ -227,17 +228,17 @@ public class GameManager : MMSingleton<GameManager>
     public void GetExp(int exp)
     {
         if (!isLive) return;
-        
+
         curExp += (int)(exp * expBonus);
         Global.SoundManager.PlaySFX(Data.SFXEnum.GetExpStone);
-        
+
         // 경험치가 충분하면 레벨업 처리
         while (curExp >= GetNextExpRequired())
         {
             curExp -= GetNextExpRequired();
             QueueLevelUp();
         }
-        
+
         if (!_isProcessingLevelUp)
         {
             ProcessNextLevelUp();
@@ -265,7 +266,7 @@ public class GameManager : MMSingleton<GameManager>
     private void ProcessNextLevelUp()
     {
         if (_levelUpQueue.Count == 0) return;
-        
+
         _isProcessingLevelUp = true;
         isLive = false;  // 레벨업 처리 중 게임 일시정지
         Global.SoundManager.PlaySFX(Data.SFXEnum.LevelUp);
@@ -282,7 +283,7 @@ public class GameManager : MMSingleton<GameManager>
     {
         _isProcessingLevelUp = false;
         isLive = true;  // 게임 재개
-        
+
         if (_levelUpQueue.Count > 0)
         {
             ProcessNextLevelUp();
@@ -293,18 +294,14 @@ public class GameManager : MMSingleton<GameManager>
     #region Game Control Methods
     public void StageClear()
     {
-        if(isStageClear) return;
+        if (isStageClear) return;
         isStageClear = true;
-        
+
         // 최종 스테이지 클리어 여부 확인 (데이터 초기화 전에)
         bool isFinalStageClear = _curStage == 12;
-        
-        // GameOverRoutine과 동일한 데이터 초기화
-        Global.DataManager.ResetWeaponData();
-        Global.UserDataManager.ResetPurchasedShopItems();
-        Global.UserDataManager.ResetPassiveItemData();
-        Global.UserDataManager.ResetStageData();
-        
+
+        Global.UserDataManager.curStage++;
+        Global.DataManager.SaveData();
         Global.SoundManager.PlaySFX(Data.SFXEnum.Shop_StageOpen);
         StartCoroutine(StageClearRoutine(isFinalStageClear));
     }
@@ -312,15 +309,16 @@ public class GameManager : MMSingleton<GameManager>
     public void GameOver()
     {
         Global.SoundManager.PlaySFX(Data.SFXEnum.HGD_Death);
-                
+
         // 부활 확률 체크 (revivePossibility가 백분율로 되어있음, 예: 20은 20%를 의미)
-        if (revivePossibility > 0 && UnityEngine.Random.Range(0f, 100f) < revivePossibility) {
+        if (revivePossibility > 0 && UnityEngine.Random.Range(0f, 100f) < revivePossibility)
+        {
             Global.SoundManager.PlaySFX(Data.SFXEnum.Revive);
             Health = maxHealth;
             Resume();
             return;
         }
-        
+
         StartCoroutine(GameOverRoutine());
     }
 
