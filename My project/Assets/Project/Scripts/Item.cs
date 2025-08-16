@@ -182,7 +182,7 @@ public class Item : ViewModel
                     case UpgradeName.Range: // 곱연산
                         float currentRange = baseDataInfo.curRange == 0 ? baseDataInfo.baseRange : baseDataInfo.curRange;
                         prevUpgradeValue = (value * currentRange) - currentRange;
-                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0:F2}%", prevUpgradeValue);
+                        desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0:F0}%", (value - 1) * 100);
                         break;
                     default:
                         prevUpgradeValue = (value * 100) - 100;

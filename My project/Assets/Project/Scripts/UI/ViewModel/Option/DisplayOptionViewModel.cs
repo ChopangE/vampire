@@ -287,7 +287,8 @@ namespace UI
         {
             ShowDamage = !ShowDamage;
             GameManager.DamageTextPoolManager.showDamageText = ShowDamage;
-            PlayerPrefs.SetInt("ShowDamage", ShowDamage ? 1 : 0);
+            PlayerPrefs.SetInt("ShowDamage", ShowDamage ? 1 : 0); // 닫을 때 값 저장
+            PlayerPrefs.Save();
             Global.SoundManager.PlaySFX(SFXEnum.Shop_Button_1);
         }
 
@@ -360,18 +361,31 @@ namespace UI
 
         private void LoadSettings()
         {
-            // 이미 세팅된 값이 있으면 덮어쓰지 않음
+            // 저장된 값 불러오기, 없으면 ON이 기본값
+            if (PlayerPrefs.HasKey("ShowDamage"))
+                ShowDamage = PlayerPrefs.GetInt("ShowDamage") == 1;
+            else {
+                ShowDamage = true;
+                PlayerPrefs.SetInt("ShowDamage", 1); // ON이 기본값
+                PlayerPrefs.Save();
+            }
             if (PlayerPrefs.HasKey("ResolutionIndex"))
                 ResolutionIndex = PlayerPrefs.GetInt("ResolutionIndex");
-            // 없으면 현재 값 유지 (기본값)
             if (PlayerPrefs.HasKey("Brightness"))
                 Brightness = PlayerPrefs.GetFloat("Brightness");
+            // ShowDamage 기본값은 true
             if (PlayerPrefs.HasKey("ShowDamage"))
                 ShowDamage = PlayerPrefs.GetInt("ShowDamage") == 1;
             else
                 ShowDamage = true;
+                PlayerPrefs.SetInt("ShowDamage", 1); // 기본값 저장
+                PlayerPrefs.Save();
             if (PlayerPrefs.HasKey("FullScreen"))
                 FullScreen = PlayerPrefs.GetInt("FullScreen") == 1;
+
+            // ShowDamageText UI 갱신
+            ShowDamageText = ShowDamage ? "데미지 표시 : ON" : "데미지 표시 : OFF";
+            OnPropertyChanged(nameof(ShowDamageText));
 
             ApplyFullScreen(); // <<<<< 먼저 호출
 
@@ -380,7 +394,7 @@ namespace UI
             ApplyBrightness();
 
             if (GameManager.DamageTextPoolManager != null)
-                GameManager.DamageTextPoolManager.showDamageText = _showDamage;
+                GameManager.DamageTextPoolManager.showDamageText = ShowDamage;
         }
     }
 }
