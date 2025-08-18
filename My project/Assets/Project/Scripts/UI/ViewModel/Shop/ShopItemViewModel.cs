@@ -53,13 +53,17 @@ namespace UI
             
             if (_shopItem.IsEvolutionItem)
             {
-                Global.UserDataManager.AdvanceEvolution(_shopItem.Id);
+                // 현재 아이템 구매 처리
+                Global.UserDataManager.PurchaseItem(_shopItem.Id);
                 
+                // 최종 진화 아이템인지 확인
                 if (Global.UserDataManager.IsFullyEvolved(_shopItem.Id))
                 {
-                    // 최종 진화 달성 시 최종 아이템으로 변경
-                    Global.UserDataManager.PurchaseItem(_shopItem.FinalEvolution.Id);
-                    // 필살기는 인게임에서 확인하여 해금
+                    // 최종 진화 달성 시 최종 아이템도 구매 처리 (중복 방지)
+                    if (_shopItem.FinalEvolution != null && _shopItem.Id != _shopItem.FinalEvolution.Id)
+                    {
+                        Global.UserDataManager.PurchaseItem(_shopItem.FinalEvolution.Id);
+                    }
                 }
                 
                 // 진화 아이템 구매 완료 이벤트 발생

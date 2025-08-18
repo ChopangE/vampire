@@ -20,32 +20,18 @@ namespace UI
             // 진화형 아이템의 경우, 현재 진화 단계에 맞는 아이템만 추가
             if (levelUpgradeSO.IsEvolutionItem)
             {
-                var currentStage = Global.UserDataManager.GetEvolutionStage(levelUpgradeSO.Id);
-                
-                // 마지막 진화 단계라면 추가하지 않음
-                if (Global.UserDataManager.IsFullyEvolved(levelUpgradeSO.Id))
-                    return;
-                    
                 // 이미 같은 계열의 진화 아이템이 있다면 추가하지 않음
                 var existingEvolutionItem = _levelUpgradeSOList.FirstOrDefault(x => 
-                    x.IsEvolutionItem && x.Id == levelUpgradeSO.Id);
+                    x.IsEvolutionItem && GetEvolutionChainId(x) == GetEvolutionChainId(levelUpgradeSO));
                 
                 if (existingEvolutionItem != null)
                     return;
 
-                // 첫 단계(stage == 0)이고 첫 번째 아이템인 경우만 추가
-                if (currentStage == 0 && levelUpgradeSO.NextEvolution != null)
+                // 현재 진화 체인에서 구매 가능한 다음 아이템 찾기
+                var nextAvailableItem = FindNextAvailableEvolutionItem(levelUpgradeSO);
+                if (nextAvailableItem != null)
                 {
-                    _levelUpgradeSOList.Add(levelUpgradeSO);
-                }
-                // 현재 단계에 맞는 진화 단계 아이템 추가
-                else if (currentStage > 0)
-                {
-                    var nextEvolution = GetNextEvolutionItem(levelUpgradeSO, currentStage);
-                    if (nextEvolution != null && !Global.UserDataManager.IsFullyEvolved(nextEvolution.Id))
-                    {
-                        _levelUpgradeSOList.Add(nextEvolution);
-                    }
+                    _levelUpgradeSOList.Add(nextAvailableItem);
                 }
             }
             // 일반 아이템은 그대로 추가
@@ -53,6 +39,41 @@ namespace UI
             {
                 _levelUpgradeSOList.Add(levelUpgradeSO);
             }
+        }
+
+        // 진화 체인에서 구매 가능한 다음 아이템을 찾는 메서드
+        private ShopItemLevelUpgradeSO FindNextAvailableEvolutionItem(ShopItemLevelUpgradeSO startItem)
+        {
+            var current = startItem;
+            int maxIterations = 10; // 무한 루프 방지
+            int iterations = 0;
+            
+            while (current != null && iterations < maxIterations)
+            {
+                // 현재 아이템이 구매되지 않았다면
+                if (!Global.UserDataManager.IsShopItemPurchased(current.Id))
+                {
+                    // 최종 진화 아이템인 경우 상점에 표시하지 않음
+                    if (Global.UserDataManager.IsFullyEvolved(current.Id))
+                    {
+                        return null;
+                    }
+                    // 최종 진화가 아니라면 반환
+                    return current;
+                }
+                
+                // 이미 구매되었다면 다음 진화 단계로 이동
+                current = current.NextEvolution;
+                iterations++;
+                
+                // NextEvolution이 null이면 더 이상 진화할 수 없으므로 종료
+                if (current == null)
+                {
+                    break;
+                }
+            }
+            
+            return null;
         }
 
         private ShopItemLevelUpgradeSO GetNextEvolutionItem(ShopItemLevelUpgradeSO item, int currentStage)
@@ -63,6 +84,37 @@ namespace UI
                 current = current.NextEvolution;
             }
             return current;
+        }
+
+        // 진화 체인의 고유 ID를 반환 (최종 진화 아이템의 ID 사용)
+        private string GetEvolutionChainId(ShopItemLevelUpgradeSO item)
+        {
+            if (item.FinalEvolution != null)
+                return item.FinalEvolution.Id;
+            return item.Id;
+        }
+
+        // 진화 체인의 첫 번째 아이템인지 확인
+        private bool IsFirstEvolutionItem(ShopItemLevelUpgradeSO item)
+        {
+            // FinalEvolution에서 역추적하여 첫 번째 아이템 찾기
+            var allShopItems = Global.StatsUpgradeManager.GetAllShopItems();
+            var evolutionChain = allShopItems.Where(x => 
+                x.IsEvolutionItem && 
+                x.FinalEvolution != null && 
+                x.FinalEvolution.Id == item.FinalEvolution?.Id).ToList();
+
+            // NextEvolution이 없는 다른 아이템을 찾아서 첫 번째인지 확인
+            foreach (var chainItem in evolutionChain)
+            {
+                bool isReferencedByOthers = evolutionChain.Any(other => other.NextEvolution == chainItem);
+                if (!isReferencedByOthers)
+                {
+                    return chainItem.Id == item.Id;
+                }
+            }
+
+            return false;
         }
 
         public void InitialGorup()

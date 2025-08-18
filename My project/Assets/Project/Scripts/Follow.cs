@@ -15,6 +15,16 @@ public class Follow : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (player == null || Camera.main == null)
+        {
+            // 플레이어나 카메라가 없으면 다시 찾기 시도
+            if (player == null)
+                player = FindObjectOfType<Player>();
+            
+            if (player == null || Camera.main == null)
+                return;
+        }
+        
         rect.position =
             Camera.main.WorldToScreenPoint(player.transform
                 .position); //GameManager.Instance.player.transform.position);

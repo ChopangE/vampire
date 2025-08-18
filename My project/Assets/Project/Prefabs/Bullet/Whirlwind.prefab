@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 7795344680324715197}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 8.802796, y: -9.9505005, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5274597039696501925}
   m_Father: {fileID: 0}
@@ -145,6 +145,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   duration: 0
   canStun: 0
+  size: 1
   followPlayer: 0
 --- !u!50 &51766492268672387
 Rigidbody2D:

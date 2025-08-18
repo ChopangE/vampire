@@ -21,7 +21,16 @@ namespace InGame
             base.Start();
             coll = GetComponent<Collider2D>();
             offset = new Vector3(0, 2f, 0);
-            player = GameManager.Instance?.player;
+            
+            // GameManager가 초기화될 때까지 기다리거나 null 체크
+            if (GameManager.Instance != null)
+            {
+                player = GameManager.Instance.player;
+            }
+            else
+            {
+                Debug.LogWarning("GameManager.Instance가 아직 초기화되지 않았습니다.");
+            }
         }
         
         public override void ActivateEffect()
@@ -30,10 +39,14 @@ namespace InGame
             
             if (player == null)
             {
-                player = GameManager.Instance?.player;
-                if (player == null)
+                // GameManager.Instance가 초기화될 때까지 기다리거나 null인 경우 처리
+                if (GameManager.Instance?.player != null)
                 {
-                    Debug.LogWarning("플레이어 참조를 찾을 수 없습니다.");
+                    player = GameManager.Instance.player;
+                }
+                else
+                {
+                    Debug.LogWarning("플레이어 참조를 찾을 수 없습니다. GameManager가 초기화되지 않았을 수 있습니다.");
                     EndEffect();
                     return;
                 }
@@ -67,26 +80,35 @@ namespace InGame
             // 효과가 활성화되어 있는 동안 반복
             while (isEffectActive)
             {
-                // GameManager가 isLive가 false면 일시 중지
-                if (GameManager.Instance != null && !GameManager.Instance.isLive)
+                // GameManager가 초기화되지 않았거나 isLive가 false면 일시 중지
+                if (GameManager.Instance == null)
                 {
                     await UniTask.Yield();
                     continue;
                 }
                 
-                if (player != null)
+                if (!GameManager.Instance.isLive)
+                {
+                    await UniTask.Yield();
+                    continue;
+                }
+                
+                if (player != null && Global.ExpManager != null)
                 {
                     // 주변 경험치 아이템 찾기
                     var expList = Global.ExpManager.spawnedItemList;
                     
-                    // 각 아이템을 플레이어 방향으로 이동 (DropMagnet과 동일한 방식)
-                    foreach (var expItem in expList)
+                    if (expList != null)
                     {
-                        if (expItem != null)
+                        // 각 아이템을 플레이어 방향으로 이동 (DropMagnet과 동일한 방식)
+                        foreach (var expItem in expList)
                         {
-                            Vector3 pos = Vector3.MoveTowards(expItem.transform.position, 
-                                player.transform.position, Time.deltaTime * pullSpeed);
-                            expItem.transform.position = pos;
+                            if (expItem != null)
+                            {
+                                Vector3 pos = Vector3.MoveTowards(expItem.transform.position, 
+                                    player.transform.position, Time.deltaTime * pullSpeed);
+                                expItem.transform.position = pos;
+                            }
                         }
                     }
                 }
@@ -104,6 +126,7 @@ namespace InGame
             while (elapsedTime < duration && isEffectActive)
             {
                 // 게임이 일시정지되면 시간 카운트를 멈춤
+                // GameManager.Instance가 null이 아닐 때만 체크
                 if (GameManager.Instance != null && GameManager.Instance.isLive)
                 {
                     elapsedTime += Time.deltaTime;

@@ -14,7 +14,7 @@ public class SecretSmash : Bullet
     [Tooltip("최종 보스에게 적용할 체력 감소 비율 (0.4 = 40%)")]
     [SerializeField] private float finalBossDamageRatio = 0.4f;
     private void OnEnable() {
-        Init(0, -1, Vector3.zero, false, 1.05f, 0, 0);
+        Init(0, -1, Vector3.zero, false, 1.05f, 0, 0, size: 1f);
         Global.SoundManager.PlaySFX(SFXEnum.UltimateSwing);
         var cc = FindObjectOfType<CameraControl>();
         cc.ShakeCamera();
@@ -27,7 +27,6 @@ public class SecretSmash : Bullet
     float duration = 0f, float criticalDamagePercent = 0f, float criticalChancePercent = 0f, float size = 0f)
     {
         base.Init(damage, per, dir, canStun, duration, criticalDamagePercent, criticalChancePercent, size);
-
         // 플레이어 방향에 따라 회전 설정
         if(GameManager.Instance.player != null)
         {

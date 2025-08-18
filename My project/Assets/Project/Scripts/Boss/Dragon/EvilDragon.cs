@@ -25,7 +25,7 @@ public class EvilDragon : MiddleBoss
         }
         timer += Time.deltaTime;
         if (castingTimer < timer) {
-            castingTimer = Random.Range(7.0f, 8.0f);
+            castingTimer = Random.Range(12.0f, 15.0f);
             timer = 0f;
             Casting();
         }

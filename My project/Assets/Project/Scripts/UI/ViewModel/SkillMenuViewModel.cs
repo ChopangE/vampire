@@ -20,13 +20,30 @@ namespace UI
             base.Awake();
             _contentSizeFitter = GetComponent<ContentSizeFitter>();
             _weaponController = FindObjectOfType<WeaponController>();
-            _weaponController.OnWeaponActivated += OnWeaponActivated;
+            if (_weaponController != null)
+            {
+                _weaponController.OnWeaponActivated += OnWeaponActivated;
+            }
         }
         void Start() {
+            if (_weaponController == null)
+            {
+                _weaponController = FindObjectOfType<WeaponController>();
+                if (_weaponController != null)
+                {
+                    _weaponController.OnWeaponActivated += OnWeaponActivated;
+                }
+            }
             InitializeSkillItems();
         }
         private void InitializeSkillItems()
         {
+            if (_weaponController == null)
+            {
+                Debug.LogWarning("WeaponController가 없어서 SkillItems를 초기화할 수 없습니다.");
+                return;
+            }
+            
             if (_weaponController != null)
             {
                 PrepareViewModels(_weaponController.ActiveWeapons.Count);
@@ -62,7 +79,24 @@ namespace UI
         }
         private void OnWeaponActivated(Weapon weapon)
         {
+            if (_weaponController == null) return;
             InitializeSkillItems();
+        }
+        
+        private void OnDestroy()
+        {
+            if (_weaponController != null)
+            {
+                _weaponController.OnWeaponActivated -= OnWeaponActivated;
+            }
+        }
+        
+        private void OnDisable()
+        {
+            if (_weaponController != null)
+            {
+                _weaponController.OnWeaponActivated -= OnWeaponActivated;
+            }
         }
     }
 }

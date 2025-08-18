@@ -81,6 +81,11 @@ namespace UI
         // 숫자 키 입력 처리 메서드
         private void HandleNumberKeyInput(object sender, int numberValue)
         {
+            if(GameManager.Instance != null)
+            {
+                if(GameManager.Instance.isStageClear)
+                return;
+            }
             // 슬롯 키와 입력된 숫자가 일치하는지 확인 (1, 2, 3 키만 처리)
             if (numberValue >= 1 && numberValue <= 3 && numberValue == SlotKey)
             {
@@ -97,10 +102,10 @@ namespace UI
             if (_shopItem == null)
                 return;
                 
-            // 진화형 아이템인 경우 사용할 수 없음
-            if (_shopItem.ItemType == ShopItemType.Evolution)
+            // 진화형 아이템 중 최종 진화가 아닌 경우 사용할 수 없음
+            if (_shopItem.ItemType == ShopItemType.Evolution && !Global.UserDataManager.IsFullyEvolved(_shopItem.Id))
             {
-                Debug.Log("진화형 아이템은 사용할 수 없습니다.");
+                Debug.Log("중간 진화 단계 아이템은 사용할 수 없습니다.");
                 return;
             }
                 
@@ -133,8 +138,8 @@ namespace UI
             ShopName = LocalizationManager.GetTranslation(_shopItem.upgradeNameKey);
             ShopValue = _shopItem.GetUpgradeValue();
             
-            // 진화형 아이템인 경우 사용불가로 표시
-            if (_shopItem.ItemType == ShopItemType.Evolution)
+            // 진화형 아이템 중 최종 진화가 아닌 경우 사용불가로 표시
+            if (_shopItem.ItemType == ShopItemType.Evolution && !Global.UserDataManager.IsFullyEvolved(_shopItem.Id))
             {
                 ShopLevel = "사용불가";
             }

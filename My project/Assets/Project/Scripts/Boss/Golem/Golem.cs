@@ -25,7 +25,7 @@ public class Golem : MiddleBoss
         }
         timer += Time.deltaTime;
         if (castingTimer < timer) {
-            castingTimer = Random.Range(6.0f, 10.0f);
+            castingTimer = Random.Range(12f, 15.0f);
             Attack();
             timer = 0f;
         }

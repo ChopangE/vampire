@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Manager;
 using SO;
 using UI;
@@ -37,6 +38,7 @@ namespace InGame
             // 마스터 무기가 있으면 초기에 비활성화
             if (masterWeapon != null)
             {
+                Debug.Log("마스터 무기 비활성화");
                 masterWeapon.SetActive(false);
                 isMasterWeaponActive = false;
             }
@@ -120,8 +122,40 @@ namespace InGame
             isPatternSucceeded = true;
             Debug.Log("마스터북 패턴 성공 - 아이템 사용 처리됨");
             
-            // 아이템 사용 처리
-            Global.UserDataManager.UseEvolutionItem(shopItem.Id);
+            // 현재 아이템이 진화형인 경우, 전체 진화 체인을 사용 처리
+            if (shopItem != null && shopItem.IsEvolutionItem)
+            {
+                // ShopItemInGameManager를 통해 진화 체인 전체 사용 처리
+                // (ShopItemInGameManager.UseActiveItem에서 UseEntireEvolutionChain 호출)
+                if (Global.UserDataManager.IsFullyEvolved(shopItem.Id))
+                {
+                    UseEntireEvolutionChain(shopItem);
+                }
+                else
+                {
+                    Global.UserDataManager.UseEvolutionItem(shopItem.Id);
+                }
+            }
+        }
+        
+        // 진화 체인 전체를 사용 처리하는 메서드
+        private void UseEntireEvolutionChain(ShopItemLevelUpgradeSO evolutionItem)
+        {
+            var allShopItems = Global.StatsUpgradeManager.GetAllShopItems();
+            var evolutionChain = allShopItems.Where(x => 
+                x.IsEvolutionItem && 
+                x.FinalEvolution != null && 
+                x.FinalEvolution.Id == evolutionItem.FinalEvolution?.Id).ToList();
+
+            // 진화 체인의 모든 아이템을 사용 처리
+            foreach (var chainItem in evolutionChain)
+            {
+                if (Global.UserDataManager.IsShopItemPurchased(chainItem.Id))
+                {
+                    Debug.Log($"진화 체인 아이템 사용 처리: {chainItem.Id}");
+                    Global.UserDataManager.UseEvolutionItem(chainItem.Id);
+                }
+            }
         }
         
         // 패턴 실패 처리

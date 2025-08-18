@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using SO;
 using UnityEngine;
 using InGame;
@@ -35,13 +36,71 @@ namespace Manager
             }
             if(shopItem.ItemType == ShopItemType.Evolution)
             {
-                if(Global.UserDataManager.IsShopItemPurchased(shopItem.Id))
+                // 최종 진화 아이템인 경우 진화 체인 완성 여부로 사용 가능 확인
+                if(Global.UserDataManager.IsFullyEvolved(shopItem.Id))
+                {
+                    // 진화 체인이 완성되었는지 확인
+                    if(IsEvolutionChainCompleted(shopItem))
+                    {
+                        // 전체 진화 체인을 사용 처리
+                        UseEntireEvolutionChain(shopItem);
+                        
+                        ActivateItem(shopItem.Id);
+                        return true;
+                    }
+                }
+                // 최종 진화가 아닌 경우 구매 여부 확인
+                else if(Global.UserDataManager.IsShopItemPurchased(shopItem.Id))
                 {
                     ActivateItem(shopItem.Id);
                     return true;
                 }
             }
             return false;
+        }
+        
+        // 진화 체인이 완성되었는지 확인 (최종 단계 전까지 모두 구매됨)
+        private bool IsEvolutionChainCompleted(ShopItemLevelUpgradeSO item)
+        {
+            var allShopItems = Global.StatsUpgradeManager.GetAllShopItems();
+            var evolutionChain = allShopItems.Where(x => 
+                x.IsEvolutionItem && 
+                x.FinalEvolution != null && 
+                x.FinalEvolution.Id == item.FinalEvolution?.Id).ToList();
+
+            // 최종 진화 아이템을 제외한 모든 아이템이 구매되었는지 확인
+            foreach (var chainItem in evolutionChain)
+            {
+                // 최종 진화 아이템이 아닌 경우
+                if (!Global.UserDataManager.IsFullyEvolved(chainItem.Id))
+                {
+                    // 구매되지 않았다면 체인 완성되지 않음
+                    if (!Global.UserDataManager.IsShopItemPurchased(chainItem.Id))
+                        return false;
+                }
+            }
+
+            return true;
+        }
+        
+        // 진화 체인 전체를 사용 처리하는 메서드
+        private void UseEntireEvolutionChain(ShopItemLevelUpgradeSO evolutionItem)
+        {
+            var allShopItems = Global.StatsUpgradeManager.GetAllShopItems();
+            var evolutionChain = allShopItems.Where(x => 
+                x.IsEvolutionItem && 
+                x.FinalEvolution != null && 
+                x.FinalEvolution.Id == evolutionItem.FinalEvolution?.Id).ToList();
+
+            // 진화 체인의 모든 아이템을 사용 처리
+            foreach (var chainItem in evolutionChain)
+            {
+                if (Global.UserDataManager.IsShopItemPurchased(chainItem.Id))
+                {
+                    Debug.Log($"진화 체인 아이템 사용 처리: {chainItem.Id}");
+                    Global.UserDataManager.UseEvolutionItem(chainItem.Id);
+                }
+            }
         }
         
         // 아이템 활성화 메서드
@@ -67,6 +126,9 @@ namespace Manager
                     itemObject = CreateItemEffect(invincibleItemPrefab);
                     break;
                     
+                case "SecretBook1":
+                case "SecretBook2":
+                case "SecretBook3":
                 case "MasterBook":
                     itemObject = CreateItemEffect(masterScrollPrefab);
                     break;

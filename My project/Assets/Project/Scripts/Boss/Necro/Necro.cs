@@ -16,7 +16,7 @@ public class Necro : MiddleBoss
         }
         timer += Time.deltaTime;
         if(castingTimer < timer) {
-            castingTimer = Random.Range(4.0f, 7.0f);
+            castingTimer = Random.Range(12.0f, 15.0f);
             timer = 0f;
             Casting();
         }

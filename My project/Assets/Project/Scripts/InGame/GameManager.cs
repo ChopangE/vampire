@@ -148,6 +148,25 @@ public class GameManager : MMSingleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
+        
+        // 필수 컴포넌트들이 할당되어 있는지 확인
+        if (player == null)
+        {
+            player = FindObjectOfType<Player>();
+        }
+        if (spawner == null)
+        {
+            spawner = FindObjectOfType<Spawner>();
+        }
+        if (weaponController == null)
+        {
+            weaponController = FindObjectOfType<WeaponController>();
+        }
+        if (pool == null)
+        {
+            pool = FindObjectOfType<PoolManager>();
+        }
+        
         InitializeGame();
         SetupStage();
     }
@@ -157,7 +176,7 @@ public class GameManager : MMSingleton<GameManager>
         if (!isLive) return;
 
         gameTime = Mathf.Min(gameTime + Time.deltaTime, maxGameTime);
-        if (Input.GetKeyDown(KeyCode.Escape) && gameTime > 1.5f)
+        if (Input.GetKeyDown(KeyCode.Escape) && gameTime > 1.5f && _inGameMainPage != null)
         {
             _inGameMainPage.Pause();
         }
@@ -171,20 +190,47 @@ public class GameManager : MMSingleton<GameManager>
         DropItemPoolManager = FindObjectOfType<DropItemPoolManager>();
         DamageTextPoolManager = FindObjectOfType<DamageTextPoolManager>();
         PassiveManager = FindObjectOfType<PassiveManager>();
-        _inGameMainPage = Global.UIManager.OpenPage<InGameMainPage>();
+        
+        // UIManager가 초기화되어 있는지 확인
+        if (Global.UIManager != null)
+        {
+            _inGameMainPage = Global.UIManager.OpenPage<InGameMainPage>();
+        }
+        else
+        {
+            Debug.LogError("Global.UIManager가 초기화되지 않았습니다.");
+        }
 
         maxHealth = baseMaxHealth;
         Health = maxHealth;
         _shield = 0;
         _defense = baseDefense;
         level = Global.UserDataManager.level; // 저장된 레벨 불러오기
-        PassiveManager.Init();
+        
+        if (PassiveManager != null)
+        {
+            PassiveManager.Init();
+        }
+        else
+        {
+            Debug.LogWarning("PassiveManager를 찾을 수 없습니다.");
+        }
     }
 
     private void SetupStage()
     {
         _curStage = Global.UserDataManager.curStage;
+        
+        if (player == null || stages == null || _curStage < 0 || _curStage >= stages.Length)
+        {
+            Debug.LogError($"SetupStage 실패: player={player}, stages={stages}, stages.Length={stages?.Length}, _curStage={_curStage}");
+            // 필수 컴포넌트들을 다시 찾아보기
+            StartCoroutine(RetrySetupStage());
+            return;
+        }
+        
         player.transform.position = stages[_curStage].position;
+        
         if (_curStage == Global.StageManager.MAX_STAGE_COUNT * Global.StageManager.MAX_STAGE_LEVEL)
         {
             SetupFinalBossStage();
@@ -194,30 +240,86 @@ public class GameManager : MMSingleton<GameManager>
             SetupNormalStage();
         }
     }
+    
+    private IEnumerator RetrySetupStage()
+    {
+        int retryCount = 0;
+        const int maxRetries = 10;
+        
+        while (retryCount < maxRetries)
+        {
+            yield return new WaitForSeconds(0.1f); // 0.1초 대기
+            
+            // 필수 컴포넌트들을 다시 찾기
+            if (player == null)
+                player = FindObjectOfType<Player>();
+            if (stages == null || stages.Length == 0)
+            {
+                // stages 배열을 다시 찾는 로직이 필요하면 여기에 추가
+                // 현재는 Inspector에서 할당되는 것으로 보임
+            }
+            
+            // 모든 필수 컴포넌트가 준비되었으면 다시 시도
+            if (player != null && stages != null && _curStage >= 0 && _curStage < stages.Length)
+            {
+                SetupStage();
+                yield break;
+            }
+            
+            retryCount++;
+        }
+        
+        Debug.LogError($"SetupStage 재시도 실패: {maxRetries}번 시도 후에도 필수 컴포넌트를 찾을 수 없습니다.");
+    }
 
     private void SetupFinalBossStage()
     {
-        bossLevel.SetActive(true);
-        spawner.gameObject.SetActive(false);
-        _inGameMainPage.ActiveTimer = false;
+        if (bossLevel != null)
+            bossLevel.SetActive(true);
+        else
+            Debug.LogWarning("bossLevel이 할당되지 않았습니다.");
+            
+        if (spawner != null)
+            spawner.gameObject.SetActive(false);
+        else
+            Debug.LogWarning("spawner가 할당되지 않았습니다.");
+            
+        if (_inGameMainPage != null)
+            _inGameMainPage.ActiveTimer = false;
     }
 
     private void SetupNormalStage()
     {
-        bossLevel.SetActive(false);
-        spawner.gameObject.SetActive(true);
+        if (bossLevel != null)
+            bossLevel.SetActive(false);
+        else
+            Debug.LogWarning("bossLevel이 할당되지 않았습니다.");
+            
+        if (spawner != null)
+            spawner.gameObject.SetActive(true);
+        else
+            Debug.LogWarning("spawner가 할당되지 않았습니다.");
+            
         if (_curStage % Global.StageManager.MAX_STAGE_COUNT == Global.StageManager.MAX_STAGE_COUNT - 1)
         {
             int bossIndex = 0;
             if (_curStage == 3) bossIndex = 0;
             else if (_curStage == 7) bossIndex = 1;
             else if (_curStage == 11) bossIndex = 2;
-            spawner.SpawnMiddleBoss(bossIndex);
-            _inGameMainPage.ActiveTimer = false;
+            
+            if (spawner != null)
+                spawner.SpawnMiddleBoss(bossIndex);
+            else
+                Debug.LogError("spawner가 null이어서 보스를 소환할 수 없습니다.");
+                
+            if (_inGameMainPage != null)
+                _inGameMainPage.ActiveTimer = false;
         }
         else
-            _inGameMainPage.ActiveTimer = true;
-
+        {
+            if (_inGameMainPage != null)
+                _inGameMainPage.ActiveTimer = true;
+        }
     }
 
 
@@ -275,7 +377,14 @@ public class GameManager : MMSingleton<GameManager>
 
     public void ShowLevelUp(bool isEvaluation = false)
     {
-        _inGameMainPage.ShowLevelUP(isEvaluation);
+        if (_inGameMainPage != null)
+        {
+            _inGameMainPage.ShowLevelUP(isEvaluation);
+        }
+        else
+        {
+            Debug.LogWarning("InGameMainPage가 null입니다. ShowLevelUp을 호출할 수 없습니다.");
+        }
     }
 
     // InGameMainPage에서 레벨업 UI가 닫힐 때 호출할 메서드
@@ -332,9 +441,24 @@ public class GameManager : MMSingleton<GameManager>
         Global.UserDataManager.ResetPurchasedShopItems();
         Global.UserDataManager.ResetPassiveItemData();
         Global.UserDataManager.ResetStageData();
+        
         var pages = Global.UIManager.GetPages<InGameMainPage>();
-        FadeScript fade = pages[0].GetComponent<FadeScript>();
-        fade.InGameFade(true);
+        if (pages != null && pages.Count > 0 && pages[0] != null)
+        {
+            FadeScript fade = pages[0].GetComponent<FadeScript>();
+            if (fade != null)
+            {
+                fade.InGameFade(true);
+            }
+            else
+            {
+                Debug.LogError("FadeScript를 찾을 수 없습니다.");
+            }
+        }
+        else
+        {
+            Debug.LogError("InGameMainPage를 찾을 수 없습니다.");
+        }
     }
 
     private IEnumerator StageClearRoutine(bool isFinalStageClear = false)
@@ -342,8 +466,22 @@ public class GameManager : MMSingleton<GameManager>
         yield return new WaitForSeconds(0.5f);
         Stop();
         var pages = Global.UIManager.GetPages<InGameMainPage>();
-        FadeScript fade = pages[0].GetComponent<FadeScript>();
-        fade.InGameFade(isGameWin: true, isGameClear: isFinalStageClear);
+        if (pages != null && pages.Count > 0 && pages[0] != null)
+        {
+            FadeScript fade = pages[0].GetComponent<FadeScript>();
+            if (fade != null)
+            {
+                fade.InGameFade(isGameWin: true, isGameClear: isFinalStageClear);
+            }
+            else
+            {
+                Debug.LogError("FadeScript를 찾을 수 없습니다.");
+            }
+        }
+        else
+        {
+            Debug.LogError("InGameMainPage를 찾을 수 없습니다.");
+        }
     }
     public void Stop()
     {

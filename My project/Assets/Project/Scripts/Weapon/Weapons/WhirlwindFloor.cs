@@ -42,6 +42,7 @@ public class WhirlwindFloor : FloorWeapon
         -1, 
         Vector2.zero, 
         duration: duration, 
+        size: size,
         criticalChancePercent: criticalChancePercent, 
         criticalDamagePercent: criticalDamagePercent);
         
