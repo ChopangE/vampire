@@ -139,14 +139,40 @@ public class ItemData : ScriptableObject
         {
             Debug.Log($"기존 무기 데이터 {_prevItemData.itemName} 상속");
         }
-        itemDataInfo.baseCount = _prevItemData.itemDataInfo.baseCount;
+
+        // 이전 무기의 제외할 업그레이드 리스트를 확인하여 해당 속성들은 상속하지 않음
+        var excludedUpgrades = new HashSet<SO.UpgradeName>();
+        if (_prevItemData.excludeUpgradeList != null)
+        {
+            foreach (var upgrade in _prevItemData.excludeUpgradeList)
+            {
+                if (upgrade != null)
+                {
+                    excludedUpgrades.Add(upgrade.upgradeName);
+                }
+            }
+        }
+
+        // 제외되지 않은 속성들만 상속
+        if (!excludedUpgrades.Contains(SO.UpgradeName.Projectiles))
+            itemDataInfo.baseCount = _prevItemData.itemDataInfo.baseCount;
+        
         itemDataInfo.maxLevel = _prevItemData.itemDataInfo.maxLevel;
-        itemDataInfo.baseRange = _prevItemData.itemDataInfo.baseRange;
-        itemDataInfo.baseDamage = _prevItemData.itemDataInfo.baseDamage;
-        itemDataInfo.baseCooldown = _prevItemData.itemDataInfo.baseCooldown;
-        itemDataInfo.baseDuration = _prevItemData.itemDataInfo.baseDuration;
-        itemDataInfo.baseCount = _prevItemData.itemDataInfo.baseCount;
-        itemDataInfo.basePierce = _prevItemData.itemDataInfo.basePierce;
+        
+        if (!excludedUpgrades.Contains(SO.UpgradeName.Range))
+            itemDataInfo.baseRange = _prevItemData.itemDataInfo.baseRange;
+        
+        if (!excludedUpgrades.Contains(SO.UpgradeName.Damage))
+            itemDataInfo.baseDamage = _prevItemData.itemDataInfo.baseDamage;
+        
+        if (!excludedUpgrades.Contains(SO.UpgradeName.Cooldown))
+            itemDataInfo.baseCooldown = _prevItemData.itemDataInfo.baseCooldown;
+        
+        if (!excludedUpgrades.Contains(SO.UpgradeName.Duration))
+            itemDataInfo.baseDuration = _prevItemData.itemDataInfo.baseDuration;
+        
+        if (!excludedUpgrades.Contains(SO.UpgradeName.PierceLimit))
+            itemDataInfo.basePierce = _prevItemData.itemDataInfo.basePierce;
     }
     [Button("저장")]
     public void Save()

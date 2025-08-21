@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Random = UnityEngine.Random;
@@ -91,14 +92,41 @@ public class Weapon : MonoBehaviour
             var weapon = GameManager.Instance.weaponController.GetEvaluateWeaponValue(this);
             if (weapon != null)
             {
-                baseDamage = weapon._data.itemDataInfo.curDamage;
-                count = weapon._data.itemDataInfo.curCount;
-                maxCooldown = weapon._data.itemDataInfo.curCoolDown;
-                size = weapon._data.itemDataInfo.curRange;
-                duration = weapon._data.itemDataInfo.curDuration;
-                pierce = weapon._data.itemDataInfo.curPierce;
+                // 이전 무기의 제외할 업그레이드 리스트를 확인하여 해당 속성들은 상속하지 않음
+                var excludedUpgrades = new HashSet<UpgradeName>();
+                if (weapon._data.excludeUpgradeList != null)
+                {
+                    foreach (var upgrade in weapon._data.excludeUpgradeList)
+                    {
+                        if (upgrade != null)
+                        {
+                            excludedUpgrades.Add(upgrade.upgradeName);
+                        }
+                    }
+                }
+
+                // 제외되지 않은 속성들만 상속
+                if (!excludedUpgrades.Contains(UpgradeName.Damage))
+                    baseDamage = weapon._data.itemDataInfo.curDamage;
+                
+                if (!excludedUpgrades.Contains(UpgradeName.Projectiles))
+                    count = weapon._data.itemDataInfo.curCount;
+                
+                if (!excludedUpgrades.Contains(UpgradeName.Cooldown))
+                    maxCooldown = weapon._data.itemDataInfo.curCoolDown;
+                
+                if (!excludedUpgrades.Contains(UpgradeName.Range))
+                    size = weapon._data.itemDataInfo.curRange;
+                
+                if (!excludedUpgrades.Contains(UpgradeName.Duration))
+                    duration = weapon._data.itemDataInfo.curDuration;
+                
+                if (!excludedUpgrades.Contains(UpgradeName.PierceLimit))
+                    pierce = weapon._data.itemDataInfo.curPierce;
+                
                 criticalChancePercent = weapon._data.itemDataInfo.curCriticalChancePercent;
                 criticalDamagePercent = weapon._data.itemDataInfo.curCriticalDamagePercent;
+                
                 GameManager.Instance.weaponController.RemoveWeapon(_data._prevItemData.itemDataInfo.itemId);
             }else
             {

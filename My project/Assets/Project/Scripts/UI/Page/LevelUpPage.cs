@@ -251,9 +251,9 @@ public class LevelUpPage : ViewModel
             }
             
             // 최대 시도 횟수를 초과한 경우 (무한 루프 방지)
-            if (count >= 50)
+            if (count >= 75)
             {
-                Debug.LogError("LevelUpPage: Next() 50번 이상 반복" + notMaxLevelItems.Length);
+                Debug.LogError("LevelUpPage: Next() 75번 이상 반복" + notMaxLevelItems.Length);
                 // 중복을 허용하여 강제로 선택
                 allowDuplicates = true;
                 

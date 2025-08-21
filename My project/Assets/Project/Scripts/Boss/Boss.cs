@@ -151,8 +151,8 @@ public class Boss : MonoBehaviour
         isLive = true;
         coll.enabled = true;
         sprite.sortingOrder = 1;
-        // 일반 몬스터 체력 계산식(10 * Mathf.Pow(1.2f, stage))의 70배
-        maxHealth = 10 * Mathf.Pow(1.2f, GameManager.Instance.CurStage) * 70;
+        // 일반 몬스터 체력 계산식(10 * Mathf.Pow(1.2f, stage))의 200배 (중간보스의 4배)
+        maxHealth = 10 * Mathf.Pow(1.2f, GameManager.Instance.CurStage) * 200;
         health = maxHealth;
         GameManager.Instance.BossHealth = health;
         GameManager.Instance.maxBossHealth = maxHealth;

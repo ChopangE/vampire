@@ -114,7 +114,10 @@ public class Item : ViewModel
         textName = texts[1];
         textDesc = texts[2];
         textName.text = data.itemName;
-
+        if (data.itemType != ItemType.Pet)
+        {
+            textName.text = LocalizationManager.GetTranslation("Skill/Name/" + data.itemName);
+        }
         weaponController = GameManager.Instance.player.GetComponent<WeaponController>();
         textLevel.text = "Lv." + (Level + 1);
 
@@ -131,11 +134,11 @@ public class Item : ViewModel
         prevUpgradeName = UpgradeName.Damage;
 
         var desc = data.itemDesc;
-        switch(data.itemType)
+        switch (data.itemType)
         {
             case ItemType.Passive:
                 desc = string.Format(data.itemDesc);
-                textDesc.text = desc;
+                textDesc.text = LocalizationManager.GetTranslation("Skill/Name/" + data.itemName) + " +" + desc;
                 return;
 
             case ItemType.Pet:
@@ -148,10 +151,10 @@ public class Item : ViewModel
 
         var upgrade = Global.UpgradeManager.GetRandomSkillUpgrade(data.excludeUpgradeList);
         var baseDataInfo = weapon._data.itemDataInfo;
-        if(upgrade != null)
+        if (upgrade != null)
         {
             prevUpgradeName = upgrade.upgradeName;
-            if(upgrade.upgradeName == UpgradeName.Damage)
+            if (upgrade.upgradeName == UpgradeName.Damage)
             {
                 prevDamageUpgradeValues = Global.UpgradeManager.GetDamageUpgradeValues();
 
@@ -159,7 +162,8 @@ public class Item : ViewModel
                 desc = string.Format(LocalizationManager.GetTranslation(upgrade.upgradeNameKey) + " + {0}", damageDesc);
                 desc += string.Format("\n" + LocalizationManager.GetTranslation("Passive/Name/CritRateName") + " + {0}%", prevDamageUpgradeValues.critChancePercent * 100);
                 desc += string.Format("\n" + LocalizationManager.GetTranslation("Passive/Name/CritDamageName") + " + {0}%", prevDamageUpgradeValues.critDamagePercent * 100);
-            }else
+            }
+            else
             {
                 var value = Global.UpgradeManager.GetUpgradeValue(upgrade.upgradeName);
                 switch (upgrade.upgradeName)
@@ -190,7 +194,7 @@ public class Item : ViewModel
                         break;
                 }
             }
-            
+
         }
         // if(Level == 0 && data.itemType != ItemData.ItemType.Heal && data.itemType != ItemData.ItemType.Pet)
         //     textDesc.text = "";
@@ -205,7 +209,7 @@ public class Item : ViewModel
         {
             IsInteractable = true;
 
-            if(data.passiveItemDataInfo.curLevel >= data.passiveItemDataInfo.maxLevel)
+            if (data.passiveItemDataInfo.curLevel >= data.passiveItemDataInfo.maxLevel)
             {
                 IsInteractable = false;
             }
@@ -214,13 +218,13 @@ public class Item : ViewModel
 
         var ActiveWeapons = GameManager.Instance.weaponController.ActiveWeapons;
         var AllWeapons = GameManager.Instance.weaponController.Weapons;
-        
+
         // 이미 활성화된 무기인지 확인
         bool isAlreadyActive = ActiveWeapons.Any(w => w.id == data.itemDataInfo.itemId);
-        
+
         if (ActiveWeapons.Count >= GameManager.Instance.weaponController.maxActiveWeaponCount)
         {
-            if(data.isEvaluateWeapon || isAlreadyActive)
+            if (data.isEvaluateWeapon || isAlreadyActive)
             {
                 // 평가 무기이거나 이미 활성화된 무기는 업그레이드 가능
                 IsInteractable = true;
@@ -248,7 +252,7 @@ public class Item : ViewModel
             return;
         }
 
-        if(IsMaxLevel)
+        if (IsMaxLevel)
             Global.SoundManager.PlaySFX(SFXEnum.SkillSelectEvaluate);
         else
             Global.SoundManager.PlaySFX(SFXEnum.SkillSelectOne);

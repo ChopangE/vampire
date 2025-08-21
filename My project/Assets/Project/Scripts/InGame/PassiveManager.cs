@@ -19,7 +19,7 @@ public class PassiveManager : MonoBehaviour
                 GameManager.Instance.player.speed = GameManager.Instance.player.baseSpeed * (1 + (0.05f * Math.Max(0, currentLevel)));
                 break;
             case PassiveId.Damage:
-                GameManager.Instance.player.damageBonus += (0.1f * Math.Max(0, currentLevel));
+                GameManager.Instance.player.damageBonus += (0.05f * Math.Max(0, currentLevel));
                 break;
             case PassiveId.ExpGainIncrease:
                 GameManager.Instance.expBonus *= (1 + (0.05f * Math.Max(0, currentLevel)));
@@ -71,9 +71,9 @@ public class PassiveManager : MonoBehaviour
                 case "AttackDamage":
                     GameManager.Instance.player.damageBonus += value;
                     break;
-                            case "Defense":
-                GameManager.Instance.Defense += value * 100f; // 백분율 값을 방어력 포인트로 변환
-                break;
+                case "Defense":
+                    GameManager.Instance.Defense += value * 100f; // 백분율 값을 방어력 포인트로 변환
+                    break;
                 case "GoldBonus":
                     GameManager.Instance.goldBonus *= (1 + value);
                     break;

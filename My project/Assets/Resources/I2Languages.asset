@@ -45,8 +45,8 @@ MonoBehaviour:
       TermType: 0
       Description: 
       Languages:
-      - Reduce Damage Taken By 5%
-      - "\uBC1B\uB294 \uD53C\uD574 5% \uAC10\uC18C"
+      - Increased Defense
+      - "\uBC29\uC5B4\uB825 \uC99D\uAC00"
       Flags: 0000
       Languages_Touch: []
     - Term: Passive/Info/EXPBonusInfo
@@ -233,6 +233,14 @@ MonoBehaviour:
       - "50hp \uD68C\uBCF5"
       Flags: 0000
       Languages_Touch: []
+    - Term: Shop/Info/invinciblePotion
+      TermType: 0
+      Description: 
+      Languages:
+      - All Damage Is Nullified For 5 Seconds
+      - "5\uCD08\uAC04 \uBAA8\uB4E0 \uB370\uBBF8\uC9C0 \uBB34\uD6A8"
+      Flags: 0000
+      Languages_Touch: []
     - Term: Shop/Info/MasterBook
       TermType: 0
       Description: 
@@ -273,12 +281,12 @@ MonoBehaviour:
       - "\uC774\uB3D9\uC18D\uB3C4 10% \uC99D\uAC00"
       Flags: 0000
       Languages_Touch: []
-    - Term: Shop/Info/invinciblePotion
+    - Term: Shop/Info/ExpMagnetUp
       TermType: 0
       Description: 
       Languages:
-      - All Damage Is Nullified For 5 Seconds
-      - "5\uCD08\uAC04 \uBAA8\uB4E0 \uB370\uBBF8\uC9C0 \uBB34\uD6A8"
+      - Gain surrounding EXP for 5 seconds
+      - "\uC8FC\uBCC0 \uACBD\uD5D8\uCE58\uB97C 5\uCD08\uAC04 \uD68D\uB4DD\uD569\uB2C8\uB2E4"
       Flags: 0000
       Languages_Touch: []
     - Term: Shop/Name/DamageUpPill
@@ -303,6 +311,14 @@ MonoBehaviour:
       Languages:
       - Heal Pill
       - "\uCCB4\uB825 \uD68C\uBCF5 \uB2E8\uC57D"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Shop/Name/invinciblePotion
+      TermType: 0
+      Description: 
+      Languages:
+      - Invincible Potion
+      - "\uBB34\uC801 \uD3EC\uC158"
       Flags: 0000
       Languages_Touch: []
     - Term: Shop/Name/MasterBook
@@ -345,60 +361,12 @@ MonoBehaviour:
       - "\uC774\uC18D \uC99D\uAC00 \uB2E8\uC57D"
       Flags: 0000
       Languages_Touch: []
-    - Term: Shop/Name/invinciblePotion
+    - Term: Shop/Name/ExpMagnetUp
       TermType: 0
       Description: 
       Languages:
-      - Invincible Potion
-      - "\uBB34\uC801 \uD3EC\uC158"
-      Flags: 0000
-      Languages_Touch: []
-    - Term: Skill/Name/Cooldown
-      TermType: 0
-      Description: 
-      Languages:
-      - Cooldown
-      - "\uCFE8\uD0C0\uC784"
-      Flags: 0000
-      Languages_Touch: []
-    - Term: Skill/Name/Damage
-      TermType: 0
-      Description: 
-      Languages:
-      - Damage
-      - "\uB370\uBBF8\uC9C0"
-      Flags: 0000
-      Languages_Touch: []
-    - Term: Skill/Name/Duration
-      TermType: 0
-      Description: 
-      Languages:
-      - Duration
-      - "\uC9C0\uC18D \uC2DC\uAC04"
-      Flags: 0000
-      Languages_Touch: []
-    - Term: Skill/Name/PierceLimit
-      TermType: 0
-      Description: 
-      Languages:
-      - PierceLimit
-      - "\uAD00\uD1B5 \uD69F\uC218"
-      Flags: 0000
-      Languages_Touch: []
-    - Term: Skill/Name/Projectiles
-      TermType: 0
-      Description: 
-      Languages:
-      - Projectiles
-      - "\uD22C\uC0AC\uCCB4 \uAC2F\uC218"
-      Flags: 0000
-      Languages_Touch: []
-    - Term: Skill/Name/Range
-      TermType: 0
-      Description: 
-      Languages:
-      - Range
-      - "\uBC94\uC704"
+      - Exp Magnet
+      - "\uACBD\uD5D8\uCE58 \uC790\uC11D"
       Flags: 0000
       Languages_Touch: []
     - Term: UI/Continue
@@ -433,28 +401,268 @@ MonoBehaviour:
       - Galmuri11 SDF
       Flags: 0000
       Languages_Touch: []
+    - Term: Skill/Name/Damage
+      TermType: 0
+      Description: 
+      Languages:
+      - Damage
+      - "\uB370\uBBF8\uC9C0"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Skill/Name/Projectiles
+      TermType: 0
+      Description: 
+      Languages:
+      - Projectiles
+      - "\uD22C\uC0AC\uCCB4 \uAC2F\uC218"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Skill/Name/PierceLimit
+      TermType: 0
+      Description: 
+      Languages:
+      - PierceLimit
+      - "\uAD00\uD1B5 \uD69F\uC218"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Skill/Name/Cooldown
+      TermType: 0
+      Description: 
+      Languages:
+      - Cooldown
+      - "\uCFE8\uD0C0\uC784"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Skill/Name/Range
+      TermType: 0
+      Description: 
+      Languages:
+      - Range
+      - "\uBC94\uC704"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: Skill/Name/Duration
+      TermType: 0
+      Description: 
+      Languages:
+      - Duration
+      - "\uC9C0\uC18D \uC2DC\uAC04"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/270\uB3C4 \uBD09\uC220"
+      TermType: 0
+      Description: 
+      Languages:
+      - 270 Degree Staff Spin
+      - "270\uB3C4 \uBD09\uC220"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uAC00\uC2DC \uC7A5\uD310"
+      TermType: 0
+      Description: 
+      Languages:
+      - Thorn Zone
+      - "\uAC00\uC2DC \uC7A5\uD310"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uAC15\uD654\uB41C \uD3ED\uBC1C \uBD80\uC801"
+      TermType: 0
+      Description: 
+      Languages:
+      - Enhanced Explosive Talisman
+      - "\uAC15\uD654\uB41C \uD3ED\uBC1C \uBD80\uC801"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uAC80\uD48D"
+      TermType: 0
+      Description: 
+      Languages:
+      - Sword Wind
+      - "\uAC80\uD48D"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uB2E8\uAC80"
+      TermType: 0
+      Description: 
+      Languages:
+      - Dagger
+      - "\uB2E8\uAC80"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uB3CC \uB358\uC9C0\uAE30"
+      TermType: 0
+      Description: 
+      Languages:
+      - Rock Throw
+      - "\uB3CC \uB358\uC9C0\uAE30"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uB3CC \uD22C\uC11D\uAE30"
+      TermType: 0
+      Description: 
+      Languages:
+      - Catapult
+      - "\uB3CC \uD22C\uC11D\uAE30"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uB3CC\uD48D"
+      TermType: 0
+      Description: 
+      Languages:
+      - Gust
+      - "\uB3CC\uD48D"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uBC14\uB78C \uC218\uB9AC\uAC80"
+      TermType: 0
+      Description: 
+      Languages:
+      - Wind Shuriken
+      - "\uBC14\uB78C \uC218\uB9AC\uAC80"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uBC14\uB78C \uC7A5\uD310"
+      TermType: 0
+      Description: 
+      Languages:
+      - Wind Zone
+      - "\uBC14\uB78C \uC7A5\uD310"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uBC14\uB78C\uC758 \uC9C0\uBC30\uC790"
+      TermType: 0
+      Description: 
+      Languages:
+      - Master of Wind
+      - "\uBC14\uB78C\uC758 \uC9C0\uBC30\uC790"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uBD09\uC220"
+      TermType: 0
+      Description: 
+      Languages:
+      - Staff Spin
+      - "\uBD09\uC220"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uBD84\uC2E0"
+      TermType: 0
+      Description: 
+      Languages:
+      - Clone
+      - "\uBD84\uC2E0"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uC218\uB9AC\uAC80"
+      TermType: 0
+      Description: 
+      Languages:
+      - Shuriken
+      - "\uC218\uB9AC\uAC80"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uC250\uB3C4\uC6B0 \uD30C\uD2B8\uB108"
+      TermType: 0
+      Description: 
+      Languages:
+      - Shadow Partner
+      - "\uC250\uB3C4\uC6B0 \uD30C\uD2B8\uB108"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uC6C0\uC9C1\uC774\uB294 \uC7A5\uD310"
+      TermType: 0
+      Description: 
+      Languages:
+      - Moving Zone
+      - "\uC6C0\uC9C1\uC774\uB294 \uC7A5\uD310"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uD1A0\uB124\uC774\uB3C4"
+      TermType: 0
+      Description: 
+      Languages:
+      - Tornado
+      - "\uD1A0\uB124\uC774\uB3C4"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uD3ED\uBC1C \uBD80\uC801"
+      TermType: 0
+      Description: 
+      Languages:
+      - Explosive Talisman
+      - "\uD3ED\uBC1C \uBD80\uC801"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uACBD\uD5D8\uCE58 \uD68D\uB4DD \uBC94\uC704 \uC99D\uAC00"
+      TermType: 0
+      Description: 
+      Languages:
+      - EXP Gain Range Up
+      - "\uACBD\uD5D8\uCE58 \uD68D\uB4DD \uBC94\uC704 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uACBD\uD5D8\uCE58 \uD68D\uB4DD\uB7C9 \uC99D\uAC00"
+      TermType: 0
+      Description: 
+      Languages:
+      - EXP Gain Up
+      - "\uACBD\uD5D8\uCE58 \uD68D\uB4DD\uB7C9 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uB370\uBBF8\uC9C0 \uC99D\uAC00"
+      TermType: 0
+      Description: 
+      Languages:
+      - Damage Up
+      - "\uB370\uBBF8\uC9C0 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uBC29\uC5B4\uB825 \uC99D\uAC00"
+      TermType: 0
+      Description: 
+      Languages:
+      - Defense Up
+      - "\uBC29\uC5B4\uB825 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uCCB4\uB825 \uC99D\uAC00"
+      TermType: 0
+      Description: 
+      Languages:
+      - Health Up
+      - "\uCCB4\uB825 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uCE58\uBA85\uD0C0 \uB370\uBBF8\uC9C0 \uC99D\uAC00"
+      TermType: 0
+      Description: 
+      Languages:
+      - Critical Damage Up
+      - "\uCE58\uBA85\uD0C0 \uB370\uBBF8\uC9C0 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uCE58\uBA85\uD0C0 \uD655\uB960 \uC99D\uAC00"
+      TermType: 0
+      Description: 
+      Languages:
+      - Critical Chance Up
+      - "\uCE58\uBA85\uD0C0 \uD655\uB960 \uC99D\uAC00"
+      Flags: 0000
+      Languages_Touch: []
+    - Term: "Skill/Name/\uD5E4\uB974\uBA54\uC2A4"
+      TermType: 0
+      Description: 
+      Languages:
+      - Hermes
+      - "\uD5E4\uB974\uBA54\uC2A4"
+      Flags: 0000
+      Languages_Touch: []
     - Term: tmpFont
       TermType: 9
       Description: 
       Languages:
       - PixelSerif_16px_normal_v02 SDF
       - Galmuri11 SDF
-      Flags: 0000
-      Languages_Touch: []
-    - Term: Shop/Info/ExpMagnetUp
-      TermType: 0
-      Description: 
-      Languages:
-      - Gain surrounding EXP for 5 seconds
-      - "\uC8FC\uBCC0 \uACBD\uD5D8\uCE58\uB97C 5\uCD08\uAC04 \uD68D\uB4DD\uD569\uB2C8\uB2E4"
-      Flags: 0000
-      Languages_Touch: []
-    - Term: Shop/Name/ExpMagnetUp
-      TermType: 0
-      Description: 
-      Languages:
-      - Exp Magnet
-      - "\uACBD\uD5D8\uCE58 \uC790\uC11D"
       Flags: 0000
       Languages_Touch: []
     CaseInsensitiveTerms: 0
@@ -472,7 +680,7 @@ MonoBehaviour:
     Google_WebServiceURL: https://script.google.com/macros/s/AKfycbwdPVAlDVP3iMK97Ytq04SaMrbkrgSDEMbtL6XuSGENq2oboE8ijiMLza3gYe9P9sAr/exec
     Google_SpreadsheetKey: 1p863SKW8MDiIdoIoCEeEKVeLVze0RoaihCjeu4er2_k
     Google_SpreadsheetName: I2Loc My project Localization
-    Google_LastUpdatedVersion: 1752249627764
+    Google_LastUpdatedVersion: 1755702661151
     Google_Password: a12345
     GoogleUpdateFrequency: 3
     GoogleInEditorCheckFrequency: 2
