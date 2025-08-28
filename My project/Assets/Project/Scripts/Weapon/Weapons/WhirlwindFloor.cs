@@ -33,7 +33,7 @@ public class WhirlwindFloor : FloorWeapon
     public void SpawnWhirlwind() {
         Global.SoundManager.PlaySFX(SFXEnum.WindFloor);
         Vector3 playerPos = player.transform.position;
-        spawnPos = playerPos + new Vector3(Random.Range(-3f,3f), Random.Range(-3f, 3f),0f);
+        spawnPos = playerPos + new Vector3(Random.Range(-7f,7f), Random.Range(-7f, 7f),0f);
         
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
         projectile = bullet.gameObject;

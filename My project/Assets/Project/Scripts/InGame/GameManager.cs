@@ -83,8 +83,9 @@ public class GameManager : MMSingleton<GameManager>
                 return;
             }
 
-            float damageReductionMultiplier = Mathf.Pow(0.95f, _defense); // 방어력 1당 5% 데미지 감소
-            float reducedDamage = damage * damageReductionMultiplier;
+            // 방어력을 직접 퍼센트로 적용 (방어력 10 = 10% 데미지 감소)
+            float damageReductionPercent = Mathf.Clamp(_defense, 0f, 100f) / 100f; // 최대 100% 방어
+            float reducedDamage = damage * (1f - damageReductionPercent);
             if (isInvincible)
             {
                 reducedDamage = 0;

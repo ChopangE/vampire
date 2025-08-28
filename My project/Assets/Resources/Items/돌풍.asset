@@ -17,19 +17,19 @@ MonoBehaviour:
     curLevel: 0
     maxLevel: 9
     baseCooldown: 10
-    baseDamage: 50
+    baseDamage: 25
     baseCount: 1
     baseRange: 1
     baseDuration: 1
     basePierce: 1
-    curCoolDown: 0
-    curDamage: 0
-    curCount: 0
-    curRange: 0
-    curDuration: 0
+    curCoolDown: 10
+    curDamage: 25
+    curCount: 1
+    curRange: 1.44
+    curDuration: 1
     curCriticalDamagePercent: 0
     curCriticalChancePercent: 0
-    curPierce: 0
+    curPierce: 1
   passiveItemDataInfo:
     passiveId: 0
     passiveValue: 0

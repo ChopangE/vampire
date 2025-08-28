@@ -36,14 +36,13 @@ namespace SO
             var b = GetLevelElement();
             if(b != null)
             {
-                // Defense의 경우 피해 감소 퍼센트로 변환
+                // Defense의 경우 직접 퍼센트로 표시
                 if (name == "Defense")
                 {
                     if (float.TryParse(b.value, out float defenseValue))
                     {
-                        // 방어력 1당 5% 데미지 감소 (1 - 0.95^defense) * 100
-                        float damageReduction = (1f - Mathf.Pow(0.95f, defenseValue)) * 100f;
-                        _levelValue = damageReduction.ToString("F0");
+                        // 방어력 값을 그대로 퍼센트로 표시 (10 = 10%)
+                        _levelValue = defenseValue.ToString("F0");
                         return _levelValue;
                     }
                 }

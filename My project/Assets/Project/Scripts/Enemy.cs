@@ -292,7 +292,7 @@ public class Enemy : DamageObject
         else
         {
             Global.ExpManager.SpawnExpItem(0, transform.position);
-            GameManager.Instance.ShowLevelUp();
+            // GameManager.Instance.ShowLevelUp();
 
             DropItem dropItem = Resources.Load<DropItem>("Prefabs/DropItem/GoldBarCoinGold");
             Vector3 dropPosition = dropItemSpawnPoints != null && dropItemSpawnPoints.Length > 0

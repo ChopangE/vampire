@@ -125,6 +125,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -134,8 +146,8 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64.875
-        height: 64
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -143,7 +155,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 61e792d4b5c043c4580209e6e9996bc6
+      spriteID: bff42bb4892756b4781ea37fc85de461
       internalID: 659678762
       vertices: []
       indices: 
@@ -153,10 +165,10 @@ TextureImporter:
       name: WingWindNew-Sheet_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 48
         y: 0
-        width: 64.875
-        height: 64
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,7 +176,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e52d6bdb7cb081a4da0370243855a1e7
+      spriteID: fab0ccaad4112e1479a8d7912379b1b7
       internalID: -528766173
       vertices: []
       indices: 
@@ -174,10 +186,10 @@ TextureImporter:
       name: WingWindNew-Sheet_2
       rect:
         serializedVersion: 2
-        x: 128
+        x: 96
         y: 0
-        width: 64.875
-        height: 64
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -185,7 +197,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 31c8af019d29dd64791a3aca443162f8
+      spriteID: 82989fcf63032744299a0a153c333dbb
       internalID: -387658103
       vertices: []
       indices: 
@@ -195,10 +207,10 @@ TextureImporter:
       name: WingWindNew-Sheet_3
       rect:
         serializedVersion: 2
-        x: 192
+        x: 144
         y: 0
-        width: 64.875
-        height: 64
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -206,7 +218,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7505048dcef82c140b6641dcb2bbee80
+      spriteID: 0c5d6aa9160b2da4683fd83eccc2db2e
       internalID: -330300988
       vertices: []
       indices: 
@@ -216,10 +228,10 @@ TextureImporter:
       name: WingWindNew-Sheet_4
       rect:
         serializedVersion: 2
-        x: 256
+        x: 192
         y: 0
-        width: 64.875
-        height: 64
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -227,7 +239,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fb9eb41488dd665479c94060e2175b4d
+      spriteID: 5ed396dfc69216745ac6919b486d35b0
       internalID: -1698026650
       vertices: []
       indices: 
@@ -237,10 +249,10 @@ TextureImporter:
       name: WingWindNew-Sheet_5
       rect:
         serializedVersion: 2
-        x: 320
+        x: 240
         y: 0
-        width: 64.875
-        height: 64
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -248,7 +260,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aadd42fd8e32948409fc95d0bfcc469e
+      spriteID: 9c3737d3fc2abf14ea93e1ea65ea4476
       internalID: -324701743
       vertices: []
       indices: 
@@ -258,10 +270,10 @@ TextureImporter:
       name: WingWindNew-Sheet_6
       rect:
         serializedVersion: 2
-        x: 384
+        x: 288
         y: 0
-        width: 64.875
-        height: 64
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -269,7 +281,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cfe821c00abfda34987efdcd23f4f559
+      spriteID: bfeedb05e58910645a1a8d43708e8d0b
       internalID: 1596101571
       vertices: []
       indices: 
@@ -279,10 +291,10 @@ TextureImporter:
       name: WingWindNew-Sheet_7
       rect:
         serializedVersion: 2
-        x: 448
+        x: 336
         y: 0
-        width: 64.875
-        height: 64
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -290,7 +302,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a0c8a3a3c15aed348ae5c838ca1a6a5b
+      spriteID: eea932ff60375044dbeca7dcf351f614
       internalID: 798416762
       vertices: []
       indices: 
