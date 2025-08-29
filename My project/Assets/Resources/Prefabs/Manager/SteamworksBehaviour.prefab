@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3357484165212495310}
   - component: {fileID: 3357484165212495311}
+  - component: {fileID: 6090566397605125295}
   m_Layer: 0
   m_Name: SteamworksBehaviour
   m_TagString: Untagged
@@ -47,10 +48,37 @@ MonoBehaviour:
   settings: {fileID: 11400000, guid: f494577043ae0ae47a56dd43d9b84494, type: 2}
   evtSteamInitialized:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6090566397605125295}
+        m_TargetAssemblyTypeName: AchievementsManager, Assembly-CSharp
+        m_MethodName: UpdateAchievements
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   evtSteamInitializationError:
     m_PersistentCalls:
       m_Calls: []
   evtLobbyInviteArgumentDetected:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6090566397605125295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3357484165212495152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811521a34c1b2bc45b35973389e7ca8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  steamworksBehaviour: {fileID: 3357484165212495311}
+  achievementObjects: []
+  achievementsPanelGroup: {fileID: 3357484165212495152}
