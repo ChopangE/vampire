@@ -288,6 +288,40 @@ public class Enemy : DamageObject
         if (_enemyType == EnemyType.Normal)
         {
             Global.ExpManager.SpawnExpItem(level / 4 + 1, transform.position);
+
+            // Normal Enemy 처치 카운트 및 업적 처리
+            var userDataManager = Manager.Global.UserDataManager;
+            if (userDataManager != null)
+            {
+                var killSaveData = userDataManager.storage.killSaveData;
+                if (killSaveData.ContainsKey("NormalEnemy"))
+                {
+                    killSaveData["NormalEnemy"]++;
+                }
+                else
+                {
+                    killSaveData["NormalEnemy"] = 1;
+                }
+                userDataManager.Save();
+
+                // 1000마리, 2000마리 처치 시 업적 클리어
+                var achievementsManager = GameObject.FindObjectOfType<AchievementsManager>();
+                if (achievementsManager != null)
+                {
+                    if (killSaveData["NormalEnemy"] >= 1000)
+                    {
+                        achievementsManager.AchivementTrueByID("1,000_Enemy_Kills");
+                    }
+                    if (killSaveData["NormalEnemy"] >= 2000)
+                    {
+                        achievementsManager.AchivementTrueByID("2,000_Enemy_Kills");
+                    }
+                    if (killSaveData["NormalEnemy"] >= 5000)
+                    {
+                        achievementsManager.AchivementTrueByID("5,000_Enemy_Kills");
+                    }
+                }
+            }
         }
         else
         {

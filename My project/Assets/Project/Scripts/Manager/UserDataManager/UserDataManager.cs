@@ -15,6 +15,7 @@ namespace Manager
             curStage = 0;
             level = 0;
             evolutionStages = new Dictionary<string, int>();
+            killSaveData = new Dictionary<string, int>();
         }
         // public HashSet<int> CollectedItem = new();
         public string GoldData;
@@ -25,6 +26,7 @@ namespace Manager
         public int curStage;
         public int level;
         public Dictionary<string, int> evolutionStages;
+        public Dictionary<string, int> killSaveData;
     }
     public partial class UserDataManager
 

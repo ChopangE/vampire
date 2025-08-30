@@ -6,6 +6,23 @@ public class SuperAmulet : BulletWeapon
     public override async UniTask Init()
     {
         await base.Init();
+
+        // Reinforced_Explosive_Talisman 업적 클리어 (최초 획득 시)
+        var userDataManager = Manager.Global.UserDataManager;
+        if (userDataManager != null)
+        {
+            var killSaveData = userDataManager.storage.killSaveData;
+            if (!killSaveData.ContainsKey("Reinforced_Explosive_Talisman"))
+            {
+                killSaveData["Reinforced_Explosive_Talisman"] = 1;
+                userDataManager.Save();
+                var achievementsManager = GameObject.FindObjectOfType<AchievementsManager>();
+                if (achievementsManager != null)
+                {
+                    achievementsManager.AchivementTrueByID("Reinforced_Explosive_Talisman");
+                }
+            }
+        }
     }
     public override void SpawnBullet()
     {

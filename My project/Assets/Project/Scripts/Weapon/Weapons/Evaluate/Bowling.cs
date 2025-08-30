@@ -14,6 +14,23 @@ public class Bowling : BulletWeapon
         await base.Init();
         maxCooldown = 5f;
         remainingCooldown = maxCooldown;
+
+        // Catapul 업적 클리어 (최초 획득 시)
+        var userDataManager = Manager.Global.UserDataManager;
+        if (userDataManager != null)
+        {
+            var killSaveData = userDataManager.storage.killSaveData;
+            if (!killSaveData.ContainsKey("Catapul"))
+            {
+                killSaveData["Catapul"] = 1;
+                userDataManager.Save();
+                var achievementsManager = GameObject.FindObjectOfType<AchievementsManager>();
+                if (achievementsManager != null)
+                {
+                    achievementsManager.AchivementTrueByID("Catapul");
+                }
+            }
+        }
     }
     public override void SpawnBullet()
     {

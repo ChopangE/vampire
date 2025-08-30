@@ -18,6 +18,23 @@ public class ShadowPlayer : Melee
     {
         InitializeComponents();
         curPlayerSpriteRenderer = GameManager.Instance.player.GetComponent<SpriteRenderer>();
+
+        // Shadow_Partner 업적 클리어 (최초 획득 시)
+        var userDataManager = Manager.Global.UserDataManager;
+        if (userDataManager != null)
+        {
+            var killSaveData = userDataManager.storage.killSaveData;
+            if (!killSaveData.ContainsKey("Shadow_Partner"))
+            {
+                killSaveData["Shadow_Partner"] = 1;
+                userDataManager.Save();
+                var achievementsManager = GameObject.FindObjectOfType<AchievementsManager>();
+                if (achievementsManager != null)
+                {
+                    achievementsManager.AchivementTrueByID("Shadow_Partner");
+                }
+            }
+        }
     }
 
     public override void LevelUp(UpgradeName prevUpgradeName, float prevUpgradeValue, DamageUpgradeValues damageUpgradeValues = null)

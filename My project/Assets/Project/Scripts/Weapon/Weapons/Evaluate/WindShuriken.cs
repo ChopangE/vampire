@@ -11,6 +11,23 @@ public class WindShuriken : BulletWeapon
     public override async UniTask Init()
     {
         await base.Init();
+
+        // Wind_Shuriken 업적 클리어 (최초 획득 시)
+        var userDataManager = Manager.Global.UserDataManager;
+        if (userDataManager != null)
+        {
+            var killSaveData = userDataManager.storage.killSaveData;
+            if (!killSaveData.ContainsKey("Wind_Shuriken"))
+            {
+                killSaveData["Wind_Shuriken"] = 1;
+                userDataManager.Save();
+                var achievementsManager = GameObject.FindObjectOfType<AchievementsManager>();
+                if (achievementsManager != null)
+                {
+                    achievementsManager.AchivementTrueByID("Wind_Shuriken");
+                }
+            }
+        }
     }
     public override void SpawnBullet()
     {

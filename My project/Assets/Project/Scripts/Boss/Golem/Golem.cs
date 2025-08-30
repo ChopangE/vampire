@@ -41,6 +41,41 @@ public class Golem : MiddleBoss
         CC = FindObjectOfType<CameraControl>();
 
     }
+    public override void Dead()
+    {
+        base.Dead();
+        // First_Golem_Defeat 업적 클리어
+        var achievementsManager = FindAnyObjectByType<AchievementsManager>();
+        if (achievementsManager != null)
+        {
+            achievementsManager.AchivementTrueByID("First_Golem_Defeat");
+        }
+
+        // Golem 처치 카운트 증가 및 저장
+        var userDataManager = Global.UserDataManager;
+        if (userDataManager != null)
+        {
+            var killSaveData = userDataManager.storage.killSaveData;
+            if (killSaveData.ContainsKey("Golem"))
+            {
+                killSaveData["Golem"]++;
+            }
+            else
+            {
+                killSaveData["Golem"] = 1;
+            }
+            userDataManager.Save();
+
+            // 10번 처치 시 Golem_Slayer 업적 클리어
+            if (killSaveData["Golem"] >= 10)
+            {
+                if (achievementsManager != null)
+                {
+                    achievementsManager.AchivementTrueByID("Golem_Slayer");
+                }
+            }
+        }
+    }
     public void StopCameraShaking() {
         CC.StopCameraShake();
     }

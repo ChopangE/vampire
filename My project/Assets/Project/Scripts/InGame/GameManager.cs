@@ -410,6 +410,20 @@ public class GameManager : MMSingleton<GameManager>
         // 최종 스테이지 클리어 여부 확인 (데이터 초기화 전에)
         bool isFinalStageClear = _curStage == 12;
 
+
+        var achievementsManager = GameObject.FindObjectOfType<AchievementsManager>();
+        // 마지막 스테이지 클리어 시 First_Game_Clear 업적 클리어
+        if (isFinalStageClear && achievementsManager != null)
+        {
+            achievementsManager.AchivementTrueByID("First_Game_Clear");
+        }
+
+        // 클리어 시 체력이 만피면 Perfect_Stage_Clear 업적 클리어
+        if (_health == maxHealth && achievementsManager != null)
+        {
+            achievementsManager.AchivementTrueByID("Perfect_Stage_Clear");
+        }
+
         Global.UserDataManager.curStage++;
         Global.DataManager.SaveData();
         Global.SoundManager.PlaySFX(Data.SFXEnum.Shop_StageOpen);

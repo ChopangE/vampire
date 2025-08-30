@@ -7,6 +7,23 @@ public class Tornado : BulletWeapon
     public override async UniTask Init()
     {
         await base.Init();
+
+        // Tornado 업적 클리어 (최초 획득 시)
+        var userDataManager = Manager.Global.UserDataManager;
+        if (userDataManager != null)
+        {
+            var killSaveData = userDataManager.storage.killSaveData;
+            if (!killSaveData.ContainsKey("Tornado"))
+            {
+                killSaveData["Tornado"] = 1;
+                userDataManager.Save();
+                var achievementsManager = GameObject.FindObjectOfType<AchievementsManager>();
+                if (achievementsManager != null)
+                {
+                    achievementsManager.AchivementTrueByID("Tornado");
+                }
+            }
+        }
     }
     public override void SpawnBullet()
     {

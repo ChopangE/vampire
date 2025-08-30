@@ -16,6 +16,41 @@ public class EvilDragon : MiddleBoss
         savingPrefabs = GameObject.Find("MiddleBossPrefabs");
 
     }
+    public override void Dead()
+    {
+        base.Dead();
+        // First_Dragon_Defeat 업적 클리어
+        var achievementsManager = FindAnyObjectByType<AchievementsManager>();
+        if (achievementsManager != null)
+        {
+            achievementsManager.AchivementTrueByID("First_Dragon_Defeat");
+        }
+
+        // Dragon 처치 카운트 증가 및 저장
+        var userDataManager = Manager.Global.UserDataManager;
+        if (userDataManager != null)
+        {
+            var killSaveData = userDataManager.storage.killSaveData;
+            if (killSaveData.ContainsKey("Dragon"))
+            {
+                killSaveData["Dragon"]++;
+            }
+            else
+            {
+                killSaveData["Dragon"] = 1;
+            }
+            userDataManager.Save();
+
+            // 10번 처치 시 Dragon_Slayer 업적 클리어
+            if (killSaveData["Dragon"] >= 10)
+            {
+                if (achievementsManager != null)
+                {
+                    achievementsManager.AchivementTrueByID("Dragon_Slayer");
+                }
+            }
+        }
+    }
     protected override void Update() {
         base.Update();
         

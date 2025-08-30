@@ -22,7 +22,7 @@ public class AchievementsManager : MonoBehaviour
             steamworksBehaviour = FindAnyObjectByType<SteamworksBehaviour>();
         }
     }
-    
+
     //* SteamworkBehaviour이 초기화 되면 업뎃하기
     public void UpdateAchievements()
     {
@@ -32,6 +32,8 @@ public class AchievementsManager : MonoBehaviour
             if (achievementObjects[i] != null)
             {
                 achievementObjects[i].StatusChanged?.Invoke(achievementObjects[i].IsAchieved);
+                Debug.Log(achievementObjects[i].Id);
+
             }
         }
     }
@@ -42,5 +44,12 @@ public class AchievementsManager : MonoBehaviour
     public void AchievementReset(AchievementObject achievementObject)
     {
         achievementObject.IsAchieved = false;
+    }
+
+    public void AchivementTrueByID(string id)
+    {
+        AchievementData myAch = id;
+        myAch.Unlock();
+        myAch.Store();
     }
 }

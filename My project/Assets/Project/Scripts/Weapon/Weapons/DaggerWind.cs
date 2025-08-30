@@ -15,6 +15,23 @@ public class DaggerWind : Melee
     public override async UniTask Init()
     {
         await base.Init();
+
+        // Sword_wind 업적 클리어 (최초 획득 시)
+        var userDataManager = Manager.Global.UserDataManager;
+        if (userDataManager != null)
+        {
+            var killSaveData = userDataManager.storage.killSaveData;
+            if (!killSaveData.ContainsKey("Sword_wind"))
+            {
+                killSaveData["Sword_wind"] = 1;
+                userDataManager.Save();
+                var achievementsManager = GameObject.FindObjectOfType<AchievementsManager>();
+                if (achievementsManager != null)
+                {
+                    achievementsManager.AchivementTrueByID("Sword_wind");
+                }
+            }
+        }
     }
 
     public override void SpawnBullet()

@@ -10,6 +10,23 @@ public class SuperStick : BulletWeapon
     public override async UniTask Init()
     {
         await base.Init();
+
+        // 270_Stick_Smash 업적 클리어 (최초 획득 시)
+        var userDataManager = Manager.Global.UserDataManager;
+        if (userDataManager != null)
+        {
+            var killSaveData = userDataManager.storage.killSaveData;
+            if (!killSaveData.ContainsKey("270_Stick_Smash"))
+            {
+                killSaveData["270_Stick_Smash"] = 1;
+                userDataManager.Save();
+                var achievementsManager = GameObject.FindObjectOfType<AchievementsManager>();
+                if (achievementsManager != null)
+                {
+                    achievementsManager.AchivementTrueByID("270_Stick_Smash");
+                }
+            }
+        }
     }
     public override void SpawnBullet()
     {

@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using Data;
 using InGame.Data;
 using Manager;
+using System;
 using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
@@ -66,6 +67,7 @@ public class Boss : MonoBehaviour
         if (!isLive)
         {
             transform.Translate(0, -5 * Time.deltaTime, 0);
+            ClearWitchAchievement();
             StageClearAsync().Forget();
             foreach (var weapon in weapons)
             {
@@ -129,6 +131,41 @@ public class Boss : MonoBehaviour
 
                 }
                 Timer2 += Time.deltaTime;
+            }
+        }
+    }
+
+    private void ClearWitchAchievement()
+    {
+        // First_Witch_Defeat 업적 클리어
+        var achievementsManager = FindAnyObjectByType<AchievementsManager>();
+        if (achievementsManager != null)
+        {
+            achievementsManager.AchivementTrueByID("First_Witch_Defeat");
+        }
+
+        // Witch 처치 카운트 증가 및 저장
+        var userDataManager = Global.UserDataManager;
+        if (userDataManager != null)
+        {
+            var killSaveData = userDataManager.storage.killSaveData;
+            if (killSaveData.ContainsKey("Witch"))
+            {
+                killSaveData["Witch"]++;
+            }
+            else
+            {
+                killSaveData["Witch"] = 1;
+            }
+            userDataManager.Save();
+
+            // 10번 처치 시 Witch_Slayer 업적 클리어
+            if (killSaveData["Witch"] >= 10)
+            {
+                if (achievementsManager != null)
+                {
+                    achievementsManager.AchivementTrueByID("Witch_Slayer");
+                }
             }
         }
     }
@@ -294,3 +331,4 @@ public class Boss : MonoBehaviour
         return false;
     }
 }
+

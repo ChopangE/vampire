@@ -21,6 +21,23 @@ public class WhirlWindOwner : FloorWeapon
         maxCooldown = 20f;
         remainingCooldown = maxCooldown;
         duration = 10f;
+
+        // Master_of_Wind 업적 클리어 (최초 획득 시)
+        var userDataManager = Manager.Global.UserDataManager;
+        if (userDataManager != null)
+        {
+            var killSaveData = userDataManager.storage.killSaveData;
+            if (!killSaveData.ContainsKey("Master_of_Wind"))
+            {
+                killSaveData["Master_of_Wind"] = 1;
+                userDataManager.Save();
+                var achievementsManager = GameObject.FindObjectOfType<AchievementsManager>();
+                if (achievementsManager != null)
+                {
+                    achievementsManager.AchivementTrueByID("Master_of_Wind");
+                }
+            }
+        }
     }
 
     public override void SpawnBullet() {
