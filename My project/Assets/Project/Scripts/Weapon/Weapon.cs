@@ -104,24 +104,37 @@ public class Weapon : MonoBehaviour
                         }
                     }
                 }
+                
+                // 현재 무기의 상속 제외 리스트도 확인
+                var excludedInheritance = new HashSet<UpgradeName>();
+                if (_data.excludeInheritanceList != null)
+                {
+                    foreach (var upgrade in _data.excludeInheritanceList)
+                    {
+                        if (upgrade != null)
+                        {
+                            excludedInheritance.Add(upgrade.upgradeName);
+                        }
+                    }
+                }
 
-                // 제외되지 않은 속성들만 상속
-                if (!excludedUpgrades.Contains(UpgradeName.Damage))
+                // 제외되지 않은 속성들만 상속 (업그레이드 제외 + 상속 제외 모두 고려)
+                if (!excludedUpgrades.Contains(UpgradeName.Damage) && !excludedInheritance.Contains(UpgradeName.Damage))
                     baseDamage = weapon._data.itemDataInfo.curDamage;
                 
-                if (!excludedUpgrades.Contains(UpgradeName.Projectiles))
+                if (!excludedUpgrades.Contains(UpgradeName.Projectiles) && !excludedInheritance.Contains(UpgradeName.Projectiles))
                     count = weapon._data.itemDataInfo.curCount;
                 
-                if (!excludedUpgrades.Contains(UpgradeName.Cooldown))
+                if (!excludedUpgrades.Contains(UpgradeName.Cooldown) && !excludedInheritance.Contains(UpgradeName.Cooldown))
                     maxCooldown = weapon._data.itemDataInfo.curCoolDown;
                 
-                if (!excludedUpgrades.Contains(UpgradeName.Range))
+                if (!excludedUpgrades.Contains(UpgradeName.Range) && !excludedInheritance.Contains(UpgradeName.Range))
                     size = weapon._data.itemDataInfo.curRange;
                 
-                if (!excludedUpgrades.Contains(UpgradeName.Duration))
+                if (!excludedUpgrades.Contains(UpgradeName.Duration) && !excludedInheritance.Contains(UpgradeName.Duration))
                     duration = weapon._data.itemDataInfo.curDuration;
                 
-                if (!excludedUpgrades.Contains(UpgradeName.PierceLimit))
+                if (!excludedUpgrades.Contains(UpgradeName.PierceLimit) && !excludedInheritance.Contains(UpgradeName.PierceLimit))
                     pierce = weapon._data.itemDataInfo.curPierce;
                 
                 criticalChancePercent = weapon._data.itemDataInfo.curCriticalChancePercent;

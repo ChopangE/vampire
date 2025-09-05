@@ -189,13 +189,19 @@ public class Boss : MonoBehaviour
         coll.enabled = true;
         sprite.sortingOrder = 1;
         // 일반 몬스터 체력 계산식(10 * Mathf.Pow(1.2f, stage))의 200배 (중간보스의 4배)
-        maxHealth = 10 * Mathf.Pow(1.2f, GameManager.Instance.CurStage) * 200;
+        maxHealth = 20 * Mathf.Pow(1.2f, GameManager.Instance.CurStage) * 200;
         health = maxHealth;
         GameManager.Instance.BossHealth = health;
         GameManager.Instance.maxBossHealth = maxHealth;
         
         // BGM 변경 플래그 리셋
         isPhase2BGMChanged = false;
+        
+        // 보스 스테이지용 카메라 사이즈 조정
+        if (CC != null)
+        {
+            CC.SetBossCameraSize(11.5f);
+        }
     }
 
     public void Hammer()

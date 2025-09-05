@@ -27,7 +27,7 @@ namespace InGame
         }
         void PlusCoin()
         {
-            int gold = (int)(coin * GameManager.Instance.goldBonus);
+            int gold = Mathf.RoundToInt(coin * GameManager.Instance.goldBonus);
             Global.GoldManager.AddGold(gold);
             DestroyItem();
         }

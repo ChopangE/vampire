@@ -20,7 +20,7 @@ public class MiddleBoss : Enemy {
 
         speed = 5f;
         // 일반 몬스터 체력 계산식(10 * Mathf.Pow(1.2f, stage))의 50배
-        maxHealth = 10 * Mathf.Pow(1.2f, GameManager.Instance.CurStage) * 50;
+        maxHealth = 20 * Mathf.Pow(1.2f, GameManager.Instance.CurStage) * 50;
         health = maxHealth;
 
         isDoing = false;

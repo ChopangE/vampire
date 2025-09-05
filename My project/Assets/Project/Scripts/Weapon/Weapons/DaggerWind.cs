@@ -8,7 +8,7 @@ using Data;
 using Manager;
 public class DaggerWind : Melee
 {
-    public int windCount = 2;  // 기본 검풍 개수
+    public int windCount = 1;  // 기본 검풍 개수
     public float windDelay = 0.1f;  // 검풍 사이 지연시간
 
 

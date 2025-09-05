@@ -80,6 +80,9 @@ public class ItemData : ScriptableObject
 
     [LabelText("제외할 업그레이드 속성")]
     public List<SkillUpgradeSO> excludeUpgradeList = new List<SkillUpgradeSO>();
+    
+    [LabelText("상속 제외할 속성")]
+    public List<SkillUpgradeSO> excludeInheritanceList = new List<SkillUpgradeSO>();
 
     [BoxGroup("진화무기 세팅")] [Button("진화무기인지 자동 체크")] 
     public void CheckEvaluateWeapon()
@@ -152,26 +155,39 @@ public class ItemData : ScriptableObject
                 }
             }
         }
+        
+        // 현재 무기의 상속 제외 리스트도 확인
+        var excludedInheritance = new HashSet<SO.UpgradeName>();
+        if (excludeInheritanceList != null)
+        {
+            foreach (var upgrade in excludeInheritanceList)
+            {
+                if (upgrade != null)
+                {
+                    excludedInheritance.Add(upgrade.upgradeName);
+                }
+            }
+        }
 
-        // 제외되지 않은 속성들만 상속
-        if (!excludedUpgrades.Contains(SO.UpgradeName.Projectiles))
+        // 제외되지 않은 속성들만 상속 (업그레이드 제외 + 상속 제외 모두 고려)
+        if (!excludedUpgrades.Contains(SO.UpgradeName.Projectiles) && !excludedInheritance.Contains(SO.UpgradeName.Projectiles))
             itemDataInfo.baseCount = _prevItemData.itemDataInfo.baseCount;
         
         itemDataInfo.maxLevel = _prevItemData.itemDataInfo.maxLevel;
         
-        if (!excludedUpgrades.Contains(SO.UpgradeName.Range))
+        if (!excludedUpgrades.Contains(SO.UpgradeName.Range) && !excludedInheritance.Contains(SO.UpgradeName.Range))
             itemDataInfo.baseRange = _prevItemData.itemDataInfo.baseRange;
         
-        if (!excludedUpgrades.Contains(SO.UpgradeName.Damage))
+        if (!excludedUpgrades.Contains(SO.UpgradeName.Damage) && !excludedInheritance.Contains(SO.UpgradeName.Damage))
             itemDataInfo.baseDamage = _prevItemData.itemDataInfo.baseDamage;
         
-        if (!excludedUpgrades.Contains(SO.UpgradeName.Cooldown))
+        if (!excludedUpgrades.Contains(SO.UpgradeName.Cooldown) && !excludedInheritance.Contains(SO.UpgradeName.Cooldown))
             itemDataInfo.baseCooldown = _prevItemData.itemDataInfo.baseCooldown;
         
-        if (!excludedUpgrades.Contains(SO.UpgradeName.Duration))
+        if (!excludedUpgrades.Contains(SO.UpgradeName.Duration) && !excludedInheritance.Contains(SO.UpgradeName.Duration))
             itemDataInfo.baseDuration = _prevItemData.itemDataInfo.baseDuration;
         
-        if (!excludedUpgrades.Contains(SO.UpgradeName.PierceLimit))
+        if (!excludedUpgrades.Contains(SO.UpgradeName.PierceLimit) && !excludedInheritance.Contains(SO.UpgradeName.PierceLimit))
             itemDataInfo.basePierce = _prevItemData.itemDataInfo.basePierce;
     }
     [Button("저장")]
