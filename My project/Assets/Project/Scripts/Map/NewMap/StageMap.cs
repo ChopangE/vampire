@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Data;
 using Manager;
+using UI.Page;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityWeld.Binding;
@@ -62,27 +63,22 @@ public class StageMap : MonoBehaviour
 
     /// <summary>
     /// 현재 스테이지에 따라 적절한 스테이지 책을 표시합니다.
-    /// 0-3: Stage1, 4-7: Stage2, 8-11: Stage3, 12: BossStage
+    /// 데모 버전: 스테이지 1(0-3)만 가능, 이후 스테이지는 데모 끝 페이지 표시
     /// </summary>
     public void ShowStageByCurrentStage()
     {
         int curStage = Global.UserDataManager.storage.curStage;
         
-        if (curStage == 12)
+        // 데모 제한: 스테이지 1(0-3)을 넘어가면 데모 끝 페이지 열기
+        if (curStage > 3)
         {
-            BossStage();
+            Global.UIManager.OpenPage<DemoEndPage>();
+            return;
         }
-        else if (curStage >= 0 && curStage <= 3)
+        
+        if (curStage >= 0 && curStage <= 3)
         {
             Stage1();
-        }
-        else if (curStage >= 4 && curStage <= 7)
-        {
-            Stage2();
-        }
-        else if (curStage >= 8 && curStage <= 11)
-        {
-            Stage3();
         }
         else
         {
@@ -105,44 +101,32 @@ public class StageMap : MonoBehaviour
     }
     [Binding]
     public void Stage2() {
-        for(int i = 0; i < stages.Length; i++) {
-            if(i == 1) {
-                stages[i].SetActive(true);
-            }
-            else {
-                stages[i].SetActive(false);
-            }
-        }
-        Global.SoundManager.PlaySFX(SFXEnum.Shop_PageTurn);
+        // 데모 제한: Stage2 접근 시 데모 끝 페이지 열기
+        Global.UIManager.OpenPage<DemoEndPage>();
     }
     [Binding]
     public void Stage3() {
-        for(int i = 0; i < stages.Length; i++) {
-            if(i == 2) {
-                stages[i].SetActive(true);
-            }
-            else {
-                stages[i].SetActive(false);
-            }
-        }
-        Global.SoundManager.PlaySFX(SFXEnum.Shop_PageTurn);
+        // 데모 제한: Stage3 접근 시 데모 끝 페이지 열기
+        Global.UIManager.OpenPage<DemoEndPage>();
     }
     [Binding]
     public void BossStage() {
-        for(int i = 0; i < stages.Length; i++) {
-            if(i == 3) {
-                stages[i].SetActive(true);
-            }
-            else {
-                stages[i].SetActive(false);
-            }
-        }
-        Global.SoundManager.PlaySFX(SFXEnum.Shop_PageTurn);
+        // 데모 제한: BossStage 접근 시 데모 끝 페이지 열기
+        Global.UIManager.OpenPage<DemoEndPage>();
     }
     private void OnStageChanged()
     {
+        int currentStageLevel = Global.StageManager.stageLevel;
+        
+        // 데모 제한: stageLevel 1을 넘어가면 데모 끝 페이지 열기
+        if (currentStageLevel > 0)
+        {
+            Global.UIManager.OpenPage<DemoEndPage>();
+            return;
+        }
+        
         for(int i = 0; i < stages.Length; i++) {
-            if(i == Global.StageManager.stageLevel) {
+            if(i == currentStageLevel) {
                 stages[i].SetActive(true);
             }
             else {

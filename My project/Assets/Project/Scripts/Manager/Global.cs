@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using HeathenEngineering.SteamworksIntegration;
 using Manager.InGame;
 using UGS;
 using UnityEngine;
@@ -36,7 +35,6 @@ namespace Manager
         // public static NewDialogueManager DialogueManager { get; private set; }
 
         public static UpgradeManager UpgradeManager { get; set; }
-        public static SteamworksBehaviour SteamworksBehaviour { get; set; }
 
         protected override void Awake()
         {
@@ -102,11 +100,6 @@ namespace Manager
             {
                 UpgradeManager = Instantiate(Resources.Load<UpgradeManager>(prefixManager + nameof(UpgradeManager)), transform);
                 UpgradeManager.name = nameof(UpgradeManager);
-            }
-            if (SteamworksBehaviour == null)
-            {
-                SteamworksBehaviour = Instantiate(Resources.Load<SteamworksBehaviour>(prefixManager + nameof(SteamworksBehaviour)), transform);
-                SteamworksBehaviour.name = nameof(SteamworksBehaviour);
             }
         }
     }
