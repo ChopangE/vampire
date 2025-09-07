@@ -37,5 +37,12 @@ namespace UI.Page
             // 현재 씬 다시 로드하거나 적절한 씬으로 이동
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+        
+        [Binding]
+        public void OpenSteamStore()
+        {
+            // Steam 스토어 페이지로 이동
+            Application.OpenURL("https://store.steampowered.com/app/3946600/HGD_SURVIVOR/");
+        }
     }
 }
