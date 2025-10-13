@@ -1,69 +1,91 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class Scanner : MonoBehaviour
 {
+    [Tooltip("Radius used for scanning")]
     public float scanRange;
     public LayerMask targetLayer;
-    public RaycastHit2D[] targets;
+
+    // Non-allocating buffer for OverlapCircleNonAlloc — tune maxTargets in the inspector.
+    public Collider2D[] targets;
+    public int maxTargets = 32;
+    int targetCount = 0;
+
+    // Last computed nearest target
     public Transform nearestTarget;
 
-    void FixedUpdate() {
+    void Awake()
+    {
+        if (targets == null || targets.Length == 0)
+            targets = new Collider2D[Mathf.Max(1, maxTargets)];
+    }
+
+    void FixedUpdate()
+    {
         if (!GameManager.Instance.isLive) return;
 
-        targets = Physics2D.CircleCastAll(transform.position, scanRange, Vector2.zero, 0, targetLayer);
+        // Fill the preallocated array without allocating memory each frame.
+        // Note: use LayerMask.value as the API expects an int mask.
+        targetCount = Physics2D.OverlapCircleNonAlloc((Vector2)transform.position, scanRange, targets, targetLayer.value);
 
         nearestTarget = GetNearest();
     }
-    
 
-    Transform GetNearest() {
-
+    Transform GetNearest()
+    {
         Transform result = null;
-        float diff = 100f;
 
+        // Use squared distances to avoid creating temporaries from sqrt calls.
+        float minSqr = float.MaxValue;
+        Vector3 myPos = transform.position;
 
-        foreach (RaycastHit2D target in targets) {
-            Vector3 mypos = transform.position;
-            Vector3 targetPos = target.transform.position;
-            float curDiff = Vector3.Distance(mypos, targetPos);
+        for (int i = 0; i < targetCount; i++)
+        {
+            var col = targets[i];
+            if (col == null) continue;
 
-            if(curDiff < diff) {
-                diff = curDiff;
-                result = target.transform;
+            Transform t = col.transform;
+            float curSqr = (t.position - myPos).sqrMagnitude;
+
+            if (curSqr < minSqr)
+            {
+                minSqr = curSqr;
+                result = t;
             }
-
-
         }
+
         return result;
     }
 
     public Transform GetNearstEliteOrBoss()
     {
         Transform result = null;
-        float diff = 100f;
+        float minSqr = float.MaxValue;
+        Vector3 myPos = transform.position;
 
-        foreach (RaycastHit2D target in targets)
+        for (int i = 0; i < targetCount; i++)
         {
+            var col = targets[i];
+            if (col == null) continue;
+
+            Transform t = col.transform;
+
+            // TryGetComponent with generics avoids allocation and is efficient.
             Boss boss;
             MiddleBoss middleBoss;
-            if (target.transform.TryGetComponent(out boss) || 
-                target.transform.TryGetComponent(out middleBoss))
+            if (t.TryGetComponent<Boss>(out boss) || t.TryGetComponent<MiddleBoss>(out middleBoss))
             {
-                Vector3 myPos = transform.position;
-                Vector3 targetPos = target.transform.position;
-                float curDiff = Vector3.Distance(myPos, targetPos);
-
-                if (curDiff < diff)
+                float curSqr = (t.position - myPos).sqrMagnitude;
+                if (curSqr < minSqr)
                 {
-                    diff = curDiff;
-                    result = target.transform;
+                    minSqr = curSqr;
+                    result = t;
                 }
             }
         }
+
         return result;
     }
-
 }

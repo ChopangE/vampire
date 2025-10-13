@@ -56,11 +56,23 @@ public class Enemy : DamageObject
 
     public WeaponController weaponController;
 
-    private bool isSoundPlaying = false; // 효과음 재생 상태 변수 추가
 
     private float lastDamageTime = 0f; // 마지막으로 데미지를 받은 시간
     private const float DAMAGE_INTERVAL = 1f; // 데미지 간격
 
+    private const string Floor = "Floor"; // "Floor" 태그를 상수로 정의 
+    private const string Hit = "Hit"; // "Hit" 애니메이션 상태 이름을 상수로 정의
+    private const string NormalEnemyTag = "NormalEnemy"; // 일반 몹 처치 카운트용 태그
+    // Cached/shared resources to avoid repeated expensive calls when many enemies die
+    private static AchievementsManager cachedAchievementsManager;
+    private static DropItem cachedGoldDropItem;
+    private static DropItem cachedLevelUpScroll;
+
+    // Batched save for kill counts to avoid disk/serialization thrashing
+    private static int pendingNormalKillIncrements = 0;
+    private static float lastNormalKillSaveTime = 0f;
+    private const int NormalKillSaveThreshold = 20; // save after this many kills
+    private const float NormalKillSaveInterval = 30f; // or this many seconds
     protected override void Awake()
     {
         base.Awake();
@@ -80,7 +92,7 @@ public class Enemy : DamageObject
             return;
         }
         if (!isLive) return;
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Hit")) return;
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName(Hit)) return;
         if (_isStunned) return; // 스턴 상태일 때는 이동하지 않음
 
         Vector2 dirVec = target.position - rigid.position;
@@ -141,36 +153,33 @@ public class Enemy : DamageObject
     }
     public override void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Bullet")) return;
-        if (collision.TryGetComponent(out Bullet bullet))
+        // TryGetComponent once and use the result; avoid extra GetComponent calls and tag checks
+        if (!collision.TryGetComponent(out Bullet bullet)) return;
+
+        Global.SoundManager.PlayHitSFX(Data.SFXEnum.Monster_Hit_1, isShootCooldown: false);
+
+        if (bullet is SecretSmash)
         {
-            Global.SoundManager.PlayHitSFX(Data.SFXEnum.Monster_Hit_1, isShootCooldown: false);
-            if (bullet is SecretSmash)
+            // 일반 몹과 엘리트 몹만 즉사 처리
+            if (_enemyType == EnemyType.Elite || _enemyType == EnemyType.Normal)
             {
-                // 일반 몹과 엘리트 몹만 즉사 처리 (중간 보스와 최종 보스는 SecretSmash에서 처리)
-                if (_enemyType == EnemyType.Elite || _enemyType == EnemyType.Normal)
-                {
-                    isLive = false;
-                    coll.enabled = false;
-                    rigid.simulated = false;
-                    spriter.sortingOrder = 1;
-                    //anim.SetBool("Dead", true);
-                    Dead();
-                    return; // 추가 처리 중단
-                }
-                // 중간 보스와 최종 보스는 SecretSmash 클래스에서 처리하므로 여기서는 추가 작업 없음
+                isLive = false;
+                coll.enabled = false;
+                rigid.simulated = false;
+                spriter.sortingOrder = 1;
+                Dead();
+                return;
             }
-            else
-            {
-                CalculateDamage(collision.GetComponent<Bullet>().CalculateDamage());
-            }
-
-
+        }
+        else
+        {
+            // use the already obtained bullet variable
+            CalculateDamage(bullet.CalculateDamage());
         }
 
         if (health > 0)
         {
-            anim.SetTrigger("Hit");
+            anim.SetTrigger(Hit);
         }
         else
         {
@@ -178,7 +187,6 @@ public class Enemy : DamageObject
             coll.enabled = false;
             rigid.simulated = false;
             spriter.sortingOrder = 1;
-            //anim.SetBool("Dead", true);
             Dead();
         }
     }
@@ -238,9 +246,10 @@ public class Enemy : DamageObject
     }
     void OnTriggerStay2D(Collider2D collision)
     {
-        if (!collision.CompareTag("Floor")) return;
+        if (!collision.CompareTag(Floor)) return;
+
         if (!collision.TryGetComponent(out Bullet bullet)) return;  // Bullet 컴포넌트 체크 추가
-        
+
         // 현재 시간이 마지막 데미지 시간 + 간격보다 큰 경우에만 데미지 적용
         if (Time.time >= lastDamageTime + DAMAGE_INTERVAL)
         {
@@ -248,7 +257,7 @@ public class Enemy : DamageObject
             lastDamageTime = Time.time;
             if (health > 0)
             {
-                anim.SetTrigger("Hit");
+                anim.SetTrigger(Hit);
             }
             else
             {
@@ -256,7 +265,6 @@ public class Enemy : DamageObject
                 coll.enabled = false;
                 rigid.simulated = false;
                 spriter.sortingOrder = 1;
-                //anim.SetBool("Dead", true);
                 Dead();
             }
         }
@@ -287,58 +295,60 @@ public class Enemy : DamageObject
         // cc.exp = level + 1;                               //경험치 조절 여기서 가능
         if (_enemyType == EnemyType.Normal)
         {
+            // Spawn exp (cheap)
             Global.ExpManager.SpawnExpItem(level / 4 + 1, transform.position);
 
-            // Normal Enemy 처치 카운트 및 업적 처리
+            // Batch increment normal enemy kill counter to avoid heavy per-death saves
             var userDataManager = Manager.Global.UserDataManager;
             if (userDataManager != null)
             {
+                pendingNormalKillIncrements++;
+                // apply to storage immediately in memory
                 var killSaveData = userDataManager.storage.killSaveData;
-                if (killSaveData.ContainsKey("NormalEnemy"))
-                {
-                    killSaveData["NormalEnemy"]++;
-                }
+                if (killSaveData.ContainsKey(NormalEnemyTag))
+                    killSaveData[NormalEnemyTag] += 1;
                 else
-                {
-                    killSaveData["NormalEnemy"] = 1;
-                }
-                userDataManager.Save();
+                    killSaveData[NormalEnemyTag] = 1;
 
-                // 1000마리, 2000마리 처치 시 업적 클리어
-                var achievementsManager = GameObject.FindObjectOfType<AchievementsManager>();
-                if (achievementsManager != null)
+                // Save only when threshold reached or interval elapsed
+                if (pendingNormalKillIncrements >= NormalKillSaveThreshold || Time.time - lastNormalKillSaveTime >= NormalKillSaveInterval)
                 {
-                    if (killSaveData["NormalEnemy"] >= 1000)
-                    {
-                        achievementsManager.AchivementTrueByID("1,000_Enemy_Kills");
-                    }
-                    if (killSaveData["NormalEnemy"] >= 2000)
-                    {
-                        achievementsManager.AchivementTrueByID("2,000_Enemy_Kills");
-                    }
-                    if (killSaveData["NormalEnemy"] >= 5000)
-                    {
-                        achievementsManager.AchivementTrueByID("5,000_Enemy_Kills");
-                    }
+                    pendingNormalKillIncrements = 0;
+                    lastNormalKillSaveTime = Time.time;
+                    userDataManager.Save();
+                }
+
+                // Cache AchievementsManager lookup (expensive) and run checks without further allocations
+                if (cachedAchievementsManager == null)
+                    cachedAchievementsManager = GameObject.FindObjectOfType<AchievementsManager>();
+
+                if (cachedAchievementsManager != null)
+                {
+                    int curKills = killSaveData.ContainsKey(NormalEnemyTag) ? killSaveData[NormalEnemyTag] : 0;
+                    if (curKills >= 1000) cachedAchievementsManager.AchivementTrueByID("1,000_Enemy_Kills");
+                    if (curKills >= 2000) cachedAchievementsManager.AchivementTrueByID("2,000_Enemy_Kills");
+                    if (curKills >= 5000) cachedAchievementsManager.AchivementTrueByID("5,000_Enemy_Kills");
                 }
             }
         }
         else
         {
             Global.ExpManager.SpawnExpItem(0, transform.position);
-            // GameManager.Instance.ShowLevelUp();
+            // Cache DropItem prefabs to avoid repeated Resources.Load during mass deaths
+            if (cachedGoldDropItem == null)
+                cachedGoldDropItem = Resources.Load<DropItem>("Prefabs/DropItem/GoldBarCoinGold");
+            if (cachedLevelUpScroll == null)
+                cachedLevelUpScroll = Resources.Load<DropItem>("Prefabs/DropItem/SpecialItem/LevelUpScroll");
 
-            DropItem dropItem = Resources.Load<DropItem>("Prefabs/DropItem/GoldBarCoinGold");
             Vector3 dropPosition = dropItemSpawnPoints != null && dropItemSpawnPoints.Length > 0
                 ? dropItemSpawnPoints[0].position
                 : transform.position;
-            GameManager.DropItemPoolManager.SpawnDropItem(dropItem, dropPosition);
+            GameManager.DropItemPoolManager.SpawnDropItem(cachedGoldDropItem, dropPosition);
 
-            DropItem dropItem2 = Resources.Load<DropItem>("Prefabs/DropItem/SpecialItem/LevelUpScroll");
             Vector3 dropPosition2 = dropItemSpawnPoints != null && dropItemSpawnPoints.Length > 1
                 ? dropItemSpawnPoints[1].position
                 : transform.position;
-            GameManager.DropItemPoolManager.SpawnDropItem(dropItem2, dropPosition2);
+            GameManager.DropItemPoolManager.SpawnDropItem(cachedLevelUpScroll, dropPosition2);
         }
         GameManager.Instance.kill++;
         gameObject.SetActive(false);

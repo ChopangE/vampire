@@ -4,6 +4,7 @@ using Manager;
 using UnityEngine;
 public class Tornado : BulletWeapon
 {
+    private const string TORNADO = "Tornado"; 
     public override async UniTask Init()
     {
         await base.Init();
@@ -13,14 +14,14 @@ public class Tornado : BulletWeapon
         if (userDataManager != null)
         {
             var killSaveData = userDataManager.storage.killSaveData;
-            if (!killSaveData.ContainsKey("Tornado"))
+            if (!killSaveData.ContainsKey(TORNADO))
             {
-                killSaveData["Tornado"] = 1;
+                killSaveData[TORNADO] = 1;
                 userDataManager.Save();
                 var achievementsManager = GameObject.FindObjectOfType<AchievementsManager>();
                 if (achievementsManager != null)
                 {
-                    achievementsManager.AchivementTrueByID("Tornado");
+                    achievementsManager.AchivementTrueByID(TORNADO);
                 }
             }
         }

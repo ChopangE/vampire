@@ -14,11 +14,31 @@ public class OutlineSprite : MonoBehaviour {
     private int originalOutlineSize;
 
     private SpriteRenderer spriteRenderer;
+    private MaterialPropertyBlock mpb;
+
+    // cache property IDs to avoid string lookups
+    private static readonly int PropOutline = Shader.PropertyToID("_Outline");
+    private static readonly int PropOutlineColor = Shader.PropertyToID("_OutlineColor");
+    private static readonly int PropOutlineSize = Shader.PropertyToID("_OutlineSize");
+
+    // last applied values to avoid redundant SetPropertyBlock calls
+    private Color lastColor = new Color(float.NaN, 0, 0, 0);
+    private int lastOutlineSize = -1;
+    private bool lastOutlineEnabled = false;
 
     void OnEnable() {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer == null) return;
+
+        if (mpb == null) mpb = new MaterialPropertyBlock();
+
         originalColor = color;
         originalOutlineSize = outlineSize;
+
+        // Force initial update
+        lastColor = new Color(float.NaN, 0, 0, 0);
+        lastOutlineSize = -1;
+        lastOutlineEnabled = !lastOutlineEnabled;
         UpdateOutline(true);
     }
 
@@ -27,7 +47,15 @@ public class OutlineSprite : MonoBehaviour {
     }
 
     void Update() {
-        UpdateOutline(true);
+        // Only update if something changed to avoid per-frame work and allocations
+        bool outlineEnabled = outlineSize > 0;
+        if (!spriteRenderer) spriteRenderer = GetComponent<SpriteRenderer>();
+        if (spriteRenderer == null) return;
+
+        if (!lastColor.Equals(color) || lastOutlineSize != outlineSize || lastOutlineEnabled != outlineEnabled)
+        {
+            UpdateOutline(outlineEnabled);
+        }
     }
 
     void UpdateOutline(bool outline) {
@@ -36,12 +64,21 @@ public class OutlineSprite : MonoBehaviour {
             if (spriteRenderer == null) return;
         }
 
-        MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+        // ensure MPB is allocated and reuse it to avoid allocations
+        if (mpb == null) mpb = new MaterialPropertyBlock();
         spriteRenderer.GetPropertyBlock(mpb);
-        mpb.SetFloat("_Outline", outline ? 1f : 0);
-        mpb.SetColor("_OutlineColor", color);
-        mpb.SetFloat("_OutlineSize", outlineSize);
+
+        float outlineVal = outline ? 1f : 0f;
+        mpb.SetFloat(PropOutline, outlineVal);
+        mpb.SetColor(PropOutlineColor, color);
+        mpb.SetFloat(PropOutlineSize, outline ? outlineSize : 0);
+
         spriteRenderer.SetPropertyBlock(mpb);
+
+        // cache last applied values
+        lastColor = color;
+        lastOutlineSize = outlineSize;
+        lastOutlineEnabled = outline;
     }
 
     public void SetColor(Color32 newColor)

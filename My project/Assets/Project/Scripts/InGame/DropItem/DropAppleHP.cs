@@ -26,8 +26,15 @@ namespace InGame
         }
         void PlusHP()
         {
-            GameManager.Instance.Health = Mathf.Min(GameManager.Instance.Health += plusHP, GameManager.Instance.maxHealth);
-            //임시코드 stat 방식 바뀌면 교체
+            // plusHP is treated as a percentage of maxHealth (e.g., 20 => 20%)
+            float percent = Mathf.Max(0f, plusHP) / 100f; // prevent negative percentages
+            float healAmount = GameManager.Instance.maxHealth * percent;
+
+            // Calculate new health without invoking the setter twice
+            float newHealth = Mathf.Min(GameManager.Instance.Health + healAmount, GameManager.Instance.maxHealth);
+            GameManager.Instance.Health = newHealth;
+
+            // 임시코드 stat 방식 바뀌면 교체
             DestroyItem();
         }
 

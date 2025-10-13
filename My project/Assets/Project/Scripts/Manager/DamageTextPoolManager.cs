@@ -28,6 +28,9 @@ namespace Manager
         public bool showDamageText = true;
         private ObjectPool<PoolObject> damageTextPool;
         private List<DamageText> spawnedDamageTextList = new List<DamageText>();
+    // throttle spikes: limit how many damage texts can spawn per frame
+    [SerializeField] private int maxSpawnPerFrame = 60;
+    private int spawnThisFrame = 0;
         private void Awake()
         {
             DOTween.SetTweensCapacity(500, 200);
@@ -38,10 +41,18 @@ namespace Manager
             ResetAllPools();
         }
 
+        void Update()
+        {
+            // reset per-frame spawn counter
+            spawnThisFrame = 0;
+        }
+
         public void SpawnDamageText(Vector3 position, float damage, bool isCritical = false, bool isBonus = false)
         {
             if (!showDamageText) return;
             if (activeObjCount >= maxDamageTextCount) return;
+            if (spawnThisFrame >= maxSpawnPerFrame) return; // throttle bursts
+            spawnThisFrame++;
 
             DamageText damageText = damageTextPool.PullGameObject(position, Quaternion.identity, DamageTextGroup)
                 .GetComponent<DamageText>();
@@ -65,7 +76,10 @@ namespace Manager
 
         protected override void ResetAllPools()
         {
-            damageTextPool = new ObjectPool<PoolObject>(damageTextList[0], ResetOnPull, ResetOnPush);
+            // Pre-warm pool to avoid runtime instantiation and list resizes
+            int prewarm = Mathf.Max(1, maxDamageTextCount);
+            damageTextPool = new ObjectPool<PoolObject>(damageTextList[0], ResetOnPull, ResetOnPush, prewarm);
+            spawnedDamageTextList = new List<DamageText>(prewarm);
         }
     }
 }

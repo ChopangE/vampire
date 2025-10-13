@@ -165,14 +165,12 @@ namespace Manager
         {
             if (hitSource == null) return;
 
-            // 해당 사운드의 마지막 재생 시간 확인
-            if (!lastHitSoundTimes.ContainsKey(name))
-            {
-                lastHitSoundTimes[name] = 0f;
-            }
-            
+            // 해당 사운드의 마지막 재생 시간 확인 (TryGetValue avoids allocations)
+            if (!lastHitSoundTimes.TryGetValue(name, out float lastTime))
+                lastTime = 0f;
+
             // 현재 시간이 마지막 재생 시간 + 쿨다운보다 작으면 재생하지 않음
-            if (isShootCooldown && Time.time < lastHitSoundTimes[name] + hitSoundCooldown) return;
+            if (isShootCooldown && Time.time < lastTime + hitSoundCooldown) return;
 
             SFXSound s = FindSFX(name, sfxArr);
             if (s == null || s.name == SFXEnum.NONE) return;
@@ -186,19 +184,36 @@ namespace Manager
 
         public BGMSound FindBGM(BGMEnum name, BGMSound[] soundsArr)
         {
-            BGMSound s = Array.Find(bgmArr, x => x.name == name);
-            if (s == null)
-                Debug.Log("해당 사운드 찾기 실패");
-            return s;
+            int idx = (int)name;
+            if (idx >= 0 && idx < soundsArr.Length)
+            {
+                var s = soundsArr[idx];
+                if (s == null)
+                {
+                    Debug.Log("해당 사운드 찾기 실패");
+                    return null;
+                }
+                return s;
+            }
+            Debug.Log("해당 사운드 찾기 실패");
+            return null;
         }
 
         public SFXSound FindSFX(SFXEnum name, SFXSound[] soundsArr)
         {
-            SFXSound s = Array.Find(sfxArr, x => x.name == name);
-
-            if (s == null)
-                Debug.Log("해당 사운드 찾기 실패");
-            return s;
+            int idx = (int)name;
+            if (idx >= 0 && idx < soundsArr.Length)
+            {
+                var s = soundsArr[idx];
+                if (s == null)
+                {
+                    Debug.Log("해당 사운드 찾기 실패");
+                    return null;
+                }
+                return s;
+            }
+            Debug.Log("해당 사운드 찾기 실패");
+            return null;
         }
 
         public float GetSFXClipLength(SFXEnum name)

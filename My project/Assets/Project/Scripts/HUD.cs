@@ -12,6 +12,25 @@ public class HUD : MonoBehaviour
     public InfoType type;
     Text myText;
     Slider mySlider;
+    
+    // Cached previous values to avoid updating UI/text every frame (and allocating strings)
+    int lastLevel = int.MinValue;
+    int lastKill = int.MinValue;
+    int lastMin = int.MinValue, lastSec = int.MinValue;
+    float lastExpNormalized = float.NaN;
+    float lastHealthNormalized = float.NaN;
+    float lastShieldNormalized = float.NaN;
+    float lastBossHealthNormalized = float.NaN;
+
+    // small lookup to avoid formatting allocations for mm:ss (00..99)
+    static readonly string[] TwoDigits = CreateTwoDigits();
+
+    static string[] CreateTwoDigits()
+    {
+        var arr = new string[100];
+        for (int i = 0; i < 100; i++) arr[i] = i.ToString("D2");
+        return arr;
+    }
 
     void Awake()
     {
@@ -40,49 +59,101 @@ public class HUD : MonoBehaviour
     }
     void LateUpdate()
     {
-        if (!GameManager.Instance.isLive) return;
+        var gm = GameManager.Instance;
+        if (!gm.isLive) return;
 
         switch (type)
         {
             case InfoType.Exp:
-                float curExp = GameManager.Instance.curExp;
-                float maxExp = GameManager.Instance.GetNextExpRequired();
-                mySlider.value = curExp / maxExp;
-                break;
-
-            case InfoType.Level:
-                myText.text = string.Format("Lv.{0:F0}", GameManager.Instance.level);
-                break;
-
-            case InfoType.Kill:
-                myText.text = string.Format("{0:F0}", GameManager.Instance.kill);
-                break;
-            case InfoType.Time:
-                float remainTime = GameManager.Instance.maxGameTime - GameManager.Instance.gameTime;
-                int min = Mathf.FloorToInt(remainTime / 60);
-                int sec = Mathf.FloorToInt(remainTime % 60);
-                myText.text = string.Format("{0:D2}:{1:D2}", min, sec);
-                if (remainTime <= 0)
+            {
+                float curExp = gm.curExp;
+                float maxExp = gm.GetNextExpRequired();
+                float normalized = (maxExp <= 0f) ? 0f : (curExp / maxExp);
+                if (!Mathf.Approximately(normalized, lastExpNormalized))
                 {
-                    GameManager.Instance.StageClear();
+                    mySlider.value = normalized;
+                    lastExpNormalized = normalized;
                 }
                 break;
-            case InfoType.Health:
-                float curHealth = GameManager.Instance.Health;
-                float maxHealth = GameManager.Instance.maxHealth;
-                mySlider.value = curHealth / maxHealth;
-                break;
-            case InfoType.Shield:
-                float curShield = GameManager.Instance.Shield;
-                float maxShield = GameManager.Instance.maxHealth;
-                mySlider.value = curShield / maxShield;
-                break;
-            case InfoType.BossHealth:
-                float curBossHealth = GameManager.Instance.BossHealth;
-                float maxBossHealth = GameManager.Instance.maxBossHealth;
-                mySlider.value = curBossHealth / maxBossHealth;
-                break;
+            }
 
+            case InfoType.Level:
+            {
+                int lvl = Mathf.FloorToInt(gm.level);
+                if (lvl != lastLevel)
+                {
+                    myText.text = "Lv." + lvl;
+                    lastLevel = lvl;
+                }
+                break;
+            }
+
+            case InfoType.Kill:
+            {
+                int k = Mathf.FloorToInt(gm.kill);
+                if (k != lastKill)
+                {
+                    myText.text = k.ToString();
+                    lastKill = k;
+                }
+                break;
+            }
+            case InfoType.Time:
+            {
+                float remainTime = gm.maxGameTime - gm.gameTime;
+                if (remainTime <= 0)
+                {
+                    gm.StageClear();
+                    remainTime = 0;
+                }
+                int min = Mathf.FloorToInt(remainTime / 60);
+                int sec = Mathf.FloorToInt(remainTime % 60);
+                if (min != lastMin || sec != lastSec)
+                {
+                    string minStr = (min >= 0 && min < TwoDigits.Length) ? TwoDigits[min] : min.ToString("D2");
+                    string secStr = (sec >= 0 && sec < TwoDigits.Length) ? TwoDigits[sec] : sec.ToString("D2");
+                    myText.text = minStr + ":" + secStr;
+                    lastMin = min;
+                    lastSec = sec;
+                }
+                break;
+            }
+            case InfoType.Health:
+            {
+                float curHealth = gm.Health;
+                float maxHealth = gm.maxHealth;
+                float normalized = (maxHealth <= 0f) ? 0f : (curHealth / maxHealth);
+                if (!Mathf.Approximately(normalized, lastHealthNormalized))
+                {
+                    mySlider.value = normalized;
+                    lastHealthNormalized = normalized;
+                }
+                break;
+            }
+            case InfoType.Shield:
+            {
+                float curShield = gm.Shield;
+                float maxShield = gm.maxHealth;
+                float normalized = (maxShield <= 0f) ? 0f : (curShield / maxShield);
+                if (!Mathf.Approximately(normalized, lastShieldNormalized))
+                {
+                    mySlider.value = normalized;
+                    lastShieldNormalized = normalized;
+                }
+                break;
+            }
+            case InfoType.BossHealth:
+            {
+                float curBossHealth = gm.BossHealth;
+                float maxBossHealth = gm.maxBossHealth;
+                float normalized = (maxBossHealth <= 0f) ? 0f : (curBossHealth / maxBossHealth);
+                if (!Mathf.Approximately(normalized, lastBossHealthNormalized))
+                {
+                    mySlider.value = normalized;
+                    lastBossHealthNormalized = normalized;
+                }
+                break;
+            }
 
         }
     }

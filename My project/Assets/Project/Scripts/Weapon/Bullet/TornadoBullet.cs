@@ -8,7 +8,7 @@ public class TornadoBullet : Bullet
 {
     Animator enemyAnim;
     Rigidbody2D enemyRb;
-    
+
     public float addPower = 5f;  // 넉백 파워
     public float moveSpeed = 3f;  // 토네이도 이동 속도
     public float directionChangeTime = 2f;  // 방향 전환 주기
@@ -26,17 +26,18 @@ public class TornadoBullet : Bullet
     {
         base.Init(damage, per, dir, false, duration, criticalDamagePercent, criticalChancePercent, size);
         rb.velocity = Vector2.zero;
-        
+
         // 초기 랜덤 방향 설정
         SetRandomDirection();
         directionTimer = directionChangeTime;
         aliveTime = 0f;
         soundPlayInterval = Global.SoundManager.GetSFXClipLength(SFXEnum.Tornado);
         soundTimer = 0;
-        
+
         StartCoroutine(MovementCoroutine());
     }
-    private void OnDisable() {
+    private void OnDisable()
+    {
         Global.SoundManager.StopSFX();
     }
 
@@ -44,13 +45,13 @@ public class TornadoBullet : Bullet
     {
         float randomAngle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
         currentDirection = new Vector3(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle), 0);
-        
+
         // 방향 벡터가 0이 되지 않도록 보장
         if (Mathf.Approximately(currentDirection.magnitude, 0f))
         {
             currentDirection = Vector3.right;
         }
-        
+
         currentDirection = currentDirection.normalized;
         // Debug.Log($"토네이도 속도: {moveSpeed}, 방향: {currentDirection}, 벡터 크기: {currentDirection.magnitude}");
     }
@@ -80,7 +81,7 @@ public class TornadoBullet : Bullet
 
             // 화면 경계 체크 및 방향 전환
             CheckScreenBounds();
-            
+
             // 이동 - 정규화된 방향 벡터 사용
             Vector3 movement = currentDirection.normalized * moveSpeed * Time.deltaTime;
             transform.position += movement;
@@ -105,12 +106,12 @@ public class TornadoBullet : Bullet
             return;
         }
 
-        // 플레이어 위치 기준으로 7x7 영역의 경계 설정
+        // 플레이어 위치 기준으로 5x5 영역의 경계 설정
         Vector3 playerPos = GameManager.Instance.player.transform.position; // 현재 위치 기준
-        float minX = playerPos.x - 7f;
-        float maxX = playerPos.x + 7f;
-        float minY = playerPos.y - 7f;
-        float maxY = playerPos.y + 7f;
+        float minX = playerPos.x - 5f;
+        float maxX = playerPos.x + 5f;
+        float minY = playerPos.y - 5f;
+        float maxY = playerPos.y + 5f;
 
         Vector3 pos = transform.position;
         bool needsDirectionChange = false;
@@ -145,14 +146,14 @@ public class TornadoBullet : Bullet
         {
             return;
         }
-        
+
         if (!collision.gameObject.activeSelf) return;
-        
+
         enemyAnim = collision.GetComponent<Animator>();
         enemyRb = collision.GetComponent<Rigidbody2D>();
-        
+
         if (enemyAnim) enemyAnim.SetTrigger("Hit");
-        
+
         // 넉백 방향 계산 및 적용
         Vector2 knockbackDir = (collision.transform.position - transform.position).normalized;
         if (enemyRb) enemyRb.AddForce(knockbackDir * addPower, ForceMode2D.Impulse);
