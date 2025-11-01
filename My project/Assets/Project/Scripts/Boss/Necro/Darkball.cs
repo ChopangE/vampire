@@ -31,9 +31,9 @@ public class Darkball : MiddleBossBullet
     }
     
     protected override void Damaging() {
-        var damage = GameManager.Instance.maxHealth * 0.4f;
+        var damage = GameManager.Instance.maxHealth * 0.3f;
         GameManager.Instance.Health -= damage;
         // 2초 동안 화상 효과 적용 (1초마다 최대체력의 5% 데미지)
-        GameManager.Instance.player.ApplyBurn(2f, 0.05f);
+        GameManager.Instance.player.ApplyBurn(2f, 0.025f);
     }
 }

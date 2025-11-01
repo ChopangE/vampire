@@ -69,7 +69,7 @@ public class BossBullet : MonoBehaviour
         
         if (type == BossWeaponType.Range) // 까마귀 스킬
         {
-            var damage = GameManager.Instance.maxHealth * 0.3f;
+            var damage = GameManager.Instance.maxHealth * 0.2f;
             GameManager.Instance.Health -= damage;
         }
         else if (type == BossWeaponType.Bomb) // 독병 직격

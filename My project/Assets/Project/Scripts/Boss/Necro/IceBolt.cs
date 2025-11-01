@@ -20,7 +20,7 @@ public class IceBolt : MiddleBossBullet
         playerPos = player.transform.position;
         Vector3 dir = (playerPos - transform.position).normalized;
         transform.rotation = Quaternion.FromToRotation(Vector3.right, dir);
-        startScale = transform.localScale;
+        startScale = new Vector3(3,3,3);
         addPower = 8.0f;
         rb.AddForce(dir * addPower, ForceMode2D.Impulse);
         StartCoroutine(GraduallyDescending());
@@ -34,7 +34,7 @@ public class IceBolt : MiddleBossBullet
     }
     
     protected override void Damaging() {
-        var damage = GameManager.Instance.maxHealth * 0.4f;
+        var damage = GameManager.Instance.maxHealth * 0.3f;
         GameManager.Instance.Health -= damage;
         // 3초 동안 30% 슬로우 적용
         GameManager.Instance.player.ApplySlow(3f, 0.3f);

@@ -83,7 +83,7 @@ public class RaserRange : MiddleBossBullet {
     }
 
     protected override void Damaging() {
-        var damage = GameManager.Instance.maxHealth * 0.4f;
+        var damage = GameManager.Instance.maxHealth * 0.3f;
         GameManager.Instance.Health -= damage;
     }
 }

@@ -23,6 +23,9 @@ public class Necro : MiddleBoss
     }
     public override void Init() {
         base.Init();
+        // Reduce maxHealth by 30% for Necro
+        maxHealth *= 0.7f;
+        health = maxHealth;
         speed = 1.6f;
         castingTimer = 3f;
         timer = 0f;

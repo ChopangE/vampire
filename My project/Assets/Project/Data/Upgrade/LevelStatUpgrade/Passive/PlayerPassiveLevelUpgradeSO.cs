@@ -63,14 +63,14 @@ namespace SO
             var groupData = GetPassiveGroupData();
             System.Numerics.BigInteger totalCost = 0;
 
-            Debug.Log($"[환급 계산] {upgradeNameKey} - 현재 레벨: {currentLevel}");
+            // Debug.Log($"[환급 계산] {upgradeNameKey} - 현재 레벨: {currentLevel}");
             
             // 먼저 데이터 구조를 확인해보자
-            Debug.Log($"[환급 계산] 패시브 데이터 구조 확인:");
-            foreach (var data in groupData)
-            {
-                Debug.Log($"[환급 계산] Level: {data.level}, GoldCost: {data.goldCost}");
-            }
+            // Debug.Log($"[환급 계산] 패시브 데이터 구조 확인:");
+            // foreach (var data in groupData)
+            // {
+            //     Debug.Log($"[환급 계산] Level: {data.level}, GoldCost: {data.goldCost}");
+            // }
 
             // 각 업그레이드 단계에서 지불한 비용 계산
             for (int fromLevel = 0; fromLevel < currentLevel; fromLevel++)
@@ -84,7 +84,7 @@ namespace SO
                     if (System.Numerics.BigInteger.TryParse(levelElement.goldCost, out var cost))
                     {
                         totalCost += cost;
-                        Debug.Log($"[환급 계산] 레벨 {fromLevel} → {toLevel} 비용: {cost}");
+                        // Debug.Log($"[환급 계산] 레벨 {fromLevel} → {toLevel} 비용: {cost}");
                     }
                 }
                 else
@@ -92,7 +92,7 @@ namespace SO
                     Debug.LogWarning($"[환급 계산] 레벨 {fromLevel} 데이터를 찾을 수 없음");
                 }
             }
-            Debug.Log($"[환급 계산] {upgradeNameKey} - 총 환급 금액: {totalCost}");
+            // Debug.Log($"[환급 계산] {upgradeNameKey} - 총 환급 금액: {totalCost}");
             return totalCost.ToString();
         }
 

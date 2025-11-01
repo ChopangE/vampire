@@ -18,56 +18,67 @@ public class WhirlwindFloor : FloorWeapon
     private Coroutine pullEnemyCoroutine;
 
 
-    public override async UniTask Init() {
+    public override async UniTask Init()
+    {
         await base.Init();
         coll = projectile.GetComponent<CircleCollider2D>();
-        
+
     }
 
-    public override void SpawnBullet() {
+    public override void SpawnBullet()
+    {
         base.SpawnBullet();
         SpawnWhirlwind();
         PullEnemy();
     }
 
-    public void SpawnWhirlwind() {
+    public void SpawnWhirlwind()
+    {
         Global.SoundManager.PlaySFX(SFXEnum.WindFloor);
         Vector3 playerPos = player.transform.position;
-        spawnPos = playerPos + new Vector3(Random.Range(-7f,7f), Random.Range(-7f, 7f),0f);
-        
+        spawnPos = playerPos + new Vector3(Random.Range(-7f, 7f), Random.Range(-7f, 7f), 0f);
+
+        // Calculate damage: 8 * (level + 1), where level is 0-based
+        int scaledDamage = 8 * level;
         Transform bullet = GameManager.Instance.pool.Get(prefabId).transform;
         projectile = bullet.gameObject;
         var projectileBullet = bullet.GetComponent<Bullet>();
-        projectileBullet.Init(damage, 
-        -1, 
-        Vector2.zero, 
-        duration: duration, 
+        projectileBullet.Init(scaledDamage,
+        -1,
+        Vector2.zero,
+        duration: duration,
         size: size,
-        criticalChancePercent: criticalChancePercent, 
+        criticalChancePercent: criticalChancePercent,
         criticalDamagePercent: criticalDamagePercent);
-        
+
         projectile.transform.position = spawnPos;
         OnPlay();
     }
 
-    public void OffPlay() {
+    public void OffPlay()
+    {
         projectile.SetActive(false);
-        if (pullEnemyCoroutine != null) {
+        if (pullEnemyCoroutine != null)
+        {
             StopCoroutine(pullEnemyCoroutine);
             pullEnemyCoroutine = null;
         }
     }
-    
-    public void OnPlay() {
+
+    public void OnPlay()
+    {
         projectile.SetActive(true);
     }
 
-    void PullEnemy() {
+    void PullEnemy()
+    {
         if (!projectile || !projectile.activeInHierarchy) return;
         Collider2D[] enemyColls = Physics2D.OverlapCircleAll(projectile.transform.position, coll.radius, 1 << LayerMask.NameToLayer("Enemy"));
-        foreach (Collider2D enemyColl in enemyColls) {
+        foreach (Collider2D enemyColl in enemyColls)
+        {
             Enemy enemy = enemyColl.GetComponent<Enemy>();
-            if (enemy != null) {
+            if (enemy != null)
+            {
                 Vector3 dir = (projectile.transform.position - enemyColl.transform.position).normalized;
                 enemy.GetAddForce(dir * addPower);
             }

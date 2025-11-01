@@ -60,7 +60,7 @@ public class Craw : MiddleBossBullet
     }
 
     protected override void Damaging() {
-        var damage = GameManager.Instance.maxHealth * 0.4f;
+        var damage = GameManager.Instance.maxHealth * 0.3f;
         GameManager.Instance.Health -= damage;
         
         // 출혈 상태 적용: 10초 지속, 5초 동안 1초마다 최대체력의 1% 데미지

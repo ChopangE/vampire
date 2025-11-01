@@ -14,7 +14,8 @@ public class WhirlWindOwner : FloorWeapon
     CircleCollider2D coll;
     Vector3 spawnPos;
 
-    public override async UniTask Init() {
+    public override async UniTask Init()
+    {
         await base.Init();
         coll = projectile.GetComponent<CircleCollider2D>();
 
@@ -40,36 +41,45 @@ public class WhirlWindOwner : FloorWeapon
         }
     }
 
-    public override void SpawnBullet() {
+    public override void SpawnBullet()
+    {
         base.SpawnBullet();
         SpawnWhirlwind();
         PullEnemy();
     }
 
-    public void SpawnWhirlwind() {
+    public void SpawnWhirlwind()
+    {
         projectile = GameManager.Instance.pool.Get(prefabId);
+        // Calculate damage: 8 * (level + 1), where level is 0-based
+        int scaledDamage = 8 * level;
         WhirlBullet whirlBullet = projectile.GetComponent<WhirlBullet>();
-        whirlBullet.Init(damage, -1, Vector2.zero, duration: duration, criticalChancePercent: criticalChancePercent, criticalDamagePercent: criticalDamagePercent, size: size);
+        whirlBullet.Init(scaledDamage, -1, Vector2.zero, duration: duration, criticalChancePercent: criticalChancePercent, criticalDamagePercent: criticalDamagePercent, size: size);
         projectile.transform.SetParent(player.transform, worldPositionStays: false);
         projectile.transform.localPosition = new Vector3(0, -0.75f, 0);
         OnPlay();
     }
 
-    public void OffPlay() {
+    public void OffPlay()
+    {
         projectile.SetActive(false);
     }
-    
-    public void OnPlay() {
+
+    public void OnPlay()
+    {
         projectile.SetActive(true);
     }
-    
-    void PullEnemy() {
+
+    void PullEnemy()
+    {
         if (!projectile || !projectile.activeInHierarchy) return;
         Collider2D[] enemyColls = Physics2D.OverlapCircleAll(projectile.transform.position, coll.radius, 1 << LayerMask.NameToLayer("Enemy"));
-        
-        foreach (Collider2D enemyColl in enemyColls) {
+
+        foreach (Collider2D enemyColl in enemyColls)
+        {
             Enemy enemy = enemyColl.GetComponent<Enemy>();
-            if (enemy != null) {
+            if (enemy != null)
+            {
                 Vector3 dir = (projectile.transform.position - enemyColl.transform.position).normalized;
                 enemy.GetAddForce(dir * addPower);
             }

@@ -105,7 +105,7 @@ public class Golem : MiddleBoss
         Collider2D coll = Physics2D.OverlapBox(transform.position, attackSize, 0, targetLayer);
         if (coll) {
             coll.gameObject.GetComponent<Rigidbody2D>().AddForce((coll.transform.position - transform.position).normalized * 100f, ForceMode2D.Impulse);
-            var damage = GameManager.Instance.maxHealth * 0.5f;
+            var damage = GameManager.Instance.maxHealth * 0.4f;
             GameManager.Instance.Health -= damage;
             Player player = coll.GetComponent<Player>();
             if (player) {

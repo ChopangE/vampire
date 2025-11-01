@@ -32,7 +32,7 @@ public class GroundAttacking : MonoBehaviour
             hasHitPlayer = true; // 플레이어를 맞췄음을 표시
             
             // 플레이어 최대 체력의 50% 데미지
-            float damage = GameManager.Instance.maxHealth * 0.5f;
+            float damage = GameManager.Instance.maxHealth * 0.4f;
             GameManager.Instance.Health -= damage;
             
             // 2초간 30% 슬로우 효과
